@@ -4,7 +4,7 @@ moban - Yet another jinja2 cli command for static text generation
 .. image:: https://api.travis-ci.org/chfw/moban.svg?branch=master
    :target: http://travis-ci.org/chfw/moban
 
-.. image:: https://codecov.io/github/chfw/moban/coverage.png
+.. image:: https://coveralls.io/repos/chfw/moban/badge.png?branch=master
     :target: https://coveralls.io/r/chfw/moban?branch=master 
 
 Example
