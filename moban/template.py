@@ -16,7 +16,7 @@ def get_dict_items(adict):
 
 def merge(user, default):
     if isinstance(user,dict) and isinstance(default,dict):
-        for k,v in default.iteritems():
+        for k,v in get_dict_items(default):
             if k not in user:
                 user[k] = v
             else:
