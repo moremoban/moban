@@ -16,7 +16,7 @@ def test_simple_overlapping():
         "hi": "world",
         "world": "hei"
     }
-    default = {"world", "hi"}
+    default = {"world": "hi"}
     merged = merge(user, default)
     assert merged == {
         "hi": "world",

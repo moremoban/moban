@@ -4,6 +4,15 @@ import yaml
 import argparse
 from jinja2 import Environment, FileSystemLoader
 
+PY2 = sys.version_info[0] == 2
+
+
+def get_dict_items(adict):
+    if PY2:
+        return adict.iteritems()
+    else:
+        return adict.items()
+
 
 def merge(user, default):
     if isinstance(user,dict) and isinstance(default,dict):
