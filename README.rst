@@ -1,3 +1,4 @@
+================================================================================
 moban - Yet another jinja2 cli command for static text generation
 ================================================================================
 
@@ -31,14 +32,14 @@ a.output will contain::
 
 
 Usage
-==========
+================================================================================
 
 usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
              [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-t TEMPLATE]
              [-o OUTPUT]
 
 optional arguments
---------------------
+--------------------------------------------------------------------------------
 
   * `-h, --help`
     show this help message and exit
