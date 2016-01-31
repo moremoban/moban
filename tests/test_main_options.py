@@ -17,7 +17,7 @@ def test_default_options(fake_template_doer):
             configuration="config.yaml",
             configuration_dir=os.path.join('.', 'config'),
             output="a.output",
-            template_dir=[os.path.join('.', 'templates')],
+            template_dir=[".", os.path.join('.', 'templates')],
         ))
 
 

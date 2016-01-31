@@ -1,2 +1,2 @@
 pyyaml==3.11
-jinja2=2.7.1
+jinja2==2.7.1

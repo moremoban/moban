@@ -58,7 +58,7 @@ def main():
     )
     parser.add_argument(
         '-td','--template_dir', nargs="*",
-        default=[os.path.join(".", "templates")],
+        default=[".", os.path.join(".", "templates")],
         help="the directories for template file lookup"
     )
     parser.add_argument(
