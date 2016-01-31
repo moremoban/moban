@@ -8,8 +8,11 @@ moban - Yet another jinja2 cli command for static text generation
 .. image:: https://codecov.io/github/chfw/moban/coverage.png
     :target: https://codecov.io/github/chfw/moban
 
+**moban** brings the high performance template engine (JINJA2) for web into
+static file generation.
 
-Example
+
+Simple Example
 ================================================================================
 
 Here is a simple example:

@@ -8,6 +8,20 @@ from nose.tools import raises
 
 @patch("moban.template.do_template")
 def test_default_options(fake_template_doer):
+    test_args = ["moban", "-t", "a.template"]
+    with patch.object(sys, 'argv', test_args):
+        main()
+        fake_template_doer.assert_called_with(Namespace(
+            template="a.template",
+            configuration=".moban.yaml",
+            configuration_dir=os.path.join('.', 'config'),
+            output="a.output",
+            template_dir=[".", os.path.join('.', 'templates')],
+        ))
+
+
+@patch("moban.template.do_template")
+def test_minimal_options(fake_template_doer):
     test_args = ["moban", "-c", "config.yaml",
                  "-t", "a.template"]
     with patch.object(sys, 'argv', test_args):
@@ -45,7 +59,7 @@ def test_no_argments():
         main()
 
 
-@raises(SystemExit)
+@raises(IOError)
 def test_missing_configuration():
     test_args = ["moban", '-t', "a.template"]
     with patch.object(sys, 'argv', test_args):

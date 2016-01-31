@@ -63,6 +63,7 @@ def main():
     )
     parser.add_argument(
         '-c', '--configuration',
+        default=".moban.yaml",
         help="the dictionary file"
     )
     parser.add_argument(
@@ -83,9 +84,6 @@ def main():
         parser.print_help()
         sys.exit(0)
     options = parser.parse_args()
-    if options.configuration is None:
-        parser.print_help()
-        sys.exit(-1)
     if options.template is None:
         parser.print_help()
         sys.exit(-1)
