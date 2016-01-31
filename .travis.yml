@@ -1,0 +1,20 @@
+sudo: false
+language: python
+notifications:
+  email: false
+env:
+  global:
+python:
+  - 2.7
+  - 2.6
+  - 3.3
+  - 3.4
+  - 3.5
+  - pypy
+install:
+  - pip install -r requirements.txt
+  - pip install -r tests/requirements.txt
+script:
+  nosetests --rednose --with-cov --with-doctest --doctest-extension=.rst
+after_success:
+  coveralls

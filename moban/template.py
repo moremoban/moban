@@ -20,7 +20,7 @@ def open_yaml(base_dir, file_name):
     if not os.path.exists(the_file):
         the_file = os.path.join(base_dir, file_name)
         if not os.path.exists(the_file):
-            raise Exception("File %s does not exist" % the_file)
+            raise IOError("File %s does not exist" % the_file)
     with open(the_file, 'r') as f:
         x=yaml.load(f)
         y = None
@@ -32,15 +32,44 @@ def open_yaml(base_dir, file_name):
             return x
 
 
+def do_template(options):
+    templateLoader = FileSystemLoader(options.template_dir)
+    env = Environment(loader=templateLoader,
+                      trim_blocks=True,
+                      lstrip_blocks=True)    
+    variables = open_yaml(options.configuration_dir,
+                          options.configuration)
+    template = env.get_template(options.template)
+    with open(options.output, 'w') as f:
+        f.write(template.render(**variables))
+
+
 def main():
-    parser = argparse.ArgumentParser(description="test")
-    parser.add_argument('-cd', '--configuration_dir',
-                        default=os.path.join(".", "config"))
-    parser.add_argument('-c', '--configuration')
-    parser.add_argument('-td','--template_dir', nargs="*",
-                        default=os.path.join(".", "templates"))
-    parser.add_argument('-t', '--template')
-    parser.add_argument('-o', '--output', default="a.output")
+    parser = argparse.ArgumentParser(
+        description="Yet another jinja2 cli command for static text generation")
+    parser.add_argument(
+        '-cd', '--configuration_dir',
+        default=os.path.join(".", "config"),
+        help="the directory for configuration file lookup"
+    )
+    parser.add_argument(
+        '-c', '--configuration',
+        help="the dictionary file"
+    )
+    parser.add_argument(
+        '-td','--template_dir', nargs="*",
+        default=[os.path.join(".", "templates")],
+        help="the directories for template file lookup"
+    )
+    parser.add_argument(
+        '-t', '--template',
+        help="the template file"
+    )
+    parser.add_argument(
+        '-o', '--output',
+        default="a.output",
+        help="the output file"
+    )
     if len(sys.argv) < 2:
         parser.print_help()
         sys.exit(0)
@@ -51,13 +80,7 @@ def main():
     if options.template is None:
         parser.print_help()
         sys.exit(-1)
-    templateLoader = FileSystemLoader(options.template_dir)
-    env = Environment(loader=templateLoader, trim_blocks=True, lstrip_blocks=True)    
-    variables = open_yaml(options.configuration_dir,
-                          options.configuration)
-    template = env.get_template(options.template)
-    with open(options.output, 'w') as f:
-        f.write(template.render(**variables))
+    do_template(options)
 
 
 if __name__ == "__main__":
