@@ -1,22 +1,17 @@
 import os
-from moban.template import do_template
-
-
-class FakeOptions:
-    def __init__(self, **keywords):
-        self.__dict__.update(keywords)
+from moban.template import do_template, open_yaml
 
         
 def test_templating():
     base_dir = os.path.join("tests", "fixtures")
-    options = FakeOptions(
+    variables = open_yaml(os.path.join(base_dir, "config"),
+                          os.path.join(base_dir, "child.yaml"))
+    options = dict(
         template_dir=base_dir,
-        configuration_dir=os.path.join(base_dir, "config"),
-        configuration=os.path.join(base_dir, "child.yaml"),
         template="a.template",
         output="test"
     )
-    do_template(options)
+    do_template(options, variables)
     with open("test", "r") as f:
         content = f.read()
         assert content == "hello world ox"

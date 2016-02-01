@@ -41,16 +41,14 @@ def open_yaml(base_dir, file_name):
             return x
 
 
-def do_template(options):
-    templateLoader = FileSystemLoader(options.template_dir)
+def do_template(options, data):
+    templateLoader = FileSystemLoader(options['template_dir'])
     env = Environment(loader=templateLoader,
                       trim_blocks=True,
                       lstrip_blocks=True)    
-    variables = open_yaml(options.configuration_dir,
-                          options.configuration)
-    template = env.get_template(options.template)
-    with open(options.output, 'w') as f:
-        f.write(template.render(**variables))
+    template = env.get_template(options['template'])
+    with open(options['output'], 'w') as f:
+        f.write(template.render(**data))
 
 
 def main():
@@ -83,11 +81,15 @@ def main():
     if len(sys.argv) < 2:
         parser.print_help()
         sys.exit(0)
-    options = parser.parse_args()
-    if options.template is None:
+    options = vars(parser.parse_args())
+    data = open_yaml(options['configuration_dir'],
+                     options['configuration'])
+    if 'configuration' in data:
+        options=merge(options, data['configuration'])
+    if options['template'] is None:
         parser.print_help()
         sys.exit(-1)
-    do_template(options)
+    do_template(options, data)
 
 
 if __name__ == "__main__":
