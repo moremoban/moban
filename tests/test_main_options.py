@@ -52,15 +52,12 @@ class TestCustomOptions:
 
 class TestOptions:
     def setUp(self):
-        self.config_file = '.moban.yaml'
+        self.config_file = 'data.yaml'
         with open(self.config_file,'w')as f:
             f.write("hello: world")
     
     @patch("moban.template.do_template")
     def test_default_options(self, fake_template_doer):
-        config_file = '.moban.yaml'
-        with open(config_file,'w')as f:
-            f.write("hello: world")
         test_args = ["moban", "-t", "a.template"]
         with patch.object(sys, 'argv', test_args):
             main()

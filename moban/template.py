@@ -5,6 +5,12 @@ import argparse
 from jinja2 import Environment, FileSystemLoader
 
 PY2 = sys.version_info[0] == 2
+DEFAULT_MOBAN_FILE = '.moban.yaml'
+DEFAULT_OPTIONS = {
+    'configuration': 'data.yaml',
+    'configuration_dir': os.path.join('.', 'config'),
+    'template_dir': ['.', os.path.join('.', 'templates')]
+}
 
 
 def get_dict_items(adict):
@@ -19,6 +25,8 @@ def merge(user, default):
         for k,v in get_dict_items(default):
             if k not in user:
                 user[k] = v
+            elif user[k] is None:
+                user[k] = v
             else:
                 user[k] = merge(user[k],v)
     return user
@@ -27,8 +35,11 @@ def merge(user, default):
 def open_yaml(base_dir, file_name):
     the_file = file_name
     if not os.path.exists(the_file):
-        the_file = os.path.join(base_dir, file_name)
-        if not os.path.exists(the_file):
+        if base_dir:
+            the_file = os.path.join(base_dir, file_name)
+            if not os.path.exists(the_file):
+                raise IOError("File %s does not exist" % the_file)
+        else:
             raise IOError("File %s does not exist" % the_file)
     with open(the_file, 'r') as f:
         x=yaml.load(f)
@@ -42,6 +53,7 @@ def open_yaml(base_dir, file_name):
 
 
 def do_template(options, data):
+    print("Templating %s to %s" % (options['template'], options['output']))
     templateLoader = FileSystemLoader(options['template_dir'])
     env = Environment(loader=templateLoader,
                       trim_blocks=True,
@@ -51,22 +63,19 @@ def do_template(options, data):
         f.write(template.render(**data))
 
 
-def main():
+def create_parser():
     parser = argparse.ArgumentParser(
         description="Yet another jinja2 cli command for static text generation")
     parser.add_argument(
         '-cd', '--configuration_dir',
-        default=os.path.join(".", "config"),
         help="the directory for configuration file lookup"
     )
     parser.add_argument(
-        '-c', '--configuration',
-        default=".moban.yaml",
+       '-c', '--configuration',
         help="the dictionary file"
     )
     parser.add_argument(
         '-td','--template_dir', nargs="*",
-        default=[".", os.path.join(".", "templates")],
         help="the directories for template file lookup"
     )
     parser.add_argument(
@@ -78,18 +87,38 @@ def main():
         default="a.output",
         help="the output file"
     )
-    if len(sys.argv) < 2:
-        parser.print_help()
-        sys.exit(0)
+    return parser
+
+
+def main():
+    parser = create_parser()
     options = vars(parser.parse_args())
-    data = open_yaml(options['configuration_dir'],
-                     options['configuration'])
-    if 'configuration' in data:
-        options=merge(options, data['configuration'])
-    if options['template'] is None:
-        parser.print_help()
-        sys.exit(-1)
-    do_template(options, data)
+    if os.path.exists(DEFAULT_MOBAN_FILE):
+        more_options = open_yaml(None, DEFAULT_MOBAN_FILE)
+        tmp_dict = {}
+        for d in more_options['configuration']:
+            for key, value in d.items():
+                tmp_dict[key] = value
+        options = merge(options, tmp_dict)
+        options = merge(options, DEFAULT_OPTIONS)
+        data = open_yaml(options['configuration_dir'],
+                         options['configuration'])
+        for d in more_options['targets']:
+            for key, value in d.items():
+                options['template'] = value
+                options['output'] = key
+                do_template(options, data)
+    else:
+        options = merge(options, DEFAULT_OPTIONS)
+        if options['template'] is None:
+            parser.print_help()
+            sys.exit(-1)
+        if options['configuration'] is None:
+            parser.print_help()
+            sys.exit(-1)
+        data = open_yaml(options['configuration_dir'],
+                         options['configuration'])
+        do_template(options, data)
 
 
 if __name__ == "__main__":
