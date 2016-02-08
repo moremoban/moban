@@ -30,3 +30,8 @@ def test_exception():
 def test_exception_2():
     test_file = os.path.join("tests", "fixtures", "dragon.yaml")
     open_yaml(os.path.join("tests", "fixtures", "config"),test_file)
+
+@raises(IOError)
+def test_exception_3():
+    test_file = os.path.join("tests", "fixtures", "dragon.yaml")
+    open_yaml(None, test_file)

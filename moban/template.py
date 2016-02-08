@@ -65,6 +65,7 @@ def do_template(options, data):
 
 def create_parser():
     parser = argparse.ArgumentParser(
+        prog='moban',
         description="Yet another jinja2 cli command for static text generation")
     parser.add_argument(
         '-cd', '--configuration_dir',
@@ -111,9 +112,6 @@ def main():
     else:
         options = merge(options, DEFAULT_OPTIONS)
         if options['template'] is None:
-            parser.print_help()
-            sys.exit(-1)
-        if options['configuration'] is None:
             parser.print_help()
             sys.exit(-1)
         data = open_yaml(options['configuration_dir'],

@@ -1,5 +1,6 @@
 import os
 import sys
+from shutil import copyfile
 from moban.template import main
 from mock import patch
 from nose.tools import raises
@@ -84,3 +85,32 @@ def test_missing_configuration():
     test_args = ["moban", '-t', "a.template"]
     with patch.object(sys, 'argv', test_args):
         main()
+
+
+class TestNoOptions:
+    def setUp(self):
+        self.config_file = '.moban.yaml'
+        copyfile(os.path.join("tests", "fixtures", self.config_file),
+                 self.config_file)
+        self.data_file = 'data.yaml'
+        with open(self.data_file,'w')as f:
+            f.write("hello: world")
+    
+    @patch("moban.template.do_template")
+    def test_single_command(self, fake_template_doer):
+        test_args = ["moban"]
+        with patch.object(sys, 'argv', test_args):
+            main()
+            fake_template_doer.assert_called_with(
+                dict(
+                    output='setup.py',
+                    configuration_dir='commons/config',
+                    template_dir=['commons/templates', '.moban.d'],
+                    configuration='data.yaml',
+                    template='setup.py'
+                ),
+                dict(hello="world"))
+
+    def tearDown(self):
+        os.unlink(self.config_file)
+        os.unlink(self.data_file)
