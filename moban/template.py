@@ -117,7 +117,3 @@ def main():
         data = open_yaml(options['configuration_dir'],
                          options['configuration'])
         do_template(options, data)
-
-
-if __name__ == "__main__":
-    main()
