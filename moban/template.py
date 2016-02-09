@@ -43,13 +43,16 @@ def open_yaml(base_dir, file_name):
             raise IOError("File %s does not exist" % the_file)
     with open(the_file, 'r') as f:
         x=yaml.load(f)
-        y = None
-        if 'overrides' in x:
-            y = open_yaml(base_dir, x.pop('overrides'))
-        if y:
-            return merge(x, y)
+        if x is not None:
+            y = None
+            if 'overrides' in x:
+                y = open_yaml(base_dir, x.pop('overrides'))
+            if y:
+                return merge(x, y)
+            else:
+                return x
         else:
-            return x
+            return None
 
 
 def do_template(options, data):
@@ -96,6 +99,17 @@ def main():
     options = vars(parser.parse_args())
     if os.path.exists(DEFAULT_MOBAN_FILE):
         more_options = open_yaml(None, DEFAULT_MOBAN_FILE)
+        if more_options is None:
+            print("%s is an invalid yaml file." % DEFAULT_MOBAN_FILE)
+            parser.print_help()
+            sys.exit(-1)            
+        if 'configuration' not in more_options:
+            print("Cannot find 'configuration' in %s " % DEFAULT_MOBAN_FILE)
+            parser.print_help()
+            sys.exit(-1)
+        if 'targets' not in more_options:
+            print("No targets in %s" % DEFAULT_MOBAN_FILE)
+            sys.exit(0)
         tmp_dict = {}
         for d in more_options['configuration']:
             for key, value in d.items():

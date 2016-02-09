@@ -114,3 +114,38 @@ class TestNoOptions:
     def tearDown(self):
         os.unlink(self.config_file)
         os.unlink(self.data_file)
+
+
+class TestInvalidMobanFile:
+    def setUp(self):
+        self.config_file = '.moban.yaml'
+
+    @raises(SystemExit)
+    @patch("moban.template.do_template")
+    def test_no_configuration(self, fake_template_doer):
+        with open(self.config_file,'w')as f:
+            f.write("")
+        test_args = ["moban"]
+        with patch.object(sys, 'argv', test_args):
+            main()
+
+    @raises(SystemExit)
+    @patch("moban.template.do_template")
+    def test_no_configuration_2(self, fake_template_doer):
+        with open(self.config_file,'w')as f:
+            f.write("not: related")
+        test_args = ["moban"]
+        with patch.object(sys, 'argv', test_args):
+            main()
+
+    @raises(SystemExit)
+    @patch("moban.template.do_template")
+    def test_no_targets(self, fake_template_doer):
+        with open(self.config_file,'w')as f:
+            f.write("configuration: test")
+        test_args = ["moban"]
+        with patch.object(sys, 'argv', test_args):
+            main()
+
+    def tearDown(self):
+        os.unlink(self.config_file)
