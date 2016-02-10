@@ -1,8 +1,21 @@
+"""
+    moban.template
+    ~~~~~~~~~~~~~~~~~~~
+
+    Bring jinja2 to command line
+
+    :copyright: (c) 2016 by Onni Software Ltd.
+    :license: New BSD License, see LICENSE for more details
+
+"""
+
 import os
 import sys
-import yaml
 import argparse
+
+import yaml
 from jinja2 import Environment, FileSystemLoader
+
 
 PY2 = sys.version_info[0] == 2
 DEFAULT_MOBAN_FILE = '.moban.yaml'
@@ -13,26 +26,69 @@ DEFAULT_OPTIONS = {
 }
 
 
-def get_dict_items(adict):
-    if PY2:
-        return adict.iteritems()
+def main():
+    """
+    program entry point
+    """
+    parser = create_parser()
+    options = vars(parser.parse_args())
+    if os.path.exists(DEFAULT_MOBAN_FILE):
+        more_options = open_yaml(None, DEFAULT_MOBAN_FILE)
+        if more_options is None:
+            print("%s is an invalid yaml file." % DEFAULT_MOBAN_FILE)
+            parser.print_help()
+            sys.exit(-1)
+        if 'targets' not in more_options:
+            print("No targets in %s" % DEFAULT_MOBAN_FILE)
+            sys.exit(0)
+        tmp_dict = {}
+        if 'configuration' in more_options:
+            for config in more_options['configuration']:
+                for key, value in config.items():
+                    tmp_dict[key] = value
+        options = merge(options, tmp_dict)
+        options = merge(options, DEFAULT_OPTIONS)
+        data = open_yaml(options['configuration_dir'],
+                         options['configuration'])
+        for target in more_options['targets']:
+            for key, value in target.items():
+                options['template'] = value
+                options['output'] = key
+                do_template(options, data)
     else:
-        return adict.items()
+        options = merge(options, DEFAULT_OPTIONS)
+        if options['template'] is None:
+            parser.print_help()
+            sys.exit(-1)
+        data = open_yaml(options['configuration_dir'],
+                         options['configuration'])
+        do_template(options, data)
 
 
-def merge(user, default):
-    if isinstance(user,dict) and isinstance(default,dict):
-        for k,v in get_dict_items(default):
-            if k not in user:
-                user[k] = v
-            elif user[k] is None:
-                user[k] = v
+def merge(left, right):
+    """
+    deep merge dictionary on the left with the one
+    on the right.
+
+    Fill in left dictionary with right one where
+    the value of the key from the right one in
+    the left one is missing or None.
+    """
+    if isinstance(left, dict) and isinstance(right, dict):
+        for key, value in _get_dict_items(right):
+            if key not in left:
+                left[key] = value
+            elif left[key] is None:
+                left[key] = value
             else:
-                user[k] = merge(user[k],v)
-    return user
+                left[key] = merge(left[key], value)
+    return left
 
 
 def open_yaml(base_dir, file_name):
+    """
+    chained yaml loader
+    """
     the_file = file_name
     if not os.path.exists(the_file):
         if base_dir:
@@ -41,32 +97,39 @@ def open_yaml(base_dir, file_name):
                 raise IOError("File %s does not exist" % the_file)
         else:
             raise IOError("File %s does not exist" % the_file)
-    with open(the_file, 'r') as f:
-        x=yaml.load(f)
-        if x is not None:
-            y = None
-            if 'overrides' in x:
-                y = open_yaml(base_dir, x.pop('overrides'))
-            if y:
-                return merge(x, y)
+    with open(the_file, 'r') as data_yaml:
+        data = yaml.load(data_yaml)
+        if data is not None:
+            parent_data = None
+            if 'overrides' in data:
+                parent_data = open_yaml(base_dir,
+                                        data.pop('overrides'))
+            if parent_data:
+                return merge(data, parent_data)
             else:
-                return x
+                return data
         else:
             return None
 
 
 def do_template(options, data):
+    """
+    apply jinja2 here
+    """
     print("Templating %s to %s" % (options['template'], options['output']))
-    templateLoader = FileSystemLoader(options['template_dir'])
-    env = Environment(loader=templateLoader,
+    template_loader = FileSystemLoader(options['template_dir'])
+    env = Environment(loader=template_loader,
                       trim_blocks=True,
-                      lstrip_blocks=True)    
+                      lstrip_blocks=True)
     template = env.get_template(options['template'])
-    with open(options['output'], 'w') as f:
-        f.write(template.render(**data))
+    with open(options['output'], 'w') as output:
+        output.write(template.render(**data))
 
 
 def create_parser():
+    """
+    construct the program options
+    """
     parser = argparse.ArgumentParser(
         prog='moban',
         description="Yet another jinja2 cli command for static text generation")
@@ -75,11 +138,11 @@ def create_parser():
         help="the directory for configuration file lookup"
     )
     parser.add_argument(
-       '-c', '--configuration',
+        '-c', '--configuration',
         help="the dictionary file"
     )
     parser.add_argument(
-        '-td','--template_dir', nargs="*",
+        '-td', '--template_dir', nargs="*",
         help="the directories for template file lookup"
     )
     parser.add_argument(
@@ -94,40 +157,8 @@ def create_parser():
     return parser
 
 
-def main():
-    parser = create_parser()
-    options = vars(parser.parse_args())
-    if os.path.exists(DEFAULT_MOBAN_FILE):
-        more_options = open_yaml(None, DEFAULT_MOBAN_FILE)
-        if more_options is None:
-            print("%s is an invalid yaml file." % DEFAULT_MOBAN_FILE)
-            parser.print_help()
-            sys.exit(-1)            
-        if 'configuration' not in more_options:
-            print("Cannot find 'configuration' in %s " % DEFAULT_MOBAN_FILE)
-            parser.print_help()
-            sys.exit(-1)
-        if 'targets' not in more_options:
-            print("No targets in %s" % DEFAULT_MOBAN_FILE)
-            sys.exit(0)
-        tmp_dict = {}
-        for d in more_options['configuration']:
-            for key, value in d.items():
-                tmp_dict[key] = value
-        options = merge(options, tmp_dict)
-        options = merge(options, DEFAULT_OPTIONS)
-        data = open_yaml(options['configuration_dir'],
-                         options['configuration'])
-        for d in more_options['targets']:
-            for key, value in d.items():
-                options['template'] = value
-                options['output'] = key
-                do_template(options, data)
+def _get_dict_items(adict):
+    if PY2:
+        return adict.iteritems()
     else:
-        options = merge(options, DEFAULT_OPTIONS)
-        if options['template'] is None:
-            parser.print_help()
-            sys.exit(-1)
-        data = open_yaml(options['configuration_dir'],
-                         options['configuration'])
-        do_template(options, data)
+        return adict.items()
