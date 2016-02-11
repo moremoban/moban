@@ -33,8 +33,6 @@ world
         main()
         with open(output, 'r') as f:
             content = f.read()
-            print content
-            print expected
             assert content == expected
     os.unlink(output)
     os.chdir(current)
