@@ -11,6 +11,25 @@ moban - Yet another jinja2 cli command for static text generation
 **moban** brings the high performance template engine (JINJA2) for web into
 static file generation.
 
+
+Installation
+============
+You can install it via pip:
+
+.. code-block:: bash
+
+    $ pip install http://github.com/chfw/moban/archive/master.zip
+
+
+or clone it and install it:
+
+.. code-block:: bash
+
+    $ git clone http://github.com/chfw/moban.git
+    $ cd moban
+    $ python setup.py install
+
+
 Quick start
 ================================================================================
 
