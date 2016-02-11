@@ -11,8 +11,7 @@ moban - Yet another jinja2 cli command for static text generation
 **moban** brings the high performance template engine (JINJA2) for web into
 static file generation.
 
-
-Simple Example
+Quick start
 ================================================================================
 
 Here is a simple example:
@@ -34,7 +33,11 @@ a.output will contain::
 
     world
 
+`the tutorial`_ has more use cases.
 
+.. _the tutorial: tutorial/README.rst
+
+	
 Usage
 ================================================================================
 
