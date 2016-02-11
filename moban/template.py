@@ -41,12 +41,8 @@ def main():
         if 'targets' not in more_options:
             print("No targets in %s" % DEFAULT_MOBAN_FILE)
             sys.exit(0)
-        tmp_dict = {}
         if 'configuration' in more_options:
-            for config in more_options['configuration']:
-                for key, value in config.items():
-                    tmp_dict[key] = value
-        options = merge(options, tmp_dict)
+            options = merge(options, more_options['configuration'])
         options = merge(options, DEFAULT_OPTIONS)
         data = open_yaml(options['configuration_dir'],
                          options['configuration'])

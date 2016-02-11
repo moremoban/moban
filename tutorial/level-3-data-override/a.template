@@ -1,0 +1,9 @@
+{%extends 'base.jj2' %}
+
+{%block header %}
+========header============
+{%endblock%}
+
+{%block footer %}
+========footer============
+{%endblock%}

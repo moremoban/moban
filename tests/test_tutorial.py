@@ -5,30 +5,58 @@ from moban.template import main
 
 
 def test_level_1():
-    output = 'a.output'
-    current = os.getcwd()
-    os.chdir(os.path.join("tutorial", "level-1-jinja2-cli"))
-    args = ['moban', '-c', 'data.yaml', '-t', 'a.template']
-    with patch.object(sys, 'argv', args):
-        main()
-        with open(output, 'r') as f:
-            content = f.read()
-            assert content == "world"
-    os.unlink(output)
-    os.chdir(current)
+    expected = "world"
+    folder = "level-1-jinja2-cli"
+    _moban(folder, expected)
 
 
 def test_level_2():
-    output = 'a.output'
     expected = """========header============
 
 world
 
 ========footer============
 """
-    current = os.getcwd()
-    os.chdir(os.path.join("tutorial", "level-2-template-inheritance"))
+    folder = "level-2-template-inheritance"
+    _moban(folder, expected)
+    
+
+def test_level_3():
+    expected = """========header============
+
+world
+
+shijie
+
+========footer============
+"""
+    folder = "level-3-data-override"
+    _moban(folder, expected)
+
+
+def test_level_4():
+    expected = """========header============
+
+world
+
+shijie
+
+========footer============
+"""
+    folder = "level-4-single-command"
+    _raw_moban(['moban'], folder, expected)
+
+    
+
+def _moban(folder, expected):
     args = ['moban', '-c', 'data.yaml', '-t', 'a.template']
+    _raw_moban(args, folder, expected)
+
+
+def _raw_moban(args, folder, expected):
+    output = 'a.output'
+    current = os.getcwd()
+    os.chdir(os.path.join("tutorial", folder))
     with patch.object(sys, 'argv', args):
         main()
         with open(output, 'r') as f:
