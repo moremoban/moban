@@ -1,5 +1,9 @@
-Level 1 Jinja2 on command line
+Level 2: template inheritance
 ================================================================================
+
+What's different here is a.template inherits base.jj2, which is located in
+templates directory. This is jinja2's standard template inheritance.
+
 
 Evaluation
 --------------------------------------------------------------------------------

@@ -1,0 +1,7 @@
+{%block header %}
+{%endblock%}
+
+{{hello}}
+
+{%block footer %}
+{%endblock%}
