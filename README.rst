@@ -45,15 +45,15 @@ usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
 optional arguments
 --------------------------------------------------------------------------------
 
-  * `-h, --help`
-    show this help message and exit
-  * `-cd CONFIGURATION_DIR --configuration_dir CONFIGURATION_DIR`
-    the directory for configuration file lookup
-  * `-c CONFIGURATION, --configuration CONFIGURATION`
-	the dictionary file
-  * `-td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]`
-	the directories for template file lookup
-  * `-t TEMPLATE, --template TEMPLATE`
-	the template file
-  * `-o OUTPUT, --output OUTPUT`
-	the output file
+* `-h, --help`
+  show this help message and exit
+* `-cd CONFIGURATION_DIR --configuration_dir CONFIGURATION_DIR`
+  the directory for configuration file lookup
+* `-c CONFIGURATION, --configuration CONFIGURATION`
+  the dictionary file
+* `-td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]`
+  the directories for template file lookup
+* `-t TEMPLATE, --template TEMPLATE`
+  the template file
+* `-o OUTPUT, --output OUTPUT`
+  the output file
