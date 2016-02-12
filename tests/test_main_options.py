@@ -20,13 +20,11 @@ class TestCustomOptions:
                      "-t", "a.template"]
         with patch.object(sys, 'argv', test_args):
             main()
-            fake_template_doer.assert_called_with(dict(
-                template="a.template",
-                configuration=self.config_file,
-                configuration_dir="/home/developer/configuration",
-                output="a.output",
-                template_dir=['/home/developer/templates'],
-            ), dict(hello="world"))
+            fake_template_doer.assert_called_with(
+                ['/home/developer/templates'],
+                dict(hello="world"),
+                [('a.template', 'a.output')]
+            )
     
     @patch("moban.template.do_template")
     def test_minimal_options(self, fake_template_doer):
@@ -34,13 +32,11 @@ class TestCustomOptions:
                      "-t", "a.template"]
         with patch.object(sys, 'argv', test_args):
             main()
-            fake_template_doer.assert_called_with(dict(
-                template="a.template",
-                configuration=self.config_file,
-                configuration_dir=os.path.join('.', 'config'),
-                output="a.output",
-                template_dir=[".", os.path.join('.', 'templates')],
-            ),dict(hello="world"))
+            fake_template_doer.assert_called_with(
+                [".", os.path.join('.', 'templates')],
+                dict(hello="world"),
+                [('a.template', 'a.output')]
+            )
 
     @raises(SystemExit)
     def test_missing_template(self):
@@ -62,13 +58,11 @@ class TestOptions:
         test_args = ["moban", "-t", "a.template"]
         with patch.object(sys, 'argv', test_args):
             main()
-            fake_template_doer.assert_called_with(dict(
-                template="a.template",
-                configuration=self.config_file,
-                configuration_dir=os.path.join('.', 'config'),
-                output="a.output",
-                template_dir=[".", os.path.join('.', 'templates')],
-            ),dict(hello="world"))
+            fake_template_doer.assert_called_with(
+                [".", os.path.join('.', 'templates')],
+                dict(hello="world"),
+                [('a.template', 'a.output')]
+            )
 
     @raises(SystemExit)
     def test_no_argments(self):
@@ -102,14 +96,10 @@ class TestNoOptions:
         with patch.object(sys, 'argv', test_args):
             main()
             fake_template_doer.assert_called_with(
-                dict(
-                    output='setup.py',
-                    configuration_dir='commons/config',
-                    template_dir=['commons/templates', '.moban.d'],
-                    configuration='data.yaml',
-                    template='setup.py'
-                ),
-                dict(hello="world"))
+                ['commons/templates', '.moban.d'],
+                dict(hello="world"),
+                [('README.rst', 'README.rst'), ('setup.py', 'setup.py')]
+            )
 
     def tearDown(self):
         os.unlink(self.config_file)

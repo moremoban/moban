@@ -18,11 +18,13 @@ from jinja2 import Environment, FileSystemLoader
 
 
 PY2 = sys.version_info[0] == 2
-DEFAULT_MOBAN_FILE = '.moban.yaml'
+PROGRAM_NAME = 'moban'
+DEFAULT_MOBAN_FILE = '.%s.yaml' % PROGRAM_NAME
 DEFAULT_OPTIONS = {
-    'configuration': 'data.yaml',
     'configuration_dir': os.path.join('.', 'config'),
-    'template_dir': ['.', os.path.join('.', 'templates')]
+    'template_dir': ['.', os.path.join('.', 'templates')],
+    'output': 'a.output',
+    'configuration': 'data.yaml'
 }
 
 
@@ -44,13 +46,16 @@ def main():
         if 'configuration' in more_options:
             options = merge(options, more_options['configuration'])
         options = merge(options, DEFAULT_OPTIONS)
+        # drop the following two keys, no use
+        del options['output']
+        del options['template']
         data = open_yaml(options['configuration_dir'],
                          options['configuration'])
+        jobs = []
         for target in more_options['targets']:
             for key, value in target.items():
-                options['template'] = value
-                options['output'] = key
-                do_template(options, data)
+                jobs.append((value, key))
+        do_template(options['template_dir'], data, jobs)
     else:
         options = merge(options, DEFAULT_OPTIONS)
         if options['template'] is None:
@@ -58,7 +63,9 @@ def main():
             sys.exit(-1)
         data = open_yaml(options['configuration_dir'],
                          options['configuration'])
-        do_template(options, data)
+        do_template(options['template_dir'],
+                    data,
+                    [(options['template'], options['output'])])
 
 
 def merge(left, right):
@@ -108,18 +115,24 @@ def open_yaml(base_dir, file_name):
             return None
 
 
-def do_template(options, data):
+def do_template(template_dirs, data, jobs):
     """
     apply jinja2 here
+
+    :param template_dirs: a list of template directories
+    :param data: data configuration
+    :param jobs: a list of jobs
     """
-    print("Templating %s to %s" % (options['template'], options['output']))
-    template_loader = FileSystemLoader(options['template_dir'])
+    template_loader = FileSystemLoader(template_dirs)
     env = Environment(loader=template_loader,
                       trim_blocks=True,
                       lstrip_blocks=True)
-    template = env.get_template(options['template'])
-    with open(options['output'], 'w') as output:
-        output.write(template.render(**data))
+    for (template_file, output) in jobs:
+        print("Templating %s to %s" % (template_file, output))
+        template = env.get_template(template_file)
+        with open(output, 'w') as output_file:
+            content = template.render(**data)
+            output_file.write(content)
 
 
 def create_parser():
@@ -127,7 +140,7 @@ def create_parser():
     construct the program options
     """
     parser = argparse.ArgumentParser(
-        prog='moban',
+        prog=PROGRAM_NAME,
         description="Yet another jinja2 cli command for static text generation")
     parser.add_argument(
         '-cd', '--configuration_dir',
@@ -147,7 +160,6 @@ def create_parser():
     )
     parser.add_argument(
         '-o', '--output',
-        default="a.output",
         help="the output file"
     )
     return parser
