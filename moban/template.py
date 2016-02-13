@@ -78,7 +78,7 @@ def merge(left, right):
     the left one is missing or None.
     """
     if isinstance(left, dict) and isinstance(right, dict):
-        for key, value in _get_dict_items(right):
+        for key, value in right.items():
             if key not in left:
                 left[key] = value
             elif left[key] is None:
@@ -163,10 +163,3 @@ def create_parser():
         help="the output file"
     )
     return parser
-
-
-def _get_dict_items(adict):
-    if PY2:
-        return adict.iteritems()
-    else:
-        return adict.items()
