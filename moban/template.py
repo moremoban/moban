@@ -19,12 +19,12 @@ from jinja2 import Environment, FileSystemLoader
 
 PY2 = sys.version_info[0] == 2
 PROGRAM_NAME = 'moban'
-DEFAULT_MOBAN_FILE = '.%s.yaml' % PROGRAM_NAME
+DEFAULT_MOBAN_FILE = '.%s.yml' % PROGRAM_NAME
 DEFAULT_OPTIONS = {
-    'configuration_dir': os.path.join('.', 'config'),
-    'template_dir': ['.', os.path.join('.', 'templates')],
-    'output': 'a.output',
-    'configuration': 'data.yaml'
+    'configuration_dir': os.path.join('.', '.%s.cd' % PROGRAM_NAME),
+    'template_dir': ['.', os.path.join('.', '.%s.td' % PROGRAM_NAME)],
+    'output': '%s.output' % PROGRAM_NAME,
+    'configuration': 'data.yml'
 }
 
 
@@ -59,6 +59,7 @@ def main():
     else:
         options = merge(options, DEFAULT_OPTIONS)
         if options['template'] is None:
+            print("No template found")
             parser.print_help()
             sys.exit(-1)
         data = open_yaml(options['configuration_dir'],
@@ -97,7 +98,8 @@ def open_yaml(base_dir, file_name):
         if base_dir:
             the_file = os.path.join(base_dir, file_name)
             if not os.path.exists(the_file):
-                raise IOError("File %s does not exist" % the_file)
+                raise IOError("Both %s and %s does not exist" % (file_name,
+                                                                 the_file))
         else:
             raise IOError("File %s does not exist" % the_file)
     with open(the_file, 'r') as data_yaml:

@@ -23,7 +23,7 @@ class TestCustomOptions:
             fake_template_doer.assert_called_with(
                 ['/home/developer/templates'],
                 dict(hello="world"),
-                [('a.template', 'a.output')]
+                [('a.template', 'moban.output')]
             )
     
     @patch("moban.template.do_template")
@@ -33,9 +33,9 @@ class TestCustomOptions:
         with patch.object(sys, 'argv', test_args):
             main()
             fake_template_doer.assert_called_with(
-                [".", os.path.join('.', 'templates')],
+                [".", os.path.join('.', '.moban.td')],
                 dict(hello="world"),
-                [('a.template', 'a.output')]
+                [('a.template', 'moban.output')]
             )
 
     @raises(SystemExit)
@@ -49,7 +49,7 @@ class TestCustomOptions:
 
 class TestOptions:
     def setUp(self):
-        self.config_file = 'data.yaml'
+        self.config_file = 'data.yml'
         with open(self.config_file,'w')as f:
             f.write("hello: world")
     
@@ -59,9 +59,9 @@ class TestOptions:
         with patch.object(sys, 'argv', test_args):
             main()
             fake_template_doer.assert_called_with(
-                [".", os.path.join('.', 'templates')],
+                [".", os.path.join('.', '.moban.td')],
                 dict(hello="world"),
-                [('a.template', 'a.output')]
+                [('a.template', 'moban.output')]
             )
 
     @raises(SystemExit)
@@ -83,7 +83,7 @@ def test_missing_configuration():
 
 class TestNoOptions:
     def setUp(self):
-        self.config_file = '.moban.yaml'
+        self.config_file = '.moban.yml'
         copyfile(os.path.join("tests", "fixtures", self.config_file),
                  self.config_file)
         self.data_file = 'data.yaml'

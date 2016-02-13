@@ -44,17 +44,16 @@ shijie
 ========footer============
 """
     folder = "level-4-single-command"
-    _raw_moban(['moban'], folder, expected)
+    _raw_moban(['moban'], folder, expected, 'a.output')
 
     
 
 def _moban(folder, expected):
     args = ['moban', '-c', 'data.yaml', '-t', 'a.template']
-    _raw_moban(args, folder, expected)
+    _raw_moban(args, folder, expected, 'moban.output')
 
 
-def _raw_moban(args, folder, expected):
-    output = 'a.output'
+def _raw_moban(args, folder, expected, output):
     current = os.getcwd()
     os.chdir(os.path.join("tutorial", folder))
     with patch.object(sys, 'argv', args):
