@@ -108,7 +108,7 @@ class TestNoOptions:
 
 class TestInvalidMobanFile:
     def setUp(self):
-        self.config_file = '.moban.yaml'
+        self.config_file = '.moban.yml'
 
     @raises(SystemExit)
     @patch("moban.template.do_template")
