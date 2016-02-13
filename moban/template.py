@@ -5,7 +5,7 @@
     Bring jinja2 to command line
 
     :copyright: (c) 2016 by Onni Software Ltd.
-    :license: New BSD License, see LICENSE for more details
+    :license: MIT License, see LICENSE for more details
 
 """
 

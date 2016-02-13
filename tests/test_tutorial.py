@@ -46,7 +46,21 @@ shijie
     folder = "level-4-single-command"
     _raw_moban(['moban'], folder, expected, 'a.output')
 
-    
+
+def test_level_5():
+    expected = """========header============
+
+world
+
+shijie
+
+this demonstrations jinja2's include statement
+
+========footer============
+"""
+    folder = "level-5-custom-configuration"
+    _raw_moban(['moban'], folder, expected, 'a.output')
+
 
 def _moban(folder, expected):
     args = ['moban', '-c', 'data.yaml', '-t', 'a.template']

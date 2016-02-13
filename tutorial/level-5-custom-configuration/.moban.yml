@@ -1,0 +1,8 @@
+configuration:
+  configuration_dir: 'custom-config'
+  template_dir:
+    - custom-templates
+    - cool-templates
+    - '.'
+targets:
+  - a.output: a.template
