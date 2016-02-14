@@ -63,7 +63,7 @@ this demonstrations jinja2's include statement
 
 
 def _moban(folder, expected):
-    args = ['moban', '-c', 'data.yaml', '-t', 'a.template']
+    args = ['moban', '-c', 'data.yml', '-t', 'a.template']
     _raw_moban(args, folder, expected, 'moban.output')
 
 
