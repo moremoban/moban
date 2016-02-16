@@ -17,11 +17,13 @@ import yaml
 from jinja2 import Environment, FileSystemLoader
 
 
-PY2 = sys.version_info[0] == 2
 PROGRAM_NAME = 'moban'
+# .moban.yaml, default moban configuration file
 DEFAULT_MOBAN_FILE = '.%s.yml' % PROGRAM_NAME
 DEFAULT_OPTIONS = {
+    # .moban.cd, default configuration dir
     'configuration_dir': os.path.join('.', '.%s.cd' % PROGRAM_NAME),
+    # .moban.td, default template dirs
     'template_dir': ['.', os.path.join('.', '.%s.td' % PROGRAM_NAME)],
     'output': '%s.output' % PROGRAM_NAME,
     'configuration': 'data.yml'
@@ -33,40 +35,84 @@ def main():
     program entry point
     """
     parser = create_parser()
-    options = vars(parser.parse_args())
     if os.path.exists(DEFAULT_MOBAN_FILE):
-        more_options = open_yaml(None, DEFAULT_MOBAN_FILE)
-        if more_options is None:
-            print("%s is an invalid yaml file." % DEFAULT_MOBAN_FILE)
-            parser.print_help()
-            sys.exit(-1)
-        if 'targets' not in more_options:
-            print("No targets in %s" % DEFAULT_MOBAN_FILE)
-            sys.exit(0)
-        if 'configuration' in more_options:
-            options = merge(options, more_options['configuration'])
-        options = merge(options, DEFAULT_OPTIONS)
-        # drop the following two keys, no use
-        del options['output']
-        del options['template']
-        data = open_yaml(options['configuration_dir'],
-                         options['configuration'])
-        jobs = []
-        for target in more_options['targets']:
-            for key, value in target.items():
-                jobs.append((value, key))
-        do_template(options['template_dir'], data, jobs)
+        handle_moban_file(parser)
     else:
-        options = merge(options, DEFAULT_OPTIONS)
-        if options['template'] is None:
-            print("No template found")
-            parser.print_help()
-            sys.exit(-1)
-        data = open_yaml(options['configuration_dir'],
-                         options['configuration'])
-        do_template(options['template_dir'],
-                    data,
-                    [(options['template'], options['output'])])
+        handle_command_line(parser)
+
+
+def create_parser():
+    """
+    construct the program options
+    """
+    parser = argparse.ArgumentParser(
+        prog=PROGRAM_NAME,
+        description="Yet another jinja2 cli command for static text generation")
+    parser.add_argument(
+        '-cd', '--configuration_dir',
+        help="the directory for configuration file lookup"
+    )
+    parser.add_argument(
+        '-c', '--configuration',
+        help="the dictionary file"
+    )
+    parser.add_argument(
+        '-td', '--template_dir', nargs="*",
+        help="the directories for template file lookup"
+    )
+    parser.add_argument(
+        '-t', '--template',
+        help="the template file"
+    )
+    parser.add_argument(
+        '-o', '--output',
+        help="the output file"
+    )
+    return parser
+
+
+def handle_moban_file(parser):
+    """
+    act upon default moban file
+    """
+    options = {}
+    if len(sys.argv) > 1:
+        options = vars(parser.parse_args())
+    more_options = open_yaml(None, DEFAULT_MOBAN_FILE)
+    if more_options is None:
+        print("%s is an invalid yaml file." % DEFAULT_MOBAN_FILE)
+        parser.print_help()
+        sys.exit(-1)
+    if 'targets' not in more_options:
+        print("No targets in %s" % DEFAULT_MOBAN_FILE)
+        sys.exit(0)
+    if 'configuration' in more_options:
+        options = merge(options, more_options['configuration'])
+    options = merge(options, DEFAULT_OPTIONS)
+    data = open_yaml(options['configuration_dir'],
+                     options['configuration'])
+    jobs = []
+    for target in more_options['targets']:
+        for key, value in target.items():
+            jobs.append((value, key))
+    do_template(options['template_dir'], data, jobs)
+
+
+def handle_command_line(parser):
+    """
+    act upon command options
+    """
+    options = vars(parser.parse_args())
+    options = merge(options, DEFAULT_OPTIONS)
+    if options['template'] is None:
+        print("No template found")
+        parser.print_help()
+        sys.exit(-1)
+    data = open_yaml(options['configuration_dir'],
+                     options['configuration'])
+    do_template(options['template_dir'],
+                data,
+                [(options['template'], options['output'])])
 
 
 def merge(left, right):
@@ -135,33 +181,3 @@ def do_template(template_dirs, data, jobs):
         with open(output, 'w') as output_file:
             content = template.render(**data)
             output_file.write(content)
-
-
-def create_parser():
-    """
-    construct the program options
-    """
-    parser = argparse.ArgumentParser(
-        prog=PROGRAM_NAME,
-        description="Yet another jinja2 cli command for static text generation")
-    parser.add_argument(
-        '-cd', '--configuration_dir',
-        help="the directory for configuration file lookup"
-    )
-    parser.add_argument(
-        '-c', '--configuration',
-        help="the dictionary file"
-    )
-    parser.add_argument(
-        '-td', '--template_dir', nargs="*",
-        help="the directories for template file lookup"
-    )
-    parser.add_argument(
-        '-t', '--template',
-        help="the template file"
-    )
-    parser.add_argument(
-        '-o', '--output',
-        help="the output file"
-    )
-    return parser
