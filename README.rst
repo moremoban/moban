@@ -38,7 +38,7 @@ Here is a simple example:
 .. code-block:: bash
 
 	$ moban -c data.yaml -t my.template
-	$ cat a.output
+	$ cat moban.output
 
 Given data.yaml as::
 
@@ -48,7 +48,7 @@ and my.template as::
 
     {{hello}}
 
-a.output will contain::
+moban.output will contain::
 
     world
 
