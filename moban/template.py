@@ -18,15 +18,25 @@ from jinja2 import Environment, FileSystemLoader
 
 
 PROGRAM_NAME = 'moban'
+DEFAULT_YAML_SUFFIX = '.yml'
 # .moban.yaml, default moban configuration file
-DEFAULT_MOBAN_FILE = '.%s.yml' % PROGRAM_NAME
+DEFAULT_MOBAN_FILE = '.%s%s' % (PROGRAM_NAME, DEFAULT_YAML_SUFFIX)
+LABEL_CONFIG = 'configuration'
+LABEL_CONFIG_DIR = '%s_dir' % LABEL_CONFIG
+LABEL_TEMPLATE = 'template'
+LABEL_TMPL_DIRS = '%s_dir' % LABEL_TEMPLATE
+LABEL_OVERRIDES = 'overrides'
+LABEL_OUTPUT = 'output'
+LABEL_TARGETS = 'targets'
 DEFAULT_OPTIONS = {
     # .moban.cd, default configuration dir
-    'configuration_dir': os.path.join('.', '.%s.cd' % PROGRAM_NAME),
+    LABEL_CONFIG_DIR: os.path.join('.', '.%s.cd' % PROGRAM_NAME),
     # .moban.td, default template dirs
-    'template_dir': ['.', os.path.join('.', '.%s.td' % PROGRAM_NAME)],
-    'output': '%s.output' % PROGRAM_NAME,
-    'configuration': 'data.yml'
+    LABEL_TMPL_DIRS: ['.', os.path.join('.', '.%s.td' % PROGRAM_NAME)],
+    # moban.output, default output file name
+    LABEL_OUTPUT: '%s.output' % PROGRAM_NAME,
+    # data.yml, default data input file
+    LABEL_CONFIG: 'data%s' % DEFAULT_YAML_SUFFIX
 }
 
 
@@ -49,19 +59,19 @@ def create_parser():
         prog=PROGRAM_NAME,
         description="Yet another jinja2 cli command for static text generation")
     parser.add_argument(
-        '-cd', '--configuration_dir',
+        '-cd', '--%s' % LABEL_CONFIG_DIR,
         help="the directory for configuration file lookup"
     )
     parser.add_argument(
-        '-c', '--configuration',
+        '-c', '--%s' % LABEL_CONFIG,
         help="the dictionary file"
     )
     parser.add_argument(
-        '-td', '--template_dir', nargs="*",
+        '-td', '--%s' % LABEL_TMPL_DIRS, nargs="*",
         help="the directories for template file lookup"
     )
     parser.add_argument(
-        '-t', '--template',
+        '-t', '--%s' % LABEL_TEMPLATE,
         help="the template file"
     )
     parser.add_argument(
@@ -83,19 +93,19 @@ def handle_moban_file(parser):
         print("%s is an invalid yaml file." % DEFAULT_MOBAN_FILE)
         parser.print_help()
         sys.exit(-1)
-    if 'targets' not in more_options:
+    if LABEL_TARGETS not in more_options:
         print("No targets in %s" % DEFAULT_MOBAN_FILE)
         sys.exit(0)
-    if 'configuration' in more_options:
-        options = merge(options, more_options['configuration'])
+    if LABEL_CONFIG in more_options:
+        options = merge(options, more_options[LABEL_CONFIG])
     options = merge(options, DEFAULT_OPTIONS)
-    data = open_yaml(options['configuration_dir'],
-                     options['configuration'])
+    data = open_yaml(options[LABEL_CONFIG_DIR],
+                     options[LABEL_CONFIG])
     jobs = []
-    for target in more_options['targets']:
+    for target in more_options[LABEL_TARGETS]:
         for key, value in target.items():
             jobs.append((value, key))
-    do_template(options['template_dir'], data, jobs)
+    do_template(options[LABEL_TMPL_DIRS], data, jobs)
 
 
 def handle_command_line(parser):
@@ -104,15 +114,15 @@ def handle_command_line(parser):
     """
     options = vars(parser.parse_args())
     options = merge(options, DEFAULT_OPTIONS)
-    if options['template'] is None:
+    if options[LABEL_TEMPLATE] is None:
         print("No template found")
         parser.print_help()
         sys.exit(-1)
-    data = open_yaml(options['configuration_dir'],
-                     options['configuration'])
-    do_template(options['template_dir'],
+    data = open_yaml(options[LABEL_CONFIG_DIR],
+                     options[LABEL_CONFIG])
+    do_template(options[LABEL_TMPL_DIRS],
                 data,
-                [(options['template'], options['output'])])
+                [(options[LABEL_TEMPLATE], options[LABEL_OUTPUT])])
 
 
 def merge(left, right):
@@ -152,9 +162,9 @@ def open_yaml(base_dir, file_name):
         data = yaml.load(data_yaml)
         if data is not None:
             parent_data = None
-            if 'overrides' in data:
+            if LABEL_OVERRIDES in data:
                 parent_data = open_yaml(base_dir,
-                                        data.pop('overrides'))
+                                        data.pop(LABEL_OVERRIDES))
             if parent_data:
                 return merge(data, parent_data)
             else:
