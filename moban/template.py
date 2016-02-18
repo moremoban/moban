@@ -99,13 +99,16 @@ def handle_moban_file(parser):
     if LABEL_CONFIG in more_options:
         options = merge(options, more_options[LABEL_CONFIG])
     options = merge(options, DEFAULT_OPTIONS)
-    data = open_yaml(options[LABEL_CONFIG_DIR],
-                     options[LABEL_CONFIG])
     jobs = []
     for target in more_options[LABEL_TARGETS]:
         for key, value in target.items():
-            jobs.append((value, key))
-    do_template(options[LABEL_TMPL_DIRS], data, jobs)
+            if isinstance(value, dict):
+                template = value.get(LABEL_TEMPLATE)
+                configuration = value.get(LABEL_CONFIG)
+                jobs.append((configuration, template, key))
+            else:
+                jobs.append((options[LABEL_CONFIG], value, key))
+    do_template(options, jobs)
 
 
 def handle_command_line(parser):
@@ -118,11 +121,10 @@ def handle_command_line(parser):
         print("No template found")
         parser.print_help()
         sys.exit(-1)
-    data = open_yaml(options[LABEL_CONFIG_DIR],
-                     options[LABEL_CONFIG])
-    do_template(options[LABEL_TMPL_DIRS],
-                data,
-                [(options[LABEL_TEMPLATE], options[LABEL_OUTPUT])])
+    do_template(options,
+                [(options[LABEL_CONFIG],
+                  options[LABEL_TEMPLATE],
+                  options[LABEL_OUTPUT])])
 
 
 def merge(left, right):
@@ -173,7 +175,7 @@ def open_yaml(base_dir, file_name):
             return None
 
 
-def do_template(template_dirs, data, jobs):
+def do_template(options, jobs):
     """
     apply jinja2 here
 
@@ -181,13 +183,14 @@ def do_template(template_dirs, data, jobs):
     :param data: data configuration
     :param jobs: a list of jobs
     """
-    template_loader = FileSystemLoader(template_dirs)
+    template_loader = FileSystemLoader(options[LABEL_TMPL_DIRS])
     env = Environment(loader=template_loader,
                       trim_blocks=True,
                       lstrip_blocks=True)
-    for (template_file, output) in jobs:
+    for (data_file, template_file, output) in jobs:
         print("Templating %s to %s" % (template_file, output))
         template = env.get_template(template_file)
+        data = open_yaml(options[LABEL_CONFIG_DIR], data_file)
         with open(output, 'w') as output_file:
             content = template.render(**data)
             output_file.write(content)

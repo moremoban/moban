@@ -21,9 +21,14 @@ class TestCustomOptions:
         with patch.object(sys, 'argv', test_args):
             main()
             fake_template_doer.assert_called_with(
-                ['/home/developer/templates'],
-                dict(hello="world"),
-                [('a.template', 'moban.output')]
+                dict(
+                    output='moban.output',
+                    configuration_dir="/home/developer/configuration",
+                    template_dir=["/home/developer/templates"],
+                    configuration=self.config_file,
+                    template='a.template'
+                ),
+                [(self.config_file, 'a.template', 'moban.output')]
             )
     
     @patch("moban.template.do_template")
@@ -33,9 +38,14 @@ class TestCustomOptions:
         with patch.object(sys, 'argv', test_args):
             main()
             fake_template_doer.assert_called_with(
-                [".", os.path.join('.', '.moban.td')],
-                dict(hello="world"),
-                [('a.template', 'moban.output')]
+                dict(
+                    output='moban.output',
+                    configuration_dir=os.path.join('.', '.moban.cd'),
+                    template_dir=[".", os.path.join('.', '.moban.td')],
+                    configuration=self.config_file,
+                    template='a.template'
+                ),
+                [(self.config_file, 'a.template', 'moban.output')]
             )
 
     @raises(SystemExit)
@@ -59,9 +69,14 @@ class TestOptions:
         with patch.object(sys, 'argv', test_args):
             main()
             fake_template_doer.assert_called_with(
-                [".", os.path.join('.', '.moban.td')],
-                dict(hello="world"),
-                [('a.template', 'moban.output')]
+                dict(
+                    output='moban.output',
+                    configuration_dir=os.path.join('.', '.moban.cd'),
+                    template_dir=[".", os.path.join('.', '.moban.td')],
+                    configuration='data.yml',
+                    template='a.template'
+                ),
+                [('data.yml', 'a.template', 'moban.output')]
             )
 
     @raises(SystemExit)
@@ -96,9 +111,14 @@ class TestNoOptions:
         with patch.object(sys, 'argv', test_args):
             main()
             fake_template_doer.assert_called_with(
-                ['commons/templates', '.moban.d'],
-                dict(hello="world"),
-                [('README.rst', 'README.rst'), ('setup.py', 'setup.py')]
+                dict(
+                    output='moban.output',
+                    configuration_dir='commons/config',
+                    template_dir=['commons/templates', '.moban.d'],
+                    configuration='data.yaml'
+                ),
+                [('data.yaml', 'README.rst', 'README.rst'),
+                 ('data.yaml', 'setup.py', 'setup.py')]
             )
 
     def tearDown(self):
