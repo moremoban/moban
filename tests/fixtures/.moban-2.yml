@@ -1,0 +1,10 @@
+configuration:
+  configuration_dir: "commons/config"
+  template_dir:
+    - "commons/templates"
+    - ".moban.d"
+targets:
+  - output: README.rst
+    configuration: custom-data.yaml
+    template: README.rst
+  - setup.py: setup.py
