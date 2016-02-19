@@ -101,12 +101,13 @@ def handle_moban_file(parser):
     options = merge(options, DEFAULT_OPTIONS)
     jobs = []
     for target in more_options[LABEL_TARGETS]:
-        for key, value in target.items():
-            if isinstance(value, dict):
-                template = value.get(LABEL_TEMPLATE)
-                configuration = value.get(LABEL_CONFIG)
-                jobs.append((configuration, template, key))
-            else:
+        if LABEL_OUTPUT in target:
+            template = target[LABEL_TEMPLATE]
+            configuration = target.get(LABEL_CONFIG, options[LABEL_CONFIG])
+            output = target[LABEL_OUTPUT]
+            jobs.append((configuration, template, output))
+        else:
+            for key, value in target.items():
                 jobs.append((options[LABEL_CONFIG], value, key))
     do_template(options, jobs)
 
