@@ -62,6 +62,21 @@ this demonstrations jinja2's include statement
     _raw_moban(['moban'], folder, expected, 'a.output')
 
 
+def test_level_6():
+    expected = """========header============
+
+world2
+
+shijie
+
+this demonstrations jinja2's include statement
+
+========footer============
+"""
+    folder = "level-6-complex-configuration"
+    _raw_moban(['moban'], folder, expected, 'a.output2')
+
+
 def _moban(folder, expected):
     args = ['moban', '-c', 'data.yml', '-t', 'a.template']
     _raw_moban(args, folder, expected, 'moban.output')
@@ -72,8 +87,13 @@ def _raw_moban(args, folder, expected, output):
     os.chdir(os.path.join("tutorial", folder))
     with patch.object(sys, 'argv', args):
         main()
-        with open(output, 'r') as f:
-            content = f.read()
-            assert content == expected
+        _verify_content(output, expected)
     os.unlink(output)
     os.chdir(current)
+
+
+def _verify_content(file_name, expected):
+    with open(file_name, 'r') as f:
+        content = f.read()
+        assert content == expected
+        

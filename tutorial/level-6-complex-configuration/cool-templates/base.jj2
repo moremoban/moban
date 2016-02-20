@@ -1,0 +1,11 @@
+{%block header %}
+{%endblock%}
+
+{{hello}}
+
+{{nihao}}
+
+{%include 'cool.template'%}
+
+{%block footer %}
+{%endblock%}

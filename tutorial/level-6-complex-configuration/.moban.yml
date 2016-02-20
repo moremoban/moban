@@ -1,0 +1,13 @@
+configuration:
+  configuration_dir: 'custom-config'
+  template_dir:
+    - custom-templates
+    - cool-templates
+    - '.'
+targets:
+  - output: a.output
+    template: a.template
+    configuration: data.yml
+  - output: a.output2
+    template: a.template
+    configuration: data2.yml

@@ -1,7 +1,7 @@
-Level 4: single command
+Level 6: Complex Configuration
 ================================================================================
 
-If `.moban.yaml` is supplied, no longer command options are needed
+There may be more data files being used for template rendering
 
 
 Evaluation
@@ -24,3 +24,17 @@ Here is the command to launch it:
     this demonstrations jinja2's include statement
     
     ========footer============
+
+`a.output2` is::
+
+    ========header============
+    
+    world2
+    
+    shijie
+    
+    this demonstrations jinja2's include statement
+    
+    ========footer============
+
+
