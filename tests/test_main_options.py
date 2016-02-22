@@ -12,7 +12,7 @@ class TestCustomOptions:
         with open(self.config_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_templates")
+    @patch("moban.template.do_template")
     def test_custom_options(self, fake_template_doer):
         test_args = ["moban", "-c", self.config_file,
                      "-cd", "/home/developer/configuration",
@@ -27,11 +27,10 @@ class TestCustomOptions:
                     template_dir=["/home/developer/templates"],
                     configuration=self.config_file,
                     template='a.template'
-                ),
-                [(self.config_file, 'a.template', 'moban.output')]
+                )
             )
     
-    @patch("moban.template.do_templates")
+    @patch("moban.template.do_template")
     def test_minimal_options(self, fake_template_doer):
         test_args = ["moban", "-c", self.config_file,
                      "-t", "a.template"]
@@ -44,8 +43,7 @@ class TestCustomOptions:
                     template_dir=[".", os.path.join('.', '.moban.td')],
                     configuration=self.config_file,
                     template='a.template'
-                ),
-                [(self.config_file, 'a.template', 'moban.output')]
+                )
             )
 
     @raises(SystemExit)
@@ -63,7 +61,7 @@ class TestOptions:
         with open(self.config_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_templates")
+    @patch("moban.template.do_template")
     def test_default_options(self, fake_template_doer):
         test_args = ["moban", "-t", "a.template"]
         with patch.object(sys, 'argv', test_args):
@@ -75,8 +73,7 @@ class TestOptions:
                     template_dir=[".", os.path.join('.', '.moban.td')],
                     configuration='data.yml',
                     template='a.template'
-                ),
-                [('data.yml', 'a.template', 'moban.output')]
+                )
             )
 
     @raises(SystemExit)

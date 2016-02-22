@@ -134,10 +134,7 @@ def handle_command_line(parser):
         print(ERROR_NO_TEMPLATE)
         parser.print_help()
         sys.exit(-1)
-    do_templates(options,
-                 [(options[LABEL_CONFIG],
-                   options[LABEL_TEMPLATE],
-                   options[LABEL_OUTPUT])])
+    do_template(options)
 
 
 def merge(left, right):
@@ -169,8 +166,9 @@ def open_yaml(base_dir, file_name):
         if base_dir:
             the_file = os.path.join(base_dir, file_name)
             if not os.path.exists(the_file):
-                raise IOError(ERROR_DATA_FILE_NOT_FOUND % (file_name,
-                                                           the_file))
+                raise IOError(
+                    ERROR_DATA_FILE_NOT_FOUND % (file_name,
+                                                 the_file))
         else:
             raise IOError(ERROR_DATA_FILE_ABSENT % the_file)
     with open(the_file, 'r') as data_yaml:
@@ -178,14 +176,26 @@ def open_yaml(base_dir, file_name):
         if data is not None:
             parent_data = None
             if LABEL_OVERRIDES in data:
-                parent_data = open_yaml(base_dir,
-                                        data.pop(LABEL_OVERRIDES))
+                parent_data = open_yaml(
+                    base_dir,
+                    data.pop(LABEL_OVERRIDES))
             if parent_data:
                 return merge(data, parent_data)
             else:
                 return data
         else:
             return None
+
+
+def do_template(options):
+    """do a single template call"""
+    print(MESSAGE_TEMPLATING % (options[LABEL_TEMPLATE], options[LABEL_OUTPUT]))
+    env = get_jinja2_env(options[LABEL_TMPL_DIRS])
+    template = env.get_template(options[LABEL_TEMPLATE])
+    data = open_yaml(options[LABEL_CONFIG_DIR], options[LABEL_CONFIG])
+    with open(options[LABEL_OUTPUT], 'w') as output_file:
+        content = template.render(**data)
+        output_file.write(content)
 
 
 def do_templates(options, jobs):
@@ -196,14 +206,60 @@ def do_templates(options, jobs):
     :param data: data configuration
     :param jobs: a list of jobs
     """
-    template_loader = FileSystemLoader(options[LABEL_TMPL_DIRS])
-    env = Environment(loader=template_loader,
-                      trim_blocks=True,
-                      lstrip_blocks=True)
+    data_file_index = {}
+    template_file_index = {}
+    data_set = set()
+    template_set = set()
     for (data_file, template_file, output) in jobs:
-        print(MESSAGE_TEMPLATING % (template_file, output))
+        if data_file not in data_file_index:
+            data_file_index[data_file] = []
+        if template_file not in template_file_index:
+            template_file_index[template_file] = []
+
+        data_file_index[data_file].append((template_file, output))
+        template_file_index[template_file].append((data_file, output))
+        data_set.add(data_file)
+        template_set.add(template_file)
+    if len(data_set) >= len(template_set):
+        do_templates_with_more_shared_templates(options, template_file_index)
+    else:
+        do_templates_with_more_shared_data(options, data_file_index)
+
+
+def do_templates_with_more_shared_templates(options, template_file_index):
+    """
+    scenario: one template with more than one data files
+    """
+    env = get_jinja2_env(options[LABEL_TMPL_DIRS])
+
+    for (template_file, data_output_pairs) in template_file_index.items():
         template = env.get_template(template_file)
+        for (data_file, output) in data_output_pairs:
+            print(MESSAGE_TEMPLATING % (template_file, output))
+            data = open_yaml(options[LABEL_CONFIG_DIR], data_file)
+            with open(output, 'w') as output_file:
+                content = template.render(**data)
+                output_file.write(content)
+
+
+def do_templates_with_more_shared_data(options, data_file_index):
+    """
+    scenario: one data file with more than one template files
+    """
+    env = get_jinja2_env(options[LABEL_TMPL_DIRS])
+
+    for (data_file, template_output_pairs) in data_file_index.items():
         data = open_yaml(options[LABEL_CONFIG_DIR], data_file)
-        with open(output, 'w') as output_file:
-            content = template.render(**data)
-            output_file.write(content)
+        for (template_file, output) in template_output_pairs:
+            print(MESSAGE_TEMPLATING % (template_file, output))
+            template = env.get_template(template_file)
+            with open(output, 'w') as output_file:
+                content = template.render(**data)
+                output_file.write(content)
+
+
+def get_jinja2_env(template_dirs):
+    template_loader = FileSystemLoader(template_dirs)
+    return Environment(loader=template_loader,
+                       trim_blocks=True,
+                       lstrip_blocks=True)
