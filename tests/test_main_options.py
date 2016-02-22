@@ -12,7 +12,7 @@ class TestCustomOptions:
         with open(self.config_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_template")
+    @patch("moban.template.do_templates")
     def test_custom_options(self, fake_template_doer):
         test_args = ["moban", "-c", self.config_file,
                      "-cd", "/home/developer/configuration",
@@ -31,7 +31,7 @@ class TestCustomOptions:
                 [(self.config_file, 'a.template', 'moban.output')]
             )
     
-    @patch("moban.template.do_template")
+    @patch("moban.template.do_templates")
     def test_minimal_options(self, fake_template_doer):
         test_args = ["moban", "-c", self.config_file,
                      "-t", "a.template"]
@@ -63,7 +63,7 @@ class TestOptions:
         with open(self.config_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_template")
+    @patch("moban.template.do_templates")
     def test_default_options(self, fake_template_doer):
         test_args = ["moban", "-t", "a.template"]
         with patch.object(sys, 'argv', test_args):
@@ -105,7 +105,7 @@ class TestNoOptions:
         with open(self.data_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_template")
+    @patch("moban.template.do_templates")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban"]
         with patch.object(sys, 'argv', test_args):
@@ -135,7 +135,7 @@ class TestOneOptions:
         with open(self.data_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_template")
+    @patch("moban.template.do_templates")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban", "-c", "splendid.yml"]
         with patch.object(sys, 'argv', test_args):
@@ -162,7 +162,7 @@ class TestInvalidMobanFile:
         self.config_file = '.moban.yml'
 
     @raises(SystemExit)
-    @patch("moban.template.do_template")
+    @patch("moban.template.do_templates")
     def test_no_configuration(self, fake_template_doer):
         with open(self.config_file,'w')as f:
             f.write("")
@@ -171,7 +171,7 @@ class TestInvalidMobanFile:
             main()
 
     @raises(SystemExit)
-    @patch("moban.template.do_template")
+    @patch("moban.template.do_templates")
     def test_no_configuration_2(self, fake_template_doer):
         with open(self.config_file,'w')as f:
             f.write("not: related")
@@ -180,7 +180,7 @@ class TestInvalidMobanFile:
             main()
 
     @raises(SystemExit)
-    @patch("moban.template.do_template")
+    @patch("moban.template.do_templates")
     def test_no_targets(self, fake_template_doer):
         with open(self.config_file,'w')as f:
             f.write("configuration: test")
@@ -201,7 +201,7 @@ class TestComplexOptions:
         with open(self.data_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_template")
+    @patch("moban.template.do_templates")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban"]
         with patch.object(sys, 'argv', test_args):

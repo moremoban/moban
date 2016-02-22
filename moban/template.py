@@ -11,6 +11,7 @@
 
 import os
 import sys
+import time
 import argparse
 
 import yaml
@@ -121,7 +122,7 @@ def handle_moban_file(parser):
         else:
             for key, value in target.items():
                 jobs.append((options[LABEL_CONFIG], value, key))
-    do_template(options, jobs)
+    do_templates(options, jobs)
 
 
 def handle_command_line(parser):
@@ -134,7 +135,7 @@ def handle_command_line(parser):
         print(ERROR_NO_TEMPLATE)
         parser.print_help()
         sys.exit(-1)
-    do_template(options,
+    do_templates(options,
                 [(options[LABEL_CONFIG],
                   options[LABEL_TEMPLATE],
                   options[LABEL_OUTPUT])])
@@ -188,7 +189,7 @@ def open_yaml(base_dir, file_name):
             return None
 
 
-def do_template(options, jobs):
+def do_templates(options, jobs):
     """
     apply jinja2 here
 

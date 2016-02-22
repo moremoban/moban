@@ -1,5 +1,5 @@
 import os
-from moban.template import do_template
+from moban.template import do_templates
 
         
 def test_templating():
@@ -8,7 +8,7 @@ def test_templating():
         "configuration_dir": os.path.join(base_dir, "config"),
         "template_dir": base_dir
     }
-    do_template(options, [
+    do_templates(options, [
         (os.path.join(base_dir, "child.yaml"),
          "a.template",
          'test')]
