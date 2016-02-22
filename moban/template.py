@@ -11,7 +11,6 @@
 
 import os
 import sys
-import time
 import argparse
 
 import yaml
@@ -136,9 +135,9 @@ def handle_command_line(parser):
         parser.print_help()
         sys.exit(-1)
     do_templates(options,
-                [(options[LABEL_CONFIG],
-                  options[LABEL_TEMPLATE],
-                  options[LABEL_OUTPUT])])
+                 [(options[LABEL_CONFIG],
+                   options[LABEL_TEMPLATE],
+                   options[LABEL_OUTPUT])])
 
 
 def merge(left, right):
