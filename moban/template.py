@@ -16,11 +16,14 @@ import argparse
 import yaml
 from jinja2 import Environment, FileSystemLoader
 
-
+# Configurations
 PROGRAM_NAME = 'moban'
+PROGRAM_DESCRIPTION = 'Yet another jinja2 cli command for static text generation'
 DEFAULT_YAML_SUFFIX = '.yml'
-# .moban.yaml, default moban configuration file
+# .moban.yml, default moban configuration file
 DEFAULT_MOBAN_FILE = '.%s%s' % (PROGRAM_NAME, DEFAULT_YAML_SUFFIX)
+
+# Command line options
 LABEL_CONFIG = 'configuration'
 LABEL_CONFIG_DIR = '%s_dir' % LABEL_CONFIG
 LABEL_TEMPLATE = 'template'
@@ -38,6 +41,16 @@ DEFAULT_OPTIONS = {
     # data.yml, default data input file
     LABEL_CONFIG: 'data%s' % DEFAULT_YAML_SUFFIX
 }
+
+# I/O messages
+# Message
+MESSAGE_TEMPLATING = "Templating %s to %s"
+# Error handling
+ERROR_INVALID_MOBAN_FILE = "%s is an invalid yaml file."
+ERROR_NO_TARGETS = "No targets in %s"
+ERROR_NO_TEMPLATE = "No template found"
+ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"
+ERROR_DATA_FILE_ABSENT = "File %s does not exist"
 
 
 def main():
@@ -57,7 +70,7 @@ def create_parser():
     """
     parser = argparse.ArgumentParser(
         prog=PROGRAM_NAME,
-        description="Yet another jinja2 cli command for static text generation")
+        description=PROGRAM_DESCRIPTION)
     parser.add_argument(
         '-cd', '--%s' % LABEL_CONFIG_DIR,
         help="the directory for configuration file lookup"
@@ -90,11 +103,10 @@ def handle_moban_file(parser):
         options = vars(parser.parse_args())
     more_options = open_yaml(None, DEFAULT_MOBAN_FILE)
     if more_options is None:
-        print("%s is an invalid yaml file." % DEFAULT_MOBAN_FILE)
-        parser.print_help()
+        print(ERROR_INVALID_MOBAN_FILE % DEFAULT_MOBAN_FILE)
         sys.exit(-1)
     if LABEL_TARGETS not in more_options:
-        print("No targets in %s" % DEFAULT_MOBAN_FILE)
+        print(ERROR_NO_TARGETS % DEFAULT_MOBAN_FILE)
         sys.exit(0)
     if LABEL_CONFIG in more_options:
         options = merge(options, more_options[LABEL_CONFIG])
@@ -119,7 +131,7 @@ def handle_command_line(parser):
     options = vars(parser.parse_args())
     options = merge(options, DEFAULT_OPTIONS)
     if options[LABEL_TEMPLATE] is None:
-        print("No template found")
+        print(ERROR_NO_TEMPLATE)
         parser.print_help()
         sys.exit(-1)
     do_template(options,
@@ -157,10 +169,10 @@ def open_yaml(base_dir, file_name):
         if base_dir:
             the_file = os.path.join(base_dir, file_name)
             if not os.path.exists(the_file):
-                raise IOError("Both %s and %s does not exist" % (file_name,
-                                                                 the_file))
+                raise IOError(ERROR_DATA_FILE_NOT_FOUND % (file_name,
+                                                           the_file))
         else:
-            raise IOError("File %s does not exist" % the_file)
+            raise IOError(ERROR_DATA_FILE_ABSENT % the_file)
     with open(the_file, 'r') as data_yaml:
         data = yaml.load(data_yaml)
         if data is not None:
@@ -189,7 +201,7 @@ def do_template(options, jobs):
                       trim_blocks=True,
                       lstrip_blocks=True)
     for (data_file, template_file, output) in jobs:
-        print("Templating %s to %s" % (template_file, output))
+        print(MESSAGE_TEMPLATING % (template_file, output))
         template = env.get_template(template_file)
         data = open_yaml(options[LABEL_CONFIG_DIR], data_file)
         with open(output, 'w') as output_file:
