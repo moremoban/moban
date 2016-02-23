@@ -4,10 +4,9 @@ configuration:
     - custom-templates
     - cool-templates
     - '.'
+  template: a.template
 targets:
   - output: a.output
-    template: a.template
     configuration: data.yml
   - output: a.output2
-    template: a.template
     configuration: data2.yml

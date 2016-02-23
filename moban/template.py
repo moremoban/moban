@@ -88,7 +88,7 @@ def create_parser():
         help="the template file"
     )
     parser.add_argument(
-        '-o', '--output',
+        '-o', '--%s' % LABEL_OUTPUT,
         help="the output file"
     )
     return parser
@@ -114,7 +114,7 @@ def handle_moban_file(parser):
     jobs = []
     for target in more_options[LABEL_TARGETS]:
         if LABEL_OUTPUT in target:
-            template = target[LABEL_TEMPLATE]
+            template = target.get(LABEL_TEMPLATE, options.get(LABEL_TEMPLATE, None))
             configuration = target.get(LABEL_CONFIG, options[LABEL_CONFIG])
             output = target[LABEL_OUTPUT]
             jobs.append((configuration, template, output))
@@ -193,6 +193,7 @@ def do_template(options):
     env = get_jinja2_env(options[LABEL_TMPL_DIRS])
     template = env.get_template(options[LABEL_TEMPLATE])
     data = open_yaml(options[LABEL_CONFIG_DIR], options[LABEL_CONFIG])
+    #apply_template(template, options[LABEL_OUTPUT], data)
     with open(options[LABEL_OUTPUT], 'w') as output_file:
         content = template.render(**data)
         output_file.write(content)
@@ -237,9 +238,7 @@ def do_templates_with_more_shared_templates(options, template_file_index):
         for (data_file, output) in data_output_pairs:
             print(MESSAGE_TEMPLATING % (template_file, output))
             data = open_yaml(options[LABEL_CONFIG_DIR], data_file)
-            with open(output, 'w') as output_file:
-                content = template.render(**data)
-                output_file.write(content)
+            apply_template(template, output, data)
 
 
 def do_templates_with_more_shared_data(options, data_file_index):
@@ -253,12 +252,22 @@ def do_templates_with_more_shared_data(options, data_file_index):
         for (template_file, output) in template_output_pairs:
             print(MESSAGE_TEMPLATING % (template_file, output))
             template = env.get_template(template_file)
-            with open(output, 'w') as output_file:
-                content = template.render(**data)
-                output_file.write(content)
+            apply_template(template, output, data)
+
+
+def apply_template(jj2_template, output, data):
+    """
+    write templated result
+    """
+    with open(output, 'w') as output_file:
+        content = jj2_template.render(**data)
+        output_file.write(content)
 
 
 def get_jinja2_env(template_dirs):
+    """
+    create jinja2 environment
+    """
     template_loader = FileSystemLoader(template_dirs)
     return Environment(loader=template_loader,
                        trim_blocks=True,
