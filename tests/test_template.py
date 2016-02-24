@@ -6,11 +6,11 @@ from moban.template import do_templates
 @patch("moban.template.do_templates_with_more_shared_data")
 def test_do_templates_1(_do_templates_with_more_shared_data):
     jobs = [
-        ('data.yml', '1.template', '1.output'),
-        ('data.yml', '2.template', '2.output'),
-        ('data.yml', '3.template', '3.output'),
-        ('data.yml', '4.template', '4.output'),
-        ('data.yml', '5.template', '6.output'),
+        {"configuration":'data.yml', "template":'1.template', "output":'1.output'},
+        {"configuration":'data.yml', "template":'2.template', "output":'2.output'},
+        {"configuration":'data.yml', "template":'3.template', "output":'3.output'},
+        {"configuration":'data.yml', "template":'4.template', "output":'4.output'},
+        {"configuration":'data.yml', "template":'5.template', "output":'6.output'},
     ]
     expected = {
         'data.yml': [
@@ -21,7 +21,7 @@ def test_do_templates_1(_do_templates_with_more_shared_data):
             ('5.template', '6.output'),
         ]
     }
-    options = {}
+    options = {'configuration': 'data.yml'}
     do_templates(options, jobs)
     _do_templates_with_more_shared_data.assert_called_with(options, expected)
 
@@ -29,11 +29,11 @@ def test_do_templates_1(_do_templates_with_more_shared_data):
 @patch("moban.template.do_templates_with_more_shared_templates")
 def test_do_templates_2(_do_templates_with_more_shared_templates):
     jobs = [
-        ('data1.yml', '1.template', '1.output'),
-        ('data2.yml', '1.template', '2.output'),
-        ('data3.yml', '1.template', '3.output'),
-        ('data4.yml', '1.template', '4.output'),
-        ('data5.yml', '1.template', '6.output'),
+        {'configuration': 'data1.yml', 'template': '1.template', 'output': '1.output'},
+        {'configuration': 'data2.yml', 'template': '1.template', 'output': '2.output'},
+        {'configuration': 'data3.yml', 'template': '1.template', 'output': '3.output'},
+        {'configuration': 'data4.yml', 'template': '1.template', 'output': '4.output'},
+        {'configuration': 'data5.yml', 'template': '1.template', 'output': '6.output'},
     ]
     expected = {
         '1.template': [
@@ -44,7 +44,7 @@ def test_do_templates_2(_do_templates_with_more_shared_templates):
             ('data5.yml', '6.output'),
         ]
     }
-    options = {}
+    options = {'configuration': 'data.yml'}
     do_templates(options, jobs)
     _do_templates_with_more_shared_templates.assert_called_with(options, expected)
 

@@ -111,17 +111,7 @@ def handle_moban_file(parser):
     if LABEL_CONFIG in more_options:
         options = merge(options, more_options[LABEL_CONFIG])
     options = merge(options, DEFAULT_OPTIONS)
-    jobs = []
-    for target in more_options[LABEL_TARGETS]:
-        if LABEL_OUTPUT in target:
-            template = target.get(LABEL_TEMPLATE, options.get(LABEL_TEMPLATE, None))
-            configuration = target.get(LABEL_CONFIG, options[LABEL_CONFIG])
-            output = target[LABEL_OUTPUT]
-            jobs.append((configuration, template, output))
-        else:
-            for key, value in target.items():
-                jobs.append((options[LABEL_CONFIG], value, key))
-    do_templates(options, jobs)
+    do_templates(options, more_options[LABEL_TARGETS])
 
 
 def handle_command_line(parser):
@@ -193,13 +183,10 @@ def do_template(options):
     env = get_jinja2_env(options[LABEL_TMPL_DIRS])
     template = env.get_template(options[LABEL_TEMPLATE])
     data = open_yaml(options[LABEL_CONFIG_DIR], options[LABEL_CONFIG])
-    #apply_template(template, options[LABEL_OUTPUT], data)
-    with open(options[LABEL_OUTPUT], 'w') as output_file:
-        content = template.render(**data)
-        output_file.write(content)
+    apply_template(template, options[LABEL_OUTPUT], data)
 
 
-def do_templates(options, jobs):
+def do_templates(options, targets):
     """
     apply jinja2 here
 
@@ -211,17 +198,31 @@ def do_templates(options, jobs):
     template_file_index = {}
     data_set = set()
     template_set = set()
-    for (data_file, template_file, output) in jobs:
-        if data_file not in data_file_index:
-            data_file_index[data_file] = []
-        if template_file not in template_file_index:
-            template_file_index[template_file] = []
-
-        data_file_index[data_file].append((template_file, output))
-        template_file_index[template_file].append((data_file, output))
-        data_set.add(data_file)
-        template_set.add(template_file)
-    if len(data_set) >= len(template_set):
+    for target in targets:
+        if LABEL_OUTPUT in target:
+            template_file = target.get(LABEL_TEMPLATE, options.get(LABEL_TEMPLATE, None))
+            data_file = target.get(LABEL_CONFIG, options[LABEL_CONFIG])
+            output = target[LABEL_OUTPUT]
+            data_set.add(data_file)
+            template_set.add(template_file)
+            if data_file not in data_file_index:
+                data_file_index[data_file] = []
+            if template_file not in template_file_index:
+                template_file_index[template_file] = []
+            data_file_index[data_file].append((template_file, output))
+            template_file_index[template_file].append((data_file, output))
+        else:
+            common_data_file = options[LABEL_CONFIG]
+            if  common_data_file not in data_file_index:
+                data_file_index[common_data_file] = []
+            for output, template_file in target.items():
+                data_set.add(common_data_file)
+                data_file_index[common_data_file].append((template_file, output))
+    if len(template_set) == 0:
+        do_templates_with_more_shared_data(options, data_file_index)
+    elif len(data_set) == 0:
+        do_templates_with_more_shared_templates(options, template_file_index) 
+    elif len(data_set) >= len(template_set):
         do_templates_with_more_shared_templates(options, template_file_index)
     else:
         do_templates_with_more_shared_data(options, data_file_index)

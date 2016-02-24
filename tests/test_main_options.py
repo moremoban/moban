@@ -114,8 +114,8 @@ class TestNoOptions:
                     template_dir=['commons/templates', '.moban.d'],
                     configuration='data.yaml'
                 ),
-                [('data.yaml', 'README.rst', 'README.rst'),
-                 ('data.yaml', 'setup.py', 'setup.py')]
+                [{'README.rst': 'README.rst'},
+                 {'setup.py': 'setup.py'}]
             )
 
     def tearDown(self):
@@ -145,8 +145,8 @@ class TestOneOptions:
                     configuration='splendid.yml',
                     template=None
                 ),
-                [('splendid.yml', 'README.rst', 'README.rst'),
-                 ('splendid.yml', 'setup.py', 'setup.py')]
+                [{'README.rst': 'README.rst'},
+                 {'setup.py': 'setup.py'}]
             )
 
     def tearDown(self):
@@ -210,8 +210,8 @@ class TestComplexOptions:
                     template_dir=['commons/templates', '.moban.d'],
                     configuration='data.yml'
                 ),
-                [('custom-data.yaml', 'README.rst', 'README.rst'),
-                 ('data.yml', 'setup.py', 'setup.py')]
+                [{'configuration': 'custom-data.yaml', 'template': 'README.rst', 'output':'README.rst'},
+                 {'setup.py': 'setup.py'}]
             )
 
     def tearDown(self):
