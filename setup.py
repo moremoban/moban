@@ -25,7 +25,7 @@ setup(
     ],
     entry_points={
         'console_scripts':[
-            'moban = moban.template:main'
+            'moban = moban.main:main'
         ]
     }
 )

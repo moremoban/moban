@@ -1,7 +1,7 @@
 import os
 import sys
 from shutil import copyfile
-from moban.template import main
+from moban.main import main
 from mock import patch
 from nose.tools import raises
 

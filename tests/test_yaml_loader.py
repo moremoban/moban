@@ -1,6 +1,6 @@
 import os
 from nose.tools import raises
-from moban.template import open_yaml
+from moban.context import open_yaml
 
 
 def test_simple_yaml():

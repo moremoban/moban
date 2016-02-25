@@ -1,5 +1,5 @@
 ================================================================================
-moban - Yet another jinja2 cli command for static text generation
+moban - 模板 Yet another jinja2 cli command for static text generation
 ================================================================================
 
 .. image:: https://api.travis-ci.org/chfw/moban.svg?branch=master

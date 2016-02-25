@@ -1,5 +1,5 @@
 """
-    moban.template
+    moban
     ~~~~~~~~~~~~~~~~~~~
 
     Bring jinja2 to command line

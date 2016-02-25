@@ -1,6 +1,6 @@
 import os
 from mock import patch
-from moban.template import Engine
+from moban.engine import Engine
 
 
 @patch("moban.template.Engine._render_with_finding_data_first")

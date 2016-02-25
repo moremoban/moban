@@ -1,4 +1,4 @@
-from moban.template import merge
+from moban.context import merge
 
 
 def test_simple_union():
