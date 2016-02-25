@@ -90,7 +90,6 @@ class TestNoOptions:
         with patch.object(sys, 'argv', test_args):
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            print call_args
             assert call_args == [
                 ('README.rst', 'data.yaml', 'README.rst'),
                 ('setup.py', 'data.yaml', 'setup.py')]
@@ -115,7 +114,6 @@ class TestOneOptions:
         with patch.object(sys, 'argv', test_args):
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            print call_args
             assert call_args == [
                 ('README.rst', 'splendid.yml', 'README.rst'),
                 ('setup.py', 'splendid.yml', 'setup.py')]
