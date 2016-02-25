@@ -12,7 +12,7 @@ class TestCustomOptions:
         with open(self.config_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_template")
+    @patch("moban.template.Engine.render_to_file")
     def test_custom_options(self, fake_template_doer):
         test_args = ["moban", "-c", self.config_file,
                      "-cd", "/home/developer/configuration",
@@ -21,29 +21,17 @@ class TestCustomOptions:
         with patch.object(sys, 'argv', test_args):
             main()
             fake_template_doer.assert_called_with(
-                dict(
-                    output='moban.output',
-                    configuration_dir="/home/developer/configuration",
-                    template_dir=["/home/developer/templates"],
-                    configuration=self.config_file,
-                    template='a.template'
-                )
+                'a.template', 'config.yaml', 'moban.output'
             )
     
-    @patch("moban.template.do_template")
+    @patch("moban.template.Engine.render_to_file")
     def test_minimal_options(self, fake_template_doer):
         test_args = ["moban", "-c", self.config_file,
                      "-t", "a.template"]
         with patch.object(sys, 'argv', test_args):
             main()
             fake_template_doer.assert_called_with(
-                dict(
-                    output='moban.output',
-                    configuration_dir=os.path.join('.', '.moban.cd'),
-                    template_dir=[".", os.path.join('.', '.moban.td')],
-                    configuration=self.config_file,
-                    template='a.template'
-                )
+                'a.template', 'config.yaml', 'moban.output'
             )
 
     @raises(SystemExit)
@@ -61,19 +49,13 @@ class TestOptions:
         with open(self.config_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_template")
+    @patch("moban.template.Engine.render_to_file")
     def test_default_options(self, fake_template_doer):
         test_args = ["moban", "-t", "a.template"]
         with patch.object(sys, 'argv', test_args):
             main()
             fake_template_doer.assert_called_with(
-                dict(
-                    output='moban.output',
-                    configuration_dir=os.path.join('.', '.moban.cd'),
-                    template_dir=[".", os.path.join('.', '.moban.td')],
-                    configuration='data.yml',
-                    template='a.template'
-                )
+                'a.template', 'data.yml', 'moban.output'
             )
 
     @raises(SystemExit)
@@ -102,21 +84,16 @@ class TestNoOptions:
         with open(self.data_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_templates")
+    @patch("moban.template.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban"]
         with patch.object(sys, 'argv', test_args):
             main()
-            fake_template_doer.assert_called_with(
-                dict(
-                    output='moban.output',
-                    configuration_dir='commons/config',
-                    template_dir=['commons/templates', '.moban.d'],
-                    configuration='data.yaml'
-                ),
-                [{'README.rst': 'README.rst'},
-                 {'setup.py': 'setup.py'}]
-            )
+            call_args = list(fake_template_doer.call_args[0][0])
+            print call_args
+            assert call_args == [
+                ('README.rst', 'data.yaml', 'README.rst'),
+                ('setup.py', 'data.yaml', 'setup.py')]
 
     def tearDown(self):
         os.unlink(self.config_file)
@@ -132,22 +109,16 @@ class TestOneOptions:
         with open(self.data_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_templates")
+    @patch("moban.template.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban", "-c", "splendid.yml"]
         with patch.object(sys, 'argv', test_args):
             main()
-            fake_template_doer.assert_called_with(
-                dict(
-                    output='moban.output',
-                    configuration_dir='commons/config',
-                    template_dir=['commons/templates', '.moban.d'],
-                    configuration='splendid.yml',
-                    template=None
-                ),
-                [{'README.rst': 'README.rst'},
-                 {'setup.py': 'setup.py'}]
-            )
+            call_args = list(fake_template_doer.call_args[0][0])
+            print call_args
+            assert call_args == [
+                ('README.rst', 'splendid.yml', 'README.rst'),
+                ('setup.py', 'splendid.yml', 'setup.py')]
 
     def tearDown(self):
         os.unlink(self.config_file)
@@ -159,7 +130,7 @@ class TestInvalidMobanFile:
         self.config_file = '.moban.yml'
 
     @raises(SystemExit)
-    @patch("moban.template.do_templates")
+    @patch("moban.template.Engine.render_to_files")
     def test_no_configuration(self, fake_template_doer):
         with open(self.config_file,'w')as f:
             f.write("")
@@ -168,7 +139,7 @@ class TestInvalidMobanFile:
             main()
 
     @raises(SystemExit)
-    @patch("moban.template.do_templates")
+    @patch("moban.template.Engine.render_to_files")
     def test_no_configuration_2(self, fake_template_doer):
         with open(self.config_file,'w')as f:
             f.write("not: related")
@@ -177,7 +148,7 @@ class TestInvalidMobanFile:
             main()
 
     @raises(SystemExit)
-    @patch("moban.template.do_templates")
+    @patch("moban.template.Engine.render_to_files")
     def test_no_targets(self, fake_template_doer):
         with open(self.config_file,'w')as f:
             f.write("configuration: test")
@@ -198,21 +169,15 @@ class TestComplexOptions:
         with open(self.data_file,'w')as f:
             f.write("hello: world")
     
-    @patch("moban.template.do_templates")
+    @patch("moban.template.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban"]
         with patch.object(sys, 'argv', test_args):
             main()
-            fake_template_doer.assert_called_with(
-                dict(
-                    output='moban.output',
-                    configuration_dir='commons/config',
-                    template_dir=['commons/templates', '.moban.d'],
-                    configuration='data.yml'
-                ),
-                [{'configuration': 'custom-data.yaml', 'template': 'README.rst', 'output':'README.rst'},
-                 {'setup.py': 'setup.py'}]
-            )
+            call_args = list(fake_template_doer.call_args[0][0])
+            assert call_args == [
+                ('README.rst', 'custom-data.yaml', 'README.rst'),
+                ('setup.py', 'data.yml', 'setup.py')]
 
     def tearDown(self):
         os.unlink(self.config_file)

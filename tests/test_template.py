@@ -1,16 +1,16 @@
 import os
 from mock import patch
-from moban.template import do_templates
+from moban.template import Engine
 
 
-@patch("moban.template.do_templates_with_more_shared_data")
+@patch("moban.template.Engine._render_with_finding_data_first")
 def test_do_templates_1(_do_templates_with_more_shared_data):
     jobs = [
-        {"configuration":'data.yml', "template":'1.template', "output":'1.output'},
-        {"configuration":'data.yml', "template":'2.template', "output":'2.output'},
-        {"configuration":'data.yml', "template":'3.template', "output":'3.output'},
-        {"configuration":'data.yml', "template":'4.template', "output":'4.output'},
-        {"configuration":'data.yml', "template":'5.template', "output":'6.output'},
+        ('1.template', 'data.yml', '1.output'),
+        ('2.template', 'data.yml', '2.output'),
+        ('3.template', 'data.yml', '3.output'),
+        ('4.template', 'data.yml', '4.output'),
+        ('5.template', 'data.yml', '6.output'),
     ]
     expected = {
         'data.yml': [
@@ -21,19 +21,19 @@ def test_do_templates_1(_do_templates_with_more_shared_data):
             ('5.template', '6.output'),
         ]
     }
-    options = {'configuration': 'data.yml'}
-    do_templates(options, jobs)
-    _do_templates_with_more_shared_data.assert_called_with(options, expected)
+    engine = Engine('.', '.')
+    engine.render_to_files(jobs)
+    _do_templates_with_more_shared_data.assert_called_with(expected)
 
 
-@patch("moban.template.do_templates_with_more_shared_templates")
+@patch("moban.template.Engine._render_with_finding_template_first")
 def test_do_templates_2(_do_templates_with_more_shared_templates):
     jobs = [
-        {'configuration': 'data1.yml', 'template': '1.template', 'output': '1.output'},
-        {'configuration': 'data2.yml', 'template': '1.template', 'output': '2.output'},
-        {'configuration': 'data3.yml', 'template': '1.template', 'output': '3.output'},
-        {'configuration': 'data4.yml', 'template': '1.template', 'output': '4.output'},
-        {'configuration': 'data5.yml', 'template': '1.template', 'output': '6.output'},
+        ('1.template', 'data1.yml', '1.output'),
+        ('1.template', 'data2.yml', '2.output'),
+        ('1.template', 'data3.yml', '3.output'),
+        ('1.template', 'data4.yml', '4.output'),
+        ('1.template', 'data5.yml', '6.output'),
     ]
     expected = {
         '1.template': [
@@ -44,21 +44,17 @@ def test_do_templates_2(_do_templates_with_more_shared_templates):
             ('data5.yml', '6.output'),
         ]
     }
-    options = {'configuration': 'data.yml'}
-    do_templates(options, jobs)
-    _do_templates_with_more_shared_templates.assert_called_with(options, expected)
+    engine = Engine('.', '.')
+    engine.render_to_files(jobs)
+    _do_templates_with_more_shared_templates.assert_called_with(expected)
 
 
 def test_do_templates_with_more_shared_templates():
-    from moban.template import do_templates_with_more_shared_templates
     base_dir = os.path.join("tests", "fixtures")
-    options = {
-        "configuration_dir": os.path.join(base_dir, "config"),
-        "template_dir": base_dir
-    }
-    do_templates_with_more_shared_templates(options, {
+    engine = Engine(base_dir, os.path.join(base_dir, "config"))
+    engine._render_with_finding_template_first({
         "a.template": [(os.path.join(base_dir, "child.yaml"),
-         'test')]
+                        'test')]
     })
     with open("test", "r") as f:
         content = f.read()
@@ -67,13 +63,9 @@ def test_do_templates_with_more_shared_templates():
 
 
 def test_do_templates_with_more_shared_data():
-    from moban.template import do_templates_with_more_shared_data
     base_dir = os.path.join("tests", "fixtures")
-    options = {
-        "configuration_dir": os.path.join(base_dir, "config"),
-        "template_dir": base_dir
-    }
-    do_templates_with_more_shared_data(options, {
+    engine = Engine(base_dir, os.path.join(base_dir, "config"))
+    engine._render_with_finding_data_first({
         os.path.join(base_dir, "child.yaml"): [("a.template", 'test')]
     })
     with open("test", "r") as f:
