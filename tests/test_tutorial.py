@@ -1,7 +1,7 @@
 import os
 import sys
 from mock import patch
-from moban.template import main
+from moban.main import main
 
 
 class TestTutorial:

@@ -3,7 +3,7 @@ from mock import patch
 from moban.engine import Engine
 
 
-@patch("moban.template.Engine._render_with_finding_data_first")
+@patch("moban.engine.Engine._render_with_finding_data_first")
 def test_do_templates_1(_do_templates_with_more_shared_data):
     jobs = [
         ('1.template', 'data.yml', '1.output'),
@@ -26,7 +26,7 @@ def test_do_templates_1(_do_templates_with_more_shared_data):
     _do_templates_with_more_shared_data.assert_called_with(expected)
 
 
-@patch("moban.template.Engine._render_with_finding_template_first")
+@patch("moban.engine.Engine._render_with_finding_template_first")
 def test_do_templates_2(_do_templates_with_more_shared_templates):
     jobs = [
         ('1.template', 'data1.yml', '1.output'),

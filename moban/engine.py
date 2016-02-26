@@ -22,27 +22,13 @@ class Engine(object):
         apply_template(template, data, output_file)
 
     def render_to_files(self, array_of_param_tuple):
-        data_file_index = {}
-        template_file_index = {}
-        data_set = set()
-        template_set = set()
-        for (template_file, data_file, output_file) in array_of_param_tuple:
-            data_set.add(data_file)
-            template_set.add(template_file)
-            if data_file not in data_file_index:
-                data_file_index[data_file] = []
-            if template_file not in template_file_index:
-                template_file_index[template_file] = []
-            data_file_index[data_file].append((template_file, output_file))
-            template_file_index[template_file].append((data_file, output_file))
-        if len(template_set) == 0:
-            self._render_with_finding_data_first(data_file_index)
-        elif len(data_set) == 0:
-            self._render_with_finding_template_first(template_file_index)
-        elif len(template_set) < len(data_set):
-            self._render_with_finding_template_first(template_file_index)
+        sta = Strategy(array_of_param_tuple)
+        sta.process()
+        algo = sta.what_to_do()
+        if algo == Strategy.DATA_FIRST:
+            self._render_with_finding_data_first(sta.data_file_index)
         else:
-            self._render_with_finding_data_first(data_file_index)
+            self._render_with_finding_template_first(sta.template_file_index)
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
@@ -68,3 +54,42 @@ def apply_template(jj2_template, data, output_file):
     with open(output_file, 'w') as output:
         content = jj2_template.render(**data)
         output.write(content)
+
+class Strategy(object):
+    DATA_FIRST = 1
+    TEMPLATE_FIRST = 2
+
+    def __init__(self, array_of_param_tuple):
+        self.data_file_index = {}
+        self.template_file_index = {}
+        self.tuples = array_of_param_tuple
+
+    def process(self):
+        for (template_file, data_file, output_file) in self.tuples:
+            _append_to_array_item_to_dictionary_key(
+                self.data_file_index,
+                data_file,
+                (template_file, output_file)
+            )
+            _append_to_array_item_to_dictionary_key(
+                self.template_file_index,
+                template_file,
+                (data_file, output_file)
+            )
+
+    def what_to_do(self):
+        algo = Strategy.DATA_FIRST
+        if self.data_file_index == {}:
+            algo = Strategy.TEMPLATE_FIRST
+        elif self.template_file_index != {}:
+            data_files = len(self.data_file_index)
+            template_files = len(self.template_file_index)
+            if data_files > template_files:
+                algo = Strategy.TEMPLATE_FIRST
+        return algo
+
+
+def _append_to_array_item_to_dictionary_key(adict, key, array_item):
+    if key not in adict:
+        adict[key] = []
+    adict[key].append(array_item)
