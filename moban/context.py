@@ -39,17 +39,8 @@ def open_yaml(base_dir, file_name):
     """
     chained yaml loader
     """
-    the_file = file_name
-    if not os.path.exists(the_file):
-        if base_dir:
-            the_file = os.path.join(base_dir, file_name)
-            if not os.path.exists(the_file):
-                raise IOError(
-                    ERROR_DATA_FILE_NOT_FOUND % (file_name,
-                                                 the_file))
-        else:
-            raise IOError(ERROR_DATA_FILE_ABSENT % the_file)
-    with open(the_file, 'r') as data_yaml:
+    the_yaml_file = search_file(base_dir, file_name)
+    with open(the_yaml_file, 'r') as data_yaml:
         data = yaml.load(data_yaml)
         if data is not None:
             parent_data = None
@@ -63,3 +54,17 @@ def open_yaml(base_dir, file_name):
                 return data
         else:
             return None
+
+
+def search_file(base_dir, file_name):
+    the_file = file_name
+    if not os.path.exists(the_file):
+        if base_dir:
+            the_file = os.path.join(base_dir, file_name)
+            if not os.path.exists(the_file):
+                raise IOError(
+                    ERROR_DATA_FILE_NOT_FOUND % (file_name,
+                                                 the_file))
+        else:
+            raise IOError(ERROR_DATA_FILE_ABSENT % the_file)
+    return the_file

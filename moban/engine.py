@@ -3,12 +3,11 @@ from jinja2 import Environment, FileSystemLoader
 from moban.context import Context
 
 
-# Message
 MESSAGE_TEMPLATING = "Templating %s to %s"
 
 
 class Engine(object):
-    def __init__(self, template_dirs, context_dirs): 
+    def __init__(self, template_dirs, context_dirs):
         template_loader = FileSystemLoader(template_dirs)
         self.jj2_environment = Environment(
             loader=template_loader,
@@ -16,9 +15,10 @@ class Engine(object):
             lstrip_blocks=True)
         self.context = Context(context_dirs)
 
-    def render_to_file(self, template, data_file, output_file):
-        template = self.jj2_environment.get_template(template)
+    def render_to_file(self, template_file, data_file, output_file):
+        template = self.jj2_environment.get_template(template_file)
         data = self.context.get_data(data_file)
+        print(MESSAGE_TEMPLATING % (template_file, output_file))
         apply_template(template, data, output_file)
 
     def render_to_files(self, array_of_param_tuple):
@@ -46,7 +46,7 @@ class Engine(object):
                 template = self.jj2_environment.get_template(template_file)
                 apply_template(template, data, output)
 
-        
+
 def apply_template(jj2_template, data, output_file):
     """
     write templated result
@@ -54,6 +54,7 @@ def apply_template(jj2_template, data, output_file):
     with open(output_file, 'w') as output:
         content = jj2_template.render(**data)
         output.write(content)
+
 
 class Strategy(object):
     DATA_FIRST = 1

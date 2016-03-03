@@ -106,7 +106,7 @@ def handle_moban_file(parser):
     if LABEL_CONFIG in more_options:
         options = merge(options, more_options[LABEL_CONFIG])
     options = merge(options, DEFAULT_OPTIONS)
-    list_of_templating_parameters = translate_targets(
+    list_of_templating_parameters = parse_targets(
         options,
         more_options[LABEL_TARGETS])    
     engine = Engine(options[LABEL_TMPL_DIRS], options[LABEL_CONFIG_DIR])
@@ -131,7 +131,7 @@ def handle_command_line(parser):
     )
 
 
-def translate_targets(options, targets):
+def parse_targets(options, targets):
     common_data_file = options[LABEL_CONFIG]
     for target in targets:
         if LABEL_OUTPUT in target:
