@@ -7,14 +7,6 @@ ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"
 ERROR_DATA_FILE_ABSENT = "File %s does not exist"
 
 
-class Context(object):
-    def __init__(self, context_dirs):
-        self.context_dirs = context_dirs
-
-    def get_data(self, file_name):
-        return open_yaml(self.context_dirs, file_name)
-
-
 def merge(left, right):
     """
     deep merge dictionary on the left with the one
