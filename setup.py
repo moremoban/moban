@@ -1,31 +1,45 @@
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from ez_setup import use_setuptools
-    use_setuptools()
-    from setuptools import setup, find_packages
+from setuptools import setup, find_packages
 
-setup(
-    name='moban',
-    author="C. W.",
-    version="0.0.1",
-    author_email="wangc_2011 (at) hotmail.com",
-    description='Yet another jinja2 cli command for static text generation',
-    install_requires=['pyyaml==3.11', 'jinja2==2.7.1'],
-    packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
-    include_package_data=True,
-    long_description="test",
-    zip_safe=False,
-    tests_require=['nose'],
-    license='New BSD',
-    classifiers=[
-        'Development Status :: 3 - Alpha',
-        'License :: OSI Approved :: BSD License',
-        'Intended Audience :: Developers',
-    ],
-    entry_points={
-        'console_scripts':[
-            'moban = moban.main:main'
-        ]
-    }
-)
+
+NAME = 'moban'
+AUTHOR = 'C.W.'
+VERSION = '0.0.1'
+EMAIL = "wangc_2011 (at) hotmail.com"
+LICENSE = 'New BSD'
+ENTRY_POINTS = {
+    'console_scripts':[
+        '%s = moban.main:main' % NAME
+    ]
+}
+PACKAGES = find_packages(exclude=['ez_setup', 'examples', 'tests'])
+DESCRIPTION = 'Yet another jinja2 cli command for static text generation'
+INSTALL_REQUIRES = ['pyyaml>=3.11', 'jinja2>=2.7.1']
+CLASSIFIERS = [
+    'Development Status :: 3 - Alpha',
+    'License :: OSI Approved :: BSD License',
+    'Intended Audience :: Developers',
+]
+
+
+def read(afile):
+    with open(afile, 'r') as opened_file:
+        return opened_file.read()
+
+
+if __name__ == '__main__':
+    setup(
+        name=NAME,
+        author=AUTHOR,
+        version=VERSION,
+        author_email=EMAIL,
+        description=DESCRIPTION,
+        install_requires=INSTALL_REQUIRES,
+        packages=PACKAGES,
+        include_package_data=True,
+        long_description=read('README.rst'),
+        zip_safe=False,
+        tests_require=['nose'],
+        license=LICENSE,
+        classifiers=CLASSIFIERS,
+        entry_points=ENTRY_POINTS
+    )
