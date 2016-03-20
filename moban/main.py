@@ -13,7 +13,7 @@ import os
 import sys
 import argparse
 
-from moban.context import merge, open_yaml
+from moban.utils import merge, open_yaml
 from moban.engine import Engine
 from moban.cache import cache_manager
 

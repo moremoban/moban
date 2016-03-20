@@ -1,6 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 
-from moban.context import Context
+from moban.utils import open_yaml
 
 
 MESSAGE_TEMPLATING = "Templating %s to %s"
@@ -24,8 +24,8 @@ class Engine(object):
     def render_to_files(self, array_of_param_tuple):
         sta = Strategy(array_of_param_tuple)
         sta.process()
-        algo = sta.what_to_do()
-        if algo == Strategy.DATA_FIRST:
+        choice = sta.what_to_do()
+        if choice == Strategy.DATA_FIRST:
             self._render_with_finding_data_first(sta.data_file_index)
         else:
             self._render_with_finding_template_first(sta.template_file_index)
@@ -47,13 +47,21 @@ class Engine(object):
                 apply_template(template, data, output)
 
 
+class Context(object):
+    def __init__(self, context_dirs):
+        self.context_dirs = context_dirs
+
+    def get_data(self, file_name):
+        return open_yaml(self.context_dirs, file_name)
+
+
 def apply_template(jj2_template, data, output_file):
     """
     write templated result
     """
     with open(output_file, 'w') as output:
-        content = jj2_template.render(**data)
-        output.write(content)
+        rendered_content = jj2_template.render(**data)
+        output.write(rendered_content)
 
 
 class Strategy(object):
@@ -79,15 +87,15 @@ class Strategy(object):
             )
 
     def what_to_do(self):
-        algo = Strategy.DATA_FIRST
+        choice = Strategy.DATA_FIRST
         if self.data_file_index == {}:
-            algo = Strategy.TEMPLATE_FIRST
+            choice = Strategy.TEMPLATE_FIRST
         elif self.template_file_index != {}:
             data_files = len(self.data_file_index)
             template_files = len(self.template_file_index)
             if data_files > template_files:
-                algo = Strategy.TEMPLATE_FIRST
-        return algo
+                choice = Strategy.TEMPLATE_FIRST
+        return choice
 
 
 def _append_to_array_item_to_dictionary_key(adict, key, array_item):
