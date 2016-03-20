@@ -1,7 +1,31 @@
 Level 6: Complex Configuration
 ================================================================================
 
-There may be more data files being used for template rendering
+On top of level 5, you could have a common template, where data and output change.
+In the following example::
+
+    configuration:
+      configuration_dir: 'custom-config'
+      template_dir:
+        - custom-templates
+        - cool-templates
+        - '.'
+      template: a.template
+    targets:
+      - output: a.output
+        configuration: data.yml
+      - output: a.output2
+        configuration: data2.yml
+
+where `template` under `confiugration` needs a template file, which will be a
+default template across `targets`. And in this example, the expand form of
+`targets` is illustrated:
+
+    {
+        "output": 'an output file',
+        "configuration": 'data file',
+        "template": "the template file"
+    }
 
 
 Evaluation
@@ -36,5 +60,3 @@ Here is the command to launch it:
     this demonstrations jinja2's include statement
     
     ========footer============
-
-

@@ -1,13 +1,19 @@
 Level 3: data override
 ================================================================================
 
-Often, data value changes slightly. `overrides` key is supported in the yaml file
+What `moban` bring on the table is data inheritance by introducing `overrides` key word in the yaml file::
+
+    overrides: data.base.yaml
+    ....
+
+And `.moban.cd` is the default directory where the base data file can be placed.
 
 
 Evaluation
 --------------------------------------------------------------------------------
 
-Here is the command to launch it:
+In this example, `data.yaml` overrides `.moban.cd/data.base.yaml`, here is the
+command to launch it:
 
 .. code-block:: bash
 

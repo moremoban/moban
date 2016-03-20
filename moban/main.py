@@ -15,6 +15,8 @@ import argparse
 
 from moban.context import merge, open_yaml
 from moban.engine import Engine
+from moban.cache import cache_manager
+
 
 # Configurations
 PROGRAM_NAME = 'moban'
@@ -22,6 +24,7 @@ PROGRAM_DESCRIPTION = 'Yet another jinja2 cli command for static text generation
 DEFAULT_YAML_SUFFIX = '.yml'
 # .moban.yml, default moban configuration file
 DEFAULT_MOBAN_FILE = '.%s%s' % (PROGRAM_NAME, DEFAULT_YAML_SUFFIX)
+DEFAULT_MOBAN_CACHE_DB = '.%s.db' % PROGRAM_NAME
 
 # Command line options
 LABEL_CONFIG = 'configuration'
@@ -53,10 +56,12 @@ def main():
     program entry point
     """
     parser = create_parser()
+    cache_manager.load_cache(DEFAULT_MOBAN_CACHE_DB)
     if os.path.exists(DEFAULT_MOBAN_FILE):
         handle_moban_file(parser)
     else:
         handle_command_line(parser)
+    cache_manager.close()
 
 
 def create_parser():
