@@ -18,7 +18,7 @@ You can install it via pip:
 
 .. code-block:: bash
 
-    $ pip install http://github.com/chfw/moban/archive/master.zip
+    $ pip install moban
 
 
 or clone it and install it:
@@ -37,10 +37,10 @@ Here is a simple example:
 
 .. code-block:: bash
 
-	$ moban -c data.yaml -t my.template
+	$ moban -c data.yml -t my.template
 	$ cat moban.output
 
-Given data.yaml as::
+Given data.yml as::
 
     hello: world
 
