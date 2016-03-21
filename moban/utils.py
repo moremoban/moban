@@ -1,6 +1,8 @@
 import os
 import yaml
 
+import moban.constants as constants
+
 
 LABEL_OVERRIDES = 'overrides'
 ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"
@@ -60,3 +62,17 @@ def search_file(base_dir, file_name):
         else:
             raise IOError(ERROR_DATA_FILE_ABSENT % the_file)
     return the_file
+
+
+def parse_targets(options, targets):
+    common_data_file = options[constants.LABEL_CONFIG]
+    for target in targets:
+        if constants.LABEL_OUTPUT in target:
+            template_file = target.get(constants.LABEL_TEMPLATE,
+                                       options.get(constants.LABEL_TEMPLATE, None))
+            data_file = target.get(constants.LABEL_CONFIG, common_data_file)
+            output = target[constants.LABEL_OUTPUT]
+            yield((template_file, data_file, output))
+        else:
+            for output, template_file in target.items():
+                yield((template_file, common_data_file, output))
