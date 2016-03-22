@@ -30,10 +30,11 @@ def main():
     program entry point
     """
     parser = create_parser()
+    options = vars(parser.parse_args())
     if os.path.exists(constants.DEFAULT_MOBAN_FILE):
-        handle_moban_file(parser)
+        handle_moban_file(options)
     else:
-        handle_command_line(parser)
+        handle_command_line(options)
 
 
 def create_parser():
@@ -66,32 +67,37 @@ def create_parser():
     return parser
 
 
-def handle_moban_file(parser):
+def handle_moban_file(options):
     """
     act upon default moban file
     """
-    options = {}
-    if len(sys.argv) > 1:
-        options = vars(parser.parse_args())
-    moban_file_configurations = open_yaml(None, constants.DEFAULT_MOBAN_FILE)
+    moban_file_configurations = open_yaml(
+        None,
+        constants.DEFAULT_MOBAN_FILE)
     if moban_file_configurations is None:
         print(ERROR_INVALID_MOBAN_FILE % constants.DEFAULT_MOBAN_FILE)
         sys.exit(-1)
     if constants.LABEL_TARGETS not in moban_file_configurations:
         print(ERROR_NO_TARGETS % constants.DEFAULT_MOBAN_FILE)
         sys.exit(0)
-    handle_moban_file_v1(moban_file_configurations, options)
+    version = moban_file_configurations.get(
+        constants.MOBAN_VERSION,
+        constants.DEFAULT_MOBAN_VERSION
+    )
+    if version == constants.DEFAULT_MOBAN_VERSION:
+        handle_moban_file_v1(moban_file_configurations, options)
+    else:
+        raise NotImplementedError(
+            "moban file version %d is not supported" % version)
 
 
-def handle_command_line(parser):
+def handle_command_line(options):
     """
     act upon command options
     """
-    options = vars(parser.parse_args())
     options = merge(options, constants.DEFAULT_OPTIONS)
     if options[constants.LABEL_TEMPLATE] is None:
         print(ERROR_NO_TEMPLATE)
-        parser.print_help()
         sys.exit(-1)
     engine = Engine(options[constants.LABEL_TMPL_DIRS], options[constants.LABEL_CONFIG_DIR])
     engine.render_to_file(

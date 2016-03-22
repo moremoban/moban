@@ -104,9 +104,6 @@ class TestOneOptions:
         self.config_file = '.moban.yml'
         copyfile(os.path.join("tests", "fixtures", self.config_file),
                  self.config_file)
-        self.data_file = 'data.yaml'
-        with open(self.data_file,'w')as f:
-            f.write("hello: world")
     
     @patch("moban.engine.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
@@ -120,7 +117,6 @@ class TestOneOptions:
 
     def tearDown(self):
         os.unlink(self.config_file)
-        os.unlink(self.data_file)
 
 
 class TestInvalidMobanFile:

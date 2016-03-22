@@ -25,3 +25,7 @@ DEFAULT_OPTIONS = {
     # data.yml, default data input file
     LABEL_CONFIG: 'data%s' % DEFAULT_YAML_SUFFIX
 }
+
+# moban file version
+MOBAN_VERSION = "version"
+DEFAULT_MOBAN_VERSION = "1.0"
