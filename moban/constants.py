@@ -28,4 +28,4 @@ DEFAULT_OPTIONS = {
 
 # moban file version
 MOBAN_VERSION = "version"
-DEFAULT_MOBAN_VERSION = "1.0"
+DEFAULT_MOBAN_VERSION = 1.0

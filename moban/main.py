@@ -18,6 +18,7 @@ from moban.engine import Engine
 import moban.constants as constants
 from moban.mobanfile import handle_moban_file_v1
 
+
 # I/O messages
 # Error handling
 ERROR_INVALID_MOBAN_FILE = "%s is an invalid yaml file."
@@ -99,7 +100,8 @@ def handle_command_line(options):
     if options[constants.LABEL_TEMPLATE] is None:
         print(ERROR_NO_TEMPLATE)
         sys.exit(-1)
-    engine = Engine(options[constants.LABEL_TMPL_DIRS], options[constants.LABEL_CONFIG_DIR])
+    engine = Engine(options[constants.LABEL_TMPL_DIRS],
+                    options[constants.LABEL_CONFIG_DIR])
     engine.render_to_file(
         options[constants.LABEL_TEMPLATE],
         options[constants.LABEL_CONFIG],

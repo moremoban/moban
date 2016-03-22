@@ -43,6 +43,7 @@ class TestCustomOptions:
     def tearDown(self):
         os.unlink(self.config_file)
 
+
 class TestOptions:
     def setUp(self):
         self.config_file = 'data.yml'

@@ -1,0 +1,10 @@
+version: 1234
+configuration:
+  configuration_dir: "commons/config"
+  template_dir:
+    - "commons/templates"
+    - ".moban.d"
+  configuration: data.yaml
+targets:
+  - README.rst: README.rst
+  - setup.py: setup.py
