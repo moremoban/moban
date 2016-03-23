@@ -16,7 +16,7 @@ DESCRIPTION = 'Yet another jinja2 cli command for static text generation'
 INSTALL_REQUIRES = ['pyyaml>=3.11', 'jinja2>=2.7.1']
 CLASSIFIERS = [
     'Development Status :: 3 - Alpha',
-    'License :: OSI Approved :: BSD License',
+    'License :: OSI Approved :: MIT License',
     'Intended Audience :: Developers',
 ]
 
