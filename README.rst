@@ -9,11 +9,11 @@ moban - 模板 Yet another jinja2 cli command for static text generation
     :target: https://codecov.io/github/chfw/moban
 
 **moban** brings the high performance template engine (JINJA2) for web into
-static file generation.
+static text generation.
 
 
 Installation
-============
+================================================================================
 You can install it via pip:
 
 .. code-block:: bash
@@ -62,7 +62,10 @@ Usage
 
 usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
              [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-t TEMPLATE]
-             [-o OUTPUT]
+             [--template_type TEMPLATE_TYPE] [-o OUTPUT]
+
+Yet another jinja2 cli command for static text generation
+
 
 optional arguments
 --------------------------------------------------------------------------------
@@ -77,5 +80,7 @@ optional arguments
   the directories for template file lookup
 * `-t TEMPLATE, --template TEMPLATE`
   the template file
+* `--template_type TEMPLATE_TYPE`
+  the template type, default is jinja2
 * `-o OUTPUT, --output OUTPUT`
   the output file

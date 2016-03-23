@@ -17,7 +17,8 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
         moban_file_configurations[constants.LABEL_TARGETS])    
     engine_class = EngineFactory.get_engine(
         merged_options[constants.LABEL_TEMPLATE_TYPE])
-    engine = engine_class(merged_options[constants.LABEL_TMPL_DIRS],
-                    merged_options[constants.LABEL_CONFIG_DIR])
+    engine = engine_class(
+        merged_options[constants.LABEL_TMPL_DIRS],
+        merged_options[constants.LABEL_CONFIG_DIR])
     engine.render_to_files(list_of_templating_parameters)
 
