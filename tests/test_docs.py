@@ -85,7 +85,7 @@ this demonstrations jinja2's include statement
         self._raw_moban(args, folder, expected, 'moban.output')
 
     def _raw_moban(self, args, folder, expected, output):
-        os.chdir(os.path.join("tutorial", folder))
+        os.chdir(os.path.join("docs", folder))
         with patch.object(sys, 'argv', args):
             main()
             _verify_content(output, expected)

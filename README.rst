@@ -8,6 +8,10 @@ moban - 模板 Yet another jinja2 cli command for static text generation
 .. image:: https://codecov.io/github/chfw/moban/coverage.png
     :target: https://codecov.io/github/chfw/moban
 
+.. image:: https://readthedocs.org/projects/moban/badge/?version=latest
+    :target: http://moban.readthedocs.org/en/latest/
+
+
 **moban** brings the high performance template engine (JINJA2) for web into
 static text generation.
 
