@@ -12,8 +12,16 @@ moban - 模板 Yet another jinja2 cli command for static text generation
     :target: http://moban.readthedocs.org/en/latest/
 
 
+:Author: C.W.
+:Issues: http://github.com/chfw/moban/issues
+:License: MIT
+:Version: |version|
+:Generated: |today|
+
+
 **moban** brings the high performance template engine (JINJA2) for web into
 static text generation.
+
 
 
 Installation
@@ -58,7 +66,7 @@ moban.output will contain::
 
 `the tutorial`_ has more use cases.
 
-.. _the tutorial: tutorial/README.rst
+.. _the tutorial: http://moban.readthedocs.org/en/latest/#tutorial
 
 	
 Usage

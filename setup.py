@@ -5,7 +5,7 @@ NAME = 'moban'
 AUTHOR = 'C.W.'
 VERSION = '0.0.1'
 EMAIL = "wangc_2011 (at) hotmail.com"
-LICENSE = 'New BSD'
+LICENSE = 'MIT'
 ENTRY_POINTS = {
     'console_scripts':[
         '%s = moban.main:main' % NAME
