@@ -14,7 +14,7 @@ import sys
 import argparse
 
 from moban.utils import merge, open_yaml
-from moban.engine import Engine
+from moban.engine import EngineFactory
 import moban.constants as constants
 from moban.mobanfile import handle_moban_file_v1
 
@@ -65,6 +65,10 @@ def create_parser():
         '-o', '--%s' % constants.LABEL_OUTPUT,
         help="the output file"
     )
+    parser.add_argument(
+        '--%s' % constants.LABEL_TEMPLATE_TYPE,
+        help="the template type, default is jinja2"
+    )
     return parser
 
 
@@ -100,8 +104,10 @@ def handle_command_line(options):
     if options[constants.LABEL_TEMPLATE] is None:
         print(ERROR_NO_TEMPLATE)
         sys.exit(-1)
-    engine = Engine(options[constants.LABEL_TMPL_DIRS],
-                    options[constants.LABEL_CONFIG_DIR])
+    engine_class = EngineFactory.get_engine(
+        options[constants.LABEL_TEMPLATE_TYPE])
+    engine = engine_class(options[constants.LABEL_TMPL_DIRS],
+                          options[constants.LABEL_CONFIG_DIR])
     engine.render_to_file(
         options[constants.LABEL_TEMPLATE],
         options[constants.LABEL_CONFIG],

@@ -177,3 +177,25 @@ class TestComplexOptions:
     def tearDown(self):
         os.unlink(self.config_file)
         os.unlink(self.data_file)
+
+
+
+class TestTemplateTypeOption:
+    def setUp(self):
+        self.config_file = 'data.yml'
+        with open(self.config_file,'w')as f:
+            f.write("hello: world")
+    
+    @patch("moban.engine.Engine.render_to_file")
+    def test_mako_optoin(self, fake_template_doer):
+        test_args = ["moban", "-t", "a.template", "--template_type", "mako"]
+        with patch.object(sys, 'argv', test_args):
+            main()
+            fake_template_doer.assert_called_with(
+                'a.template', 'data.yml', 'moban.output'
+            )
+
+    def tearDown(self):
+        os.unlink(self.config_file)
+
+

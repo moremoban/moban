@@ -1,9 +1,22 @@
 from jinja2 import Environment, FileSystemLoader
 
-from moban.utils import open_yaml
-
+from moban.utils import open_yaml, load_external_engine
+from moban.constants import DEFAULT_TEMPLATE_TYPE
 
 MESSAGE_TEMPLATING = "Templating %s to %s"
+
+
+class EngineFactory(object):
+    @staticmethod
+    def get_engine(template_type):
+        if template_type == DEFAULT_TEMPLATE_TYPE:
+            return Engine
+        else:
+            try:
+                external_engine = load_external_engine(template_type)
+            except ImportError:
+                raise NotImplementedError("No such template support")
+            return external_engine.get_engine(template_type)
 
 
 class Engine(object):
