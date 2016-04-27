@@ -74,7 +74,7 @@ def apply_template(jj2_template, data, output_file):
     """
     with open(output_file, 'w') as output:
         rendered_content = jj2_template.render(**data)
-        output.write(rendered_content)
+        output.write(rendered_content.encode('utf-8'))
 
 
 class Strategy(object):
