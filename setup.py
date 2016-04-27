@@ -24,7 +24,7 @@ CLASSIFIERS = [
 def read_files(*files):
     text = ""
     for single_file in files:
-        text = text + read(single_file)
+        text = text + read(single_file) + "\n"
     return text
 
 def read(afile):
