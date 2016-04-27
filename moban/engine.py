@@ -72,7 +72,7 @@ def apply_template(jj2_template, data, output_file):
     """
     write templated result
     """
-    with open(output_file, 'w') as output:
+    with open(output_file, 'wb') as output:
         rendered_content = jj2_template.render(**data)
         output.write(rendered_content.encode('utf-8'))
 
