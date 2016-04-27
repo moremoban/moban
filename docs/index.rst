@@ -19,6 +19,8 @@ Tutorial
    level-5-custom-configuration/README.rst
    level-6-complex-configuration/README.rst
 
+.. include:: ../CHANGELOG.rst
+
 Indices and tables
 ==================
 
