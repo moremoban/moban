@@ -2,8 +2,6 @@ sudo: false
 language: python
 notifications:
   email: false
-env:
-  global:
 python:
   - pypy
   - 2.6
@@ -11,6 +9,7 @@ python:
   - 3.3
   - 3.4
   - 3.5
+  - pypy3
 install:
   - pip install -r requirements.txt
   - pip install -r tests/requirements.txt
