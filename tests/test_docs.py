@@ -58,7 +58,7 @@ world
 
 shijie
 
-this demonstrations jinja2's include statement
+this demonstrates jinja2's include statement
 
 ========footer============
 """
@@ -72,7 +72,7 @@ world2
 
 shijie
 
-this demonstrations jinja2's include statement
+this demonstrates jinja2's include statement
 
 ========footer============
 """
