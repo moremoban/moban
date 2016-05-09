@@ -24,6 +24,7 @@ class Engine(object):
         template_loader = FileSystemLoader(template_dirs)
         self.jj2_environment = Environment(
             loader=template_loader,
+            keep_trailing_newline=True,
             trim_blocks=True,
             lstrip_blocks=True)
         self.context = Context(context_dirs)
