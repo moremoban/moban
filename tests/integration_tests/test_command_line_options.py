@@ -3,7 +3,7 @@ import sys
 from shutil import copyfile
 from moban.main import main
 from mock import patch
-from nose.tools import raises
+from nose.tools import raises, assert_raises
 
 
 class TestCustomOptions:
@@ -100,24 +100,38 @@ class TestNoOptions:
         os.unlink(self.data_file)
 
 
-class TestOneOptions:
+class TestNoOptions:
     def setUp(self):
         self.config_file = '.moban.yml'
         copyfile(os.path.join("tests", "fixtures", self.config_file),
                  self.config_file)
+        self.data_file = 'data.yaml'
+        with open(self.data_file,'w')as f:
+            f.write("hello: world")
     
     @patch("moban.engine.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
-        test_args = ["moban", "-c", "splendid.yml"]
+        test_args = ["moban"]
         with patch.object(sys, 'argv', test_args):
             main()
             call_args = list(fake_template_doer.call_args[0][0])
             assert call_args == [
-                ('README.rst', 'splendid.yml', 'README.rst'),
-                ('setup.py', 'splendid.yml', 'setup.py')]
+                ('README.rst', 'data.yaml', 'README.rst'),
+                ('setup.py', 'data.yaml', 'setup.py')]
 
     def tearDown(self):
         os.unlink(self.config_file)
+        os.unlink(self.data_file)
+
+
+def test_duplicated_targets_in_moban_file():
+    config_file = 'duplicated.moban.yml'
+    copyfile(os.path.join("tests", "fixtures", config_file),
+             '.moban.yml')
+    test_args = ["moban"]
+    with patch.object(sys, 'argv', test_args):
+        assert_raises(SyntaxError, main)
+    os.unlink('.moban.yml')
 
 
 class TestInvalidMobanFile:

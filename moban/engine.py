@@ -115,4 +115,7 @@ class Strategy(object):
 def _append_to_array_item_to_dictionary_key(adict, key, array_item):
     if key not in adict:
         adict[key] = []
-    adict[key].append(array_item)
+    if array_item in adict[key]:
+        raise SyntaxError("%s already exists in the target %s" % (array_item, key))
+    else:     
+        adict[key].append(array_item)
