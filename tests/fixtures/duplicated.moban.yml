@@ -1,0 +1,8 @@
+configuration:
+  configuration_dir: "commons/config"
+  template_dir:
+    - "commons/templates"
+    - ".moban.d"
+targets:
+  - setup.py: setup.py
+  - setup.py: setup.py
