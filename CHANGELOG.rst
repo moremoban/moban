@@ -15,7 +15,7 @@ Updated
 Updated
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-#. Bug fix `issue 2 <https://github.com/chfw/moban/issues/2>`_, keep trailing new lines
+#. Bug fix `issue 4 <https://github.com/chfw/moban/issues/4>`_, keep trailing new lines
 
 0.0.2 - 27-Apr-2016
 --------------------------------------------------------------------------------
