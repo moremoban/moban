@@ -7,7 +7,7 @@ CHANGE Log
 Updated
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-#. Bug fix `issue 3 <https://github.com/chfw/moban/issues/3>`_, should detect duplicated targets in `.moban.yml` file.
+#. Bug fix `issue 5 <https://github.com/chfw/moban/issues/5>`_, should detect duplicated targets in `.moban.yml` file.
 
 0.0.3 - 09-May-2016
 --------------------------------------------------------------------------------
