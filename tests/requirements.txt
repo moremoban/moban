@@ -2,3 +2,4 @@ nose
 codecov
 coverage
 mock
+flake8

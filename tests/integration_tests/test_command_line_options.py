@@ -9,9 +9,9 @@ from nose.tools import raises, assert_raises
 class TestCustomOptions:
     def setUp(self):
         self.config_file = 'config.yaml'
-        with open(self.config_file,'w')as f:
+        with open(self.config_file, 'w')as f:
             f.write("hello: world")
-    
+
     @patch("moban.engine.Engine.render_to_file")
     def test_custom_options(self, fake_template_doer):
         test_args = ["moban", "-c", self.config_file,
@@ -23,7 +23,7 @@ class TestCustomOptions:
             fake_template_doer.assert_called_with(
                 'a.template', 'config.yaml', 'moban.output'
             )
-    
+
     @patch("moban.engine.Engine.render_to_file")
     def test_minimal_options(self, fake_template_doer):
         test_args = ["moban", "-c", self.config_file,
@@ -47,9 +47,9 @@ class TestCustomOptions:
 class TestOptions:
     def setUp(self):
         self.config_file = 'data.yml'
-        with open(self.config_file,'w')as f:
+        with open(self.config_file, 'w')as f:
             f.write("hello: world")
-    
+
     @patch("moban.engine.Engine.render_to_file")
     def test_default_options(self, fake_template_doer):
         test_args = ["moban", "-t", "a.template"]
@@ -82,9 +82,9 @@ class TestNoOptions:
         copyfile(os.path.join("tests", "fixtures", self.config_file),
                  self.config_file)
         self.data_file = 'data.yaml'
-        with open(self.data_file,'w')as f:
+        with open(self.data_file, 'w')as f:
             f.write("hello: world")
-    
+
     @patch("moban.engine.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban"]
@@ -100,15 +100,15 @@ class TestNoOptions:
         os.unlink(self.data_file)
 
 
-class TestNoOptions:
+class TestNoOptions2:
     def setUp(self):
         self.config_file = '.moban.yml'
         copyfile(os.path.join("tests", "fixtures", self.config_file),
                  self.config_file)
         self.data_file = 'data.yaml'
-        with open(self.data_file,'w')as f:
+        with open(self.data_file, 'w')as f:
             f.write("hello: world")
-    
+
     @patch("moban.engine.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban"]
@@ -141,7 +141,7 @@ class TestInvalidMobanFile:
     @raises(SystemExit)
     @patch("moban.engine.Engine.render_to_files")
     def test_no_configuration(self, fake_template_doer):
-        with open(self.config_file,'w')as f:
+        with open(self.config_file, 'w')as f:
             f.write("")
         test_args = ["moban"]
         with patch.object(sys, 'argv', test_args):
@@ -150,7 +150,7 @@ class TestInvalidMobanFile:
     @raises(SystemExit)
     @patch("moban.engine.Engine.render_to_files")
     def test_no_configuration_2(self, fake_template_doer):
-        with open(self.config_file,'w')as f:
+        with open(self.config_file, 'w')as f:
             f.write("not: related")
         test_args = ["moban"]
         with patch.object(sys, 'argv', test_args):
@@ -159,7 +159,7 @@ class TestInvalidMobanFile:
     @raises(SystemExit)
     @patch("moban.engine.Engine.render_to_files")
     def test_no_targets(self, fake_template_doer):
-        with open(self.config_file,'w')as f:
+        with open(self.config_file, 'w')as f:
             f.write("configuration: test")
         test_args = ["moban"]
         with patch.object(sys, 'argv', test_args):
@@ -175,9 +175,9 @@ class TestComplexOptions:
         copyfile(os.path.join("tests", "fixtures", ".moban-2.yml"),
                  self.config_file)
         self.data_file = 'data.yaml'
-        with open(self.data_file,'w')as f:
+        with open(self.data_file, 'w')as f:
             f.write("hello: world")
-    
+
     @patch("moban.engine.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban"]
@@ -193,13 +193,12 @@ class TestComplexOptions:
         os.unlink(self.data_file)
 
 
-
 class TestTemplateTypeOption:
     def setUp(self):
         self.config_file = 'data.yml'
-        with open(self.config_file,'w')as f:
+        with open(self.config_file, 'w')as f:
             f.write("hello: world")
-    
+
     @patch("moban.engine.Engine.render_to_file")
     def test_mako_optoin(self, fake_template_doer):
         test_args = ["moban", "-t", "a.template", "--template_type", "mako"]
@@ -211,5 +210,3 @@ class TestTemplateTypeOption:
 
     def tearDown(self):
         os.unlink(self.config_file)
-
-

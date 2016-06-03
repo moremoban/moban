@@ -7,7 +7,7 @@ class TestException:
     def setUp(self):
         self.moban_file = '.moban.yml'
         self.data_file = 'data.yml'
-        
+
     def tearDown(self):
         os.unlink(self.moban_file)
         if os.path.exists(self.data_file):

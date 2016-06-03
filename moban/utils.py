@@ -69,9 +69,11 @@ def parse_targets(options, targets):
     common_data_file = options[constants.LABEL_CONFIG]
     for target in targets:
         if constants.LABEL_OUTPUT in target:
-            template_file = target.get(constants.LABEL_TEMPLATE,
-                                       options.get(constants.LABEL_TEMPLATE, None))
-            data_file = target.get(constants.LABEL_CONFIG, common_data_file)
+            template_file = target.get(
+                constants.LABEL_TEMPLATE,
+                options.get(constants.LABEL_TEMPLATE, None))
+            data_file = target.get(constants.LABEL_CONFIG,
+                                   common_data_file)
             output = target[constants.LABEL_OUTPUT]
             yield((template_file, data_file, output))
         else:

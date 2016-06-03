@@ -13,7 +13,6 @@ class TestTutorial:
         folder = "level-1-jinja2-cli"
         self._moban(folder, expected)
 
-
     def test_level_2(self):
         expected = """========header============
 
@@ -23,7 +22,6 @@ world
 """
         folder = "level-2-template-inheritance"
         self._moban(folder, expected)
-
 
     def test_level_3(self):
         expected = """========header============
@@ -37,7 +35,6 @@ shijie
         folder = "level-3-data-override"
         self._moban(folder, expected)
 
-
     def test_level_4(self):
         expected = """========header============
 
@@ -49,7 +46,6 @@ shijie
 """
         folder = "level-4-single-command"
         self._raw_moban(['moban'], folder, expected, 'a.output')
-
 
     def test_level_5(self):
         expected = """========header============
@@ -79,7 +75,6 @@ this demonstrates jinja2's include statement
         folder = "level-6-complex-configuration"
         self._raw_moban(['moban'], folder, expected, 'a.output2')
 
-
     def _moban(self, folder, expected):
         args = ['moban', '-c', 'data.yml', '-t', 'a.template']
         self._raw_moban(args, folder, expected, 'moban.output')
@@ -99,4 +94,3 @@ def _verify_content(file_name, expected):
     with open(file_name, 'r') as f:
         content = f.read()
         assert content == expected
-

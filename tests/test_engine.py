@@ -8,7 +8,7 @@ def test_default_template_type():
     assert engine_class == Engine
 
 
-def test_default_mako_type(): # fake mako
+def test_default_mako_type():  # fake mako
     engine_class = EngineFactory.get_engine("mako")
     assert engine_class == Engine
 
@@ -16,6 +16,3 @@ def test_default_mako_type(): # fake mako
 @raises(NotImplementedError)
 def test_unknown_template_type():
     EngineFactory.get_engine("unknown_template_type")
-
-
-    

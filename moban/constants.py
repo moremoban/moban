@@ -3,7 +3,8 @@ import os
 
 # Configurations
 PROGRAM_NAME = 'moban'
-PROGRAM_DESCRIPTION = 'Yet another jinja2 cli command for static text generation'
+PROGRAM_DESCRIPTION = ('Yet another jinja2 cli command for static ' +
+                       'text generation')
 DEFAULT_YAML_SUFFIX = '.yml'
 # .moban.yml, default moban configuration file
 DEFAULT_MOBAN_FILE = '.%s%s' % (PROGRAM_NAME, DEFAULT_YAML_SUFFIX)

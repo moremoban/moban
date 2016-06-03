@@ -68,6 +68,7 @@ def test_two_level_conflict():
         }
     }
 
+
 def test_three_level_conflict():
     user = {
         "L1":
@@ -94,4 +95,3 @@ def test_three_level_conflict():
             }
         }
     }
-

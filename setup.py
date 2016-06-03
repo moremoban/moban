@@ -7,7 +7,7 @@ VERSION = '0.0.4'
 EMAIL = "wangc_2011 (at) hotmail.com"
 LICENSE = 'MIT'
 ENTRY_POINTS = {
-    'console_scripts':[
+    'console_scripts': [
         '%s = moban.main:main' % NAME
     ]
 }
@@ -26,6 +26,7 @@ def read_files(*files):
     for single_file in files:
         text = text + read(single_file) + "\n"
     return text
+
 
 def read(afile):
     with open(afile, 'r') as opened_file:
