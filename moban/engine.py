@@ -1,3 +1,4 @@
+from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
 
 from moban.utils import open_yaml, load_external_engine
@@ -83,8 +84,8 @@ class Strategy(object):
     TEMPLATE_FIRST = 2
 
     def __init__(self, array_of_param_tuple):
-        self.data_file_index = {}
-        self.template_file_index = {}
+        self.data_file_index = defaultdict(list)
+        self.template_file_index = defaultdict(list)
         self.tuples = array_of_param_tuple
 
     def process(self):
@@ -113,8 +114,6 @@ class Strategy(object):
 
 
 def _append_to_array_item_to_dictionary_key(adict, key, array_item):
-    if key not in adict:
-        adict[key] = []
     if array_item in adict[key]:
         raise SyntaxError(
             "%s already exists in the target %s" % (array_item,
