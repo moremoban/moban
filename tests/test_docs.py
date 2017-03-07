@@ -87,6 +87,8 @@ this demonstrates jinja2's include statement
         os.unlink(output)
 
     def tearDown(self):
+        if os.path.exists('.moban.hashes'):
+            os.unlink('.moban.hashes')
         os.chdir(self.current)
 
 

@@ -1,7 +1,7 @@
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
 
-from moban.utils import open_yaml, load_external_engine
+from moban.utils import open_yaml, load_external_engine, HashStore
 from moban.constants import DEFAULT_TEMPLATE_TYPE
 
 MESSAGE_TEMPLATING = "Templating %s to %s"
@@ -29,6 +29,7 @@ class Engine(object):
             trim_blocks=True,
             lstrip_blocks=True)
         self.context = Context(context_dirs)
+        self.hash_store = HashStore()
 
     def render_to_file(self, template_file, data_file, output_file):
         template = self.jj2_environment.get_template(template_file)
@@ -44,22 +45,33 @@ class Engine(object):
             self._render_with_finding_data_first(sta.data_file_index)
         else:
             self._render_with_finding_template_first(sta.template_file_index)
+        self.hash_store.close()
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
             template = self.jj2_environment.get_template(template_file)
             for (data_file, output) in data_output_pairs:
-                print(MESSAGE_TEMPLATING % (template_file, output))
                 data = self.context.get_data(data_file)
-                apply_template(template, data, output)
+                flag = self._apply_template(template, data, output)
+                if flag:
+                    print(MESSAGE_TEMPLATING % (template_file, output))
 
     def _render_with_finding_data_first(self, data_file_index):
         for (data_file, template_output_pairs) in data_file_index.items():
             data = self.context.get_data(data_file)
             for (template_file, output) in template_output_pairs:
-                print(MESSAGE_TEMPLATING % (template_file, output))
                 template = self.jj2_environment.get_template(template_file)
-                apply_template(template, data, output)
+                flag = self._apply_template(template, data, output)
+                if flag:
+                    print(MESSAGE_TEMPLATING % (template_file, output))
+
+    def _apply_template(self, template, data, output):
+        rendered_content = template.render(**data).encode('utf-8')
+        flag = self.hash_store.is_file_changed(output, rendered_content)
+        if flag:
+            with open(output, 'wb') as out:
+                out.write(rendered_content)
+        return flag
 
 
 class Context(object):

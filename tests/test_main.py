@@ -12,6 +12,8 @@ class TestException:
         os.unlink(self.moban_file)
         if os.path.exists(self.data_file):
             os.unlink(self.data_file)
+        if os.path.exists('.moban.hashes'):
+            os.unlink('.moban.hashes')
 
     @raises(NotImplementedError)
     def test_vhandle_moban_file(self):

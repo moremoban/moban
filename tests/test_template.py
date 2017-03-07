@@ -24,6 +24,8 @@ def test_do_templates_1(_do_templates_with_more_shared_data):
     engine = Engine('.', '.')
     engine.render_to_files(jobs)
     _do_templates_with_more_shared_data.assert_called_with(expected)
+    if os.path.exists('.moban.hashes'):
+        os.unlink('.moban.hashes')
 
 
 @patch("moban.engine.Engine._render_with_finding_template_first")
@@ -47,6 +49,8 @@ def test_do_templates_2(_do_templates_with_more_shared_templates):
     engine = Engine('.', '.')
     engine.render_to_files(jobs)
     _do_templates_with_more_shared_templates.assert_called_with(expected)
+    if os.path.exists('.moban.hashes'):
+        os.unlink('.moban.hashes')
 
 
 def test_do_templates_with_more_shared_templates():
@@ -60,6 +64,8 @@ def test_do_templates_with_more_shared_templates():
         content = f.read()
         assert content == "hello world ox"
     os.unlink("test")
+    if os.path.exists('.moban.hashes'):
+        os.unlink('.moban.hashes')
 
 
 def test_do_templates_with_more_shared_data():
@@ -72,3 +78,5 @@ def test_do_templates_with_more_shared_data():
         content = f.read()
         assert content == "hello world ox"
     os.unlink("test")
+    if os.path.exists('.moban.hashes'):
+        os.unlink('.moban.hashes')

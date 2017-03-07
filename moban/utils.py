@@ -1,6 +1,8 @@
 import os
 import sys
 import yaml
+import json
+import hashlib
 
 import moban.constants as constants
 
@@ -89,3 +91,33 @@ def load_external_engine(template_type):
         raise
     module = sys.modules[module_name]
     return module
+
+
+class HashStore:
+    def __init__(self):
+        self.cache_file = '.moban.hashes'
+        if os.path.exists(self.cache_file):
+            with open(self.cache_file, 'r') as f:
+                self.hashes = json.load(f)
+        else:
+            self.hashes = {}
+
+    def is_file_changed(self, file_name, file_content):
+        ret = True
+        content_hash = get_hash(file_content)
+        if file_name in self.hashes:
+            if content_hash == self.hashes[file_name]:
+                ret = False
+        else:
+            self.hashes[file_name] = content_hash
+        return ret
+
+    def close(self):
+        with open(self.cache_file, 'w') as f:
+            json.dump(self.hashes, f)
+
+
+def get_hash(content):
+    md5 = hashlib.md5()
+    md5.update(content)
+    return md5.digest().decode('latin1')
