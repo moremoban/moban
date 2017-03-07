@@ -35,7 +35,9 @@ class Engine(object):
         template = self.jj2_environment.get_template(template_file)
         data = self.context.get_data(data_file)
         print(MESSAGE_TEMPLATING % (template_file, output_file))
-        apply_template(template, data, output_file)
+        with open(output_file, 'wb') as output:
+            rendered_content = template.render(**data)
+            output.write(rendered_content.encode('utf-8'))
 
     def render_to_files(self, array_of_param_tuple):
         sta = Strategy(array_of_param_tuple)
@@ -80,15 +82,6 @@ class Context(object):
 
     def get_data(self, file_name):
         return open_yaml(self.context_dirs, file_name)
-
-
-def apply_template(jj2_template, data, output_file):
-    """
-    write templated result
-    """
-    with open(output_file, 'wb') as output:
-        rendered_content = jj2_template.render(**data)
-        output.write(rendered_content.encode('utf-8'))
 
 
 class Strategy(object):
