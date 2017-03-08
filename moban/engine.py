@@ -7,6 +7,7 @@ from moban.constants import DEFAULT_TEMPLATE_TYPE
 MESSAGE_TEMPLATING = "Templating %s to %s"
 MESSAGE_NO_ACTION = "No file for templating!"
 MESSAGE_REPORT = "Templated %s out of %s files."
+MESSAGE_TEMPLATED_ALL = "Templated %s files."
 
 
 class EngineFactory(object):
@@ -56,6 +57,8 @@ class Engine(object):
     def report(self):
         if self.__templated_count == 0:
             print(MESSAGE_NO_ACTION)
+        elif self.__templated_count == self.__file_count:
+            print(MESSAGE_TEMPLATED_ALL % self.__file_count)
         else:
             print(MESSAGE_REPORT % (self.__templated_count,
                                     self.__file_count))
