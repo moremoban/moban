@@ -108,7 +108,7 @@ class HashStore:
         if file_name in self.hashes:
             if content_hash == self.hashes[file_name]:
                 ret = False
-        else:
+        if ret:
             self.hashes[file_name] = content_hash
         return ret
 
