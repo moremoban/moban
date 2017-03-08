@@ -5,6 +5,8 @@ from moban.utils import open_yaml, load_external_engine, HashStore
 from moban.constants import DEFAULT_TEMPLATE_TYPE
 
 MESSAGE_TEMPLATING = "Templating %s to %s"
+MESSAGE_NO_ACTION = "No file for templating!"
+MESSAGE_REPORT = "Templated %s out of %s files."
 
 
 class EngineFactory(object):
@@ -30,6 +32,8 @@ class Engine(object):
             lstrip_blocks=True)
         self.context = Context(context_dirs)
         self.hash_store = HashStore()
+        self.__file_count = 0
+        self.__templated_count = 0
 
     def render_to_file(self, template_file, data_file, output_file):
         template = self.jj2_environment.get_template(template_file)
@@ -49,6 +53,13 @@ class Engine(object):
             self._render_with_finding_template_first(sta.template_file_index)
         self.hash_store.close()
 
+    def report(self):
+        if self.__templated_count == 0:
+            print(MESSAGE_NO_ACTION)
+        else:
+            print(MESSAGE_REPORT % (self.__templated_count,
+                                    self.__file_count))
+
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
             template = self.jj2_environment.get_template(template_file)
@@ -57,6 +68,8 @@ class Engine(object):
                 flag = self._apply_template(template, data, output)
                 if flag:
                     print(MESSAGE_TEMPLATING % (template_file, output))
+                    self.__templated_count += 1
+                self.__file_count += 1
 
     def _render_with_finding_data_first(self, data_file_index):
         for (data_file, template_output_pairs) in data_file_index.items():
@@ -66,6 +79,8 @@ class Engine(object):
                 flag = self._apply_template(template, data, output)
                 if flag:
                     print(MESSAGE_TEMPLATING % (template_file, output))
+                    self.__templated_count += 1
+                self.__file_count += 1
 
     def _apply_template(self, template, data, output):
         rendered_content = template.render(**data).encode('utf-8')
