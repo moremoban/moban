@@ -1,7 +1,7 @@
 CHANGE Log
 ================================================================================
 
-0.0.5 - unreleased
+0.0.5 - 17-Mar-2017
 --------------------------------------------------------------------------------
 
 Added
@@ -9,6 +9,7 @@ Added
 
 #. Create a default hash store when processing a moban file. It will save
    unnecessary file write to the disc if the rendered content is not changed.
+#. Added summary reports
 
 0.0.4 - 11-May-2016
 --------------------------------------------------------------------------------
