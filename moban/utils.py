@@ -116,8 +116,8 @@ class HashStore:
 
     def _is_source_updated(self, file_name, file_content):
         changed = True
+        content_hash = get_hash(file_content)
         if os.path.exists(file_name):
-            content_hash = get_hash(file_content)
             if file_name in self.hashes:
                 if content_hash == self.hashes[file_name]:
                     changed = False
@@ -125,6 +125,8 @@ class HashStore:
         # so no need to get content hash at all
         if changed:
             self.hashes[file_name] = content_hash
+
+        return changed
 
     def close(self):
         with open(self.cache_file, 'w') as f:
