@@ -28,7 +28,7 @@ class TestHashStore:
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
         if flag:
-            with open(self.fixture[0], 'w') as f:
+            with open(self.fixture[0], 'wb') as f:
                 f.write(self.fixture[1])
         hs.close()
         hs2 = HashStore()
