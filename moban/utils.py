@@ -105,14 +105,26 @@ class HashStore:
             self.hashes = {}
 
     def is_file_changed(self, file_name, file_content):
-        ret = True
-        content_hash = get_hash(file_content)
-        if file_name in self.hashes:
-            if content_hash == self.hashes[file_name]:
-                ret = False
-        if ret:
+        changed = self._is_source_updated(file_name, file_content)
+
+        if changed is False:
+            with open(file_name, 'r') as target_file:
+                target_hash = get_hash(target_file.read())
+                if target_hash != self.hashes[file_name]:
+                    changed = True
+        return changed
+
+    def _is_source_updated(self, file_name, file_content):
+        changed = True
+        if os.path.exists(file_name):
+            content_hash = get_hash(file_content)
+            if file_name in self.hashes:
+                if content_hash == self.hashes[file_name]:
+                    changed = False
+        # else the dest file has not been created yet
+        # so no need to get content hash at all
+        if changed:
             self.hashes[file_name] = content_hash
-        return ret
 
     def close(self):
         with open(self.cache_file, 'w') as f:
