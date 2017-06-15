@@ -13,7 +13,7 @@ import os
 import sys
 import argparse
 
-from moban.utils import merge, open_yaml
+from moban.utils import merge, open_yaml, HashStore
 from moban.engine import EngineFactory
 import moban.constants as constants
 from moban.mobanfile import handle_moban_file_v1
@@ -32,6 +32,7 @@ def main():
     """
     parser = create_parser()
     options = vars(parser.parse_args())
+    HashStore.IGNORE_CACHE_FILE = options['force']
     if os.path.exists(constants.DEFAULT_MOBAN_FILE):
         handle_moban_file(options)
     else:
@@ -68,6 +69,10 @@ def create_parser():
     parser.add_argument(
         '--%s' % constants.LABEL_TEMPLATE_TYPE,
         help="the template type, default is jinja2"
+    )
+    parser.add_argument(
+        '-f', action='store_true', dest='force', default=False,
+        help="force moban to template all files despite of .moban.hashes"
     )
     return parser
 

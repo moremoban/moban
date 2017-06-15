@@ -94,9 +94,11 @@ def load_external_engine(template_type):
 
 
 class HashStore:
+    IGNORE_CACHE_FILE = False
+
     def __init__(self):
         self.cache_file = '.moban.hashes'
-        if os.path.exists(self.cache_file):
+        if os.path.exists(self.cache_file) and self.IGNORE_CACHE_FILE is False:
             with open(self.cache_file, 'r') as f:
                 self.hashes = json.load(f)
         else:
