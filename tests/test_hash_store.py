@@ -59,7 +59,7 @@ class TestHashStore:
         hs2.close()
         # now let update the generated file
         hs3 = HashStore()
-        with open(self.fixture[0], 'wb') as f:
+        with open(self.fixture[0], 'w') as f:
             f.write('hey changed')
         flag = hs3.is_file_changed(*self.fixture)
         assert flag is True
