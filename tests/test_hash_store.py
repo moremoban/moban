@@ -36,3 +36,32 @@ class TestHashStore:
         assert flag is False
         hs2.close()
         os.unlink(self.fixture[0])
+
+    def test_dest_file_changed(self):
+        """
+        The situation is:
+
+        moban once
+        then update the generated file
+        moban again, and the generated file should be detected
+        and get templated
+        """
+        hs = HashStore()
+        flag = hs.is_file_changed(*self.fixture)
+        if flag:
+            with open(self.fixture[0], 'wb') as f:
+                f.write(self.fixture[1])
+        hs.close()
+        # no change
+        hs2 = HashStore()
+        flag = hs2.is_file_changed(*self.fixture)
+        assert flag is False
+        hs2.close()
+        # now let update the generated file
+        hs3 = HashStore()
+        with open(self.fixture[0], 'wb') as f:
+            f.write('hey changed')
+        flag = hs3.is_file_changed(*self.fixture)
+        assert flag is True
+        hs3.close()
+        os.unlink(self.fixture[0])
