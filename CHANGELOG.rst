@@ -1,6 +1,21 @@
 CHANGE Log
 ================================================================================
 
+0.0.6 - unreleased
+--------------------------------------------------------------------------------
+
+Added
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#. added '-f' flag to force moban to template all files despite of .moban.hashes
+
+Updated
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#. moban would check target file in the situation where the changes happened in
+   target file than in the source: the template file + the data configuration
+   after moban has been applied.
+
 0.0.5 - 17-Mar-2017
 --------------------------------------------------------------------------------
 
@@ -17,7 +32,8 @@ Added
 Updated
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-#. Bug fix `issue 5 <https://github.com/chfw/moban/issues/5>`_, should detect duplicated targets in `.moban.yml` file.
+#. Bug fix `issue 5 <https://github.com/chfw/moban/issues/5>`_, should detect
+   duplicated targets in `.moban.yml` file.
 
 0.0.3 - 09-May-2016
 --------------------------------------------------------------------------------
@@ -25,7 +41,8 @@ Updated
 Updated
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-#. Bug fix `issue 4 <https://github.com/chfw/moban/issues/4>`_, keep trailing new lines
+#. Bug fix `issue 4 <https://github.com/chfw/moban/issues/4>`_, keep trailing
+   new lines
 
 0.0.2 - 27-Apr-2016
 --------------------------------------------------------------------------------
@@ -33,7 +50,8 @@ Updated
 Updated
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-#. Bug fix `issue 1 <https://github.com/chfw/moban/issues/1>`_, failed to save utf-8 characters
+#. Bug fix `issue 1 <https://github.com/chfw/moban/issues/1>`_, failed to save
+   utf-8 characters
 
 
 0.0.1 - 23-Mar-2016

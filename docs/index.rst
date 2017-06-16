@@ -9,6 +9,9 @@
 Tutorial
 ==========================================================================================
 
+Please clone the moban repository as the data mentioned in the tutorial are stored in
+examples folder.
+
 .. toctree::
    :maxdepth: 1
 
