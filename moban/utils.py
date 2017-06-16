@@ -108,7 +108,7 @@ class HashStore:
         changed = self._is_source_updated(file_name, file_content)
 
         if changed is False:
-            with open(file_name, 'r') as target_file:
+            with open(file_name, 'rb') as target_file:
                 target_hash = get_hash(target_file.read())
                 if target_hash != self.hashes[file_name]:
                     changed = True
