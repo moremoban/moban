@@ -1,7 +1,7 @@
 CHANGE Log
 ================================================================================
 
-0.0.6 - unreleased
+0.0.6 - 16-Jun-2017
 --------------------------------------------------------------------------------
 
 Added
@@ -12,9 +12,10 @@ Added
 Updated
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-#. moban would check target file in the situation where the changes happened in
-   target file than in the source: the template file + the data configuration
-   after moban has been applied.
+#. moban will not template target file in the situation where the changes
+   occured in target file than in the source: the template file + the data
+   configuration after moban has been applied. This new release will remove the
+   change during mobanization process.
 
 0.0.5 - 17-Mar-2017
 --------------------------------------------------------------------------------
