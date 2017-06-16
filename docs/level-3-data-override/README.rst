@@ -12,6 +12,8 @@ And `.moban.cd` is the default directory where the base data file can be placed.
 Evaluation
 --------------------------------------------------------------------------------
 
+Please change directory to `docs/level-3-data-override` directory.
+
 In this example, `data.yaml` overrides `.moban.cd/data.base.yaml`, here is the
 command to launch it:
 

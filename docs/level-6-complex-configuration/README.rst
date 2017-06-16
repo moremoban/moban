@@ -31,6 +31,8 @@ default template across `targets`. And in this example, the expand form of
 Evaluation
 --------------------------------------------------------------------------------
 
+Please go to `docs/level-6-complex-configuration` directory.
+
 Here is the command to launch it:
 
 .. code-block:: bash

@@ -22,6 +22,8 @@ examples folder.
    level-5-custom-configuration/README.rst
    level-6-complex-configuration/README.rst
 
+For more complex use case, please look at `its usage in pyexcel project <http://pyexcel.readthedocs.io/en/latest/guide.html>`_
+
 .. include:: ../CHANGELOG.rst
 
 Indices and tables

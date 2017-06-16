@@ -9,6 +9,9 @@ iterate through a number of files
 Evaluation
 --------------------------------------------------------------------------------
 
+Please go to `docs/level-4-single-command` directory.
+
+
 Here is the `.moban.yml`, whihc replaces the command in level 3::
 
     targets:

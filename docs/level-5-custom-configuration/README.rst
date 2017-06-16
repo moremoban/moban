@@ -23,6 +23,9 @@ where `configuration` lead a dictionary of key words:
 Evaluation
 --------------------------------------------------------------------------------
 
+Please go to `docs/level-5-custom-configuration` directory.
+
+
 Here is the command to launch it:
 
 .. code-block:: bash

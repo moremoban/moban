@@ -9,9 +9,10 @@ template directory.
 Evaluation
 --------------------------------------------------------------------------------
 
-`a.template` inherits `.moban.td/base.jj2` and here is the command to launch it:
+Please go to `docs/level-2-template-inheritance`, here is the command to launch it:
 
 .. code-block:: bash
 
     moban -c data.yaml -t a.template
 
+`a.template` inherits `.moban.td/base.jj2`.

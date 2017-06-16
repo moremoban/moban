@@ -74,7 +74,7 @@ Usage
 
 usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
              [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-t TEMPLATE]
-             [--template_type TEMPLATE_TYPE] [-o OUTPUT]
+             [--template_type TEMPLATE_TYPE] [-o OUTPUT] [-f]
 
 Yet another jinja2 cli command for static text generation
 
@@ -96,3 +96,5 @@ optional arguments
   the template type, default is jinja2
 * `-o OUTPUT, --output OUTPUT`
   the output file
+* `-f`
+  force moban to template all files despite of .moban.hashes
