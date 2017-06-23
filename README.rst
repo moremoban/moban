@@ -20,8 +20,8 @@ moban - 模板 Yet another jinja2 cli command for static text generation
 
 
 **moban** brings the high performance template engine (JINJA2) for web into
-static text generation.
-
+static text generation. It is used in pyexcel project to keep documentation
+consistent across the documentations of individual libraries.
 
 
 Installation
