@@ -11,6 +11,8 @@ moban - 模板 Yet another jinja2 cli command for static text generation
 .. image:: https://readthedocs.org/projects/moban/badge/?version=latest
     :target: http://moban.readthedocs.org/en/latest/
 
+.. image:: https://img.shields.io/gitter/room/gitterHQ/gitter.svg
+   :target: https://gitter.im/chfw_moban/Lobby
 
 :Author: C.W.
 :Issues: http://github.com/chfw/moban/issues
