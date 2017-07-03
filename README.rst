@@ -2,11 +2,11 @@
 moban - 模板 Yet another jinja2 cli command for static text generation
 ================================================================================
 
-.. image:: https://api.travis-ci.org/chfw/moban.svg?branch=master
-   :target: http://travis-ci.org/chfw/moban
+.. image:: https://api.travis-ci.org/moremoban/moban.svg?branch=master
+   :target: http://travis-ci.org/moremoban/moban
 
-.. image:: https://codecov.io/github/chfw/moban/coverage.png
-    :target: https://codecov.io/github/chfw/moban
+.. image:: https://codecov.io/github/moremoban/moban/coverage.png
+    :target: https://codecov.io/github/moremoban/moban
 
 .. image:: https://readthedocs.org/projects/moban/badge/?version=latest
     :target: http://moban.readthedocs.org/en/latest/
@@ -15,7 +15,7 @@ moban - 模板 Yet another jinja2 cli command for static text generation
    :target: https://gitter.im/chfw_moban/Lobby
 
 :Author: C.W.
-:Issues: http://github.com/chfw/moban/issues
+:Issues: http://github.com/moremoban/moban/issues
 :License: MIT
 :Version: |version|
 :Generated: |today|
@@ -39,7 +39,7 @@ or clone it and install it:
 
 .. code-block:: bash
 
-    $ git clone http://github.com/chfw/moban.git
+    $ git clone http://github.com/moremoban/moban.git
     $ cd moban
     $ python setup.py install
 
