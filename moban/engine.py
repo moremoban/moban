@@ -100,8 +100,8 @@ class Engine(object):
 class Context(object):
     def __init__(self, context_dirs):
         self.context_dirs = context_dirs
-        self.__cached_environ_variables = {
-            key: os.environ[key] for key in os.environ}
+        self.__cached_environ_variables = dict(
+            (key, os.environ[key]) for key in os.environ)
 
     def get_data(self, file_name):
         data = open_yaml(self.context_dirs, file_name)
