@@ -1,7 +1,10 @@
+import os
+
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
 
-from moban.utils import open_yaml, load_external_engine, HashStore
+from moban.utils import (open_yaml, load_external_engine,
+                         HashStore, merge)
 from moban.constants import DEFAULT_TEMPLATE_TYPE
 
 MESSAGE_TEMPLATING = "Templating %s to %s"
@@ -97,9 +100,13 @@ class Engine(object):
 class Context(object):
     def __init__(self, context_dirs):
         self.context_dirs = context_dirs
+        self.__cached_environ_variables = {
+            key: os.environ[key] for key in os.environ}
 
     def get_data(self, file_name):
-        return open_yaml(self.context_dirs, file_name)
+        data = open_yaml(self.context_dirs, file_name)
+        merge(data, self.__cached_environ_variables)
+        return data
 
 
 class Strategy(object):

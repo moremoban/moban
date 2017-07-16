@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 NAME = 'moban'
 AUTHOR = 'C.W.'
-VERSION = '0.0.6'
+VERSION = '0.0.7'
 EMAIL = "wangc_2011 (at) hotmail.com"
 LICENSE = 'MIT'
 ENTRY_POINTS = {
