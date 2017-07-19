@@ -1,0 +1,7 @@
+configuration:
+  template_dir:
+    - "setupmobans/templates"
+    - ".moban.d"
+  configuration: moban.yml
+targets:
+  - setup.py: setup.py.jj2

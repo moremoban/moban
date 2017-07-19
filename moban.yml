@@ -1,0 +1,18 @@
+name: moban
+organisation: moremoban
+author: C. W.
+contact: wangc_2011@hotmail.com
+license: MIT
+version: 0.0.7
+current_version: 0.0.7
+release: 0.0.7
+branch: master
+command_line_interface: "moban"
+entry_point: "moban.main:main"
+keywords:
+  - jinja2
+  - moban
+dependencies:
+  - pyyaml>=3.11
+  - jinja2>=2.7.1
+description: Yet another jinja2 cli command for static text generation
