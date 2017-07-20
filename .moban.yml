@@ -5,3 +5,4 @@ configuration:
   configuration: moban.yml
 targets:
   - setup.py: setup.py
+  - .travis.yml: travis.yml.jj2
