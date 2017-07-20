@@ -4,4 +4,4 @@ configuration:
     - ".moban.d"
   configuration: moban.yml
 targets:
-  - setup.py: setup.py.jj2
+  - setup.py: setup.py

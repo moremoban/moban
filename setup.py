@@ -4,7 +4,6 @@ except ImportError:
     from ez_setup import use_setuptools
     use_setuptools()
     from setuptools import setup, find_packages
-from platform import python_implementation
 import sys
 PY2 = sys.version_info[0] == 2
 PY26 = PY2 and sys.version_info[1] < 7
@@ -94,7 +93,7 @@ def filter_out_test_code(file_handle):
         else:
             for keyword in ['|version|', '|today|']:
                 if keyword in line:
-                   break
+                    break
             else:
                 yield line
 
