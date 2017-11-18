@@ -5,8 +5,8 @@ moban - 模板 Yet another jinja2 cli command for static text generation
 .. image:: https://api.travis-ci.org/moremoban/moban.svg?branch=master
    :target: http://travis-ci.org/moremoban/moban
 
-.. image:: https://codecov.io/github/moremoban/moban/coverage.png
-    :target: https://codecov.io/github/moremoban/moban
+.. image:: https://codecov.io/gh/moremoban/moban/coverage.png
+    :target: https://codecov.io/gh/moremoban/moban
 
 .. image:: https://readthedocs.org/projects/moban/badge/?version=latest
     :target: http://moban.readthedocs.org/en/latest/
