@@ -10,6 +10,9 @@ DEFAULT_YAML_SUFFIX = '.yml'
 DEFAULT_MOBAN_FILE = '.%s%s' % (PROGRAM_NAME, DEFAULT_YAML_SUFFIX)
 DEFAULT_TEMPLATE_TYPE = 'jinja2'
 
+# .moban.hashes
+DEFAULT_MOBAN_CACHE_FILE = '.moban.hashes'
+
 # Command line options
 LABEL_CONFIG = 'configuration'
 LABEL_CONFIG_DIR = 'configuration_dir'
@@ -18,6 +21,8 @@ LABEL_TMPL_DIRS = 'template_dir'
 LABEL_OUTPUT = 'output'
 LABEL_TEMPLATE_TYPE = 'template_type'
 LABEL_TARGETS = 'targets'
+LABEL_OVERRIDES = 'overrides'
+
 DEFAULT_CONFIGURATION_DIRNAME = '.moban.cd'
 DEFAULT_TEMPLATE_DIRNAME = '.moban.td'
 DEFAULT_OPTIONS = {
@@ -35,3 +40,18 @@ DEFAULT_OPTIONS = {
 # moban file version
 MOBAN_VERSION = "version"
 DEFAULT_MOBAN_VERSION = 1.0
+
+# error messages
+ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"
+ERROR_DATA_FILE_ABSENT = "File %s does not exist"
+
+MESSAGE_SYNTAX_ERROR = "%s already exists in the target %s"
+MESSAGE_DIR_NOT_EXIST = "%s does not exist"
+MESSAGE_NO_THIRD_PARTY_ENGINE = "No such template support"
+MESSAGE_FILE_VERSION_NOT_SUPPORTED = "moban file version %d is not supported"
+
+# I/O messages
+# Error handling
+ERROR_INVALID_MOBAN_FILE = "%s is an invalid yaml file."
+ERROR_NO_TARGETS = "No targets in %s"
+ERROR_NO_TEMPLATE = "No template found"

@@ -20,12 +20,6 @@ from moban.mobanfile import handle_moban_file_v1
 import moban.exceptions as exceptions
 import moban.reporter as reporter
 
-# I/O messages
-# Error handling
-ERROR_INVALID_MOBAN_FILE = "%s is an invalid yaml file."
-ERROR_NO_TARGETS = "No targets in %s"
-ERROR_NO_TEMPLATE = "No template found"
-
 
 def main():
     """
@@ -91,10 +85,12 @@ def handle_moban_file(options):
         None,
         constants.DEFAULT_MOBAN_FILE)
     if moban_file_configurations is None:
-        print(ERROR_INVALID_MOBAN_FILE % constants.DEFAULT_MOBAN_FILE)
+        reporter.report_error_message(
+            constants.ERROR_INVALID_MOBAN_FILE % constants.DEFAULT_MOBAN_FILE)
         sys.exit(-1)
     if constants.LABEL_TARGETS not in moban_file_configurations:
-        print(ERROR_NO_TARGETS % constants.DEFAULT_MOBAN_FILE)
+        reporter.report_error_message(
+            constants.ERROR_NO_TARGETS % constants.DEFAULT_MOBAN_FILE)
         sys.exit(0)
     version = moban_file_configurations.get(
         constants.MOBAN_VERSION,
@@ -104,7 +100,7 @@ def handle_moban_file(options):
         handle_moban_file_v1(moban_file_configurations, options)
     else:
         raise NotImplementedError(
-            "moban file version %d is not supported" % version)
+            constants.MESSAGE_FILE_VERSION_NOT_SUPPORTED % version)
 
 
 def handle_command_line(options):
@@ -113,7 +109,7 @@ def handle_command_line(options):
     """
     options = merge(options, constants.DEFAULT_OPTIONS)
     if options[constants.LABEL_TEMPLATE] is None:
-        print(ERROR_NO_TEMPLATE)
+        reporter.report_error_message(constants.ERROR_NO_TEMPLATE)
         sys.exit(-1)
     engine_class = EngineFactory.get_engine(
         options[constants.LABEL_TEMPLATE_TYPE])

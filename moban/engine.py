@@ -19,7 +19,8 @@ class EngineFactory(object):
             try:
                 external_engine = load_external_engine(template_type)
             except ImportError:
-                raise exceptions.NoThirdPartyEngine("No such template support")
+                raise exceptions.NoThirdPartyEngine(
+                    constants.MESSAGE_NO_THIRD_PARTY_ENGINE)
             return external_engine.get_engine(template_type)
 
 
@@ -146,8 +147,7 @@ class Strategy(object):
 def _append_to_array_item_to_dictionary_key(adict, key, array_item):
     if array_item in adict[key]:
         raise SyntaxError(
-            "%s already exists in the target %s" % (array_item,
-                                                    key))
+            constants.MESSAGE_SYNTAX_ERROR % (array_item, key))
     else:
         adict[key].append(array_item)
 
@@ -156,14 +156,16 @@ def verify_the_existence_of_directories(dirs):
     if not isinstance(dirs, list):
         dirs = [dirs]
     for directory in dirs:
-        if not os.path.exists(directory):
-            should_I_ignore = (
-                constants.DEFAULT_CONFIGURATION_DIRNAME in directory or
-                constants.DEFAULT_TEMPLATE_DIRNAME in directory
-            )
-            if should_I_ignore:
-                # ignore
-                pass
-            else:
-                raise exceptions.DirectoryNotFound(
-                    "%s does not exist" % os.path.abspath(directory))
+        if os.path.exists(directory):
+            continue
+        should_I_ignore = (
+            constants.DEFAULT_CONFIGURATION_DIRNAME in directory or
+            constants.DEFAULT_TEMPLATE_DIRNAME in directory
+        )
+        if should_I_ignore:
+            # ignore
+            pass
+        else:
+            raise exceptions.DirectoryNotFound(
+                constants.MESSAGE_DIR_NOT_EXIST % os.path.abspath(
+                    directory))

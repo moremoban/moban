@@ -3,7 +3,7 @@ from mock import patch
 import moban.reporter as reporter
 from nose.tools import eq_
 
-PY2 = sys.info[0] == 2
+PY2 = sys.version_info[0] == 2
 if PY2:
     from StringIO import StringIO
 else:
