@@ -13,7 +13,7 @@ def test_default_mako_type():  # fake mako
     assert engine_class == Engine
 
 
-@raises(NotImplementedError)
+@raises(exceptions.NoThirdPartyEngine)
 def test_unknown_template_type():
     EngineFactory.get_engine("unknown_template_type")
 
