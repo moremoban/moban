@@ -146,7 +146,7 @@ class Strategy(object):
 
 def _append_to_array_item_to_dictionary_key(adict, key, array_item):
     if array_item in adict[key]:
-        raise SyntaxError(
+        raise exceptions.MobanfileGrammarException(
             constants.MESSAGE_SYNTAX_ERROR % (array_item, key))
     else:
         adict[key].append(array_item)

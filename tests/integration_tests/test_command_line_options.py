@@ -147,7 +147,7 @@ def test_duplicated_targets_in_moban_file(fake_verify):
              '.moban.yml')
     test_args = ["moban"]
     with patch.object(sys, 'argv', test_args):
-        assert_raises(SyntaxError, main)
+        assert_raises(SystemExit, main)
     os.unlink('.moban.yml')
 
 

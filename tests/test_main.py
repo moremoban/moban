@@ -35,6 +35,7 @@ class TestException:
         import moban.main as main
         main.handle_moban_file({})
 
+    @raises(SystemExit)
     @patch('os.path.exists')
     @patch('moban.main.handle_moban_file')
     @patch('moban.reporter.report_error_message')
@@ -45,8 +46,8 @@ class TestException:
         from moban.main import main
         with patch.object(sys, 'argv', ['moban']):
             main()
-        assert fake_reporter.called
 
+    @raises(SystemExit)
     @patch('os.path.exists')
     @patch('moban.main.handle_moban_file')
     @patch('moban.reporter.report_error_message')
@@ -57,4 +58,3 @@ class TestException:
         from moban.main import main
         with patch.object(sys, 'argv', ['moban']):
             main()
-        assert fake_reporter.called

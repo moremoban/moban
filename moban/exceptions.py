@@ -8,3 +8,7 @@ class NoThirdPartyEngine(Exception):
 
 class MobanfileGrammarException(Exception):
     pass
+
+
+class NoTemplate(Exception):
+    pass

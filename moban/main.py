@@ -31,15 +31,17 @@ def main():
     if os.path.exists(constants.DEFAULT_MOBAN_FILE):
         try:
             handle_moban_file(options)
-        except exceptions.DirectoryNotFound as e:
-            reporter.report_error_message(str(e))
-        except exceptions.NoThirdPartyEngine as e:
-            reporter.report_error_message(str(e))
-        except exceptions.MobanfileGrammarException as e:
+        except (exceptions.DirectoryNotFound,
+                exceptions.NoThirdPartyEngine,
+                exceptions.MobanfileGrammarException) as e:
             reporter.report_error_message(str(e))
             sys.exit(-1)
     else:
-        handle_command_line(options)
+        try:
+            handle_command_line(options)
+        except exceptions.NoTemplate as e:
+            reporter.report_error_message(str(e))
+            sys.exit(-1)
 
 
 def create_parser():
@@ -110,8 +112,7 @@ def handle_command_line(options):
     """
     options = merge(options, constants.DEFAULT_OPTIONS)
     if options[constants.LABEL_TEMPLATE] is None:
-        reporter.report_error_message(constants.ERROR_NO_TEMPLATE)
-        sys.exit(-1)
+        raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
     engine_class = EngineFactory.get_engine(
         options[constants.LABEL_TEMPLATE_TYPE])
     engine = engine_class(options[constants.LABEL_TMPL_DIRS],
