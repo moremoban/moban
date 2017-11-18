@@ -32,9 +32,9 @@ def main():
         try:
             handle_moban_file(options)
         except exceptions.DirectoryNotFound as e:
-            reporter.report_error_message(e)
+            reporter.report_error_message(str(e))
         except exceptions.NoThirdPartyEngine as e:
-            reporter.report_error_message(e)
+            reporter.report_error_message(str(e))
         except exceptions.MobanfileGrammarException as e:
             reporter.report_error_message(str(e))
             sys.exit(-1)
