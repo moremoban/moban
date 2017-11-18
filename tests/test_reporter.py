@@ -1,7 +1,13 @@
+import sys
 from mock import patch
 import moban.reporter as reporter
-from StringIO import StringIO
 from nose.tools import eq_
+
+PY2 = sys.info[0] == 2
+if PY2:
+    from StringIO import StringIO
+else:
+    from io import StringIO
 
 
 def test_partial_run():
