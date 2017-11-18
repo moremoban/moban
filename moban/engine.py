@@ -5,7 +5,8 @@ from jinja2 import Environment, FileSystemLoader
 
 from moban.utils import (open_yaml, load_external_engine,
                          HashStore, merge)
-from moban.constants import DEFAULT_TEMPLATE_TYPE
+import moban.constants as constants
+import moban.exceptions as exceptions
 
 MESSAGE_TEMPLATING = "Templating %s to %s"
 MESSAGE_NO_ACTION = "No file for templating!"
@@ -16,7 +17,7 @@ MESSAGE_TEMPLATED_ALL = "Templated %s files."
 class EngineFactory(object):
     @staticmethod
     def get_engine(template_type):
-        if template_type == DEFAULT_TEMPLATE_TYPE:
+        if template_type == constants.DEFAULT_TEMPLATE_TYPE:
             return Engine
         else:
             try:
@@ -28,6 +29,7 @@ class EngineFactory(object):
 
 class Engine(object):
     def __init__(self, template_dirs, context_dirs):
+        verify_the_existence_of_directories(template_dirs)
         template_loader = FileSystemLoader(template_dirs)
         self.jj2_environment = Environment(
             loader=template_loader,
@@ -99,6 +101,7 @@ class Engine(object):
 
 class Context(object):
     def __init__(self, context_dirs):
+        verify_the_existence_of_directories(context_dirs)
         self.context_dirs = context_dirs
         self.__cached_environ_variables = dict(
             (key, os.environ[key]) for key in os.environ)
@@ -150,3 +153,20 @@ def _append_to_array_item_to_dictionary_key(adict, key, array_item):
                                                     key))
     else:
         adict[key].append(array_item)
+
+
+def verify_the_existence_of_directories(dirs):
+    if not isinstance(dirs, list):
+        dirs = [dirs]
+    for directory in dirs:
+        if not os.path.exists(directory):
+            should_I_ignore = (
+                constants.DEFAULT_CONFIGURATION_DIRNAME in directory or
+                constants.DEFAULT_TEMPLATE_DIRNAME in directory
+            )
+            if should_I_ignore:
+                # ignore
+                pass
+            else:
+                raise exceptions.DirectoryNotFound(
+                    "%s does not exist" % os.path.abspath(directory))

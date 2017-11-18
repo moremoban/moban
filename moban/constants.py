@@ -12,17 +12,19 @@ DEFAULT_TEMPLATE_TYPE = 'jinja2'
 
 # Command line options
 LABEL_CONFIG = 'configuration'
-LABEL_CONFIG_DIR = '%s_dir' % LABEL_CONFIG
+LABEL_CONFIG_DIR = 'configuration_dir'
 LABEL_TEMPLATE = 'template'
-LABEL_TMPL_DIRS = '%s_dir' % LABEL_TEMPLATE
+LABEL_TMPL_DIRS = 'template_dir'
 LABEL_OUTPUT = 'output'
 LABEL_TEMPLATE_TYPE = 'template_type'
 LABEL_TARGETS = 'targets'
+DEFAULT_CONFIGURATION_DIRNAME = '.moban.cd'
+DEFAULT_TEMPLATE_DIRNAME = '.moban.td'
 DEFAULT_OPTIONS = {
     # .moban.cd, default configuration dir
-    LABEL_CONFIG_DIR: os.path.join('.', '.%s.cd' % PROGRAM_NAME),
+    LABEL_CONFIG_DIR: os.path.join('.', DEFAULT_CONFIGURATION_DIRNAME),
     # .moban.td, default template dirs
-    LABEL_TMPL_DIRS: ['.', os.path.join('.', '.%s.td' % PROGRAM_NAME)],
+    LABEL_TMPL_DIRS: ['.', os.path.join('.', DEFAULT_TEMPLATE_DIRNAME)],
     # moban.output, default output file name
     LABEL_OUTPUT: '%s.output' % PROGRAM_NAME,
     # data.yml, default data input file
