@@ -35,6 +35,9 @@ def main():
             reporter.report_error_message(e)
         except exceptions.NoThirdPartyEngine as e:
             reporter.report_error_message(e)
+        except exceptions.MobanfileGrammarException as e:
+            reporter.report_error_message(str(e))
+            sys.exit(-1)
     else:
         handle_command_line(options)
 
@@ -85,13 +88,11 @@ def handle_moban_file(options):
         None,
         constants.DEFAULT_MOBAN_FILE)
     if moban_file_configurations is None:
-        reporter.report_error_message(
+        raise exceptions.MobanfileGrammarException(
             constants.ERROR_INVALID_MOBAN_FILE % constants.DEFAULT_MOBAN_FILE)
-        sys.exit(-1)
     if constants.LABEL_TARGETS not in moban_file_configurations:
-        reporter.report_error_message(
+        raise exceptions.MobanfileGrammarException(
             constants.ERROR_NO_TARGETS % constants.DEFAULT_MOBAN_FILE)
-        sys.exit(0)
     version = moban_file_configurations.get(
         constants.MOBAN_VERSION,
         constants.DEFAULT_MOBAN_VERSION
@@ -99,7 +100,7 @@ def handle_moban_file(options):
     if version == constants.DEFAULT_MOBAN_VERSION:
         handle_moban_file_v1(moban_file_configurations, options)
     else:
-        raise NotImplementedError(
+        raise exceptions.MobanfileGrammarException(
             constants.MESSAGE_FILE_VERSION_NOT_SUPPORTED % version)
 
 

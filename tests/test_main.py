@@ -19,14 +19,14 @@ class TestException:
         if os.path.exists('.moban.hashes'):
             os.unlink('.moban.hashes')
 
-    @raises(NotImplementedError)
-    def test_vhandle_moban_file(self):
+    @raises(exceptions.MobanfileGrammarException)
+    def test_handle_moban_file(self):
         copyfile(os.path.join("tests", "fixtures", ".moban-version-1234.yml"),
                  self.moban_file)
         import moban.main as main
         main.handle_moban_file({})
 
-    @raises(SystemExit)
+    @raises(exceptions.MobanfileGrammarException)
     def test_version_1_is_recognized(self):
         copyfile(os.path.join("tests", "fixtures", ".moban-version-1.0.yml"),
                  self.moban_file)

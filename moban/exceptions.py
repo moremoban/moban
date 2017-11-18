@@ -4,3 +4,7 @@ class DirectoryNotFound(Exception):
 
 class NoThirdPartyEngine(Exception):
     pass
+
+
+class MobanfileGrammarException(Exception):
+    pass
