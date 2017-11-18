@@ -6,3 +6,4 @@ configuration:
 targets:
   - setup.py: setup.py
   - .travis.yml: travis.yml.jj2
+  - requirements.txt: requirements.txt.jj2
