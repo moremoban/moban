@@ -1,6 +1,21 @@
 CHANGE Log
 ================================================================================
 
+0.0.8 - 18-Nov-2017
+--------------------------------------------------------------------------------
+
+Added
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#. `issue 8 <https://github.com/moremoban/moban/issues/8>`_, verify the existence
+   of custom template and configuration directories. default .moban.td,
+   .moban.cd are ignored if they do not exist.
+
+Updated
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#. Colorize error messages and processing messages. crayons become a dependency.
+
 0.0.7 - 19-Jul-2017
 --------------------------------------------------------------------------------
 

@@ -17,7 +17,8 @@ from moban.utils import merge, open_yaml, HashStore
 from moban.engine import EngineFactory
 import moban.constants as constants
 from moban.mobanfile import handle_moban_file_v1
-
+import moban.exceptions as exceptions
+import moban.reporter as reporter
 
 # I/O messages
 # Error handling
@@ -34,7 +35,12 @@ def main():
     options = vars(parser.parse_args())
     HashStore.IGNORE_CACHE_FILE = options['force']
     if os.path.exists(constants.DEFAULT_MOBAN_FILE):
-        handle_moban_file(options)
+        try:
+            handle_moban_file(options)
+        except exceptions.DirectoryNotFound as e:
+            reporter.report_error_message(e)
+        except exceptions.NoThirdPartyEngine as e:
+            reporter.report_error_message(e)
     else:
         handle_command_line(options)
 

@@ -7,11 +7,7 @@ from moban.utils import (open_yaml, load_external_engine,
                          HashStore, merge)
 import moban.constants as constants
 import moban.exceptions as exceptions
-
-MESSAGE_TEMPLATING = "Templating %s to %s"
-MESSAGE_NO_ACTION = "No file for templating!"
-MESSAGE_REPORT = "Templated %s out of %s files."
-MESSAGE_TEMPLATED_ALL = "Templated %s files."
+import moban.reporter as reporter
 
 
 class EngineFactory(object):
@@ -23,7 +19,7 @@ class EngineFactory(object):
             try:
                 external_engine = load_external_engine(template_type)
             except ImportError:
-                raise NotImplementedError("No such template support")
+                raise exceptions.NoThirdPartyEngine("No such template support")
             return external_engine.get_engine(template_type)
 
 
@@ -44,7 +40,8 @@ class Engine(object):
     def render_to_file(self, template_file, data_file, output_file):
         template = self.jj2_environment.get_template(template_file)
         data = self.context.get_data(data_file)
-        print(MESSAGE_TEMPLATING % (template_file, output_file))
+        reporter.report_templating(template_file, output_file)
+
         with open(output_file, 'wb') as output:
             rendered_content = template.render(**data)
             output.write(rendered_content.encode('utf-8'))
@@ -61,12 +58,12 @@ class Engine(object):
 
     def report(self):
         if self.__templated_count == 0:
-            print(MESSAGE_NO_ACTION)
+            reporter.report_no_action()
         elif self.__templated_count == self.__file_count:
-            print(MESSAGE_TEMPLATED_ALL % self.__file_count)
+            reporter.report_full_run(self.__file_count)
         else:
-            print(MESSAGE_REPORT % (self.__templated_count,
-                                    self.__file_count))
+            reporter.report_partial_run(self.__templated_count,
+                                        self.__file_count)
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
@@ -75,7 +72,7 @@ class Engine(object):
                 data = self.context.get_data(data_file)
                 flag = self._apply_template(template, data, output)
                 if flag:
-                    print(MESSAGE_TEMPLATING % (template_file, output))
+                    reporter.report_templating(template_file, output)
                     self.__templated_count += 1
                 self.__file_count += 1
 
@@ -86,7 +83,7 @@ class Engine(object):
                 template = self.jj2_environment.get_template(template_file)
                 flag = self._apply_template(template, data, output)
                 if flag:
-                    print(MESSAGE_TEMPLATING % (template_file, output))
+                    reporter.report_templating(template_file, output)
                     self.__templated_count += 1
                 self.__file_count += 1
 

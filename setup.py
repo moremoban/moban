@@ -9,7 +9,7 @@ PY26 = PY2 and sys.version_info[1] < 7
 
 NAME = 'moban'
 AUTHOR = 'C. W.'
-VERSION = '0.0.7'
+VERSION = '0.0.8'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -47,6 +47,7 @@ CLASSIFIERS = [
 INSTALL_REQUIRES = [
     'pyyaml>=3.11',
     'jinja2>=2.7.1',
+    'crayons',
 ]
 
 
