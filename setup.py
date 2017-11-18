@@ -1,10 +1,9 @@
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from ez_setup import use_setuptools
-    use_setuptools()
-    from setuptools import setup, find_packages
+# Template by setupmobans
+import os
 import sys
+import codecs
+from shutil import rmtree
+from setuptools import setup, find_packages, Command
 PY2 = sys.version_info[0] == 2
 PY26 = PY2 and sys.version_info[1] < 7
 
@@ -24,7 +23,7 @@ DESCRIPTION = (
 )
 URL = 'https://github.com/moremoban/moban'
 DOWNLOAD_URL = '%s/archive/0.0.7.tar.gz' % URL
-FILES = ['README.rst', 'CHANGELOG.rst']
+FILES = ['README.rst',  'CHANGELOG.rst']
 KEYWORDS = [
     'jinja2',
     'moban',
@@ -36,7 +35,6 @@ CLASSIFIERS = [
     'Topic :: Utilities',
     'Topic :: Software Development :: Libraries',
     'Programming Language :: Python',
-    'License :: OSI Approved :: BSD License',
     'Intended Audience :: Developers',
     'Programming Language :: Python :: 2.6',
     'Programming Language :: Python :: 2.7',
@@ -55,6 +53,66 @@ INSTALL_REQUIRES = [
 PACKAGES = find_packages(exclude=['ez_setup', 'examples', 'tests'])
 EXTRAS_REQUIRE = {
 }
+# You do not need to read beyond this line
+PUBLISH_COMMAND = '{0} setup.py sdist bdist_wheel upload -r pypi'.format(
+    sys.executable)
+GS_COMMAND = ('gs moban v0.0.7 ' +
+              "Find 0.0.7 in changelog for more details")
+NO_GS_MESSAGE = ('Automatic github release is disabled. ' +
+                 'Please install gease to enable it.')
+UPLOAD_FAILED_MSG = (
+    'Upload failed. please run "%s" yourself.' % PUBLISH_COMMAND)
+HERE = os.path.abspath(os.path.dirname(__file__))
+
+
+class PublishCommand(Command):
+    """Support setup.py upload."""
+
+    description = 'Build and publish the package on github and pypi'
+    user_options = []
+
+    @staticmethod
+    def status(s):
+        """Prints things in bold."""
+        print('\033[1m{0}\033[0m'.format(s))
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        try:
+            self.status('Removing previous builds...')
+            rmtree(os.path.join(HERE, 'dist'))
+        except OSError:
+            pass
+
+        self.status('Building Source and Wheel (universal) distribution...')
+        run_status = True
+        if has_gease():
+            run_status = os.system(GS_COMMAND) == 0
+        else:
+            self.status(NO_GS_MESSAGE)
+        if run_status:
+            if os.system(PUBLISH_COMMAND) != 0:
+                self.status(UPLOAD_FAILED_MSG % PUBLISH_COMMAND)
+
+        sys.exit()
+
+
+def has_gease():
+    """
+    test if github release command is installed
+
+    visit http://github.com/moremoban/gease for more info
+    """
+    try:
+        import gease  # noqa
+        return True
+    except ImportError:
+        return False
 
 
 def read_files(*files):
@@ -68,7 +126,7 @@ def read_files(*files):
 
 def read(afile):
     """Read a file into setup"""
-    with open(afile, 'r') as opened_file:
+    with codecs.open(afile, 'r', 'utf-8') as opened_file:
         content = filter_out_test_code(opened_file)
         content = "".join(list(content))
         return content
@@ -117,5 +175,8 @@ if __name__ == '__main__':
         include_package_data=True,
         zip_safe=False,
         entry_points=ENTRY_POINTS,
-        classifiers=CLASSIFIERS
+        classifiers=CLASSIFIERS,
+        cmdclass={
+            'publish': PublishCommand,
+        }
     )
