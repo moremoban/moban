@@ -36,7 +36,7 @@ def open_yaml(base_dir, file_name):
         data = yaml.load(data_yaml)
         if data is not None:
             parent_data = None
-            if constants.LABEL_OVERRIDES in data:
+            if base_dir and constants.LABEL_OVERRIDES in data:
                 parent_data = open_yaml(
                     base_dir,
                     data.pop(constants.LABEL_OVERRIDES))
