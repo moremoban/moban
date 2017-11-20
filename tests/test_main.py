@@ -24,7 +24,7 @@ class TestException:
         copyfile(os.path.join("tests", "fixtures", ".moban-version-1234.yml"),
                  self.moban_file)
         import moban.main as main
-        main.handle_moban_file({})
+        main.handle_moban_file(self.moban_file, {})
 
     @raises(exceptions.MobanfileGrammarException)
     def test_version_1_is_recognized(self):
@@ -33,7 +33,7 @@ class TestException:
         copyfile(os.path.join("tests", "fixtures", ".moban-version-1.0.yml"),
                  self.data_file)
         import moban.main as main
-        main.handle_moban_file({})
+        main.handle_moban_file(self.moban_file, {})
 
     @raises(SystemExit)
     @patch('os.path.exists')

@@ -1,6 +1,16 @@
+import os
 import moban.constants as constants
 from moban.engine import EngineFactory
 from moban.utils import merge, parse_targets
+
+
+def find_default_moban_file():
+    for moban_file in constants.DEFAULT_MOBAN_FILES:
+        if os.path.exists(moban_file):
+            break
+    else:
+        moban_file = None
+    return moban_file
 
 
 def handle_moban_file_v1(moban_file_configurations, command_line_options):

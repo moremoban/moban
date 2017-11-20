@@ -221,7 +221,7 @@ class TestTemplateTypeOption:
             f.write("hello: world")
 
     @patch("moban.engine.Engine.render_to_file")
-    def test_mako_optoin(self, fake_template_doer):
+    def test_mako_option(self, fake_template_doer):
         test_args = ["moban", "-t", "a.template", "--template_type", "mako"]
         with patch.object(sys, 'argv', test_args):
             main()

@@ -7,7 +7,10 @@ PROGRAM_DESCRIPTION = ('Yet another jinja2 cli command for static ' +
                        'text generation')
 DEFAULT_YAML_SUFFIX = '.yml'
 # .moban.yml, default moban configuration file
-DEFAULT_MOBAN_FILE = '.%s%s' % (PROGRAM_NAME, DEFAULT_YAML_SUFFIX)
+DEFAULT_MOBAN_FILES = [
+    '.%s%s' % (PROGRAM_NAME, DEFAULT_YAML_SUFFIX),
+    '.%s%s' % (PROGRAM_NAME, '.yaml')
+]
 DEFAULT_TEMPLATE_TYPE = 'jinja2'
 
 # .moban.hashes

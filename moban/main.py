@@ -9,16 +9,17 @@
 
 """
 
-import os
 import sys
 import argparse
 
-from moban.utils import merge, open_yaml, HashStore
+from moban.utils import merge, HashStore
 from moban.engine import EngineFactory
 import moban.constants as constants
 from moban.mobanfile import handle_moban_file_v1
+from moban.mobanfile import find_default_moban_file
 import moban.exceptions as exceptions
 import moban.reporter as reporter
+from moban.utils import open_yaml
 
 
 def main():
@@ -28,9 +29,10 @@ def main():
     parser = create_parser()
     options = vars(parser.parse_args())
     HashStore.IGNORE_CACHE_FILE = options['force']
-    if os.path.exists(constants.DEFAULT_MOBAN_FILE):
+    moban_file = find_default_moban_file()
+    if moban_file:
         try:
-            handle_moban_file(options)
+            handle_moban_file(moban_file, options)
         except (exceptions.DirectoryNotFound,
                 exceptions.NoThirdPartyEngine,
                 exceptions.MobanfileGrammarException) as e:
@@ -82,19 +84,17 @@ def create_parser():
     return parser
 
 
-def handle_moban_file(options):
+def handle_moban_file(moban_file, options):
     """
     act upon default moban file
     """
-    moban_file_configurations = open_yaml(
-        None,
-        constants.DEFAULT_MOBAN_FILE)
+    moban_file_configurations = open_yaml(None, moban_file)
     if moban_file_configurations is None:
         raise exceptions.MobanfileGrammarException(
-            constants.ERROR_INVALID_MOBAN_FILE % constants.DEFAULT_MOBAN_FILE)
+            constants.ERROR_INVALID_MOBAN_FILE % moban_file)
     if constants.LABEL_TARGETS not in moban_file_configurations:
         raise exceptions.MobanfileGrammarException(
-            constants.ERROR_NO_TARGETS % constants.DEFAULT_MOBAN_FILE)
+            constants.ERROR_NO_TARGETS % moban_file)
     version = moban_file_configurations.get(
         constants.MOBAN_VERSION,
         constants.DEFAULT_MOBAN_VERSION
