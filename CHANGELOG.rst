@@ -9,6 +9,8 @@ Added
 
 #. `issue 11 <https://github.com/moremoban/moban/issues/11>`_, recognize
    .moban.yaml as well as .moban.yml.
+#. `issue 9 <https://github.com/moremoban/moban/issues/9>`_, preserve
+   file permissions of the source template.
 
 Updated
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

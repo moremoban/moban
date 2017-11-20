@@ -1,10 +1,13 @@
 import os
 import sys
-import yaml
+import stat
 import json
 import hashlib
 
+import yaml
+
 import moban.constants as constants
+import moban.exceptions as exceptions
 
 
 def merge(left, right):
@@ -132,3 +135,16 @@ def get_hash(content):
     md5 = hashlib.md5()
     md5.update(content)
     return md5.digest().decode('latin1')
+
+
+def file_permissions_copy(source, dest):
+    source_permissions = file_permissions(source)
+    dest_permissions = file_permissions(dest)
+    if source_permissions != dest_permissions:
+        os.chmod(dest, source_permissions)
+
+
+def file_permissions(afile):
+    if not os.path.exists(afile):
+        raise exceptions.FileNotFound(afile)
+    return stat.S_IMODE(os.lstat(afile).st_mode)

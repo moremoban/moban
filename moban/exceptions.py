@@ -2,6 +2,10 @@ class DirectoryNotFound(Exception):
     pass
 
 
+class FileNotFound(Exception):
+    pass
+
+
 class NoThirdPartyEngine(Exception):
     pass
 

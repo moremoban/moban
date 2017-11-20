@@ -3,8 +3,7 @@ import os
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
 
-from moban.utils import (open_yaml, load_external_engine,
-                         HashStore, merge)
+import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
 import moban.reporter as reporter
@@ -17,7 +16,7 @@ class EngineFactory(object):
             return Engine
         else:
             try:
-                external_engine = load_external_engine(template_type)
+                external_engine = utils.load_external_engine(template_type)
             except ImportError:
                 raise exceptions.NoThirdPartyEngine(
                     constants.MESSAGE_NO_THIRD_PARTY_ENGINE)
@@ -34,7 +33,7 @@ class Engine(object):
             trim_blocks=True,
             lstrip_blocks=True)
         self.context = Context(context_dirs)
-        self.hash_store = HashStore()
+        self.hash_store = utils.HashStore()
         self.__file_count = 0
         self.__templated_count = 0
 
@@ -46,6 +45,8 @@ class Engine(object):
         with open(output_file, 'wb') as output:
             rendered_content = template.render(**data)
             output.write(rendered_content.encode('utf-8'))
+
+        utils.file_permissions_copy(template_file, output_file)
 
     def render_to_files(self, array_of_param_tuple):
         sta = Strategy(array_of_param_tuple)
@@ -94,6 +95,8 @@ class Engine(object):
         if flag:
             with open(output, 'wb') as out:
                 out.write(rendered_content)
+
+            utils.file_permissions_copy(template.filename, output)
         return flag
 
 
@@ -105,8 +108,8 @@ class Context(object):
             (key, os.environ[key]) for key in os.environ)
 
     def get_data(self, file_name):
-        data = open_yaml(self.context_dirs, file_name)
-        merge(data, self.__cached_environ_variables)
+        data = utils.open_yaml(self.context_dirs, file_name)
+        utils.merge(data, self.__cached_environ_variables)
         return data
 
 
