@@ -91,7 +91,8 @@ class Engine(object):
 
     def _apply_template(self, template, data, output):
         rendered_content = template.render(**data).encode('utf-8')
-        flag = self.hash_store.is_file_changed(output, rendered_content)
+        flag = self.hash_store.is_file_changed(
+            output, rendered_content, template.filename)
         if flag:
             with open(output, 'wb') as out:
                 out.write(rendered_content)

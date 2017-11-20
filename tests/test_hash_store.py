@@ -4,7 +4,11 @@ from moban.utils import HashStore
 
 class TestHashStore:
     def setUp(self):
-        self.fixture = ('test.out', 'test content'.encode('utf-8'))
+        self.source_template = os.path.join('tests', 'fixtures', 'a.template')
+        self.fixture = (
+            'test.out',
+            'test content'.encode('utf-8'),
+            self.source_template)
 
     def tearDown(self):
         os.unlink('.moban.hashes')
@@ -61,6 +65,30 @@ class TestHashStore:
         hs3 = HashStore()
         with open(self.fixture[0], 'w') as f:
             f.write('hey changed')
+        flag = hs3.is_file_changed(*self.fixture)
+        assert flag is True
+        hs3.close()
+        os.unlink(self.fixture[0])
+
+    def test_dest_file_file_permision_changed(self):
+        """
+        Save as above, but this time,
+        the generated file had file permision change
+        """
+        hs = HashStore()
+        flag = hs.is_file_changed(*self.fixture)
+        if flag:
+            with open(self.fixture[0], 'wb') as f:
+                f.write(self.fixture[1])
+        hs.close()
+        # no change
+        hs2 = HashStore()
+        flag = hs2.is_file_changed(*self.fixture)
+        assert flag is False
+        hs2.close()
+        # now let change file permision of generated file
+        hs3 = HashStore()
+        os.chmod(self.fixture[0], 0o766)
         flag = hs3.is_file_changed(*self.fixture)
         assert flag is True
         hs3.close()

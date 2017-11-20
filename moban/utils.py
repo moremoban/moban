@@ -102,19 +102,23 @@ class HashStore:
         else:
             self.hashes = {}
 
-    def is_file_changed(self, file_name, file_content):
-        changed = self._is_source_updated(file_name, file_content)
+    def is_file_changed(self, file_name, file_content, source_template):
+        changed = self._is_source_updated(
+            file_name, file_content, source_template)
 
         if changed is False:
-            with open(file_name, 'rb') as target_file:
-                target_hash = get_hash(target_file.read())
-                if target_hash != self.hashes[file_name]:
-                    changed = True
+            target_hash = get_file_hash(file_name)
+            if target_hash != self.hashes[file_name]:
+                changed = True
         return changed
 
-    def _is_source_updated(self, file_name, file_content):
+    def _is_source_updated(self, file_name, file_content, source_template):
         changed = True
-        content_hash = get_hash(file_content)
+        content = _mix(
+            file_content,
+            oct(file_permissions(source_template))
+        )
+        content_hash = get_hash(content)
         if os.path.exists(file_name):
             if file_name in self.hashes:
                 if content_hash == self.hashes[file_name]:
@@ -129,6 +133,13 @@ class HashStore:
     def close(self):
         with open(self.cache_file, 'w') as f:
             json.dump(self.hashes, f)
+
+
+def get_file_hash(afile):
+    with open(afile, 'rb') as handle:
+        content = handle.read()
+    content = _mix(content, oct(file_permissions(afile)))
+    return get_hash(content)
 
 
 def get_hash(content):
@@ -148,3 +159,7 @@ def file_permissions(afile):
     if not os.path.exists(afile):
         raise exceptions.FileNotFound(afile)
     return stat.S_IMODE(os.lstat(afile).st_mode)
+
+
+def _mix(content, file_permissions_copy):
+    return content + file_permissions_copy
