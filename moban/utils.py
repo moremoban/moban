@@ -162,4 +162,6 @@ def file_permissions(afile):
 
 
 def _mix(content, file_permissions_copy):
+    if sys.version_info[0] > 2:
+        file_permissions_copy = file_permissions_copy.encode('utf-8')
     return content + file_permissions_copy
