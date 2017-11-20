@@ -1,4 +1,4 @@
-version: 1234
+moban_file_spec_version: 1234
 configuration:
   configuration_dir: "commons/config"
   template_dir:

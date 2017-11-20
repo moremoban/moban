@@ -41,8 +41,8 @@ DEFAULT_OPTIONS = {
 }
 
 # moban file version
-MOBAN_VERSION = "version"
-DEFAULT_MOBAN_VERSION = 1.0
+MOBAN_VERSION = "moban_file_spec_version"
+DEFAULT_MOBAN_VERSION = '1.0'
 
 # error messages
 ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"
@@ -51,7 +51,7 @@ ERROR_DATA_FILE_ABSENT = "File %s does not exist"
 MESSAGE_SYNTAX_ERROR = "%s already exists in the target %s"
 MESSAGE_DIR_NOT_EXIST = "%s does not exist"
 MESSAGE_NO_THIRD_PARTY_ENGINE = "No such template support"
-MESSAGE_FILE_VERSION_NOT_SUPPORTED = "moban file version %d is not supported"
+MESSAGE_FILE_VERSION_NOT_SUPPORTED = "moban file version '%s' is not supported"
 
 # I/O messages
 # Error handling

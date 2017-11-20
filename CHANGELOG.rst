@@ -10,6 +10,16 @@ Added
 #. `issue 11 <https://github.com/moremoban/moban/issues/11>`_, recognize
    .moban.yaml as well as .moban.yml.
 
+Updated
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#. use explicit version name: `moban_file_spec_version` so that `version` can be
+   used by users. `issue 10 <https://github.com/moremoban/moban/issues/10>`_
+   Please note: moban_file_spec_version is reserved for future file spec
+   upgrade. For now, all files are assumed to be '1.0'. When there comes
+   a new version i.e. 2.0, new moban file based on 2.0 will have to include
+   'moban_file_spec_version: 2.0'
+
 0.0.8 - 18-Nov-2017
 --------------------------------------------------------------------------------
 
