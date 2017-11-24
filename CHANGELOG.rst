@@ -11,7 +11,9 @@ Added
    .moban.yaml as well as .moban.yml.
 #. `issue 9 <https://github.com/moremoban/moban/issues/9>`_, preserve
    file permissions of the source template.
-
+#. `-m` option is added to allow you to specify a custom moban file. kinda
+   related to issue 11.
+   
 Updated
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
