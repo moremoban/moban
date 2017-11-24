@@ -140,6 +140,34 @@ class TestNoOptions2:
         os.unlink(self.data_file)
 
 
+class TestCustomMobanFile:
+    def setUp(self):
+        self.config_file = 'custom-moban.txt'
+        copyfile(os.path.join("tests", "fixtures", ".moban.yml"),
+                 self.config_file)
+        self.data_file = 'data.yaml'
+        with open(self.data_file, 'w')as f:
+            f.write("hello: world")
+        self.patcher = patch(
+            "moban.engine.verify_the_existence_of_directories")
+        self.patcher.start()
+
+    @patch("moban.engine.Engine.render_to_files")
+    def test_single_command(self, fake_template_doer):
+        test_args = ["moban", "-m", self.config_file]
+        with patch.object(sys, 'argv', test_args):
+            main()
+            call_args = list(fake_template_doer.call_args[0][0])
+            assert call_args == [
+                ('README.rst', 'data.yaml', 'README.rst'),
+                ('setup.py', 'data.yaml', 'setup.py')]
+
+    def tearDown(self):
+        self.patcher.stop()
+        os.unlink(self.config_file)
+        os.unlink(self.data_file)
+
+
 @patch("moban.engine.verify_the_existence_of_directories")
 def test_duplicated_targets_in_moban_file(fake_verify):
     config_file = 'duplicated.moban.yml'

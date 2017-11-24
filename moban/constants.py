@@ -25,6 +25,8 @@ LABEL_OUTPUT = 'output'
 LABEL_TEMPLATE_TYPE = 'template_type'
 LABEL_TARGETS = 'targets'
 LABEL_OVERRIDES = 'overrides'
+LABEL_MOBANFILE = 'mobanfile'
+LABEL_FORCE = 'force'
 
 DEFAULT_CONFIGURATION_DIRNAME = '.moban.cd'
 DEFAULT_TEMPLATE_DIRNAME = '.moban.td'

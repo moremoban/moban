@@ -27,8 +27,10 @@ def main():
     """
     parser = create_parser()
     options = vars(parser.parse_args())
-    HashStore.IGNORE_CACHE_FILE = options['force']
-    moban_file = mobanfile.find_default_moban_file()
+    HashStore.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
+    moban_file = options[constants.LABEL_MOBANFILE]
+    if moban_file is None:
+        moban_file = mobanfile.find_default_moban_file()
     if moban_file:
         try:
             handle_moban_file(moban_file, options)
@@ -77,8 +79,12 @@ def create_parser():
         help="the template type, default is jinja2"
     )
     parser.add_argument(
-        '-f', action='store_true', dest='force', default=False,
+        '-f', action='store_true', dest=constants.LABEL_FORCE, default=False,
         help="force moban to template all files despite of .moban.hashes"
+    )
+    parser.add_argument(
+        '-m', '--%s' % constants.LABEL_MOBANFILE,
+        help="custom moban file"
     )
     return parser
 
