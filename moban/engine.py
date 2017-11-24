@@ -3,6 +3,7 @@ import os
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
 
+from moban.hashstore import HashStore
 import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
@@ -33,7 +34,7 @@ class Engine(object):
             trim_blocks=True,
             lstrip_blocks=True)
         self.context = Context(context_dirs)
-        self.hash_store = utils.HashStore()
+        self.hash_store = HashStore()
         self.__file_count = 0
         self.__templated_count = 0
 

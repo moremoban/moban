@@ -4,7 +4,7 @@
 
     Bring jinja2 to command line
 
-    :copyright: (c) 2016 by Onni Software Ltd.
+    :copyright: (c) 2016-2017 by Onni Software Ltd.
     :license: MIT License, see LICENSE for more details
 
 """
@@ -12,14 +12,13 @@
 import sys
 import argparse
 
-from moban.utils import merge, HashStore
+from moban.utils import merge, open_yaml
+from moban.hashstore import HashStore
 from moban.engine import EngineFactory
 import moban.constants as constants
-from moban.mobanfile import handle_moban_file_v1
-from moban.mobanfile import find_default_moban_file
+import moban.mobanfile as mobanfile
 import moban.exceptions as exceptions
 import moban.reporter as reporter
-from moban.utils import open_yaml
 
 
 def main():
@@ -29,7 +28,7 @@ def main():
     parser = create_parser()
     options = vars(parser.parse_args())
     HashStore.IGNORE_CACHE_FILE = options['force']
-    moban_file = find_default_moban_file()
+    moban_file = mobanfile.find_default_moban_file()
     if moban_file:
         try:
             handle_moban_file(moban_file, options)
@@ -100,7 +99,7 @@ def handle_moban_file(moban_file, options):
         constants.DEFAULT_MOBAN_VERSION
     )
     if version == constants.DEFAULT_MOBAN_VERSION:
-        handle_moban_file_v1(moban_file_configurations, options)
+        mobanfile.handle_moban_file_v1(moban_file_configurations, options)
     else:
         raise exceptions.MobanfileGrammarException(
             constants.MESSAGE_FILE_VERSION_NOT_SUPPORTED % version)

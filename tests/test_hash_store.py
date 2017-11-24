@@ -1,5 +1,5 @@
 import os
-from moban.utils import HashStore
+from moban.hashstore import HashStore
 
 
 class TestHashStore:
