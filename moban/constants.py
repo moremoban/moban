@@ -60,3 +60,9 @@ MESSAGE_FILE_VERSION_NOT_SUPPORTED = "moban file version '%s' is not supported"
 ERROR_INVALID_MOBAN_FILE = "%s is an invalid yaml file."
 ERROR_NO_TARGETS = "No targets in %s"
 ERROR_NO_TEMPLATE = "No template found"
+
+
+# Shell messages
+HAS_CHANGES = 1
+ERROR = 2
+NO_CHANGES = 0

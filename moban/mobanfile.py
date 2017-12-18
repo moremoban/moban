@@ -1,5 +1,6 @@
 import os
 import moban.constants as constants
+import moban.reporter as reporter
 from moban.engine import EngineFactory
 from moban.utils import merge, parse_targets
 
@@ -31,4 +32,6 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
         merged_options[constants.LABEL_TMPL_DIRS],
         merged_options[constants.LABEL_CONFIG_DIR])
     engine.render_to_files(list_of_templating_parameters)
-    engine.report()
+    exit_code = reporter.convert_to_shell_exit_code(
+        engine.number_of_templated_files())
+    return exit_code

@@ -1,5 +1,7 @@
 import crayons
 
+import moban.constants as constants
+
 MESSAGE_TEMPLATING = "Templating {} to {}"
 MESSAGE_NO_ACTION = "Everything is up to date!"
 MESSAGE_REPORT = "Templated {} out of {} files."
@@ -28,3 +30,8 @@ def report_partial_run(file_count, total):
 
 def report_error_message(message):
     print(crayons.white("Error: ", bold=True) + crayons.red(message))
+
+
+def convert_to_shell_exit_code(number_of_templated_files):
+    return (constants.HAS_CHANGES if number_of_templated_files > 0
+            else constants.NO_CHANGES)

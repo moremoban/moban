@@ -68,6 +68,9 @@ class Engine(object):
             reporter.report_partial_run(self.__templated_count,
                                         self.__file_count)
 
+    def number_of_templated_files(self):
+        return self.__templated_count
+
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
             template = self.jj2_environment.get_template(template_file)

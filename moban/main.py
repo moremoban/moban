@@ -33,18 +33,22 @@ def main():
         moban_file = mobanfile.find_default_moban_file()
     if moban_file:
         try:
-            handle_moban_file(moban_file, options)
+            count = handle_moban_file(moban_file, options)
+            if count:
+                sys.exit(count)
         except (exceptions.DirectoryNotFound,
                 exceptions.NoThirdPartyEngine,
                 exceptions.MobanfileGrammarException) as e:
             reporter.report_error_message(str(e))
-            sys.exit(-1)
+            sys.exit(constants.ERROR)
     else:
         try:
-            handle_command_line(options)
+            count = handle_command_line(options)
+            if count:
+                sys.exit(count)
         except exceptions.NoTemplate as e:
             reporter.report_error_message(str(e))
-            sys.exit(-1)
+            sys.exit(constants.ERROR)
 
 
 def create_parser():
@@ -127,3 +131,6 @@ def handle_command_line(options):
         options[constants.LABEL_CONFIG],
         options[constants.LABEL_OUTPUT]
     )
+    exit_code = reporter.convert_to_shell_exit_code(
+        engine.number_of_templated_files())
+    return exit_code
