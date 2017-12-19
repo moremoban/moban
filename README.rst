@@ -102,3 +102,11 @@ optional arguments
   force moban to template all files despite of .moban.hashes
 * `-m MOBANFILE, --mobanfile MOBANFILE`
   custom moban file
+
+
+exit codes
+--------------------------------------------------------------------------------
+
+- 0 : no changes
+- 1 : has changes
+- 2 : error occured
