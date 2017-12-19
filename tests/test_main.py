@@ -58,3 +58,37 @@ class TestException:
         from moban.main import main
         with patch.object(sys, 'argv', ['moban']):
             main()
+
+
+class TestExitCodes:
+    def setUp(self):
+        self.moban_file = '.moban.yml'
+        self.data_file = 'data.yml'
+
+    def tearDown(self):
+        if os.path.exists(self.moban_file):
+            os.unlink(self.moban_file)
+        if os.path.exists(self.data_file):
+            os.unlink(self.data_file)
+        if os.path.exists('.moban.hashes'):
+            os.unlink('.moban.hashes')
+
+    @raises(SystemExit)
+    @patch('moban.main.handle_moban_file')
+    @patch('moban.mobanfile.find_default_moban_file')
+    def test_has_many_files(self, fake_find_file, fake_moban_file):
+        fake_find_file.return_value = "abc"
+        fake_moban_file.return_value = 1
+        from moban.main import main
+        with patch.object(sys, 'argv', ['moban']):
+            main()
+
+    @raises(SystemExit)
+    @patch('moban.main.handle_command_line')
+    @patch('moban.mobanfile.find_default_moban_file')
+    def test_handle_single_change(self, fake_find_file, fake_command_line):
+        fake_find_file.return_value = None
+        fake_command_line.return_value = 1
+        from moban.main import main
+        with patch.object(sys, 'argv', ['moban']):
+            main()
