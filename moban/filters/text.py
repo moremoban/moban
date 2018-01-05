@@ -1,6 +1,10 @@
-def split_length(line, length):
+import re
+
+
+def split_length(input_line, length):
     start = 0
     limit = length
+    line = re.sub('\s+', ' ', input_line)
     line_length = len(line)
     if line_length < length:
         yield line
@@ -17,7 +21,7 @@ def split_length(line, length):
             yield line[start:start+limit]
             start = start+limit+1
             limit = length
-            if len(line[start:]) < length or start+limit > len(line):
+            if len(line[start:]) < length or start+limit >= len(line):
                 break
 
         yield line[start:]
