@@ -9,7 +9,7 @@ PY26 = PY2 and sys.version_info[1] < 7
 
 NAME = 'moban'
 AUTHOR = 'C. W.'
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -18,8 +18,7 @@ ENTRY_POINTS = {
     ]
 }
 DESCRIPTION = (
-    'Yet another jinja2 cli command for static text generation' +
-    ''
+    'Yet another jinja2 cli command for static text generation'
 )
 URL = 'https://github.com/moremoban/moban'
 DOWNLOAD_URL = '%s/archive/0.1.0.tar.gz' % URL
