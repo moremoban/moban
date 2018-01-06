@@ -1,6 +1,6 @@
 import re
 
-ISSUE = '^.*?`(.*)`.*?$'
+ISSUE = '^.*?`(.*?#[0-9]+)`.*?$'
 SAME_PROJ_FULL_ISSUE = '`#{3} <https://github.com/{0}/{1}/{2}/{3}>`_'
 DIFF_PROJ_FULL_ISSUE = '`{1}#{3} <https://github.com/{0}/{1}/{2}/{3}>`_'
 
@@ -31,6 +31,6 @@ def github_expand(line, name, organisation):
             reference = DIFF_PROJ_FULL_ISSUE.format(*tokens)
         else:
             reference = SAME_PROJ_FULL_ISSUE.format(*tokens)
-        return re.sub('`(.*)`', reference, line)
+        return re.sub('`.*?#[0-9]+`', reference, line)
     else:
-        return result
+        return line

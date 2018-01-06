@@ -5,6 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 
 from moban.hashstore import HashStore
 from moban.filters.text import split_length
+from moban.filters.github import github_expand
 import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
@@ -35,6 +36,7 @@ class Engine(object):
             trim_blocks=True,
             lstrip_blocks=True)
         self.jj2_environment.filters['split_length'] = split_length
+        self.jj2_environment.filters['github_expand'] = github_expand
         self.context = Context(context_dirs)
         self.hash_store = HashStore()
         self.__file_count = 0
