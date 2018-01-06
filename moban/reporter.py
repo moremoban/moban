@@ -2,10 +2,10 @@ import crayons
 
 import moban.constants as constants
 
-MESSAGE_TEMPLATING = "Templating {} to {}"
+MESSAGE_TEMPLATING = "Templating {0} to {1}"
 MESSAGE_NO_ACTION = "Everything is up to date!"
-MESSAGE_REPORT = "Templated {} out of {} files."
-MESSAGE_TEMPLATED_ALL = "Templated {} files."
+MESSAGE_REPORT = "Templated {0} out of {1} files."
+MESSAGE_TEMPLATED_ALL = "Templated {0} files."
 
 
 def report_templating(source_file, destination_file):
