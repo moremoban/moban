@@ -10,7 +10,7 @@ def test_github_expand():
         ['`PR#15` works', 'project', 'organisation'],
         ['`cool#16` works', 'project', 'organisation'],
         ['`microsoft#cool#PR#17` works', 'project', 'organisation'],
-        ['`cool##18` also works', 'project', 'organisation']
+        ['this `cool##18`', 'project', 'organisation']
     ]
     expectations = [
         'fix `#12 <https://github.com/organisation/project/issues/12>`_',
@@ -19,7 +19,7 @@ def test_github_expand():
         '`#15 <https://github.com/organisation/project/pull/15>`_ works',
         '`cool#16 <https://github.com/organisation/cool/issues/16>`_ works',
         '`cool#17 <https://github.com/microsoft/cool/pull/17>`_ works',
-        '`cool#18 <https://github.com/organisation/cool/issues/18>`_ also works'
+        'this `cool#18 <https://github.com/organisation/cool/issues/18>`_'
     ]
     for input_line, expect in zip(inputs, expectations):
         actual = github_expand(*input_line)
