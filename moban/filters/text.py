@@ -11,10 +11,12 @@ def split_length(input_line, length):
     else:
         while True:
             if ' ' in line[start:start+limit]:
+                # go back and find a space
                 while limit > 0 and line[start+limit] != ' ':
                     limit -= 1
             else:
                 # full whole line is single unit
+                # so go forward find a space
                 while (start+limit) < len(line) and line[start+limit] != ' ':
                     limit += 1
 
