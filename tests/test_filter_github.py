@@ -14,7 +14,8 @@ def test_github_expand():
         ['`goog#cool#19` works', 'project', 'organisation'],
         ['`twitter#cool#weird#19` works', 'project', 'organisation'],
         ['wont work', 'project', 'organisation'],
-        ['`wont work either`', 'prj', 'org']
+        ['`wont work either`', 'prj', 'org'],
+        ['some `weird` `case` `#10` is', 'prj', 'org']
     ]
     expectations = [
         'fix `#12 <https://github.com/organisation/project/issues/12>`_',
@@ -27,7 +28,8 @@ def test_github_expand():
         '`goog#19 <https://github.com/organisation/goog/issues/19>`_ works',
         '`cool#19 <https://github.com/twitter/cool/issues/19>`_ works',
         'wont work',
-        '`wont work either`'
+        '`wont work either`',
+        'some `weird` case `#10 <https://github.com/org/prj/issues/10>`_ is'
     ]
     for input_line, expect in zip(inputs, expectations):
         actual = github_expand(*input_line)

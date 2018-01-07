@@ -6,7 +6,7 @@ def split_length(input_line, length):
     limit = length
     line = re.sub('\s+', ' ', input_line)
     line_length = len(line)
-    if line_length < length:
+    if line_length <= length:
         yield line
     else:
         while True:

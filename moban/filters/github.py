@@ -1,6 +1,6 @@
 import re
 
-GITHUB_REF_PATTERN = '`(.*?#[0-9]+)`'
+GITHUB_REF_PATTERN = '`([^`]*?#[0-9]+)`'
 ISSUE = '^.*?' + GITHUB_REF_PATTERN + '.*?$'
 SAME_PROJ_FULL_ISSUE = '`#{3} <https://github.com/{0}/{1}/{2}/{3}>`_'
 DIFF_PROJ_FULL_ISSUE = '`{1}#{3} <https://github.com/{0}/{1}/{2}/{3}>`_'
