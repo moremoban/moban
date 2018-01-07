@@ -29,7 +29,7 @@ def test_github_expand():
         '`cool#19 <https://github.com/twitter/cool/issues/19>`_ works',
         'wont work',
         '`wont work either`',
-        'some `weird` case `#10 <https://github.com/org/prj/issues/10>`_ is'
+        'some `weird` `case` `#10 <https://github.com/org/prj/issues/10>`_ is'
     ]
     for input_line, expect in zip(inputs, expectations):
         actual = github_expand(*input_line)
