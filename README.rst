@@ -110,3 +110,34 @@ exit codes
 - 0 : no changes
 - 1 : has changes
 - 2 : error occured
+
+Special Filters
+================================================================================
+
+split_length
+--------------------------------------------------------------------------------
+
+It breaks down the given string into a fixed length paragraph. Here is the syntax::
+
+    {% for line in your_string | split_length(your_line_with) %}
+    {{line}}
+    {% endfor %}
+
+github_expand
+--------------------------------------------------------------------------------
+
+It expands simple hashtags into github issues. Here is the syntax::
+
+    {{ your_github_string | github_expand }}
+
+Grammar::
+
+    =============== ==============================
+    Syntax          Meaning
+    =============== ==============================
+    `#1`            moban issues 1
+    `PR#1`          moban pull request 1
+    `pyexcel#1`     other project issues 1
+    `pyexcel#PR#1`  other project pulll request 1
+    =============== ==============================
+

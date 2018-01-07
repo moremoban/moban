@@ -1,10 +1,13 @@
 configuration:
   template_dir:
     - "setupmobans/templates"
-    - ".moban.d"
+    - ".moban.td"
   configuration: moban.yml
 targets:
   - setup.py: setup.py
-  - .travis.yml: travis.yml.jj2
+  - .travis.yml: travis.yml
   - requirements.txt: requirements.txt.jj2
   - MANIFEST.in: MANIFEST.in.jj2
+  - output: CHANGELOG.rst
+    configuration: changelog.yml
+    template: CHANGELOG.rst.jj2
