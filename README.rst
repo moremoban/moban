@@ -123,6 +123,9 @@ It breaks down the given string into a fixed length paragraph. Here is the synta
     {{line}}
     {% endfor %}
 
+It is used to keep changelog formatted in
+`CHANGELOG.rst.jjs in pypi-mobans project <https://github.com/moremoban/pypi-mobans/blob/master/templates/CHANGELOG.rst.jj2#L15>`_
+
 github_expand
 --------------------------------------------------------------------------------
 
@@ -130,7 +133,13 @@ It expands simple hashtags into github issues. Here is the syntax::
 
     {{ your_github_string | github_expand }}
 
-Grammar::
+
+It makes it easy to mention github reference in change log in all projects. Here is
+the place it is applied:
+`CHANGELOG.rst.jjs in pypi-mobans project <https://github.com/moremoban/pypi-mobans/blob/master/templates/CHANGELOG.rst.jj2#L15>`_
+
+
+Here is Grammar in the changelog.yml::
 
     =============== ==============================
     Syntax          Meaning
@@ -140,4 +149,6 @@ Grammar::
     `pyexcel#1`     other project issues 1
     `pyexcel#PR#1`  other project pulll request 1
     =============== ==============================
+
+More details can be found in `moban's changelog.yml <https://github.com/moremoban/moban/blob/master/.moban.cd/changelog.yml#L10>`_
 
