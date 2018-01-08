@@ -8,7 +8,7 @@ releases:
       limit
     - 'speical filter expand github references: pull request and issues'
     - '`#15`: fix templating syntax to enable python 2.6'
-  date: 07-Jan-2017
+  date: 08-Jan-2017
   version: 0.1.1
 - changes:
   - action: Added
