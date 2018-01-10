@@ -5,7 +5,7 @@ releases:
   - action: Added
     details:
     - '`#13`: strip off new lines in the templated file'
-  date: unreleased
+  date: 10-Jan-2018
   version: 0.1.2
 - changes:
   - action: Added
@@ -14,7 +14,7 @@ releases:
       limit
     - 'speical filter expand github references: pull request and issues'
     - '`#15`: fix templating syntax to enable python 2.6'
-  date: 08-Jan-2017
+  date: 08-Jan-2018
   version: 0.1.1
 - changes:
   - action: Added
