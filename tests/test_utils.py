@@ -5,6 +5,7 @@ from nose.tools import raises, eq_
 from moban.utils import load_external_engine
 from moban.utils import file_permissions_copy
 from moban.utils import write_file_out
+from moban.utils import strip_off_trailing_new_lines
 from moban.engine import Engine
 
 
@@ -51,3 +52,9 @@ def test_write_file_out():
     with open(test_file, 'r') as f:
         content = f.read()
         eq_(content, '\n    helloworld\n')
+
+
+def test_strip_new_lines():
+    content = "test\n\n\n\n\n"
+    actual = strip_off_trailing_new_lines(content)
+    eq_(actual, 'test\n')

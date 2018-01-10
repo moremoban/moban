@@ -103,8 +103,13 @@ def file_permissions(afile):
     return stat.S_IMODE(os.lstat(afile).st_mode)
 
 
-def write_file_out(filename, content):
+def strip_off_trailing_new_lines(content):
+    return re.sub('(\n\s+)+$', '\n', content)
+
+
+def write_file_out(filename, content, strip=True):
     with open(filename, 'wb') as out:
-        content = re.sub('(\n\s+)+$', '\n', content)
+        if strip:
+            content = strip_off_trailing_new_lines(content)
         content = content.encode('utf-8')
         out.write(content)

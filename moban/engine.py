@@ -97,11 +97,11 @@ class Engine(object):
 
     def _apply_template(self, template, data, output):
         rendered_content = template.render(**data)
+        rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
         flag = self.hash_store.is_file_changed(
             output, rendered_content, template.filename)
         if flag:
-            utils.write_file_out(output, rendered_content)
-
+            utils.write_file_out(output, rendered_content, strip=False)
             utils.file_permissions_copy(template.filename, output)
         return flag
 
