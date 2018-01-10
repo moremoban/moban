@@ -107,9 +107,10 @@ def strip_off_trailing_new_lines(content):
     return re.sub('(\n\s+)+$', '\n', content)
 
 
-def write_file_out(filename, content, strip=True):
+def write_file_out(filename, content, strip=True, encode=True):
     with open(filename, 'wb') as out:
         if strip:
             content = strip_off_trailing_new_lines(content)
-        content = content.encode('utf-8')
+        if encode:
+            content = content.encode('utf-8')
         out.write(content)
