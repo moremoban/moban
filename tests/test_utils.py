@@ -4,6 +4,7 @@ import stat
 from nose.tools import raises, eq_
 from moban.utils import load_external_engine
 from moban.utils import file_permissions_copy
+from moban.utils import write_file_out
 from moban.engine import Engine
 
 
@@ -35,3 +36,18 @@ def test_file_permission_copy():
         stat.S_IMODE(os.lstat(test_dest).st_mode))
     os.unlink(test_source)
     os.unlink(test_dest)
+
+
+def test_write_file_out():
+    content = """
+    helloworld
+
+
+
+
+    """
+    test_file = "testout"
+    write_file_out(test_file, content)
+    with open(test_file, 'r') as f:
+        content = f.read()
+        eq_(content, '\n    helloworld\n')

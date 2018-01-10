@@ -4,6 +4,12 @@ releases:
 - changes:
   - action: Added
     details:
+    - '`#13`: strip off new lines in the templated file'
+  date: unreleased
+  version: 0.1.2
+- changes:
+  - action: Added
+    details:
     - the ability to present a long text as multi-line paragraph with a custom  upper
       limit
     - 'speical filter expand github references: pull request and issues'

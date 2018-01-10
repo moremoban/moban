@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 import stat
 
@@ -104,5 +105,6 @@ def file_permissions(afile):
 
 def write_file_out(filename, content):
     with open(filename, 'wb') as out:
+        content = re.sub('(\n\s+)+$', '\n', content)
         content = content.encode('utf-8')
         out.write(content)
