@@ -47,10 +47,8 @@ class Engine(object):
         data = self.context.get_data(data_file)
         reporter.report_templating(template_file, output_file)
 
-        with open(output_file, 'wb') as output:
-            rendered_content = template.render(**data)
-            output.write(rendered_content.encode('utf-8'))
-
+        rendered_content = template.render(**data)
+        utils.write_file_out(output_file, rendered_content)
         utils.file_permissions_copy(template_file, output_file)
 
     def render_to_files(self, array_of_param_tuple):
@@ -98,12 +96,11 @@ class Engine(object):
                 self.__file_count += 1
 
     def _apply_template(self, template, data, output):
-        rendered_content = template.render(**data).encode('utf-8')
+        rendered_content = template.render(**data)
         flag = self.hash_store.is_file_changed(
             output, rendered_content, template.filename)
         if flag:
-            with open(output, 'wb') as out:
-                out.write(rendered_content)
+            utils.write_file_out(output, rendered_content)
 
             utils.file_permissions_copy(template.filename, output)
         return flag

@@ -100,3 +100,9 @@ def file_permissions(afile):
     if not os.path.exists(afile):
         raise exceptions.FileNotFound(afile)
     return stat.S_IMODE(os.lstat(afile).st_mode)
+
+
+def write_file_out(filename, content):
+    with open(filename, 'wb') as out:
+        content = content.encode('utf-8')
+        out.write(content)
