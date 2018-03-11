@@ -60,7 +60,7 @@ def get_file_hash(afile):
 
 def get_hash(content):
     md5 = hashlib.md5()
-    md5.update(content)
+    md5.update(content.decode('utf-8'))
     return md5.digest().decode('latin1')
 
 
