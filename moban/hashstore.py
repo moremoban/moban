@@ -7,6 +7,9 @@ import moban.utils as utils
 import moban.constants as constants
 
 
+PY2 = sys.version_info[0] == 2
+
+
 class HashStore:
     IGNORE_CACHE_FILE = False
 
@@ -60,11 +63,13 @@ def get_file_hash(afile):
 
 def get_hash(content):
     md5 = hashlib.md5()
-    md5.update(content.decode('utf-8'))
+    if PY2:
+        content = content.decode('utf-8')
+    md5.update(content)
     return md5.digest().decode('latin1')
 
 
 def _mix(content, file_permissions_copy):
-    if sys.version_info[0] > 2:
+    if not PY2:
         file_permissions_copy = file_permissions_copy.encode('utf-8')
     return content + file_permissions_copy
