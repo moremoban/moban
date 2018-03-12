@@ -9,7 +9,7 @@ PY26 = PY2 and sys.version_info[1] < 7
 
 NAME = 'moban'
 AUTHOR = 'C. W.'
-VERSION = '0.1.2'
+VERSION = '0.1.3'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -21,8 +21,8 @@ DESCRIPTION = (
     'Yet another jinja2 cli command for static text generation'
 )
 URL = 'https://github.com/moremoban/moban'
-DOWNLOAD_URL = '%s/archive/0.1.2.tar.gz' % URL
-FILES = ['README.rst',  'CHANGELOG.rst']
+DOWNLOAD_URL = '%s/archive/0.1.3.tar.gz' % URL
+FILES = ['README.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'jinja2',
     'moban',
@@ -48,6 +48,7 @@ INSTALL_REQUIRES = [
     'jinja2>=2.7.1',
     'crayons',
 ]
+SETUP_COMMANDS = {}
 
 
 PACKAGES = find_packages(exclude=['ez_setup', 'examples', 'tests'])
@@ -56,8 +57,8 @@ EXTRAS_REQUIRE = {
 # You do not need to read beyond this line
 PUBLISH_COMMAND = '{0} setup.py sdist bdist_wheel upload -r pypi'.format(
     sys.executable)
-GS_COMMAND = ('gs moban v0.1.2 ' +
-              "Find 0.1.2 in changelog for more details")
+GS_COMMAND = ('gs moban v0.1.3 ' +
+              "Find 0.1.3 in changelog for more details")
 NO_GS_MESSAGE = ('Automatic github release is disabled. ' +
                  'Please install gease to enable it.')
 UPLOAD_FAILED_MSG = (
@@ -86,6 +87,8 @@ class PublishCommand(Command):
         try:
             self.status('Removing previous builds...')
             rmtree(os.path.join(HERE, 'dist'))
+            rmtree(os.path.join(HERE, 'build'))
+            rmtree(os.path.join(HERE, 'moban.egg-info'))
         except OSError:
             pass
 
@@ -100,6 +103,11 @@ class PublishCommand(Command):
                 self.status(UPLOAD_FAILED_MSG % PUBLISH_COMMAND)
 
         sys.exit()
+
+
+SETUP_COMMANDS.update({
+    'publish': PublishCommand
+})
 
 
 def has_gease():
@@ -176,7 +184,5 @@ if __name__ == '__main__':
         zip_safe=False,
         entry_points=ENTRY_POINTS,
         classifiers=CLASSIFIERS,
-        cmdclass={
-            'publish': PublishCommand,
-        }
+        cmdclass=SETUP_COMMANDS
     )

@@ -2,6 +2,12 @@ name: moban
 organisation: moremoban
 releases:
 - changes:
+  - action: Updated
+    details:
+    - handle unicode on python 2
+  date: 12-Mar-2018
+  version: 0.1.3
+- changes:
   - action: Added
     details:
     - '`#13`: strip off new lines in the templated file'
