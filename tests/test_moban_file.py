@@ -3,8 +3,9 @@ from mock import patch
 
 
 class TestFinder:
+
     def setUp(self):
-        self.patcher = patch('os.path.exists')
+        self.patcher = patch("os.path.exists")
         self.fake_file_existence = self.patcher.start()
 
     def tearDown(self):
@@ -13,17 +14,20 @@ class TestFinder:
     def test_moban_yml(self):
         self.fake_file_existence.return_value = True
         from moban.mobanfile import find_default_moban_file
+
         actual = find_default_moban_file()
-        eq_('.moban.yml', actual)
+        eq_(".moban.yml", actual)
 
     def test_moban_yaml(self):
         self.fake_file_existence.side_effect = [False, True]
         from moban.mobanfile import find_default_moban_file
+
         actual = find_default_moban_file()
-        eq_('.moban.yaml', actual)
+        eq_(".moban.yaml", actual)
 
     def test_no_moban_file(self):
         self.fake_file_existence.side_effect = [False, False]
         from moban.mobanfile import find_default_moban_file
+
         actual = find_default_moban_file()
         assert actual is None

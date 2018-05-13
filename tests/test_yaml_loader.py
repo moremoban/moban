@@ -6,18 +6,13 @@ from moban.utils import open_yaml
 def test_simple_yaml():
     test_file = os.path.join("tests", "fixtures", "simple.yaml")
     data = open_yaml(os.path.join("tests", "fixtures"), test_file)
-    eq_(data, {
-        "simple": "yaml"
-    })
+    eq_(data, {"simple": "yaml"})
 
 
 def test_inheritance_yaml():
     test_file = os.path.join("tests", "fixtures", "child.yaml")
     data = open_yaml(os.path.join("tests", "fixtures", "config"), test_file)
-    eq_(data, {
-        "key": "hello world",
-        "pass": "ox"
-    })
+    eq_(data, {"key": "hello world", "pass": "ox"})
 
 
 @raises(IOError)

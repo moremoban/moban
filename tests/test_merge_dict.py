@@ -5,93 +5,32 @@ def test_simple_union():
     user = {"hi": "world"}
     default = {"world": "hi"}
     merged = merge(user, default)
-    assert merged == {
-        "hi": "world",
-        "world": "hi"
-    }
+    assert merged == {"hi": "world", "world": "hi"}
 
 
 def test_simple_overlapping():
-    user = {
-        "hi": "world",
-        "world": "hei"
-    }
+    user = {"hi": "world", "world": "hei"}
     default = {"world": "hi"}
     merged = merge(user, default)
-    assert merged == {
-        "hi": "world",
-        "world": "hei"
-    }
+    assert merged == {"hi": "world", "world": "hei"}
 
 
 def test_two_level_merge():
-    user = {
-        "L1":
-        {
-            "L2": "World"
-        }
-    }
-    default = {
-        "L1":
-        {
-            "L2.1": "Hi"
-        }
-    }
+    user = {"L1": {"L2": "World"}}
+    default = {"L1": {"L2.1": "Hi"}}
     merged = merge(user, default)
-    assert merged == {
-        "L1":
-        {
-            "L2": "World",
-            "L2.1": "Hi"
-        }
-    }
+    assert merged == {"L1": {"L2": "World", "L2.1": "Hi"}}
 
 
 def test_two_level_conflict():
-    user = {
-        "L1":
-        {
-            "L2": "World"
-        }
-    }
-    default = {
-        "L1":
-        {
-            "L2": "Hi"
-        }
-    }
+    user = {"L1": {"L2": "World"}}
+    default = {"L1": {"L2": "Hi"}}
     merged = merge(user, default)
-    assert merged == {
-        "L1":
-        {
-            "L2": "World"
-        }
-    }
+    assert merged == {"L1": {"L2": "World"}}
 
 
 def test_three_level_conflict():
-    user = {
-        "L1":
-        {
-            "L2": {
-                "L3": "World"
-            }
-        }
-    }
-    default = {
-        "L1":
-        {
-            "L2": {
-                "L3": "Hi"
-            }
-        }
-    }
+    user = {"L1": {"L2": {"L3": "World"}}}
+    default = {"L1": {"L2": {"L3": "Hi"}}}
     merged = merge(user, default)
-    assert merged == {
-        "L1":
-        {
-            "L2": {
-                "L3": "World"
-            }
-        }
-    }
+    assert merged == {"L1": {"L2": {"L3": "World"}}}

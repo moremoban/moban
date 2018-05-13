@@ -9,8 +9,11 @@ MESSAGE_TEMPLATED_ALL = "Templated {0} files."
 
 
 def report_templating(source_file, destination_file):
-    print(MESSAGE_TEMPLATING.format(crayons.yellow(source_file),
-                                    crayons.green(destination_file)))
+    print(
+        MESSAGE_TEMPLATING.format(
+            crayons.yellow(source_file), crayons.green(destination_file)
+        )
+    )
 
 
 def report_no_action():
@@ -33,5 +36,8 @@ def report_error_message(message):
 
 
 def convert_to_shell_exit_code(number_of_templated_files):
-    return (constants.HAS_CHANGES if number_of_templated_files > 0
-            else constants.NO_CHANGES)
+    return (
+        constants.HAS_CHANGES
+        if number_of_templated_files > 0
+        else constants.NO_CHANGES
+    )

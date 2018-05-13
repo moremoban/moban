@@ -3,15 +3,15 @@ from moban.hashstore import HashStore
 
 
 class TestHashStore:
+
     def setUp(self):
-        self.source_template = os.path.join('tests', 'fixtures', 'a.template')
+        self.source_template = os.path.join("tests", "fixtures", "a.template")
         self.fixture = (
-            'test.out',
-            'test content'.encode('utf-8'),
-            self.source_template)
+            "test.out", "test content".encode("utf-8"), self.source_template
+        )
 
     def tearDown(self):
-        os.unlink('.moban.hashes')
+        os.unlink(".moban.hashes")
 
     def test_simple_use_case(self):
         hs = HashStore()
@@ -32,7 +32,7 @@ class TestHashStore:
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
         if flag:
-            with open(self.fixture[0], 'wb') as f:
+            with open(self.fixture[0], "wb") as f:
                 f.write(self.fixture[1])
         hs.close()
         hs2 = HashStore()
@@ -53,7 +53,7 @@ class TestHashStore:
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
         if flag:
-            with open(self.fixture[0], 'wb') as f:
+            with open(self.fixture[0], "wb") as f:
                 f.write(self.fixture[1])
         hs.close()
         # no change
@@ -63,8 +63,8 @@ class TestHashStore:
         hs2.close()
         # now let update the generated file
         hs3 = HashStore()
-        with open(self.fixture[0], 'w') as f:
-            f.write('hey changed')
+        with open(self.fixture[0], "w") as f:
+            f.write("hey changed")
         flag = hs3.is_file_changed(*self.fixture)
         assert flag is True
         hs3.close()
@@ -78,7 +78,7 @@ class TestHashStore:
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
         if flag:
-            with open(self.fixture[0], 'wb') as f:
+            with open(self.fixture[0], "wb") as f:
                 f.write(self.fixture[1])
         hs.close()
         # no change

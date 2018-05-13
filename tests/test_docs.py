@@ -5,6 +5,7 @@ from moban.main import main
 
 
 class TestTutorial:
+
     def setUp(self):
         self.current = os.getcwd()
 
@@ -45,7 +46,7 @@ shijie
 ========footer============
 """
         folder = "level-4-single-command"
-        self._raw_moban(['moban'], folder, expected, 'a.output')
+        self._raw_moban(["moban"], folder, expected, "a.output")
 
     def test_level_5(self):
         expected = """========header============
@@ -59,7 +60,7 @@ this demonstrates jinja2's include statement
 ========footer============
 """
         folder = "level-5-custom-configuration"
-        self._raw_moban(['moban'], folder, expected, 'a.output')
+        self._raw_moban(["moban"], folder, expected, "a.output")
 
     def test_level_6(self):
         expected = """========header============
@@ -73,26 +74,26 @@ this demonstrates jinja2's include statement
 ========footer============
 """
         folder = "level-6-complex-configuration"
-        self._raw_moban(['moban'], folder, expected, 'a.output2')
+        self._raw_moban(["moban"], folder, expected, "a.output2")
 
     def _moban(self, folder, expected):
-        args = ['moban', '-c', 'data.yml', '-t', 'a.template']
-        self._raw_moban(args, folder, expected, 'moban.output')
+        args = ["moban", "-c", "data.yml", "-t", "a.template"]
+        self._raw_moban(args, folder, expected, "moban.output")
 
     def _raw_moban(self, args, folder, expected, output):
         os.chdir(os.path.join("docs", folder))
-        with patch.object(sys, 'argv', args):
+        with patch.object(sys, "argv", args):
             main()
             _verify_content(output, expected)
         os.unlink(output)
 
     def tearDown(self):
-        if os.path.exists('.moban.hashes'):
-            os.unlink('.moban.hashes')
+        if os.path.exists(".moban.hashes"):
+            os.unlink(".moban.hashes")
         os.chdir(self.current)
 
 
 def _verify_content(file_name, expected):
-    with open(file_name, 'r') as f:
+    with open(file_name, "r") as f:
         content = f.read()
         assert content == expected

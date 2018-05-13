@@ -13,6 +13,7 @@ import moban.reporter as reporter
 
 
 class EngineFactory(object):
+
     @staticmethod
     def get_engine(template_type):
         if template_type == constants.DEFAULT_TEMPLATE_TYPE:
@@ -22,11 +23,13 @@ class EngineFactory(object):
                 external_engine = utils.load_external_engine(template_type)
             except ImportError:
                 raise exceptions.NoThirdPartyEngine(
-                    constants.MESSAGE_NO_THIRD_PARTY_ENGINE)
+                    constants.MESSAGE_NO_THIRD_PARTY_ENGINE
+                )
             return external_engine.get_engine(template_type)
 
 
 class Engine(object):
+
     def __init__(self, template_dirs, context_dirs):
         verify_the_existence_of_directories(template_dirs)
         template_loader = FileSystemLoader(template_dirs)
@@ -34,9 +37,10 @@ class Engine(object):
             loader=template_loader,
             keep_trailing_newline=True,
             trim_blocks=True,
-            lstrip_blocks=True)
-        self.jj2_environment.filters['split_length'] = split_length
-        self.jj2_environment.filters['github_expand'] = github_expand
+            lstrip_blocks=True,
+        )
+        self.jj2_environment.filters["split_length"] = split_length
+        self.jj2_environment.filters["github_expand"] = github_expand
         self.context = Context(context_dirs)
         self.hash_store = HashStore()
         self.__file_count = 0
@@ -67,8 +71,9 @@ class Engine(object):
         elif self.__templated_count == self.__file_count:
             reporter.report_full_run(self.__file_count)
         else:
-            reporter.report_partial_run(self.__templated_count,
-                                        self.__file_count)
+            reporter.report_partial_run(
+                self.__templated_count, self.__file_count
+            )
 
     def number_of_templated_files(self):
         return self.__templated_count
@@ -98,23 +103,26 @@ class Engine(object):
     def _apply_template(self, template, data, output):
         rendered_content = template.render(**data)
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
-        rendered_content = rendered_content.encode('utf-8')
+        rendered_content = rendered_content.encode("utf-8")
         flag = self.hash_store.is_file_changed(
-            output, rendered_content, template.filename)
+            output, rendered_content, template.filename
+        )
         if flag:
             utils.write_file_out(
-                output, rendered_content,
-                strip=False, encode=False)
+                output, rendered_content, strip=False, encode=False
+            )
             utils.file_permissions_copy(template.filename, output)
         return flag
 
 
 class Context(object):
+
     def __init__(self, context_dirs):
         verify_the_existence_of_directories(context_dirs)
         self.context_dirs = context_dirs
         self.__cached_environ_variables = dict(
-            (key, os.environ[key]) for key in os.environ)
+            (key, os.environ[key]) for key in os.environ
+        )
 
     def get_data(self, file_name):
         data = utils.open_yaml(self.context_dirs, file_name)
@@ -134,14 +142,12 @@ class Strategy(object):
     def process(self):
         for (template_file, data_file, output_file) in self.tuples:
             _append_to_array_item_to_dictionary_key(
-                self.data_file_index,
-                data_file,
-                (template_file, output_file)
+                self.data_file_index, data_file, (template_file, output_file)
             )
             _append_to_array_item_to_dictionary_key(
                 self.template_file_index,
                 template_file,
-                (data_file, output_file)
+                (data_file, output_file),
             )
 
     def what_to_do(self):
@@ -159,7 +165,8 @@ class Strategy(object):
 def _append_to_array_item_to_dictionary_key(adict, key, array_item):
     if array_item in adict[key]:
         raise exceptions.MobanfileGrammarException(
-            constants.MESSAGE_SYNTAX_ERROR % (array_item, key))
+            constants.MESSAGE_SYNTAX_ERROR % (array_item, key)
+        )
     else:
         adict[key].append(array_item)
 
@@ -171,13 +178,13 @@ def verify_the_existence_of_directories(dirs):
         if os.path.exists(directory):
             continue
         should_I_ignore = (
-            constants.DEFAULT_CONFIGURATION_DIRNAME in directory or
-            constants.DEFAULT_TEMPLATE_DIRNAME in directory
+            constants.DEFAULT_CONFIGURATION_DIRNAME in directory
+            or constants.DEFAULT_TEMPLATE_DIRNAME in directory
         )
         if should_I_ignore:
             # ignore
             pass
         else:
             raise exceptions.DirectoryNotFound(
-                constants.MESSAGE_DIR_NOT_EXIST % os.path.abspath(
-                    directory))
+                constants.MESSAGE_DIR_NOT_EXIST % os.path.abspath(directory)
+            )

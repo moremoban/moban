@@ -20,14 +20,14 @@ def test_unknown_template_type():
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_tmpl_directries():
-    Engine('abc', 'tests')
+    Engine("abc", "tests")
 
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_config_directries():
-    Engine('tests', 'abc')
+    Engine("tests", "abc")
 
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_ctx_directries():
-    Context(['abc'])
+    Context(["abc"])

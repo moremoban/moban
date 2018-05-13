@@ -34,14 +34,14 @@ def open_yaml(base_dir, file_name):
     chained yaml loader
     """
     the_yaml_file = search_file(base_dir, file_name)
-    with open(the_yaml_file, 'r') as data_yaml:
+    with open(the_yaml_file, "r") as data_yaml:
         data = yaml.load(data_yaml)
         if data is not None:
             parent_data = None
             if base_dir and constants.LABEL_OVERRIDES in data:
                 parent_data = open_yaml(
-                    base_dir,
-                    data.pop(constants.LABEL_OVERRIDES))
+                    base_dir, data.pop(constants.LABEL_OVERRIDES)
+                )
             if parent_data:
                 return merge(data, parent_data)
             else:
@@ -57,8 +57,8 @@ def search_file(base_dir, file_name):
             the_file = os.path.join(base_dir, file_name)
             if not os.path.exists(the_file):
                 raise IOError(
-                    constants.ERROR_DATA_FILE_NOT_FOUND % (
-                        file_name, the_file))
+                    constants.ERROR_DATA_FILE_NOT_FOUND % (file_name, the_file)
+                )
         else:
             raise IOError(constants.ERROR_DATA_FILE_ABSENT % the_file)
     return the_file
@@ -70,14 +70,14 @@ def parse_targets(options, targets):
         if constants.LABEL_OUTPUT in target:
             template_file = target.get(
                 constants.LABEL_TEMPLATE,
-                options.get(constants.LABEL_TEMPLATE, None))
-            data_file = target.get(constants.LABEL_CONFIG,
-                                   common_data_file)
+                options.get(constants.LABEL_TEMPLATE, None),
+            )
+            data_file = target.get(constants.LABEL_CONFIG, common_data_file)
             output = target[constants.LABEL_OUTPUT]
-            yield((template_file, data_file, output))
+            yield ((template_file, data_file, output))
         else:
             for output, template_file in target.items():
-                yield((template_file, common_data_file, output))
+                yield ((template_file, common_data_file, output))
 
 
 def load_external_engine(template_type):
@@ -104,13 +104,13 @@ def file_permissions(afile):
 
 
 def strip_off_trailing_new_lines(content):
-    return re.sub('(\n\s+)+$', '\n', content)
+    return re.sub("(\n\s+)+$", "\n", content)
 
 
 def write_file_out(filename, content, strip=True, encode=True):
-    with open(filename, 'wb') as out:
+    with open(filename, "wb") as out:
         if strip:
             content = strip_off_trailing_new_lines(content)
         if encode:
-            content = content.encode('utf-8')
+            content = content.encode("utf-8")
         out.write(content)
