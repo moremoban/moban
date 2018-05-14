@@ -1,4 +1,6 @@
-# Template by setupmobans
+#!/usr/bin/env python3
+
+# Template by pypi-mobans
 import os
 import sys
 import codecs
@@ -9,7 +11,7 @@ PY26 = PY2 and sys.version_info[1] < 7
 
 NAME = 'moban'
 AUTHOR = 'C. W.'
-VERSION = '0.1.3'
+VERSION = '0.1.4'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -20,7 +22,7 @@ ENTRY_POINTS = {
 DESCRIPTION = (
     'Yet another jinja2 cli command for static text generation'
 )
-URL = 'https://github.com/moremoban/moban'
+URL = 'https:///moremoban/moban'
 DOWNLOAD_URL = '%s/archive/0.1.3.tar.gz' % URL
 FILES = ['README.rst', 'CHANGELOG.rst']
 KEYWORDS = [
@@ -30,8 +32,6 @@ KEYWORDS = [
 ]
 
 CLASSIFIERS = [
-    'Topic :: Office/Business',
-    'Topic :: Utilities',
     'Topic :: Software Development :: Libraries',
     'Programming Language :: Python',
     'Intended Audience :: Developers',
@@ -134,7 +134,8 @@ def read_files(*files):
 
 def read(afile):
     """Read a file into setup"""
-    with codecs.open(afile, 'r', 'utf-8') as opened_file:
+    the_relative_file = os.path.join(HERE, afile)
+    with codecs.open(the_relative_file, 'r', 'utf-8') as opened_file:
         content = filter_out_test_code(opened_file)
         content = "".join(list(content))
         return content
