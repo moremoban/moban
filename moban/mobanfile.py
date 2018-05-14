@@ -42,10 +42,13 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     )
     engine.render_to_files(list_of_templating_parameters)
     engine.report()
-    number_of_copied_files = handle_copy(
-        merged_options[constants.LABEL_TMPL_DIRS],
-        moban_file_configurations[constants.LABEL_COPY]
+    if constants.LABEL_COPY in moban_file_configurations:
+        number_of_copied_files = handle_copy(
+            merged_options[constants.LABEL_TMPL_DIRS],
+            moban_file_configurations[constants.LABEL_COPY]
         )
+    else:
+        number_of_copied_files = 0
     exit_code = reporter.convert_to_shell_exit_code(
         engine.number_of_templated_files() + number_of_copied_files
     )
