@@ -47,4 +47,4 @@ def test_no_action():
     fake_stdout = patcher.start()
     reporter.report_no_action()
     patcher.stop()
-    eq_(fake_stdout.getvalue(), "Everything is up to date!\n")
+    eq_(fake_stdout.getvalue(), "No templating\n")
