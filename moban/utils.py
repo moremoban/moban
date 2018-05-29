@@ -100,7 +100,7 @@ def file_permissions_copy(source, dest):
 def file_permissions(afile):
     if not os.path.exists(afile):
         raise exceptions.FileNotFound(afile)
-    return stat.S_IMODE(os.lstat(afile).st_mode)
+    return stat.S_IMODE(os.stat(afile).st_mode)
 
 
 def strip_off_trailing_new_lines(content):
