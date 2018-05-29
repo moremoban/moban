@@ -22,7 +22,7 @@ ENTRY_POINTS = {
 DESCRIPTION = (
     'Yet another jinja2 cli command for static text generation'
 )
-URL = 'https:///moremoban/moban'
+URL = 'https://github.com/moremoban/moban'
 DOWNLOAD_URL = '%s/archive/0.1.4.tar.gz' % URL
 FILES = ['README.rst', 'CHANGELOG.rst']
 KEYWORDS = [

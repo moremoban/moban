@@ -17,3 +17,4 @@ dependencies:
   - jinja2>=2.7.1
   - crayons
 description: Yet another jinja2 cli command for static text generation
+scm_host: github.com
