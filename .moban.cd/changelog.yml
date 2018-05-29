@@ -4,6 +4,14 @@ releases:
 - changes:
   - action: Updated
     details:
+    - '`#21`: targets become optional'
+    - "`#19`: transfer symlink's target file's file permission under unix/linux systems"
+    - '`#16`: introduce copy key word in mobanfile'
+  date: 29-May-2018
+  version: 0.1.4
+- changes:
+  - action: Updated
+    details:
     - handle unicode on python 2
   date: 12-Mar-2018
   version: 0.1.3

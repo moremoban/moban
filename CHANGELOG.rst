@@ -1,6 +1,19 @@
 Change log
 ================================================================================
 
+0.1.4 - 29-May-2018
+--------------------------------------------------------------------------------
+
+Updated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#21 <https://github.com/moremoban/moban/issues/21>`_: targets become
+   optional
+#. `#19 <https://github.com/moremoban/moban/issues/19>`_: transfer symlink's
+   target file's file permission under unix/linux systems
+#. `#16 <https://github.com/moremoban/moban/issues/16>`_: introduce copy key
+   word in mobanfile
+
 0.1.3 - 12-Mar-2018
 --------------------------------------------------------------------------------
 
