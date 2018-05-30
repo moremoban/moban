@@ -3,13 +3,20 @@ import os
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
 
+from lml.loader import scan_plugins
+
 from moban.hashstore import HashStore
-from moban.filters.text import split_length
-from moban.filters.github import github_expand
+from moban.extensions import JinjaFilterManager
 import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
 import moban.reporter as reporter
+
+
+INTERNAL_FILTERS = [
+    'moban.filters.github',
+    'moban.filters.text'
+]
 
 
 class EngineFactory(object):
@@ -39,8 +46,11 @@ class Engine(object):
             trim_blocks=True,
             lstrip_blocks=True,
         )
-        self.jj2_environment.filters["split_length"] = split_length
-        self.jj2_environment.filters["github_expand"] = github_expand
+        self._filters = JinjaFilterManager()
+        scan_plugins('moban_', 'moban', None, INTERNAL_FILTERS)
+        for filter_name, filter_function in self._filters.get_all_filters():
+            self.jj2_environment.filters[filter_name] = filter_function
+
         self.context = Context(context_dirs)
         self.hash_store = HashStore()
         self.__file_count = 0

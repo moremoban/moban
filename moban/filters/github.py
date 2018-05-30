@@ -1,4 +1,6 @@
 import re
+from moban.extensions import JinjaFilter
+
 
 GITHUB_REF_PATTERN = "`([^`]*?#[0-9]+)`"
 ISSUE = "^.*?" + GITHUB_REF_PATTERN + ".*?$"
@@ -9,6 +11,7 @@ PULL = "pull"
 ISSUES = "issues"
 
 
+@JinjaFilter('github_expand')
 def github_expand(line, name, organisation):
     result = re.match(ISSUE, line)
     if result:

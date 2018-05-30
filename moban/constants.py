@@ -68,3 +68,9 @@ ERROR_NO_TEMPLATE = "No template found"
 HAS_CHANGES = 1
 ERROR = 2
 NO_CHANGES = 0
+
+
+# Extension
+JINJA_FILTER_EXTENSION = "jinja_filter"
+JINJA_TEST_EXTENSION = "jinja_test"
+JINJA_GLOBALS_EXTENSION = "jinja_globals"
