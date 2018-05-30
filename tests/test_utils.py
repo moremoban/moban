@@ -55,6 +55,7 @@ def test_file_permission_copy_symlink():
     )
     os.unlink(test_source)
     os.unlink(test_dest)
+    os.unlink(test_symlink)
 
 
 def test_write_file_out():

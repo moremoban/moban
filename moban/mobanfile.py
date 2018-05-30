@@ -22,6 +22,22 @@ def handle_copy(template_dirs, copy_config):
     return copier.number_of_copied_files()
 
 
+def handle_targets(merged_options, targets):
+    list_of_templating_parameters = parse_targets(
+        merged_options, targets,
+    )
+    engine_class = EngineFactory.get_engine(
+        merged_options[constants.LABEL_TEMPLATE_TYPE]
+    )
+    engine = engine_class(
+        merged_options[constants.LABEL_TMPL_DIRS],
+        merged_options[constants.LABEL_CONFIG_DIR],
+    )
+    engine.render_to_files(list_of_templating_parameters)
+    engine.report()
+    return engine.number_of_templated_files()
+
+
 def handle_moban_file_v1(moban_file_configurations, command_line_options):
     merged_options = None
     if constants.LABEL_CONFIG in moban_file_configurations:
@@ -33,19 +49,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
     targets = moban_file_configurations.get(constants.LABEL_TARGETS)
     if targets:
-        list_of_templating_parameters = parse_targets(
-            merged_options, targets,
-        )
-        engine_class = EngineFactory.get_engine(
-            merged_options[constants.LABEL_TEMPLATE_TYPE]
-        )
-        engine = engine_class(
-            merged_options[constants.LABEL_TMPL_DIRS],
-            merged_options[constants.LABEL_CONFIG_DIR],
-        )
-        engine.render_to_files(list_of_templating_parameters)
-        engine.report()
-        number_of_templated_files = engine.number_of_templated_files()
+        number_of_templated_files = handle_targets(merged_options, targets)
     else:
         number_of_templated_files = 0
 
