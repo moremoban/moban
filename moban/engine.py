@@ -15,6 +15,7 @@ import moban.reporter as reporter
 
 
 BUILTIN_EXENSIONS = [
+    'moban.filters.repr'
 ]
 
 
