@@ -14,8 +14,6 @@ import moban.reporter as reporter
 
 
 INTERNAL_FILTERS = [
-    'moban.filters.github',
-    'moban.filters.text'
 ]
 
 

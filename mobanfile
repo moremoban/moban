@@ -3,6 +3,8 @@ configuration:
     - "setupmobans/templates"
     - ".moban.d"
   configuration: moban.yml
+  plugin_dir:
+    - "setupmobans/plugins"
 targets:
   - setup.py: setup.py
   - .travis.yml: travis.yml
