@@ -6,14 +6,15 @@ from jinja2 import Environment, FileSystemLoader
 from lml.loader import scan_plugins
 
 from moban.hashstore import HashStore
-from moban.extensions import JinjaFilterManager
+from moban.extensions import JinjaFilterManager, JinjaTestManager
+from moban.extensions import JinjaGlobalsManager
 import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
 import moban.reporter as reporter
 
 
-INTERNAL_FILTERS = [
+BUILTIN_EXENSIONS = [
 ]
 
 
@@ -45,9 +46,17 @@ class Engine(object):
             lstrip_blocks=True,
         )
         self._filters = JinjaFilterManager()
-        scan_plugins('moban_', 'moban', None, INTERNAL_FILTERS)
-        for filter_name, filter_function in self._filters.get_all_filters():
+        self._tests = JinjaTestManager()
+        self._globals = JinjaGlobalsManager()
+        scan_plugins('moban_', 'moban', None, BUILTIN_EXENSIONS)
+        for filter_name, filter_function in self._filters.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
+
+        for test_name, test_function in self._tests.get_all():
+            self.jj2_environment.tests[test_name] = test_function
+
+        for global_name, dict_obj in self._globals.get_all():
+            self.jj2_environment.globals[global_name] = dict_obj
 
         self.context = Context(context_dirs)
         self.hash_store = HashStore()
