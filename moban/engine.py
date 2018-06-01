@@ -15,7 +15,8 @@ import moban.reporter as reporter
 
 
 BUILTIN_EXENSIONS = [
-    'moban.filters.repr'
+    'moban.filters.repr',
+    'moban.tests.files'
 ]
 
 
@@ -60,6 +61,7 @@ class Engine(object):
             self.jj2_environment.globals[global_name] = dict_obj
 
         self.context = Context(context_dirs)
+        self.template_dirs = template_dirs
         self.hash_store = HashStore()
         self.__file_count = 0
         self.__templated_count = 0
@@ -71,7 +73,7 @@ class Engine(object):
 
         rendered_content = template.render(**data)
         utils.write_file_out(output_file, rendered_content)
-        utils.file_permissions_copy(template_file, output_file)
+        self._file_permissions_copy(template_file, output_file)
 
     def render_to_files(self, array_of_param_tuple):
         sta = Strategy(array_of_param_tuple)
@@ -129,8 +131,16 @@ class Engine(object):
             utils.write_file_out(
                 output, rendered_content, strip=False, encode=False
             )
-            utils.file_permissions_copy(template.filename, output)
+            self._file_permissions_copy(template.filename, output)
         return flag
+
+    def _file_permissions_copy(self, template_file, output_file):
+        true_template_file = template_file
+        for a_template_dir in self.template_dirs:
+            true_template_file = os.path.join(a_template_dir, template_file)
+            if os.path.exists(true_template_file):
+                break
+        utils.file_permissions_copy(true_template_file, output_file)
 
 
 class Context(object):

@@ -37,6 +37,11 @@ class JinjaTest(PluginInfo):
                                         tags=[filter_name])
 
 
+def jinja_tests(**keywords):
+        for key, value in keywords.items():
+            JinjaTest(key)(value)
+
+
 class JinjaGlobalsManager(PluginManager, PluginMixin):
     def __init__(self):
         super(JinjaGlobalsManager, self).__init__(

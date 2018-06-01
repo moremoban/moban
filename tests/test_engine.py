@@ -1,4 +1,5 @@
-from nose.tools import raises
+import os
+from nose.tools import raises, eq_
 from moban.engine import EngineFactory, Engine, Context
 import moban.exceptions as exceptions
 
@@ -31,3 +32,14 @@ def test_non_existent_config_directries():
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_ctx_directries():
     Context(["abc"])
+
+
+def test_file_tests():
+    output = 'test.txt'
+    path = os.path.join('tests', 'fixtures', 'jinja_tests')
+    engine = Engine([path], path)
+    engine.render_to_file('file_tests.template', 'file_tests.yml', output)
+    with open(output, 'r') as output_file:
+        content = output_file.read()
+        eq_(content, 'yes\nhere')
+    os.unlink(output)
