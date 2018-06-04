@@ -16,6 +16,8 @@ import moban.reporter as reporter
 
 BUILTIN_EXENSIONS = [
     'moban.filters.repr',
+    'moban.filters.github',
+    'moban.filters.text',
     'moban.tests.files'
 ]
 
@@ -131,7 +133,7 @@ class Engine(object):
             utils.write_file_out(
                 output, rendered_content, strip=False, encode=False
             )
-            self._file_permissions_copy(template.filename, output)
+            utils.file_permissions_copy(template.filename, output)
         return flag
 
     def _file_permissions_copy(self, template_file, output_file):
