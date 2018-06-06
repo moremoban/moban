@@ -50,7 +50,13 @@ class JinjaGlobalsManager(PluginManager, PluginMixin):
             )
 
 
-class JinjaGlobals(PluginInfo):
-    def __init__(self, filter_name):
-        super(JinjaGlobals, self).__init__(constants.JINJA_GLOBALS_EXTENSION,
-                                           tags=[filter_name])
+class PluginHelper(object):
+    def __init__(self, payload_obj):
+        self.payload = payload_obj
+
+
+def jinja_global(identifier, dict_obj):
+    plugin = PluginInfo(constants.JINJA_GLOBALS_EXTENSION,
+                        tags=[identifier])
+    helper = PluginHelper(dict_obj)
+    plugin(helper)
