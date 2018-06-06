@@ -21,6 +21,11 @@ BUILTIN_EXENSIONS = [
     'moban.tests.files'
 ]
 
+_FILTERS = JinjaFilterManager()
+_TESTS = JinjaTestManager()
+_GLOBALS = JinjaGlobalsManager()
+scan_plugins('moban_', 'moban', None, BUILTIN_EXENSIONS)
+
 
 class EngineFactory(object):
 
@@ -49,17 +54,13 @@ class Engine(object):
             trim_blocks=True,
             lstrip_blocks=True,
         )
-        self._filters = JinjaFilterManager()
-        self._tests = JinjaTestManager()
-        self._globals = JinjaGlobalsManager()
-        scan_plugins('moban_', 'moban', None, BUILTIN_EXENSIONS)
-        for filter_name, filter_function in self._filters.get_all():
+        for filter_name, filter_function in _FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
 
-        for test_name, test_function in self._tests.get_all():
+        for test_name, test_function in _TESTS.get_all():
             self.jj2_environment.tests[test_name] = test_function
 
-        for global_name, dict_obj in self._globals.get_all():
+        for global_name, dict_obj in _GLOBALS.get_all():
             self.jj2_environment.globals[global_name] = dict_obj
 
         self.context = Context(context_dirs)

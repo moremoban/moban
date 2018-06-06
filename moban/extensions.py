@@ -33,13 +33,14 @@ class JinjaTestManager(PluginManager, PluginMixin):
 
 class JinjaTest(PluginInfo):
     def __init__(self, filter_name):
-        super(JinjaTest, self).__init__(constants.JINJA_TEST_EXTENSION,
-                                        tags=[filter_name])
+        super(JinjaTest, self).__init__(
+            constants.JINJA_TEST_EXTENSION,
+            tags=[filter_name])
 
 
 def jinja_tests(**keywords):
-        for key, value in keywords.items():
-            JinjaTest(key)(value)
+    for key, value in keywords.items():
+        JinjaTest(key)(value)
 
 
 class JinjaGlobalsManager(PluginManager, PluginMixin):
