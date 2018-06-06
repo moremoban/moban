@@ -7,6 +7,7 @@ targets:
   - setup.py: setup.py
   - .travis.yml: travis.yml
   - requirements.txt: requirements.txt.jj2
+  - .gitignore: gitignore.jj2
   - MANIFEST.in: MANIFEST.in.jj2
   - output: CHANGELOG.rst
     configuration: changelog.yml
