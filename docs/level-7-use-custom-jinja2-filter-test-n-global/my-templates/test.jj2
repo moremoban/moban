@@ -1,0 +1,11 @@
+{% if level is level7%}
+Hello, you are in level 7 example
+{% else %}
+Hello, you are not in {{level}}
+{% endif %}
+
+{% if level8 is level7%}
+Hello, you are in level 7 example
+{% else %}
+Hello, you are not in level 7
+{% endif %}

@@ -1,0 +1,10 @@
+configuration:
+  template_dir:
+    - my-templates
+  plugin_dir:
+    - custom-jj2-plugin
+  configuration: data.yml
+targets:
+  - filter.output: filter.jj2
+  - test.output: test.jj2
+  - global.output: global.jj2

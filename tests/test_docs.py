@@ -1,5 +1,8 @@
 import os
 import sys
+
+from nose.tools import eq_
+
 from mock import patch
 from moban.main import main
 
@@ -76,6 +79,14 @@ this demonstrates jinja2's include statement
         folder = "level-6-complex-configuration"
         self._raw_moban(["moban"], folder, expected, "a.output2")
 
+    def test_level_7(self):
+        expected = """Hello, you are in level 7 example
+
+Hello, you are not in level 7
+"""
+        folder = "level-7-use-custom-jinja2-filter-test-n-global"
+        self._raw_moban(["moban"], folder, expected, "test.output")
+
     def _moban(self, folder, expected):
         args = ["moban", "-c", "data.yml", "-t", "a.template"]
         self._raw_moban(args, folder, expected, "moban.output")
@@ -96,4 +107,4 @@ this demonstrates jinja2's include statement
 def _verify_content(file_name, expected):
     with open(file_name, "r") as f:
         content = f.read()
-        assert content == expected
+        eq_(content, expected)

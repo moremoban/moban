@@ -21,6 +21,7 @@ examples folder.
    level-4-single-command/README.rst
    level-5-custom-configuration/README.rst
    level-6-complex-configuration/README.rst
+   level-7-use-custom-jinja2-filter-test-n-global/README.rst
 
 For more complex use case, please look at `its usage in pyexcel project <http://pyexcel.readthedocs.io/en/latest/guide.html>`_
 
