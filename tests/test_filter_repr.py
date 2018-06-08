@@ -3,7 +3,7 @@ from nose.tools import eq_
 
 
 def test_string():
-    me = 'abc'
+    me = "abc"
     expected = repr_function(me)
     eq_(expected, "'abc'")
 

@@ -13,12 +13,11 @@ jinja_tests(
     link=islink,
     exists=exists,
     link_exists=lexists,
-
     # path testing
     is_abs=isabs,
     abs=isabs,
     is_same_file=samefile,
     same_file=samefile,
     is_mount=ismount,
-    mount=ismount
+    mount=ismount,
 )

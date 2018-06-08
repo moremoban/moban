@@ -11,7 +11,7 @@ PULL = "pull"
 ISSUES = "issues"
 
 
-@JinjaFilter('github_expand')
+@JinjaFilter("github_expand")
 def github_expand(line, name, organisation):
     result = re.match(ISSUE, line)
     if result:

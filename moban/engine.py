@@ -15,16 +15,16 @@ import moban.reporter as reporter
 
 
 BUILTIN_EXENSIONS = [
-    'moban.filters.repr',
-    'moban.filters.github',
-    'moban.filters.text',
-    'moban.tests.files'
+    "moban.filters.repr",
+    "moban.filters.github",
+    "moban.filters.text",
+    "moban.tests.files",
 ]
 
 _FILTERS = JinjaFilterManager()
 _TESTS = JinjaTestManager()
 _GLOBALS = JinjaGlobalsManager()
-scan_plugins('moban_', 'moban', None, BUILTIN_EXENSIONS)
+scan_plugins("moban_", "moban", None, BUILTIN_EXENSIONS)
 
 
 class EngineFactory(object):
