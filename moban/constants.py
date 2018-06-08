@@ -20,6 +20,7 @@ DEFAULT_MOBAN_CACHE_FILE = ".moban.hashes"
 # Command line options
 LABEL_CONFIG = "configuration"
 LABEL_CONFIG_DIR = "configuration_dir"
+LABEL_PLUGIN_DIRS = "plugin_dir"
 LABEL_TEMPLATE = "template"
 LABEL_TMPL_DIRS = "template_dir"
 LABEL_OUTPUT = "output"
@@ -68,3 +69,9 @@ ERROR_NO_TEMPLATE = "No template found"
 HAS_CHANGES = 1
 ERROR = 2
 NO_CHANGES = 0
+
+
+# Extension
+JINJA_FILTER_EXTENSION = "jinja_filter"
+JINJA_TEST_EXTENSION = "jinja_test"
+JINJA_GLOBALS_EXTENSION = "jinja_globals"

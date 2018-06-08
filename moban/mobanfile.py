@@ -1,4 +1,9 @@
 import os
+import re
+import sys
+
+from lml.utils import do_import
+
 import moban.constants as constants
 import moban.reporter as reporter
 from moban.engine import EngineFactory
@@ -23,9 +28,7 @@ def handle_copy(template_dirs, copy_config):
 
 
 def handle_targets(merged_options, targets):
-    list_of_templating_parameters = parse_targets(
-        merged_options, targets,
-    )
+    list_of_templating_parameters = parse_targets(merged_options, targets)
     engine_class = EngineFactory.get_engine(
         merged_options[constants.LABEL_TEMPLATE_TYPE]
     )
@@ -38,6 +41,19 @@ def handle_targets(merged_options, targets):
     return engine.number_of_templated_files()
 
 
+def handle_plugin_dirs(plugin_dirs):
+    for plugin_dir in plugin_dirs:
+        plugin_path = os.path.dirname(os.path.abspath(plugin_dir))
+        if plugin_path not in sys.path:
+            sys.path.append(plugin_path)
+        pysearchre = re.compile(".py$", re.IGNORECASE)
+        pluginfiles = filter(pysearchre.search, os.listdir(plugin_dir))
+        plugins = list(map(lambda fp: os.path.splitext(fp)[0], pluginfiles))
+        for plugin in plugins:
+            plugin_module = os.path.basename(plugin_dir) + "." + plugin
+            do_import(plugin_module)
+
+
 def handle_moban_file_v1(moban_file_configurations, command_line_options):
     merged_options = None
     if constants.LABEL_CONFIG in moban_file_configurations:
@@ -46,6 +62,9 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
             moban_file_configurations[constants.LABEL_CONFIG],
         )
     merged_options = merge(command_line_options, constants.DEFAULT_OPTIONS)
+    plugins_dirs = merged_options.get(constants.LABEL_PLUGIN_DIRS)
+    if plugins_dirs:
+        handle_plugin_dirs(plugins_dirs)
 
     targets = moban_file_configurations.get(constants.LABEL_TARGETS)
     if targets:
@@ -56,7 +75,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if constants.LABEL_COPY in moban_file_configurations:
         number_of_copied_files = handle_copy(
             merged_options[constants.LABEL_TMPL_DIRS],
-            moban_file_configurations[constants.LABEL_COPY]
+            moban_file_configurations[constants.LABEL_COPY],
         )
     else:
         number_of_copied_files = 0

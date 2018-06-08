@@ -106,8 +106,10 @@ def handle_moban_file(moban_file, options):
         raise exceptions.MobanfileGrammarException(
             constants.ERROR_INVALID_MOBAN_FILE % moban_file
         )
-    if (constants.LABEL_TARGETS not in moban_file_configurations and
-            constants.LABEL_COPY not in moban_file_configurations):
+    if (
+        constants.LABEL_TARGETS not in moban_file_configurations
+        and constants.LABEL_COPY not in moban_file_configurations
+    ):
         raise exceptions.MobanfileGrammarException(
             constants.ERROR_NO_TARGETS % moban_file
         )

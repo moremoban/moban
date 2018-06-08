@@ -1,0 +1,6 @@
+{% if 'tests/fixtures/jinja_tests/file_tests.template' is exists %}
+yes
+{%else%}
+no
+{% endif %}
+{{ test }}

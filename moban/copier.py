@@ -5,6 +5,7 @@ import moban.reporter as reporter
 
 
 class Copier(object):
+
     def __init__(self, template_dirs):
         self.template_dirs = template_dirs
         self._count = 0
@@ -19,7 +20,8 @@ class Copier(object):
                     self._count = self._count + 1
                 else:
                     reporter.report_error_message(
-                        "{0} cannot be found".format(src))
+                        "{0} cannot be found".format(src)
+                    )
 
     def number_of_copied_files(self):
         return self._count
