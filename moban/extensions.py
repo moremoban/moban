@@ -33,7 +33,6 @@ class JinjaTestManager(PluginManager, PluginMixin):
 
 class JinjaTest(PluginInfo):
     def __init__(self, test_name):
-        print(test_name)
         super(JinjaTest, self).__init__(
             constants.JINJA_TEST_EXTENSION,
             tags=[test_name])
