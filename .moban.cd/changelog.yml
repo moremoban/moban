@@ -4,6 +4,14 @@ releases:
 - changes:
   - action: Updated
     details:
+    - '`#18`: file exists test'
+    - "`#23`: custom jinja plugins"
+    - '`#26`: repr filter'
+  date: unreleased
+  version: 0.2.0
+- changes:
+  - action: Updated
+    details:
     - '`#21`: targets become optional'
     - "`#19`: transfer symlink's target file's file permission under unix/linux systems"
     - '`#16`: introduce copy key word in mobanfile'
