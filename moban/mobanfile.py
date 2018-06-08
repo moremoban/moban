@@ -1,12 +1,13 @@
 import os
 import re
 import sys
+from collections import defaultdict
 
 from lml.utils import do_import
 
 import moban.constants as constants
 import moban.reporter as reporter
-from moban.engine import EngineFactory
+from moban.engine import ENGINES
 from moban.utils import merge, parse_targets
 from moban.copier import Copier
 
@@ -29,16 +30,24 @@ def handle_copy(template_dirs, copy_config):
 
 def handle_targets(merged_options, targets):
     list_of_templating_parameters = parse_targets(merged_options, targets)
-    engine_class = EngineFactory.get_engine(
-        merged_options[constants.LABEL_TEMPLATE_TYPE]
-    )
-    engine = engine_class(
-        merged_options[constants.LABEL_TMPL_DIRS],
-        merged_options[constants.LABEL_CONFIG_DIR],
-    )
-    engine.render_to_files(list_of_templating_parameters)
-    engine.report()
-    return engine.number_of_templated_files()
+    jobs_for_each_engine = defaultdict(list)
+    for file_list in list_of_templating_parameters:
+        _, extension = os.path.splitext(file_list[0])
+        jobs_for_each_engine[extension[1:]].append(file_list)
+
+    count = 0
+    for template_type in jobs_for_each_engine.keys():
+        engine_class = ENGINES.get_engine(
+            template_type
+        )
+        engine = engine_class(
+            merged_options[constants.LABEL_TMPL_DIRS],
+            merged_options[constants.LABEL_CONFIG_DIR],
+        )
+        engine.render_to_files(jobs_for_each_engine[template_type])
+        engine.report()
+        count = count + engine.number_of_templated_files()
+    return count
 
 
 def handle_plugin_dirs(plugin_dirs):

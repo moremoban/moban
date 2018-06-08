@@ -5,7 +5,7 @@
 
 {{nihao}}
 
-{%include 'cool.template'%}
+{%include 'cool.template.jj2'%}
 
 {%block footer %}
 {%endblock%}

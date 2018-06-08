@@ -1,5 +1,11 @@
-from moban.engine import Engine
+from lml.plugin import PluginInfo
+
+from moban.constants import TEMPLATE_ENGINE_EXTENSION
 
 
-def get_engine(template_type):
-    return Engine
+@PluginInfo(
+    TEMPLATE_ENGINE_EXTENSION,
+    tags=['mako']
+)
+class MakoEngine:
+    pass

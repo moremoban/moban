@@ -1,23 +1,23 @@
 import os
 from nose.tools import raises, eq_
-from moban.engine import EngineFactory, Engine, Context
+from moban.engine import ENGINES, Engine, Context
 import moban.exceptions as exceptions
 from moban.extensions import jinja_global
 
 
 def test_default_template_type():
-    engine_class = EngineFactory.get_engine("jinja2")
+    engine_class = ENGINES.get_engine("jj2")
     assert engine_class == Engine
 
 
 def test_default_mako_type():  # fake mako
-    engine_class = EngineFactory.get_engine("mako")
-    assert engine_class == Engine
+    engine_class = ENGINES.get_engine("mako")
+    assert engine_class.__name__ == 'MakoEngine'
 
 
 @raises(exceptions.NoThirdPartyEngine)
 def test_unknown_template_type():
-    EngineFactory.get_engine("unknown_template_type")
+    ENGINES.get_engine("unknown_template_type")
 
 
 @raises(exceptions.DirectoryNotFound)
