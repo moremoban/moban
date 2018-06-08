@@ -4,12 +4,14 @@ Change log
 0.2.0 - unreleased
 --------------------------------------------------------------------------------
 
-Updated
+Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. `#18 <https://github.com/moremoban/moban/issues/18>`_: file exists test
 #. `#23 <https://github.com/moremoban/moban/issues/23>`_: custom jinja plugins
 #. `#26 <https://github.com/moremoban/moban/issues/26>`_: repr filter
+#. `#47 <https://github.com/moremoban/moban/issues/47>`_: allow the expansion of
+   template engine
 
 0.1.4 - 29-May-2018
 --------------------------------------------------------------------------------

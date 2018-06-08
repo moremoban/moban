@@ -1,6 +1,8 @@
 import os
 import stat
 
+from nose.tools import eq_
+
 from moban.utils import file_permissions_copy
 from moban.utils import write_file_out
 from moban.utils import strip_off_trailing_new_lines

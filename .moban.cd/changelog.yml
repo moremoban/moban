@@ -2,11 +2,12 @@ name: moban
 organisation: moremoban
 releases:
 - changes:
-  - action: Updated
+  - action: Added
     details:
     - '`#18`: file exists test'
     - "`#23`: custom jinja plugins"
     - '`#26`: repr filter'
+    - "`#47`: allow the expansion of template engine"
   date: unreleased
   version: 0.2.0
 - changes:
