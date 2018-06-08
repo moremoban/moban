@@ -8,6 +8,9 @@ Since version 0.2, mobanfile supports an extra field `plugin_dir`, along with
 `template_dir`. When you put your own jinja2 filters, tests and globals in
 your moban repo, you can let moban know about them via this keyword.
 
+Importantly, you have to have `__init__.py` file in your `plugin_dir`. Otherwise,
+your plugins will NOT be loaded.
+
 Jinja2 Filter
 *******************
 

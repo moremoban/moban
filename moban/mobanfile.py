@@ -45,14 +45,17 @@ def handle_targets(merged_options, targets):
 
 def handle_plugin_dirs(plugin_dirs):
     for plugin_dir in plugin_dirs:
-        sys.path.append(os.path.abspath(plugin_dir))
+        plugin_path = os.path.dirname(os.path.abspath(plugin_dir))
+        if plugin_path not in sys.path:
+            sys.path.append(plugin_path)
         pysearchre = re.compile('.py$', re.IGNORECASE)
         pluginfiles = filter(pysearchre.search,
                              os.listdir(plugin_dir))
         plugins = list(map(lambda fp: os.path.splitext(fp)[0],
                            pluginfiles))
         for plugin in plugins:
-            do_import(plugin)
+            plugin_module = os.path.basename(plugin_dir) + '.' + plugin
+            do_import(plugin_module)
 
 
 def handle_moban_file_v1(moban_file_configurations, command_line_options):
