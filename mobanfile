@@ -6,8 +6,8 @@ configuration:
   plugin_dir:
     - "setupmobans/plugins"
 targets:
-  - setup.py: custom_setup.py.jj2
-  - .travis.yml: custom_travis.yml.jj2
+  - setup.py: setup.py
+  - .travis.yml: travis.yml
   - requirements.txt: requirements.txt.jj2
   - .gitignore: gitignore.jj2
   - MANIFEST.in: MANIFEST.in.jj2

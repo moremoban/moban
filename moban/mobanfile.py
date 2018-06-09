@@ -33,7 +33,10 @@ def handle_targets(merged_options, targets):
     jobs_for_each_engine = defaultdict(list)
     for file_list in list_of_templating_parameters:
         _, extension = os.path.splitext(file_list[0])
-        jobs_for_each_engine[extension[1:]].append(file_list)
+        template_type = extension[1:]
+        if template_type not in ENGINES.all_types():
+            template_type = constants.DEFAULT_TEMPLATE_TYPE
+        jobs_for_each_engine[template_type].append(file_list)
 
     count = 0
     for template_type in jobs_for_each_engine.keys():

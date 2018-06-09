@@ -36,6 +36,9 @@ class EngineFactory(PluginManager):
     def get_engine(self, template_type):
         return self.load_me_now(template_type)
 
+    def all_types(self):
+        return list(self.registry.keys())
+
     def raise_exception(self, key):
         raise exceptions.NoThirdPartyEngine(key)
 
