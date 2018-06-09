@@ -81,6 +81,10 @@ def create_parser():
         "-o", "--%s" % constants.LABEL_OUTPUT, help="the output file"
     )
     parser.add_argument(
+        "--%s" % constants.LABEL_TEMPLATE_TYPE,
+        help="the template type, default is jinja2",
+    )
+    parser.add_argument(
         "-f",
         action="store_true",
         dest=constants.LABEL_FORCE,

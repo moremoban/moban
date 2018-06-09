@@ -95,6 +95,8 @@ Usage
                            the template file
      -o OUTPUT, --output OUTPUT
                            the output file
+     --template_type TEMPLATE_TYPE
+                           the template type, default is jinja2
      -f                    force moban to template all files despite of
                            .moban.hashes
      -m MOBANFILE, --mobanfile MOBANFILE
