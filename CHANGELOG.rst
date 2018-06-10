@@ -12,6 +12,8 @@ Added
 #. `#26 <https://github.com/moremoban/moban/issues/26>`_: repr filter
 #. `#47 <https://github.com/moremoban/moban/issues/47>`_: allow the expansion of
    template engine
+#. `#58 <https://github.com/moremoban/moban/issues/58>`_: allow template type
+   per template
 
 0.1.4 - 29-May-2018
 --------------------------------------------------------------------------------

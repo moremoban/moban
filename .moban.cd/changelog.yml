@@ -8,6 +8,7 @@ releases:
     - "`#23`: custom jinja plugins"
     - '`#26`: repr filter'
     - "`#47`: allow the expansion of template engine"
+    - "`#58`: allow template type per template"
   date: unreleased
   version: 0.2.0
 - changes:
