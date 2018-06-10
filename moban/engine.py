@@ -50,7 +50,7 @@ scan_plugins("moban_", "moban", None, BUILTIN_EXENSIONS)
 
 @PluginInfo(
     constants.TEMPLATE_ENGINE_EXTENSION,
-    tags=['jj2', 'jinja2']
+    tags=['jinja2', 'jinja', 'jj2', 'j2']
 )
 class Engine(object):
 
