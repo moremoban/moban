@@ -35,7 +35,7 @@ def handle_targets(merged_options, targets):
         _, extension = os.path.splitext(file_list[0])
         template_type = extension[1:]
         if template_type not in ENGINES.all_types():
-            template_type = constants.DEFAULT_TEMPLATE_TYPE
+            template_type = merged_options[constants.LABEL_TEMPLATE_TYPE]
         jobs_for_each_engine[template_type].append(file_list)
 
     count = 0
