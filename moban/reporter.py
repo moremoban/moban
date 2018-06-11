@@ -26,13 +26,15 @@ def report_no_action():
 
 def report_full_run(file_count):
     figure = crayons.green(str(file_count), bold=True)
-    print(MESSAGE_TEMPLATED_ALL.format(figure))
+    message = MESSAGE_TEMPLATED_ALL.format(figure)
+    print(_format_single(message, file_count))
 
 
 def report_partial_run(file_count, total):
     figure = crayons.green(str(file_count), bold=True)
     total_figure = crayons.yellow(str(total), bold=True)
-    print(MESSAGE_REPORT.format(figure, total_figure))
+    message = MESSAGE_REPORT.format(figure, total_figure)
+    print(_format_single(message, total))
 
 
 def report_error_message(message):
@@ -65,4 +67,11 @@ def report_no_copying_done():
 
 def report_copying_summary(file_count):
     figure = crayons.green(str(file_count), bold=True)
-    print(MESSAGE_COPIED_ALL.format(figure))
+    message = MESSAGE_COPIED_ALL.format(figure)
+    print(_format_single(message, file_count))
+
+
+def _format_single(message, count):
+    if count == 1:
+        return message.replace('files', 'file')
+    return message
