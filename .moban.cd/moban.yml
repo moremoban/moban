@@ -9,6 +9,8 @@ release: 0.2.0
 branch: master
 command_line_interface: "moban"
 entry_point: "moban.main:main"
+company: Onni Software Ltd.
+copyright_year: 2017-2018
 keywords:
   - jinja2
   - moban
