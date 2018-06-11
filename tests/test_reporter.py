@@ -48,3 +48,9 @@ def test_no_action():
     reporter.report_no_action()
     patcher.stop()
     eq_(fake_stdout.getvalue(), "No templating\n")
+
+
+def test_format_single():
+    message = '1 files'
+    ret = reporter._format_single(message, 1)
+    eq_(ret, '1 file')
