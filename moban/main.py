@@ -14,7 +14,7 @@ import argparse
 
 from moban.utils import merge, open_yaml
 from moban.hashstore import HashStore
-from moban.engine import EngineFactory
+from moban.engine import ENGINES
 import moban.constants as constants
 import moban.mobanfile as mobanfile
 import moban.exceptions as exceptions
@@ -131,7 +131,7 @@ def handle_command_line(options):
     options = merge(options, constants.DEFAULT_OPTIONS)
     if options[constants.LABEL_TEMPLATE] is None:
         raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
-    engine_class = EngineFactory.get_engine(
+    engine_class = ENGINES.get_engine(
         options[constants.LABEL_TEMPLATE_TYPE]
     )
     engine = engine_class(

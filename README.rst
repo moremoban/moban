@@ -74,35 +74,34 @@ moban.output will contain::
 Usage
 ================================================================================
 
-usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
-             [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-t TEMPLATE]
-             [--template_type TEMPLATE_TYPE] [-o OUTPUT] [-f] [-m MOBANFILE]
-
-Yet another jinja2 cli command for static text generation
+::
 
 
-optional arguments
---------------------------------------------------------------------------------
-
-* `-h, --help`
-  show this help message and exit
-* `-cd CONFIGURATION_DIR --configuration_dir CONFIGURATION_DIR`
-  the directory for configuration file lookup
-* `-c CONFIGURATION, --configuration CONFIGURATION`
-  the dictionary file
-* `-td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]`
-  the directories for template file lookup
-* `-t TEMPLATE, --template TEMPLATE`
-  the template file
-* `--template_type TEMPLATE_TYPE`
-  the template type, default is jinja2
-* `-o OUTPUT, --output OUTPUT`
-  the output file
-* `-f`
-  force moban to template all files despite of .moban.hashes
-* `-m MOBANFILE, --mobanfile MOBANFILE`
-  custom moban file
-
+   usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
+                [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-t TEMPLATE] [-o OUTPUT]
+                [-f] [-m MOBANFILE]
+   
+   Yet another jinja2 cli command for static text generation
+   
+   optional arguments:
+     -h, --help            show this help message and exit
+     -cd CONFIGURATION_DIR, --configuration_dir CONFIGURATION_DIR
+                           the directory for configuration file lookup
+     -c CONFIGURATION, --configuration CONFIGURATION
+                           the dictionary file
+     -td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]
+                           the directories for template file lookup
+     -t TEMPLATE, --template TEMPLATE
+                           the template file
+     -o OUTPUT, --output OUTPUT
+                           the output file
+     --template_type TEMPLATE_TYPE
+                           the template type, default is jinja2
+     -f                    force moban to template all files despite of
+                           .moban.hashes
+     -m MOBANFILE, --mobanfile MOBANFILE
+                           custom moban file
+   
 
 exit codes
 --------------------------------------------------------------------------------
@@ -111,7 +110,7 @@ exit codes
 - 1 : has changes
 - 2 : error occured
 
-Special Filters
+Built-in Filters
 ================================================================================
 
 split_length
@@ -152,3 +151,16 @@ Here is Grammar in the changelog.yml::
 
 More details can be found in `moban's changelog.yml <https://github.com/moremoban/moban/blob/master/.moban.cd/changelog.yml#L10>`_
 
+`repr`
+--------------------------------------------------------------------------------
+
+Returns a single quoted string in the templated file
+
+
+Built-in Tests
+================================================================================
+
+`exists`
+--------------------------------------------------------------------------------
+
+Test if a file exists or not

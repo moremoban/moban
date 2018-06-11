@@ -75,3 +75,5 @@ NO_CHANGES = 0
 JINJA_FILTER_EXTENSION = "jinja_filter"
 JINJA_TEST_EXTENSION = "jinja_test"
 JINJA_GLOBALS_EXTENSION = "jinja_globals"
+
+TEMPLATE_ENGINE_EXTENSION = "template_engine"

@@ -4,7 +4,6 @@ Level 7: Custom jinja filters, tests and globals
 Level 7 example demonstrates advanced plugin capabilities of moban. The following
 moban file had `plugin_dir` specified::
 
-
     configuration:
       template_dir:
         - my-templates
@@ -42,4 +41,3 @@ Here is the command to launch it:
    Everything is up to date!
 
 Please examine individual template and its associated plugin for more details.
-

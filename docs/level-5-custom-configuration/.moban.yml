@@ -5,4 +5,4 @@ configuration:
     - cool-templates
     - '.'
 targets:
-  - a.output: a.template
+  - a.output: a.template.jj2

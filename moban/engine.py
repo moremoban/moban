@@ -3,6 +3,7 @@ import os
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
 
+from lml.plugin import PluginManager, PluginInfo
 from lml.loader import scan_plugins
 
 from moban.hashstore import HashStore
@@ -24,25 +25,33 @@ BUILTIN_EXENSIONS = [
 _FILTERS = JinjaFilterManager()
 _TESTS = JinjaTestManager()
 _GLOBALS = JinjaGlobalsManager()
+
+
+class EngineFactory(PluginManager):
+    def __init__(self):
+        super(EngineFactory, self).__init__(
+            constants.TEMPLATE_ENGINE_EXTENSION
+        )
+
+    def get_engine(self, template_type):
+        return self.load_me_now(template_type)
+
+    def all_types(self):
+        return list(self.registry.keys())
+
+    def raise_exception(self, key):
+        raise exceptions.NoThirdPartyEngine(key)
+
+
+ENGINES = EngineFactory()
+
 scan_plugins("moban_", "moban", None, BUILTIN_EXENSIONS)
 
 
-class EngineFactory(object):
-
-    @staticmethod
-    def get_engine(template_type):
-        if template_type == constants.DEFAULT_TEMPLATE_TYPE:
-            return Engine
-        else:
-            try:
-                external_engine = utils.load_external_engine(template_type)
-            except ImportError:
-                raise exceptions.NoThirdPartyEngine(
-                    constants.MESSAGE_NO_THIRD_PARTY_ENGINE
-                )
-            return external_engine.get_engine(template_type)
-
-
+@PluginInfo(
+    constants.TEMPLATE_ENGINE_EXTENSION,
+    tags=['jinja2', 'jinja', 'jj2', 'j2']
+)
 class Engine(object):
 
     def __init__(self, template_dirs, context_dirs):

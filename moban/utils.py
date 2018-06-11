@@ -1,6 +1,5 @@
 import os
 import re
-import sys
 import stat
 
 import yaml
@@ -78,16 +77,6 @@ def parse_targets(options, targets):
         else:
             for output, template_file in target.items():
                 yield ((template_file, common_data_file, output))
-
-
-def load_external_engine(template_type):
-    module_name = "%s_%s" % (constants.PROGRAM_NAME, template_type)
-    try:
-        __import__(module_name)
-    except ImportError:
-        raise
-    module = sys.modules[module_name]
-    return module
 
 
 def file_permissions_copy(source, dest):
