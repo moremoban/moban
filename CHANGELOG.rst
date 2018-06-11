@@ -15,6 +15,12 @@ Added
 #. `#58 <https://github.com/moremoban/moban/issues/58>`_: allow template type
    per template
 
+Updated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#34 <https://github.com/moremoban/moban/issues/34>`_: fix plural message if
+   single file is processed
+
 0.1.4 - 29-May-2018
 --------------------------------------------------------------------------------
 
