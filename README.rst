@@ -110,7 +110,7 @@ exit codes
 - 1 : has changes
 - 2 : error occured
 
-Special Filters
+Built-in Filters
 ================================================================================
 
 split_length
@@ -151,3 +151,16 @@ Here is Grammar in the changelog.yml::
 
 More details can be found in `moban's changelog.yml <https://github.com/moremoban/moban/blob/master/.moban.cd/changelog.yml#L10>`_
 
+`repr`
+--------------------------------------------------------------------------------
+
+Returns a single quoted string in the templated file
+
+
+Built-in Tests
+================================================================================
+
+`exists`
+--------------------------------------------------------------------------------
+
+Test if a file exists or not
