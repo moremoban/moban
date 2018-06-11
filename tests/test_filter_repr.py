@@ -1,4 +1,4 @@
-from moban.filters.repr import repr_function
+from moban.filters.repr import repr as repr_function
 from nose.tools import eq_
 
 

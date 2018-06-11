@@ -21,10 +21,13 @@ class JinjaFilterManager(PluginManager, PluginMixin):
 
 class JinjaFilter(PluginInfo):
 
-    def __init__(self, filter_name):
+    def __init__(self):
         super(JinjaFilter, self).__init__(
-            constants.JINJA_FILTER_EXTENSION, tags=[filter_name]
+            constants.JINJA_FILTER_EXTENSION
         )
+
+    def tags(self):
+        yield self.cls.__name__
 
 
 class JinjaTestManager(PluginManager, PluginMixin):
@@ -35,10 +38,17 @@ class JinjaTestManager(PluginManager, PluginMixin):
 
 class JinjaTest(PluginInfo):
 
-    def __init__(self, test_name):
+    def __init__(self, test_name=None):
         super(JinjaTest, self).__init__(
-            constants.JINJA_TEST_EXTENSION, tags=[test_name]
+            constants.JINJA_TEST_EXTENSION
         )
+        self.test_name = test_name
+
+    def tags(self):
+        if self.test_name:
+            yield self.test_name
+        else:
+            yield self.cls.__name__
 
 
 def jinja_tests(**keywords):

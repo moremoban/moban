@@ -3,8 +3,8 @@ import base64
 from moban.extensions import JinjaFilter
 
 
-@JinjaFilter('base64encode')
-def base64_encode(string):
+@JinjaFilter()
+def base64encode(string):
     if sys.version_info[0] > 2:
         content = base64.b64encode(string.encode('utf-8'))
         content = content.decode('utf-8')
