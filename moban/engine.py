@@ -3,31 +3,55 @@ import os
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
 
+from lml.plugin import PluginManager, PluginInfo
+from lml.loader import scan_plugins
+
 from moban.hashstore import HashStore
-from moban.filters.text import split_length
-from moban.filters.github import github_expand
+from moban.extensions import JinjaFilterManager, JinjaTestManager
+from moban.extensions import JinjaGlobalsManager
 import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
 import moban.reporter as reporter
 
 
-class EngineFactory(object):
+BUILTIN_EXENSIONS = [
+    "moban.filters.repr",
+    "moban.filters.github",
+    "moban.filters.text",
+    "moban.tests.files",
+]
 
-    @staticmethod
-    def get_engine(template_type):
-        if template_type == constants.DEFAULT_TEMPLATE_TYPE:
-            return Engine
-        else:
-            try:
-                external_engine = utils.load_external_engine(template_type)
-            except ImportError:
-                raise exceptions.NoThirdPartyEngine(
-                    constants.MESSAGE_NO_THIRD_PARTY_ENGINE
-                )
-            return external_engine.get_engine(template_type)
+_FILTERS = JinjaFilterManager()
+_TESTS = JinjaTestManager()
+_GLOBALS = JinjaGlobalsManager()
 
 
+class EngineFactory(PluginManager):
+    def __init__(self):
+        super(EngineFactory, self).__init__(
+            constants.TEMPLATE_ENGINE_EXTENSION
+        )
+
+    def get_engine(self, template_type):
+        return self.load_me_now(template_type)
+
+    def all_types(self):
+        return list(self.registry.keys())
+
+    def raise_exception(self, key):
+        raise exceptions.NoThirdPartyEngine(key)
+
+
+ENGINES = EngineFactory()
+
+scan_plugins("moban_", "moban", None, BUILTIN_EXENSIONS)
+
+
+@PluginInfo(
+    constants.TEMPLATE_ENGINE_EXTENSION,
+    tags=['jinja2', 'jinja', 'jj2', 'j2']
+)
 class Engine(object):
 
     def __init__(self, template_dirs, context_dirs):
@@ -39,9 +63,17 @@ class Engine(object):
             trim_blocks=True,
             lstrip_blocks=True,
         )
-        self.jj2_environment.filters["split_length"] = split_length
-        self.jj2_environment.filters["github_expand"] = github_expand
+        for filter_name, filter_function in _FILTERS.get_all():
+            self.jj2_environment.filters[filter_name] = filter_function
+
+        for test_name, test_function in _TESTS.get_all():
+            self.jj2_environment.tests[test_name] = test_function
+
+        for global_name, helper_obj in _GLOBALS.get_all():
+            self.jj2_environment.globals[global_name] = helper_obj.payload
+
         self.context = Context(context_dirs)
+        self.template_dirs = template_dirs
         self.hash_store = HashStore()
         self.__file_count = 0
         self.__templated_count = 0
@@ -53,7 +85,7 @@ class Engine(object):
 
         rendered_content = template.render(**data)
         utils.write_file_out(output_file, rendered_content)
-        utils.file_permissions_copy(template_file, output_file)
+        self._file_permissions_copy(template_file, output_file)
 
     def render_to_files(self, array_of_param_tuple):
         sta = Strategy(array_of_param_tuple)
@@ -113,6 +145,14 @@ class Engine(object):
             )
             utils.file_permissions_copy(template.filename, output)
         return flag
+
+    def _file_permissions_copy(self, template_file, output_file):
+        true_template_file = template_file
+        for a_template_dir in self.template_dirs:
+            true_template_file = os.path.join(a_template_dir, template_file)
+            if os.path.exists(true_template_file):
+                break
+        utils.file_permissions_copy(true_template_file, output_file)
 
 
 class Context(object):

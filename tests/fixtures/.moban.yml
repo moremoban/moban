@@ -5,5 +5,5 @@ configuration:
     - ".moban.d"
   configuration: data.yaml
 targets:
-  - README.rst: README.rst
-  - setup.py: setup.py
+  - README.rst: README.rst.jj2
+  - setup.py: setup.py.jj2

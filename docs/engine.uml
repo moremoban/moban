@@ -1,0 +1,23 @@
+@startuml
+
+package "moban" {
+[engine factory]
+[jinja2 engine]
+}
+
+[lml]
+
+package "moban-mako" {
+[mako engine]
+}
+
+package "moban-haml" {
+[haml engine]
+}
+
+[engine factory] -> [lml] : get all engines
+[lml] <-- [jinja2 engine] : register
+[lml] <.. [mako engine] : register
+[lml] <.. [haml engine] : register
+
+@enduml

@@ -1,6 +1,8 @@
 import re
+from moban.extensions import JinjaFilter
 
 
+@JinjaFilter()
 def split_length(input_line, length):
     start = 0
     limit = length

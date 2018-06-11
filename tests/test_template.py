@@ -57,7 +57,7 @@ def test_do_templates_with_more_shared_templates():
     base_dir = os.path.join("tests", "fixtures")
     engine = Engine(base_dir, os.path.join(base_dir, "config"))
     engine._render_with_finding_template_first(
-        {"a.template": [(os.path.join(base_dir, "child.yaml"), "test")]}
+        {"a.jj2": [(os.path.join(base_dir, "child.yaml"), "test")]}
     )
     with open("test", "r") as f:
         content = f.read()
@@ -71,7 +71,7 @@ def test_do_templates_with_more_shared_data():
     base_dir = os.path.join("tests", "fixtures")
     engine = Engine(base_dir, os.path.join(base_dir, "config"))
     engine._render_with_finding_data_first(
-        {os.path.join(base_dir, "child.yaml"): [("a.template", "test")]}
+        {os.path.join(base_dir, "child.yaml"): [("a.jj2", "test")]}
     )
     with open("test", "r") as f:
         content = f.read()

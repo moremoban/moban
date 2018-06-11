@@ -2,6 +2,19 @@ name: moban
 organisation: moremoban
 releases:
 - changes:
+  - action: Added
+    details:
+    - '`#18`: file exists test'
+    - "`#23`: custom jinja plugins"
+    - '`#26`: repr filter'
+    - "`#47`: allow the expansion of template engine"
+    - "`#58`: allow template type per template"
+  - action: Updated
+    details:
+    - "`#34`: fix plural message if single file is processed"
+  date: 11-06-2018
+  version: 0.2.0
+- changes:
   - action: Updated
     details:
     - '`#21`: targets become optional'

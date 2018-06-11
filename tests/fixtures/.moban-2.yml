@@ -6,5 +6,5 @@ configuration:
 targets:
   - output: README.rst
     configuration: custom-data.yaml
-    template: README.rst
-  - setup.py: setup.py
+    template: README.rst.jj2
+  - setup.py: setup.py.jj2

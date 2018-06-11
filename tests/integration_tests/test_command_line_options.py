@@ -3,7 +3,7 @@ import sys
 from shutil import copyfile
 from moban.main import main
 from mock import patch
-from nose.tools import raises, assert_raises
+from nose.tools import raises, assert_raises, eq_
 
 
 class TestCustomOptions:
@@ -28,21 +28,21 @@ class TestCustomOptions:
             "-td",
             "/home/developer/templates",
             "-t",
-            "a.template",
+            "a.jj2",
         ]
         with patch.object(sys, "argv", test_args):
             main()
             fake_template_doer.assert_called_with(
-                "a.template", "config.yaml", "moban.output"
+                "a.jj2", "config.yaml", "moban.output"
             )
 
     @patch("moban.engine.Engine.render_to_file")
     def test_minimal_options(self, fake_template_doer):
-        test_args = ["moban", "-c", self.config_file, "-t", "a.template"]
+        test_args = ["moban", "-c", self.config_file, "-t", "a.jj2"]
         with patch.object(sys, "argv", test_args):
             main()
             fake_template_doer.assert_called_with(
-                "a.template", "config.yaml", "moban.output"
+                "a.jj2", "config.yaml", "moban.output"
             )
 
     @raises(SystemExit)
@@ -69,11 +69,11 @@ class TestOptions:
 
     @patch("moban.engine.Engine.render_to_file")
     def test_default_options(self, fake_template_doer):
-        test_args = ["moban", "-t", "a.template"]
+        test_args = ["moban", "-t", "a.jj2"]
         with patch.object(sys, "argv", test_args):
             main()
             fake_template_doer.assert_called_with(
-                "a.template", "data.yml", "moban.output"
+                "a.jj2", "data.yml", "moban.output"
             )
 
     @raises(SystemExit)
@@ -89,7 +89,7 @@ class TestOptions:
 
 @raises(IOError)
 def test_missing_configuration():
-    test_args = ["moban", "-t", "a.template"]
+    test_args = ["moban", "-t", "a.jj2"]
     with patch.object(sys, "argv", test_args):
         main()
 
@@ -116,11 +116,11 @@ class TestNoOptions:
         with patch.object(sys, "argv", test_args):
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            assert (
-                call_args
-                == [
-                    ("README.rst", "data.yaml", "README.rst"),
-                    ("setup.py", "data.yaml", "setup.py"),
+            eq_(
+                call_args,
+                [
+                    ("README.rst.jj2", "data.yaml", "README.rst"),
+                    ("setup.py.jj2", "data.yaml", "setup.py"),
                 ]
             )
 
@@ -152,11 +152,11 @@ class TestNoOptions2:
         with patch.object(sys, "argv", test_args):
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            assert (
-                call_args
-                == [
-                    ("README.rst", "data.yaml", "README.rst"),
-                    ("setup.py", "data.yaml", "setup.py"),
+            eq_(
+                call_args,
+                [
+                    ("README.rst.jj2", "data.yaml", "README.rst"),
+                    ("setup.py.jj2", "data.yaml", "setup.py"),
                 ]
             )
 
@@ -187,11 +187,11 @@ class TestCustomMobanFile:
         with patch.object(sys, "argv", test_args):
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            assert (
-                call_args
-                == [
-                    ("README.rst", "data.yaml", "README.rst"),
-                    ("setup.py", "data.yaml", "setup.py"),
+            eq_(
+                call_args,
+                [
+                    ("README.rst.jj2", "data.yaml", "README.rst"),
+                    ("setup.py.jj2", "data.yaml", "setup.py"),
                 ]
             )
 
@@ -268,11 +268,11 @@ class TestComplexOptions:
         with patch.object(sys, "argv", test_args):
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            assert (
-                call_args
-                == [
-                    ("README.rst", "custom-data.yaml", "README.rst"),
-                    ("setup.py", "data.yml", "setup.py"),
+            eq_(
+                call_args,
+                [
+                    ("README.rst.jj2", "custom-data.yaml", "README.rst"),
+                    ("setup.py.jj2", "data.yml", "setup.py"),
                 ]
             )
 
@@ -291,11 +291,11 @@ class TestTemplateTypeOption:
 
     @patch("moban.engine.Engine.render_to_file")
     def test_mako_option(self, fake_template_doer):
-        test_args = ["moban", "-t", "a.template", "--template_type", "mako"]
+        test_args = ["moban", "-t", "a.mako"]
         with patch.object(sys, "argv", test_args):
             main()
             fake_template_doer.assert_called_with(
-                "a.template", "data.yml", "moban.output"
+                "a.mako", "data.yml", "moban.output"
             )
 
     def tearDown(self):
