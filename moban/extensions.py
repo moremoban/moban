@@ -46,9 +46,9 @@ class JinjaTest(PluginInfo):
 
     def tags(self):
         if self.test_name:
-            yield self.cls.__name__
-        else:
             yield self.test_name
+        else:
+            yield self.cls.__name__
 
 
 def jinja_tests(**keywords):
