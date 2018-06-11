@@ -9,7 +9,7 @@ releases:
     - '`#26`: repr filter'
     - "`#47`: allow the expansion of template engine"
     - "`#58`: allow template type per template"
-  date: unreleased
+  date: 11-06-2018
   version: 0.2.0
 - changes:
   - action: Updated
