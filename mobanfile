@@ -14,5 +14,3 @@ targets:
   - output: CHANGELOG.rst
     configuration: changelog.yml
     template: CHANGELOG.rst.jj2
-copy:
-  - setup.py.test: setup.py
