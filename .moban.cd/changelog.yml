@@ -4,6 +4,12 @@ releases:
 - changes:
   - action: Updated
     details:
+    - "`#28`: if a template has been copied once before, it is skipped in the next moban call"
+  date: unreleased
+  version: 0.2.2
+- changes:
+  - action: Updated
+    details:
     - templates using the same template engine will be templated as a group
     - update lml dependency to 0.0.3
   date: 13-06-2018
