@@ -32,12 +32,33 @@ class TestCopier:
 
     def test_number_of_files(self):
         copier = Copier([os.path.join("tests", "fixtures")])
-        file_list = [{"/tmp/test": "copier-test01.csv"}]
+        file_list = [{"/tmp/test": "copier-test04.csv"}]
         copier.copy_files(file_list)
         eq_(copier.number_of_copied_files(), 1)
 
     def test_handle_copy(self):
         tmpl_dirs = [os.path.join("tests", "fixtures")]
-        copy_config = [{"/tmp/test": "copier-test01.csv"}]
+        copy_config = [{"/tmp/test": "copier-test05.csv"}]
         count = handle_copy(tmpl_dirs, copy_config)
         eq_(count, 1)
+
+
+@patch("moban.reporter.report_copying")
+def test_lazy_copy_files(reporter):
+    copier = Copier([os.path.join("tests", "fixtures")])
+    file_list = [{"/tmp/test2": "copier-test02.csv"}]
+    copier.copy_files(file_list)
+    copier.copy_files(file_list)  # not called the second time
+    eq_(reporter.call_count, 1)
+    os.unlink("/tmp/test2")
+
+
+@patch("moban.reporter.report_copying")
+def test_lazy_copy_the_same_file(reporter):
+    copier = Copier([os.path.join("tests", "fixtures")])
+    dest_file = os.path.join("tests", "fixtures", "copier-test03.csv")
+    file_list = [{
+        dest_file: "copier-test03.csv"
+    }]
+    copier.copy_files(file_list)
+    eq_(reporter.call_count, 0)

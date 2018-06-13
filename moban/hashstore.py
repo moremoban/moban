@@ -22,23 +22,27 @@ class HashStore:
             self.hashes = {}
 
     def are_two_file_different(self, source_file, dest_file):
-        source_changed = True
-        dest_changed = True
+
+        different = True
         source_hash = get_file_hash(source_file)
 
         previous_source_hash = self.hashes.get("copy:" + source_file)
         if previous_source_hash:
             if source_hash == previous_source_hash:
-                source_changed = False
+                different = False
         else:
             self.hashes["copy:" + source_file] = source_hash
 
         if os.path.exists(dest_file):
             dest_hash = get_file_hash(dest_file)
             if source_hash == dest_hash:
-                dest_changed = False
+                different = False
+            else:
+                different = True
+        else:
+            different = True
 
-        return source_changed or dest_changed
+        return different
 
     def is_file_changed(self, file_name, file_content, source_template):
         changed = self._is_source_updated(
