@@ -22,7 +22,6 @@ class HashStore:
             self.hashes = {}
 
     def are_two_file_different(self, source_file, dest_file):
-
         different = True
         source_hash = get_file_hash(source_file)
 
@@ -33,14 +32,15 @@ class HashStore:
         if source_hash == previous_source_hash:
             different = False
 
-        if os.path.exists(dest_file):
-            dest_hash = get_file_hash(dest_file)
-            if source_hash == dest_hash:
-                different = False
+        if not different:
+            if os.path.exists(dest_file):
+                dest_hash = get_file_hash(dest_file)
+                if source_hash == dest_hash:
+                    different = False
+                else:
+                    different = True
             else:
                 different = True
-        else:
-            different = True
 
         return different
 

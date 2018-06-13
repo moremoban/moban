@@ -51,14 +51,3 @@ def test_lazy_copy_files(reporter):
     copier.copy_files(file_list)  # not called the second time
     eq_(reporter.call_count, 1)
     os.unlink("/tmp/test2")
-
-
-@patch("moban.reporter.report_copying")
-def test_lazy_copy_the_same_file(reporter):
-    copier = Copier([os.path.join("tests", "fixtures")])
-    dest_file = os.path.join("tests", "fixtures", "copier-test03.csv")
-    file_list = [{
-        dest_file: "copier-test03.csv"
-    }]
-    copier.copy_files(file_list)
-    eq_(reporter.call_count, 0)
