@@ -122,7 +122,7 @@ def handle_moban_file(moban_file, options):
         raise exceptions.MobanfileGrammarException(
             constants.MESSAGE_FILE_VERSION_NOT_SUPPORTED % version
         )
-    HASH_STORE.save_db()
+    HASH_STORE.save_hashes()
 
 
 def handle_command_line(options):
@@ -143,7 +143,7 @@ def handle_command_line(options):
         options[constants.LABEL_CONFIG],
         options[constants.LABEL_OUTPUT],
     )
-    HASH_STORE.save_db()
+    HASH_STORE.save_hashes()
     exit_code = reporter.convert_to_shell_exit_code(
         engine.number_of_templated_files()
     )

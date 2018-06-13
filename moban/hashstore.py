@@ -27,11 +27,11 @@ class HashStore:
         source_hash = get_file_hash(source_file)
 
         previous_source_hash = self.hashes.get("copy:" + source_file)
-        if previous_source_hash:
-            if source_hash == previous_source_hash:
-                different = False
-        else:
+        if previous_source_hash is None:
             self.hashes["copy:" + source_file] = source_hash
+
+        if source_hash == previous_source_hash:
+            different = False
 
         if os.path.exists(dest_file):
             dest_hash = get_file_hash(dest_file)
@@ -72,8 +72,7 @@ class HashStore:
 
         return changed
 
-    def save_db(self):
-        import json
+    def save_hashes(self):
         with open(self.cache_file, "w") as f:
             json.dump(self.hashes, f)
 

@@ -16,13 +16,13 @@ class TestHashStore:
     def test_simple_use_case(self):
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
-        hs.save_db()
+        hs.save_hashes()
         assert flag is True
 
     def test_dest_file_does_not_exist(self):
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
-        hs.save_db()
+        hs.save_hashes()
         hs2 = HashStore()
         flag = hs2.is_file_changed(*self.fixture)
         assert flag is True
@@ -33,11 +33,11 @@ class TestHashStore:
         if flag:
             with open(self.fixture[0], "wb") as f:
                 f.write(self.fixture[1])
-        hs.save_db()
+        hs.save_hashes()
         hs2 = HashStore()
         flag = hs2.is_file_changed(*self.fixture)
         assert flag is False
-        hs2.save_db()
+        hs2.save_hashes()
         os.unlink(self.fixture[0])
 
     def test_dest_file_changed(self):
@@ -54,19 +54,19 @@ class TestHashStore:
         if flag:
             with open(self.fixture[0], "wb") as f:
                 f.write(self.fixture[1])
-        hs.save_db()
+        hs.save_hashes()
         # no change
         hs2 = HashStore()
         flag = hs2.is_file_changed(*self.fixture)
         assert flag is False
-        hs2.save_db()
+        hs2.save_hashes()
         # now let update the generated file
         hs3 = HashStore()
         with open(self.fixture[0], "w") as f:
             f.write("hey changed")
         flag = hs3.is_file_changed(*self.fixture)
         assert flag is True
-        hs3.save_db()
+        hs3.save_hashes()
         os.unlink(self.fixture[0])
 
     def test_dest_file_file_permision_changed(self):
@@ -79,16 +79,16 @@ class TestHashStore:
         if flag:
             with open(self.fixture[0], "wb") as f:
                 f.write(self.fixture[1])
-        hs.save_db()
+        hs.save_hashes()
         # no change
         hs2 = HashStore()
         flag = hs2.is_file_changed(*self.fixture)
         assert flag is False
-        hs2.save_db()
+        hs2.save_hashes()
         # now let change file permision of generated file
         hs3 = HashStore()
         os.chmod(self.fixture[0], 0o766)
         flag = hs3.is_file_changed(*self.fixture)
         assert flag is True
-        hs3.save_db()
+        hs3.save_hashes()
         os.unlink(self.fixture[0])
