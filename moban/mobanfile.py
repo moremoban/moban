@@ -34,9 +34,11 @@ def handle_targets(merged_options, targets):
     for file_list in list_of_templating_parameters:
         _, extension = os.path.splitext(file_list[0])
         template_type = extension[1:]
-        if template_type not in ENGINES.all_types():
-            template_type = merged_options[constants.LABEL_TEMPLATE_TYPE]
-        jobs_for_each_engine[template_type].append(file_list)
+        primary_template_type = ENGINES.get_primary_key(template_type)
+        if primary_template_type is None:
+            primary_template_type = merged_options[
+                constants.LABEL_TEMPLATE_TYPE]
+        jobs_for_each_engine[primary_template_type].append(file_list)
 
     count = 0
     for template_type in jobs_for_each_engine.keys():
