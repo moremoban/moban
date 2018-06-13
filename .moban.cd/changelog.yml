@@ -2,6 +2,13 @@ name: moban
 organisation: moremoban
 releases:
 - changes:
+  - action: Updated
+    details:
+    - templates using the same template engine will be templated as a group
+    - update lml dependency to 0.0.3
+  date: unreleased
+  version: 0.2.1
+- changes:
   - action: Added
     details:
     - '`#18`: file exists test'

@@ -64,14 +64,6 @@ class JinjaGlobalsManager(PluginManager, PluginMixin):
         )
 
 
-class PluginHelper(object):
-
-    def __init__(self, identifier, payload_obj):
-        self.payload = payload_obj
-        self.__name__ = identifier
-
-
 def jinja_global(identifier, dict_obj):
     plugin = PluginInfo(constants.JINJA_GLOBALS_EXTENSION, tags=[identifier])
-    helper = PluginHelper(identifier, dict_obj)
-    plugin(helper)
+    plugin(dict_obj)

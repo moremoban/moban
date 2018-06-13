@@ -69,8 +69,8 @@ class Engine(object):
         for test_name, test_function in _TESTS.get_all():
             self.jj2_environment.tests[test_name] = test_function
 
-        for global_name, helper_obj in _GLOBALS.get_all():
-            self.jj2_environment.globals[global_name] = helper_obj.payload
+        for global_name, dict_obj in _GLOBALS.get_all():
+            self.jj2_environment.globals[global_name] = dict_obj
 
         self.context = Context(context_dirs)
         self.template_dirs = template_dirs
