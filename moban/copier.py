@@ -15,15 +15,14 @@ class Copier(object):
         for dest_src_pair in file_list:
             for dest, src in dest_src_pair.items():
                 src_path = self._get_src_file(src)
-                if src_path:
-                    if HASH_STORE.are_two_file_different(src_path, dest):
-                        reporter.report_copying(src_path, dest)
-                        shutil.copy(src_path, dest)
-                        self._count = self._count + 1
-                else:
+                if src_path is None:
                     reporter.report_error_message(
                         "{0} cannot be found".format(src)
                     )
+                elif HASH_STORE.are_two_file_different(src_path, dest):
+                    reporter.report_copying(src_path, dest)
+                    shutil.copy(src_path, dest)
+                    self._count = self._count + 1
 
     def number_of_copied_files(self):
         return self._count
