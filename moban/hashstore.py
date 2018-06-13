@@ -21,6 +21,25 @@ class HashStore:
         else:
             self.hashes = {}
 
+    def are_two_file_different(self, source_file, dest_file):
+        source_changed = True
+        dest_changed = True
+        source_hash = get_file_hash(source_file)
+
+        previous_source_hash = self.hashes.get("copy:" + source_file)
+        if previous_source_hash:
+            if source_hash == previous_source_hash:
+                source_changed = False
+        else:
+            self.hashes["copy:" + source_file] = source_hash
+
+        if os.path.exists(dest_file):
+            dest_hash = get_file_hash(dest_file)
+            if source_hash == dest_hash:
+                dest_changed = False
+
+        return source_changed or dest_changed
+
     def is_file_changed(self, file_name, file_content, source_template):
         changed = self._is_source_updated(
             file_name, file_content, source_template
@@ -49,9 +68,13 @@ class HashStore:
 
         return changed
 
-    def close(self):
+    def save_db(self):
+        import json
         with open(self.cache_file, "w") as f:
             json.dump(self.hashes, f)
+
+
+HASH_STORE = HashStore()
 
 
 def get_file_hash(afile):

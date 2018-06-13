@@ -16,17 +16,16 @@ class TestHashStore:
     def test_simple_use_case(self):
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
+        hs.save_db()
         assert flag is True
-        hs.close()
 
     def test_dest_file_does_not_exist(self):
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
-        hs.close()
+        hs.save_db()
         hs2 = HashStore()
         flag = hs2.is_file_changed(*self.fixture)
         assert flag is True
-        hs2.close()
 
     def test_dest_file_exist(self):
         hs = HashStore()
@@ -34,11 +33,11 @@ class TestHashStore:
         if flag:
             with open(self.fixture[0], "wb") as f:
                 f.write(self.fixture[1])
-        hs.close()
+        hs.save_db()
         hs2 = HashStore()
         flag = hs2.is_file_changed(*self.fixture)
         assert flag is False
-        hs2.close()
+        hs2.save_db()
         os.unlink(self.fixture[0])
 
     def test_dest_file_changed(self):
@@ -55,19 +54,19 @@ class TestHashStore:
         if flag:
             with open(self.fixture[0], "wb") as f:
                 f.write(self.fixture[1])
-        hs.close()
+        hs.save_db()
         # no change
         hs2 = HashStore()
         flag = hs2.is_file_changed(*self.fixture)
         assert flag is False
-        hs2.close()
+        hs2.save_db()
         # now let update the generated file
         hs3 = HashStore()
         with open(self.fixture[0], "w") as f:
             f.write("hey changed")
         flag = hs3.is_file_changed(*self.fixture)
         assert flag is True
-        hs3.close()
+        hs3.save_db()
         os.unlink(self.fixture[0])
 
     def test_dest_file_file_permision_changed(self):
@@ -80,16 +79,16 @@ class TestHashStore:
         if flag:
             with open(self.fixture[0], "wb") as f:
                 f.write(self.fixture[1])
-        hs.close()
+        hs.save_db()
         # no change
         hs2 = HashStore()
         flag = hs2.is_file_changed(*self.fixture)
         assert flag is False
-        hs2.close()
+        hs2.save_db()
         # now let change file permision of generated file
         hs3 = HashStore()
         os.chmod(self.fixture[0], 0o766)
         flag = hs3.is_file_changed(*self.fixture)
         assert flag is True
-        hs3.close()
+        hs3.save_db()
         os.unlink(self.fixture[0])

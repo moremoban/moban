@@ -2,6 +2,7 @@ import os
 import shutil
 
 import moban.reporter as reporter
+from moban.hashstore import HASH_STORE
 
 
 class Copier(object):
@@ -15,9 +16,10 @@ class Copier(object):
             for dest, src in dest_src_pair.items():
                 src_path = self._get_src_file(src)
                 if src_path:
-                    reporter.report_copying(src_path, dest)
-                    shutil.copy(src_path, dest)
-                    self._count = self._count + 1
+                    if HASH_STORE.are_two_file_different(src_path, dest):
+                        reporter.report_copying(src_path, dest)
+                        shutil.copy(src_path, dest)
+                        self._count = self._count + 1
                 else:
                     reporter.report_error_message(
                         "{0} cannot be found".format(src)
@@ -30,7 +32,7 @@ class Copier(object):
         if self._count:
             reporter.report_copying_summary(self._count)
         else:
-            reporter.report_no_action()
+            reporter.report_no_copying()
 
     def _get_src_file(self, src):
         for folder in self.template_dirs:

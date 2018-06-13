@@ -13,7 +13,7 @@ import sys
 import argparse
 
 from moban.utils import merge, open_yaml
-from moban.hashstore import HashStore
+from moban.hashstore import HASH_STORE
 from moban.engine import ENGINES
 import moban.constants as constants
 import moban.mobanfile as mobanfile
@@ -27,7 +27,7 @@ def main():
     """
     parser = create_parser()
     options = vars(parser.parse_args())
-    HashStore.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
+    HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
     moban_file = options[constants.LABEL_MOBANFILE]
     if moban_file is None:
         moban_file = mobanfile.find_default_moban_file()
@@ -122,6 +122,7 @@ def handle_moban_file(moban_file, options):
         raise exceptions.MobanfileGrammarException(
             constants.MESSAGE_FILE_VERSION_NOT_SUPPORTED % version
         )
+    HASH_STORE.save_db()
 
 
 def handle_command_line(options):
@@ -142,6 +143,7 @@ def handle_command_line(options):
         options[constants.LABEL_CONFIG],
         options[constants.LABEL_OUTPUT],
     )
+    HASH_STORE.save_db()
     exit_code = reporter.convert_to_shell_exit_code(
         engine.number_of_templated_files()
     )
