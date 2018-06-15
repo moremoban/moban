@@ -2,6 +2,9 @@ name: moban
 organisation: moremoban
 releases:
 - changes:
+  - action: Added
+    details:
+    - "`#31`: create directory if missing during copying"
   - action: Updated
     details:
     - "`#28`: if a template has been copied once before, it is skipped in the next moban call"
