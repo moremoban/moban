@@ -9,6 +9,7 @@ MESSAGE_NO_COPY = "No copying"
 MESSAGE_NO_TEMPLATING = "No templating"
 MESSAGE_REPORT = "Templated {0} out of {1} files."
 MESSAGE_TEMPLATED_ALL = "Templated {0} files."
+MESSAGE_COPY_REPORT = "Copied {0} out of {1} files."
 MESSAGE_COPIED_ALL = "Copied {0} files."
 
 
@@ -69,10 +70,16 @@ def report_no_copying_done():
     print(crayons.red(MESSAGE_NO_COPY, bold=True))
 
 
-def report_copying_summary(file_count):
-    figure = crayons.green(str(file_count), bold=True)
-    message = MESSAGE_COPIED_ALL.format(figure)
-    print(_format_single(message, file_count))
+def report_copying_summary(total, copies):
+    if total == copies:
+        figure = crayons.green(str(total), bold=True)
+        message = MESSAGE_COPIED_ALL.format(figure)
+        print(_format_single(message, total))
+    else:
+        figure = crayons.green(str(copies), bold=True)
+        total_figure = crayons.yellow(str(total), bold=True)
+        message = MESSAGE_COPY_REPORT.format(figure, total_figure)
+        print(_format_single(message, total))
 
 
 def _format_single(message, count):

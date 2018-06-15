@@ -23,6 +23,14 @@ examples folder.
    level-6-complex-configuration/README.rst
    level-7-use-custom-jinja2-filter-test-n-global/README.rst
 
+In pratice, the following use cases were found interesting to go along with.
+
+.. toctree::
+   :maxdepth: 1
+
+   misc-1-copying-templates
+
+
 For more complex use case, please look at `its usage in pyexcel project <http://pyexcel.readthedocs.io/en/latest/guide.html>`_
 
 Developer Guide
@@ -40,4 +48,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

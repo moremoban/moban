@@ -10,11 +10,13 @@ class Copier(object):
 
     def __init__(self, template_dirs):
         self.template_dirs = template_dirs
+        self._file_count = 0
         self._count = 0
 
     def copy_files(self, file_list):
         for dest_src_pair in file_list:
             for dest, src in dest_src_pair.items():
+                self._file_count += 1
                 src_path = self._get_src_file(src)
                 if src_path is None:
                     reporter.report_error_message(
@@ -22,7 +24,8 @@ class Copier(object):
                     )
                 elif HASH_STORE.are_two_file_different(src_path, dest):
                     dest_folder = os.path.dirname(dest)
-                    utils.mkdir_p(dest_folder)
+                    if dest_folder:
+                        utils.mkdir_p(dest_folder)
                     reporter.report_copying(src_path, dest)
                     shutil.copy(src_path, dest)
                     self._count = self._count + 1
@@ -32,7 +35,7 @@ class Copier(object):
 
     def report(self):
         if self._count:
-            reporter.report_copying_summary(self._count)
+            reporter.report_copying_summary(self._file_count, self._count)
         else:
             reporter.report_no_copying()
 
