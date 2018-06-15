@@ -1,6 +1,7 @@
 import os
 import shutil
 
+import moban.utils as utils
 import moban.reporter as reporter
 from moban.hashstore import HASH_STORE
 
@@ -20,6 +21,8 @@ class Copier(object):
                         "{0} cannot be found".format(src)
                     )
                 elif HASH_STORE.are_two_file_different(src_path, dest):
+                    dest_folder = os.path.dirname(dest)
+                    utils.mkdir_p(dest_folder)
                     reporter.report_copying(src_path, dest)
                     shutil.copy(src_path, dest)
                     self._count = self._count + 1
