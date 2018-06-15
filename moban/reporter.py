@@ -24,6 +24,10 @@ def report_no_action():
     print(crayons.yellow(MESSAGE_NO_TEMPLATING, bold=True))
 
 
+def report_no_copying():
+    print(crayons.yellow(MESSAGE_NO_COPY, bold=True))
+
+
 def report_full_run(file_count):
     figure = crayons.green(str(file_count), bold=True)
     message = MESSAGE_TEMPLATED_ALL.format(figure)

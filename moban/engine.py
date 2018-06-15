@@ -6,7 +6,7 @@ from jinja2 import Environment, FileSystemLoader
 from lml.plugin import PluginManager, PluginInfo
 from lml.loader import scan_plugins
 
-from moban.hashstore import HashStore
+from moban.hashstore import HASH_STORE
 from moban.extensions import JinjaFilterManager, JinjaTestManager
 from moban.extensions import JinjaGlobalsManager
 import moban.utils as utils
@@ -74,7 +74,6 @@ class Engine(object):
 
         self.context = Context(context_dirs)
         self.template_dirs = template_dirs
-        self.hash_store = HashStore()
         self.__file_count = 0
         self.__templated_count = 0
 
@@ -95,7 +94,6 @@ class Engine(object):
             self._render_with_finding_data_first(sta.data_file_index)
         else:
             self._render_with_finding_template_first(sta.template_file_index)
-        self.hash_store.close()
 
     def report(self):
         if self.__templated_count == 0:
@@ -136,7 +134,7 @@ class Engine(object):
         rendered_content = template.render(**data)
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
         rendered_content = rendered_content.encode("utf-8")
-        flag = self.hash_store.is_file_changed(
+        flag = HASH_STORE.is_file_changed(
             output, rendered_content, template.filename
         )
         if flag:
