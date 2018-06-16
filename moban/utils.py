@@ -1,6 +1,7 @@
 import os
 import re
 import stat
+import errno
 
 import yaml
 
@@ -103,3 +104,13 @@ def write_file_out(filename, content, strip=True, encode=True):
         if encode:
             content = content.encode("utf-8")
         out.write(content)
+
+
+def mkdir_p(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise

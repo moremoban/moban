@@ -2,6 +2,15 @@ name: moban
 organisation: moremoban
 releases:
 - changes:
+  - action: Added
+    details:
+    - "`#31`: create directory if missing during copying"
+  - action: Updated
+    details:
+    - "`#28`: if a template has been copied once before, it is skipped in the next moban call"
+  date: unreleased
+  version: 0.2.2
+- changes:
   - action: Updated
     details:
     - templates using the same template engine will be templated as a group
