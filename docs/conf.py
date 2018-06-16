@@ -17,8 +17,8 @@ master_doc = 'index'
 
 project = u'moban'
 copyright = u'2017-2018 Onni Software Ltd.'
-version = '0.2.0'
-release = '0.2.0'
+version = '0.2.2'
+release = '0.2.2'
 exclude_patterns = []
 pygments_style = 'sphinx'
 html_theme = 'default'
