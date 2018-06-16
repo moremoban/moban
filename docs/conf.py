@@ -1,31 +1,44 @@
-extensions = []
+# -*- coding: utf-8 -*-
+DESCRIPTION = (
+    'Yet another jinja2 cli command for static text generation' +
+    ''
+)
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.viewcode',
+]
+intersphinx_mapping = {
+}
 templates_path = ['_templates']
 source_suffix = '.rst'
 master_doc = 'index'
-project = 'moban'
-copyright = '2016, C.W.'
-author = 'C.W.'
-version = '0.0.6'
-release = '0.0.6'
-language = None
+
+project = u'moban'
+copyright = u'2017-2018 Onni Software Ltd.'
+version = '0.2.0'
+release = '0.2.0'
 exclude_patterns = []
 pygments_style = 'sphinx'
-todo_include_todos = False
-html_theme = 'alabaster'
+html_theme = 'default'
 html_static_path = ['_static']
 htmlhelp_basename = 'mobandoc'
-latex_elements = {
-}
+latex_elements = {}
 latex_documents = [
-    (master_doc, 'moban.tex', 'moban Documentation',
-     'C.W.', 'manual'),
+    ('index', 'moban.tex',
+     'moban Documentation',
+     'Onni Software Ltd.', 'manual'),
 ]
 man_pages = [
-    (master_doc, 'moban', 'moban Documentation',
-     [author], 1)
+    ('index', 'moban',
+     'moban Documentation',
+     [u'Onni Software Ltd.'], 1)
 ]
 texinfo_documents = [
-    (master_doc, 'moban', 'moban Documentation',
-     author, 'moban', 'One line description of project.',
+    ('index', 'moban',
+     'moban Documentation',
+     'Onni Software Ltd.', 'moban',
+     DESCRIPTION,
      'Miscellaneous'),
 ]
