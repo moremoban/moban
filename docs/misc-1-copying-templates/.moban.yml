@@ -1,0 +1,6 @@
+configuration:
+  template_dir:
+    - template-sources
+copy:
+  - simple.file.copy: file-in-template-sources-folder.txt
+  - "misc-1-copying/can-create-folder/if-not-exists.txt": file-in-template-sources-folder.txt

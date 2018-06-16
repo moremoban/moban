@@ -1,11 +1,13 @@
 import os
 import stat
+from shutil import rmtree
 
 from nose.tools import eq_
 
 from moban.utils import file_permissions_copy
 from moban.utils import write_file_out
 from moban.utils import strip_off_trailing_new_lines
+from moban.utils import mkdir_p
 
 
 def create_file(test_file, permission):
@@ -65,3 +67,10 @@ def test_strip_new_lines():
     content = "test\n\n\n\n\n"
     actual = strip_off_trailing_new_lines(content)
     eq_(actual, "test\n")
+
+
+def test_mkdir_p():
+    test_path = 'a/b/c/d'
+    mkdir_p(test_path)
+    assert os.path.exists(test_path)
+    rmtree(test_path)

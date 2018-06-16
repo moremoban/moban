@@ -87,6 +87,12 @@ Hello, you are not in level 7
         folder = "level-7-use-custom-jinja2-filter-test-n-global"
         self._raw_moban(["moban"], folder, expected, "test.output")
 
+    def test_misc_1(self):
+        expected = "test file\n"
+
+        folder = "misc-1-copying-templates"
+        self._raw_moban(["moban"], folder, expected, "simple.file.copy")
+
     def _moban(self, folder, expected):
         args = ["moban", "-c", "data.yml", "-t", "a.template"]
         self._raw_moban(args, folder, expected, "moban.output")
