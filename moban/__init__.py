@@ -1,2 +1,7 @@
-__version__ = "0.0.7"
-__author__ = "C.W."
+from moban._version import __version__
+from moban._version import __author__
+
+__all__ = (
+    '__author__',
+    '__version__',
+)
