@@ -4,11 +4,17 @@ releases:
 - changes:
   - action: Added
     details:
+    - "`#76`: support running moban as a module from python command"
+  date: unreleased
+  version: 0.2.3
+- changes:
+  - action: Added
+    details:
     - "`#31`: create directory if missing during copying"
   - action: Updated
     details:
     - "`#28`: if a template has been copied once before, it is skipped in the next moban call"
-  date: unreleased
+  date: released
   version: 0.2.2
 - changes:
   - action: Updated
