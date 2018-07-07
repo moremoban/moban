@@ -46,12 +46,13 @@ class TestCopier:
 
 @patch("moban.reporter.report_copying")
 def test_lazy_copy_files(reporter):
+    test_file = "/tmp/test2"
     copier = Copier([os.path.join("tests", "fixtures")])
-    file_list = [{"/tmp/test2": "copier-test02.csv"}]
+    file_list = [{test_file: "copier-test02.csv"}]
     copier.copy_files(file_list)
     copier.copy_files(file_list)  # not called the second time
     eq_(reporter.call_count, 1)
-    os.unlink("/tmp/test2")
+    os.unlink(test_file)
 
 
 @patch("moban.reporter.report_copying")
