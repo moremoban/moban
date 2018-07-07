@@ -32,7 +32,6 @@ class Copier(object):
                                 dest_file_under_dir: src_file_under_dir
                             }
                         )
-                    print(new_file_pair)
                     self.copy_files(new_file_pair)
                 elif HASH_STORE.are_two_file_different(src_path, dest):
                     dest_folder = os.path.dirname(dest)
