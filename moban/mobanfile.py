@@ -8,7 +8,7 @@ from lml.utils import do_import
 import moban.constants as constants
 import moban.reporter as reporter
 from moban.engine import ENGINES
-from moban.utils import merge, parse_targets
+from moban.utils import merge, parse_targets, expand_directories
 from moban.copier import Copier
 
 
@@ -30,6 +30,10 @@ def handle_copy(template_dirs, copy_config):
 
 def handle_targets(merged_options, targets):
     list_of_templating_parameters = parse_targets(merged_options, targets)
+    list_of_templating_parameters = expand_directories(
+        list_of_templating_parameters,
+        merged_options[constants.LABEL_TMPL_DIRS]
+        )
     jobs_for_each_engine = defaultdict(list)
     for file_list in list_of_templating_parameters:
         _, extension = os.path.splitext(file_list[0])

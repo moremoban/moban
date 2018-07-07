@@ -80,6 +80,21 @@ def parse_targets(options, targets):
                 yield ((template_file, common_data_file, output))
 
 
+def expand_directories(file_list, template_dirs):
+    for template_file, data_file, output in file_list:
+        true_template_file = template_file
+        for a_template_dir in template_dirs:
+            true_template_file = os.path.join(a_template_dir, template_file)
+            if os.path.exists(true_template_file):
+                break
+        if os.path.isdir(true_template_file):
+            for file_name in os.listdir(true_template_file):
+                yield((os.path.join(true_template_file, file_name),
+                       data_file, os.path.join(output, file_name)))
+        else:
+            yield ((template_file, data_file, output))
+
+
 def file_permissions_copy(source, dest):
     source_permissions = file_permissions(source)
     dest_permissions = file_permissions(dest)
