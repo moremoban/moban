@@ -4,8 +4,8 @@ releases:
 - changes:
   - action: Added
     details:
-    - "`#76`: support running moban as a module from python command"
-    - "`#32`: support copy a directory recusively"
+    - "`#76`: running moban as a module from python command"
+    - "`#32`: copy a directory recusively"
   date: unreleased
   version: 0.2.3
 - changes:
