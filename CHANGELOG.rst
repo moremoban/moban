@@ -9,6 +9,8 @@ Added
 
 #. `#76 <https://github.com/moremoban/moban/issues/76>`_: support running moban
    as a module from python command
+#. `#32 <https://github.com/moremoban/moban/issues/32>`_: support copy a
+   director recusively
 
 0.2.2 - released
 --------------------------------------------------------------------------------

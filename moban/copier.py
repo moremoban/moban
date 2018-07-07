@@ -22,6 +22,18 @@ class Copier(object):
                     reporter.report_error_message(
                         "{0} cannot be found".format(src)
                     )
+                elif os.path.isdir(src_path):
+                    new_file_pair = []
+                    for file_name in os.listdir(src_path):
+                        src_file_under_dir = os.path.join(src, file_name)
+                        dest_file_under_dir = os.path.join(dest, file_name)
+                        new_file_pair.append(
+                            {
+                                dest_file_under_dir: src_file_under_dir
+                            }
+                        )
+                    print(new_file_pair)
+                    self.copy_files(new_file_pair)
                 elif HASH_STORE.are_two_file_different(src_path, dest):
                     dest_folder = os.path.dirname(dest)
                     if dest_folder:
