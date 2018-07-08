@@ -87,6 +87,11 @@ Hello, you are not in level 7
         folder = "level-7-use-custom-jinja2-filter-test-n-global"
         self._raw_moban(["moban"], folder, expected, "test.output")
 
+    def test_level_8(self):
+        expected = "it is a test\n"
+        folder = "level-8-pass-a-folder-full-of-templates"
+        self._raw_moban(["moban"], folder, expected, "templated-folder/my")
+
     def test_misc_1(self):
         expected = "test file\n"
 

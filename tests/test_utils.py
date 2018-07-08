@@ -7,7 +7,7 @@ from nose.tools import eq_
 from moban.utils import file_permissions_copy
 from moban.utils import write_file_out
 from moban.utils import strip_off_trailing_new_lines
-from moban.utils import mkdir_p
+from moban.utils import mkdir_p, expand_directories
 
 
 def create_file(test_file, permission):
@@ -74,3 +74,11 @@ def test_mkdir_p():
     mkdir_p(test_path)
     assert os.path.exists(test_path)
     rmtree(test_path)
+
+
+def test_expand_dir():
+    file_list = [("template-tests", 'abc', 'abc')]
+    template_dirs = [os.path.join("tests", "fixtures")]
+    results = list(expand_directories(file_list, template_dirs))
+    expected = [('template-tests/a.jj2', 'abc', 'abc/a')]
+    eq_(results, expected)
