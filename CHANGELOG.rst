@@ -1,7 +1,20 @@
 Change log
 ================================================================================
 
-0.2.2 - unreleased
+0.2.3 - 10-07-2018
+--------------------------------------------------------------------------------
+
+Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#76 <https://github.com/moremoban/moban/issues/76>`_: running moban as a
+   module from python command
+#. `#32 <https://github.com/moremoban/moban/issues/32>`_: copy a directory
+   recusively
+#. `#33 <https://github.com/moremoban/moban/issues/33>`_: template all files in
+   a directory
+
+0.2.2 - 16-06-2018
 --------------------------------------------------------------------------------
 
 Added

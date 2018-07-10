@@ -7,6 +7,8 @@ configuration:
     - "setupmobans/plugins"
 targets:
   - setup.py: setup.py
+  - moban/__init__.py: __init__.py.jj2
+  - moban/_version.py: _version.py.jj2
   - docs/conf.py: conf.py.jj2
   - .travis.yml: travis.yml
   - requirements.txt: requirements.txt.jj2

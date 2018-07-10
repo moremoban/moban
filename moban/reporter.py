@@ -84,5 +84,5 @@ def report_copying_summary(total, copies):
 
 def _format_single(message, count):
     if count == 1:
-        return message.replace('files', 'file')
+        return message.replace("files", "file")
     return message

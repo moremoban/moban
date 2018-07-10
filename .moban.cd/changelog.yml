@@ -4,11 +4,19 @@ releases:
 - changes:
   - action: Added
     details:
+    - "`#76`: running moban as a module from python command"
+    - "`#32`: copy a directory recusively"
+    - "`#33`: template all files in a directory"
+  date: 10-07-2018
+  version: 0.2.3
+- changes:
+  - action: Added
+    details:
     - "`#31`: create directory if missing during copying"
   - action: Updated
     details:
     - "`#28`: if a template has been copied once before, it is skipped in the next moban call"
-  date: unreleased
+  date: 16-06-2018
   version: 0.2.2
 - changes:
   - action: Updated

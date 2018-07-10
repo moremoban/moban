@@ -3,10 +3,10 @@ from moban.copier import Copier
 from moban.mobanfile import handle_copy
 from nose.tools import eq_
 from mock import patch
+import shutil
 
 
 class TestCopier:
-
     def setUp(self):
         self.patcher = patch("shutil.copy")
         self.fake_copy = self.patcher.start()
@@ -45,9 +45,21 @@ class TestCopier:
 
 @patch("moban.reporter.report_copying")
 def test_lazy_copy_files(reporter):
+    test_file = "/tmp/test2"
     copier = Copier([os.path.join("tests", "fixtures")])
-    file_list = [{"/tmp/test2": "copier-test02.csv"}]
+    file_list = [{test_file: "copier-test02.csv"}]
     copier.copy_files(file_list)
     copier.copy_files(file_list)  # not called the second time
     eq_(reporter.call_count, 1)
-    os.unlink("/tmp/test2")
+    os.unlink(test_file)
+
+
+@patch("moban.reporter.report_copying")
+def test_copy_dir(reporter):
+    test_dir = "/tmp/copy-a-directory"
+    copier = Copier([os.path.join("tests", "fixtures")])
+    file_list = [{test_dir: "copier-directory"}]
+    copier.copy_files(file_list)
+    copier.copy_files(file_list)  # not called the second time
+    eq_(reporter.call_count, 2)
+    shutil.rmtree(test_dir)

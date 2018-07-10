@@ -4,11 +4,12 @@ from moban.hashstore import HashStore
 
 
 class TestHashStore:
-
     def setUp(self):
         self.source_template = os.path.join("tests", "fixtures", "a.jj2")
         self.fixture = (
-            "test.out", "test content".encode("utf-8"), self.source_template
+            "test.out",
+            "test content".encode("utf-8"),
+            self.source_template,
         )
 
     def tearDown(self):
@@ -96,14 +97,13 @@ class TestHashStore:
 
 
 class TestHashStore2:
-
     def setUp(self):
         self.source_file = os.path.join("tests", "fixtures", "a.jj2")
         self.dest_file = os.path.join("tests", "fixtures", "copier-test02.csv")
 
     def test_simple_use_case(self):
         hs = HashStore()
-        flag = hs.are_two_file_different(self.source_file, '/tmp/abc')
+        flag = hs.are_two_file_different(self.source_file, "/tmp/abc")
         assert flag is True
 
     def test_laziness_with_same_file(self):
