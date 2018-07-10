@@ -12,7 +12,7 @@ def test_default_template_type():
 
 def test_default_mako_type():  # fake mako
     engine_class = ENGINES.get_engine("mako")
-    assert engine_class.__name__ == 'MakoEngine'
+    assert engine_class.__name__ == "MakoEngine"
 
 
 @raises(exceptions.NoThirdPartyEngine)

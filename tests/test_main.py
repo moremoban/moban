@@ -7,7 +7,6 @@ import moban.exceptions as exceptions
 
 
 class TestException:
-
     def setUp(self):
         self.moban_file = ".moban.yml"
         self.data_file = "data.yml"
@@ -74,7 +73,6 @@ class TestException:
 
 
 class TestExitCodes:
-
     def setUp(self):
         self.moban_file = ".moban.yml"
         self.data_file = "data.yml"

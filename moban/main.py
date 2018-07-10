@@ -12,12 +12,12 @@
 import sys
 import argparse
 
-from moban.utils import merge, open_yaml
-from moban.hashstore import HASH_STORE
 from moban.engine import ENGINES
+from moban.hashstore import HASH_STORE
+from moban.utils import merge, open_yaml
 import moban.constants as constants
-import moban.mobanfile as mobanfile
 import moban.exceptions as exceptions
+import moban.mobanfile as mobanfile
 import moban.reporter as reporter
 
 
@@ -132,9 +132,7 @@ def handle_command_line(options):
     options = merge(options, constants.DEFAULT_OPTIONS)
     if options[constants.LABEL_TEMPLATE] is None:
         raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
-    engine_class = ENGINES.get_engine(
-        options[constants.LABEL_TEMPLATE_TYPE]
-    )
+    engine_class = ENGINES.get_engine(options[constants.LABEL_TEMPLATE_TYPE])
     engine = engine_class(
         options[constants.LABEL_TMPL_DIRS], options[constants.LABEL_CONFIG_DIR]
     )

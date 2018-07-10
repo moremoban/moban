@@ -8,7 +8,6 @@ from moban.main import main
 
 
 class TestTutorial:
-
     def setUp(self):
         self.current = os.getcwd()
 

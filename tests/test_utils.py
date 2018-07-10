@@ -70,15 +70,15 @@ def test_strip_new_lines():
 
 
 def test_mkdir_p():
-    test_path = 'a/b/c/d'
+    test_path = "a/b/c/d"
     mkdir_p(test_path)
     assert os.path.exists(test_path)
     rmtree(test_path)
 
 
 def test_expand_dir():
-    file_list = [("template-tests", 'abc', 'abc')]
+    file_list = [("template-tests", "abc", "abc")]
     template_dirs = [os.path.join("tests", "fixtures")]
     results = list(expand_directories(file_list, template_dirs))
-    expected = [('template-tests/a.jj2', 'abc', 'abc/a')]
+    expected = [("template-tests/a.jj2", "abc", "abc/a")]
     eq_(results, expected)

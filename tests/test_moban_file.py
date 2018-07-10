@@ -3,12 +3,11 @@ from mock import patch
 
 
 class TestFinder:
-
     def setUp(self):
         self.patcher = patch("os.path.exists")
         self.fake_file_existence = self.patcher.start()
-        self.fake_file_existence.__name__ = 'fake'
-        self.fake_file_existence.__module__ = 'fake'
+        self.fake_file_existence.__name__ = "fake"
+        self.fake_file_existence.__module__ = "fake"
 
     def tearDown(self):
         self.patcher.stop()

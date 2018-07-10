@@ -7,7 +7,6 @@ from nose.tools import raises, assert_raises, eq_
 
 
 class TestCustomOptions:
-
     def setUp(self):
         self.config_file = "config.yaml"
         with open(self.config_file, "w") as f:
@@ -57,7 +56,6 @@ class TestCustomOptions:
 
 
 class TestOptions:
-
     def setUp(self):
         self.config_file = "data.yml"
         with open(self.config_file, "w") as f:
@@ -95,7 +93,6 @@ def test_missing_configuration():
 
 
 class TestNoOptions:
-
     def setUp(self):
         self.config_file = ".moban.yml"
         copyfile(
@@ -121,7 +118,7 @@ class TestNoOptions:
                 [
                     ("README.rst.jj2", "data.yaml", "README.rst"),
                     ("setup.py.jj2", "data.yaml", "setup.py"),
-                ]
+                ],
             )
 
     def tearDown(self):
@@ -131,7 +128,6 @@ class TestNoOptions:
 
 
 class TestNoOptions2:
-
     def setUp(self):
         self.config_file = ".moban.yml"
         copyfile(
@@ -157,7 +153,7 @@ class TestNoOptions2:
                 [
                     ("README.rst.jj2", "data.yaml", "README.rst"),
                     ("setup.py.jj2", "data.yaml", "setup.py"),
-                ]
+                ],
             )
 
     def tearDown(self):
@@ -167,7 +163,6 @@ class TestNoOptions2:
 
 
 class TestCustomMobanFile:
-
     def setUp(self):
         self.config_file = "custom-moban.txt"
         copyfile(
@@ -192,7 +187,7 @@ class TestCustomMobanFile:
                 [
                     ("README.rst.jj2", "data.yaml", "README.rst"),
                     ("setup.py.jj2", "data.yaml", "setup.py"),
-                ]
+                ],
             )
 
     def tearDown(self):
@@ -212,7 +207,6 @@ def test_duplicated_targets_in_moban_file(fake_verify):
 
 
 class TestInvalidMobanFile:
-
     def setUp(self):
         self.config_file = ".moban.yml"
 
@@ -248,7 +242,6 @@ class TestInvalidMobanFile:
 
 
 class TestComplexOptions:
-
     def setUp(self):
         self.config_file = ".moban.yml"
         copyfile(
@@ -273,7 +266,7 @@ class TestComplexOptions:
                 [
                     ("README.rst.jj2", "custom-data.yaml", "README.rst"),
                     ("setup.py.jj2", "data.yml", "setup.py"),
-                ]
+                ],
             )
 
     def tearDown(self):
@@ -283,7 +276,6 @@ class TestComplexOptions:
 
 
 class TestTemplateTypeOption:
-
     def setUp(self):
         self.config_file = "data.yml"
         with open(self.config_file, "w") as f:

@@ -49,11 +49,9 @@ scan_plugins("moban_", "moban", None, BUILTIN_EXENSIONS)
 
 
 @PluginInfo(
-    constants.TEMPLATE_ENGINE_EXTENSION,
-    tags=['jinja2', 'jinja', 'jj2', 'j2']
+    constants.TEMPLATE_ENGINE_EXTENSION, tags=["jinja2", "jinja", "jj2", "j2"]
 )
 class Engine(object):
-
     def __init__(self, template_dirs, context_dirs):
         verify_the_existence_of_directories(template_dirs)
         template_loader = FileSystemLoader(template_dirs)
@@ -154,7 +152,6 @@ class Engine(object):
 
 
 class Context(object):
-
     def __init__(self, context_dirs):
         verify_the_existence_of_directories(context_dirs)
         self.context_dirs = context_dirs
