@@ -11,6 +11,8 @@ Added
    module from python command
 #. `#32 <https://github.com/moremoban/moban/issues/32>`_: copy a directory
    recusively
+#. `#33 <https://github.com/moremoban/moban/issues/33>`_: template all files in
+   a directory
 
 0.2.2 - released
 --------------------------------------------------------------------------------

@@ -1,0 +1,7 @@
+configuration:
+  configuration_dir: 'config'
+  configuration: level8.yml
+  template_dir:
+    - template-folder
+targets:
+  - templated-folder: templates
