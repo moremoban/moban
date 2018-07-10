@@ -12,19 +12,19 @@ def split_length(input_line, length):
         yield line
     else:
         while True:
-            if " " in line[start:start + limit]:
+            if " " in line[start : start + limit]:
                 # go back and find a space
                 while limit > 0 and line[start + limit] != " ":
                     limit -= 1
             else:
                 # full whole line is single unit
                 # so go forward find a space
-                while (
-                    (start + limit) < len(line) and line[start + limit] != " "
-                ):
+                while (start + limit) < len(line) and line[
+                    start + limit
+                ] != " ":
                     limit += 1
 
-            yield line[start:start + limit]
+            yield line[start : start + limit]
             start = start + limit + 1
             limit = length
             if len(line[start:]) < length or start + limit >= len(line):

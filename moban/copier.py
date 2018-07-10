@@ -7,7 +7,6 @@ from moban.hashstore import HASH_STORE
 
 
 class Copier(object):
-
     def __init__(self, template_dirs):
         self.template_dirs = template_dirs
         self._file_count = 0
@@ -28,9 +27,7 @@ class Copier(object):
                         src_file_under_dir = os.path.join(src, file_name)
                         dest_file_under_dir = os.path.join(dest, file_name)
                         new_file_pair.append(
-                            {
-                                dest_file_under_dir: src_file_under_dir
-                            }
+                            {dest_file_under_dir: src_file_under_dir}
                         )
                     self.copy_files(new_file_pair)
                 elif HASH_STORE.are_two_file_different(src_path, dest):

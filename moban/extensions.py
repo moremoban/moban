@@ -3,7 +3,6 @@ import moban.constants as constants
 
 
 class PluginMixin:
-
     def get_all(self):
         for name in self.registry.keys():
             # only the first matching one is returned
@@ -12,7 +11,6 @@ class PluginMixin:
 
 
 class JinjaFilterManager(PluginManager, PluginMixin):
-
     def __init__(self):
         super(JinjaFilterManager, self).__init__(
             constants.JINJA_FILTER_EXTENSION
@@ -20,28 +18,21 @@ class JinjaFilterManager(PluginManager, PluginMixin):
 
 
 class JinjaFilter(PluginInfo):
-
     def __init__(self):
-        super(JinjaFilter, self).__init__(
-            constants.JINJA_FILTER_EXTENSION
-        )
+        super(JinjaFilter, self).__init__(constants.JINJA_FILTER_EXTENSION)
 
     def tags(self):
         yield self.cls.__name__
 
 
 class JinjaTestManager(PluginManager, PluginMixin):
-
     def __init__(self):
         super(JinjaTestManager, self).__init__(constants.JINJA_TEST_EXTENSION)
 
 
 class JinjaTest(PluginInfo):
-
     def __init__(self, test_name=None):
-        super(JinjaTest, self).__init__(
-            constants.JINJA_TEST_EXTENSION
-        )
+        super(JinjaTest, self).__init__(constants.JINJA_TEST_EXTENSION)
         self.test_name = test_name
 
     def tags(self):
@@ -57,7 +48,6 @@ def jinja_tests(**keywords):
 
 
 class JinjaGlobalsManager(PluginManager, PluginMixin):
-
     def __init__(self):
         super(JinjaGlobalsManager, self).__init__(
             constants.JINJA_GLOBALS_EXTENSION

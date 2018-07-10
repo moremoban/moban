@@ -132,9 +132,7 @@ def handle_command_line(options):
     options = merge(options, constants.DEFAULT_OPTIONS)
     if options[constants.LABEL_TEMPLATE] is None:
         raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
-    engine_class = ENGINES.get_engine(
-        options[constants.LABEL_TEMPLATE_TYPE]
-    )
+    engine_class = ENGINES.get_engine(options[constants.LABEL_TEMPLATE_TYPE])
     engine = engine_class(
         options[constants.LABEL_TMPL_DIRS], options[constants.LABEL_CONFIG_DIR]
     )

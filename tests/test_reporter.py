@@ -51,6 +51,6 @@ def test_no_action():
 
 
 def test_format_single():
-    message = '1 files'
+    message = "1 files"
     ret = reporter._format_single(message, 1)
-    eq_(ret, '1 file')
+    eq_(ret, "1 file")

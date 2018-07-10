@@ -7,7 +7,6 @@ import shutil
 
 
 class TestCopier:
-
     def setUp(self):
         self.patcher = patch("shutil.copy")
         self.fake_copy = self.patcher.start()
