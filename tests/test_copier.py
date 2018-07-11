@@ -61,5 +61,16 @@ def test_copy_dir(reporter):
     file_list = [{test_dir: "copier-directory"}]
     copier.copy_files(file_list)
     copier.copy_files(file_list)  # not called the second time
+    eq_(reporter.call_count, 1)
+    shutil.rmtree(test_dir)
+
+
+@patch("moban.reporter.report_copying")
+def test_copy_dir_recusively(reporter):
+    test_dir = "/tmp/copy-a-directory"
+    copier = Copier([os.path.join("tests", "fixtures")])
+    file_list = [{test_dir: "copier-directory/**"}]
+    copier.copy_files(file_list)
+    copier.copy_files(file_list)  # not called the second time
     eq_(reporter.call_count, 2)
     shutil.rmtree(test_dir)

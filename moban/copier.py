@@ -17,9 +17,18 @@ class Copier(object):
             self._file_count += 1
             src_path = self._get_src_file(src)
             if src_path is None:
-                reporter.report_error_message(
-                    "{0} cannot be found".format(src)
-                )
+                if src.endswith('**'):
+                    src_path = self._get_src_file(src[:-3])
+                    if src_path:
+                        self._do_copy_dir_recursively(src[:-3], src_path, dest)
+                    else:
+                        reporter.report_error_message(
+                            "{0} cannot be found".format(src)
+                        )
+                else:
+                    reporter.report_error_message(
+                        "{0} cannot be found".format(src)
+                    )
             elif os.path.isdir(src_path):
                 self._do_copy_dir(src, src_path, dest)
             elif HASH_STORE.are_two_file_different(src_path, dest):
@@ -43,6 +52,19 @@ class Copier(object):
             return None
 
     def _do_copy_dir(self, source, actual_source_path, dest):
+        new_file_pair = []
+        for file_name in os.listdir(actual_source_path):
+            real_src_file = os.path.join(actual_source_path, file_name)
+            if os.path.isfile(real_src_file):
+                src_file_under_dir = os.path.join(source, file_name)
+                dest_file_under_dir = os.path.join(dest, file_name)
+                new_file_pair.append(
+                    {dest_file_under_dir: src_file_under_dir}
+                )
+        if len(new_file_pair) > 0:
+            self.copy_files(new_file_pair)
+
+    def _do_copy_dir_recursively(self, source, actual_source_path, dest):
         new_file_pair = []
         for file_name in os.listdir(actual_source_path):
             src_file_under_dir = os.path.join(source, file_name)
