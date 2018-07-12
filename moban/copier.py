@@ -18,12 +18,13 @@ class Copier(object):
             src_path = self._get_src_file(src)
             if src_path is None:
                 if src.endswith('**'):
-                    src_path = self._get_src_file(src[:-3])
+                    source_dir = src[:-3]
+                    src_path = self._get_src_file(source_dir)
                     if src_path:
                         self._do_copy_dir_recursively(src[:-3], src_path, dest)
                     else:
                         reporter.report_error_message(
-                            "{0} cannot be found".format(src)
+                            "{0} cannot be found".format(source_dir)
                         )
                 else:
                     reporter.report_error_message(
