@@ -121,6 +121,21 @@ class TestNoOptions:
                 ],
             )
 
+    @patch("moban.engine.Engine.render_to_files")
+    def test_single_command_with_options(self, fake_template_doer):
+        test_args = ["moban", "-t", "abc.jj2", "-c", "new.yml", "-o", "xyz.output"]
+        with patch.object(sys, "argv", test_args):
+            main()
+            call_args = list(fake_template_doer.call_args[0][0])
+            eq_(
+                call_args,
+                [
+                    ("README.rst.jj2", "new.yml", "README.rst"),
+                    ("setup.py.jj2", "new.yml", "setup.py"),
+                    ('abc.jj2', 'new.yml', 'xyz.output')
+                ],
+            )
+
     def tearDown(self):
         os.unlink(self.config_file)
         os.unlink(self.data_file)
