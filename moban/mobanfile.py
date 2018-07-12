@@ -23,6 +23,7 @@ def find_default_moban_file():
 
 def handle_moban_file_v1(moban_file_configurations, command_line_options):
     merged_options = None
+    target = extract_target(command_line_options)
     if constants.LABEL_CONFIG in moban_file_configurations:
         merged_options = merge(
             command_line_options,
@@ -35,6 +36,8 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
     targets = moban_file_configurations.get(constants.LABEL_TARGETS)
     if targets:
+        if target:
+            targets += target
         number_of_templated_files = handle_targets(merged_options, targets)
     else:
         number_of_templated_files = 0
@@ -101,3 +104,22 @@ def handle_plugin_dirs(plugin_dirs):
         for plugin in plugins:
             plugin_module = os.path.basename(plugin_dir) + "." + plugin
             do_import(plugin_module)
+
+
+def extract_target(options):
+    template = options.get(constants.LABEL_TEMPLATE)
+    config = options.get(constants.LABEL_CONFIG)
+    output = options.get(constants.LABEL_OUTPUT)
+    result = []
+    if template:
+        if config:
+            result = [
+                {
+                    constants.LABEL_TEMPLATE: template,
+                    constants.LABEL_CONFIG: config,
+                    constants.LABEL_OUTPUT: output,
+                }
+            ]
+        else:
+            result = [{template: output}]
+    return result
