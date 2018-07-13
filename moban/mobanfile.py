@@ -36,8 +36,9 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
     targets = moban_file_configurations.get(constants.LABEL_TARGETS)
     if targets:
-        print(target)
         if target:
+            # if command line option exists, append its template to targets
+            # issue 30
             targets += target
         number_of_templated_files = handle_targets(merged_options, targets)
     else:
