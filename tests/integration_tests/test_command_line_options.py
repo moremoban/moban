@@ -122,8 +122,31 @@ class TestNoOptions:
             )
 
     @patch("moban.engine.Engine.render_to_files")
+    def test_single_command_with_a_few_options(self, fake_template_doer):
+        test_args = ["moban", "-t", "abc.jj2", "-o", "xyz.output"]
+        with patch.object(sys, "argv", test_args):
+            main()
+            call_args = list(fake_template_doer.call_args[0][0])
+            eq_(
+                call_args,
+                [
+                    ("README.rst.jj2", "data.yaml", "README.rst"),
+                    ("setup.py.jj2", "data.yaml", "setup.py"),
+                    ("abc.jj2", "data.yaml", "xyz.output"),
+                ],
+            )
+
+    @patch("moban.engine.Engine.render_to_files")
     def test_single_command_with_options(self, fake_template_doer):
-        test_args = ["moban", "-t", "abc.jj2", "-c", "new.yml", "-o", "xyz.output"]
+        test_args = [
+            "moban",
+            "-t",
+            "abc.jj2",
+            "-c",
+            "new.yml",
+            "-o",
+            "xyz.output",
+        ]
         with patch.object(sys, "argv", test_args):
             main()
             call_args = list(fake_template_doer.call_args[0][0])
@@ -132,9 +155,16 @@ class TestNoOptions:
                 [
                     ("README.rst.jj2", "new.yml", "README.rst"),
                     ("setup.py.jj2", "new.yml", "setup.py"),
-                    ('abc.jj2', 'new.yml', 'xyz.output')
+                    ("abc.jj2", "new.yml", "xyz.output"),
                 ],
             )
+
+    @raises(Exception)
+    @patch("moban.engine.Engine.render_to_files")
+    def test_single_command_without_output_option(self, fake_template_doer):
+        test_args = ["moban", "-t", "abc.jj2"]
+        with patch.object(sys, "argv", test_args):
+            main()
 
     def tearDown(self):
         os.unlink(self.config_file)

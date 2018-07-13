@@ -36,6 +36,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
     targets = moban_file_configurations.get(constants.LABEL_TARGETS)
     if targets:
+        print(target)
         if target:
             targets += target
         number_of_templated_files = handle_targets(merged_options, targets)
@@ -112,6 +113,9 @@ def extract_target(options):
     output = options.get(constants.LABEL_OUTPUT)
     result = []
     if template:
+        if output is None:
+            raise Exception(
+                "Please specify a output file name for %s." % template)
         if config:
             result = [
                 {
@@ -121,5 +125,5 @@ def extract_target(options):
                 }
             ]
         else:
-            result = [{template: output}]
+            result = [{output: template}]
     return result
