@@ -9,6 +9,8 @@ Added
 
 #. `#32 <https://github.com/moremoban/moban/issues/32>`_: option 1 copy a
    directory without its subdirectories.
+#. `#30 <https://github.com/moremoban/moban/issues/30>`_: command line template
+   option is ignore when a moban file is present
 
 0.2.3 - 10-07-2018
 --------------------------------------------------------------------------------

@@ -16,7 +16,7 @@ class Copier(object):
         for dest, src in _iterate_list_of_dicts(file_list):
             src_path = self._get_src_file(src)
             if src_path is None:
-                if src.endswith('**'):
+                if src.endswith("**"):
                     source_dir = src[:-3]
                     src_path = self._get_src_file(source_dir)
                     if src_path:
@@ -60,9 +60,7 @@ class Copier(object):
                 self._increment_file_count()
                 src_file_under_dir = os.path.join(source, file_name)
                 dest_file_under_dir = os.path.join(dest, file_name)
-                new_file_pair.append(
-                    {dest_file_under_dir: src_file_under_dir}
-                )
+                new_file_pair.append({dest_file_under_dir: src_file_under_dir})
         if len(new_file_pair) > 0:
             self.copy_files(new_file_pair)
 
@@ -72,9 +70,7 @@ class Copier(object):
             self._increment_file_count()
             src_file_under_dir = os.path.join(source, file_name)
             dest_file_under_dir = os.path.join(dest, file_name)
-            new_file_pair.append(
-                {dest_file_under_dir: src_file_under_dir}
-            )
+            new_file_pair.append({dest_file_under_dir: src_file_under_dir})
         self.copy_files(new_file_pair)
 
     def _copy(self, src_path, dest):
