@@ -6,7 +6,7 @@ releases:
     details:
     - "`#32`: option 1 copy a directory without its subdirectories."
     - "`#30`: command line template option is ignore when a moban file is present"
-  date: pending release
+  date: 14-07-2018
   version: 0.2.4
 - changes:
   - action: Added
