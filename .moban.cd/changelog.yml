@@ -4,6 +4,13 @@ releases:
 - changes:
   - action: Added
     details:
+    - "`#32`: option 1 copy a directory without its subdirectories."
+    - "`#30`: command line template option is ignore when a moban file is present"
+  date: 14-07-2018
+  version: 0.2.4
+- changes:
+  - action: Added
+    details:
     - "`#76`: running moban as a module from python command"
     - "`#32`: copy a directory recusively"
     - "`#33`: template all files in a directory"
