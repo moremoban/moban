@@ -4,11 +4,11 @@ from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
 
 from lml.plugin import PluginManager, PluginInfo
-from lml.loader import scan_plugins
+from lml.loader import scan_plugins_regex
 
 from moban.hashstore import HASH_STORE
 from moban.extensions import JinjaFilterManager, JinjaTestManager
-from moban.extensions import JinjaGlobalsManager
+from moban.extensions import JinjaGlobalsManager, LibraryManager
 import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
@@ -25,6 +25,7 @@ BUILTIN_EXENSIONS = [
 _FILTERS = JinjaFilterManager()
 _TESTS = JinjaTestManager()
 _GLOBALS = JinjaGlobalsManager()
+LIBRARIES = LibraryManager()
 
 
 class EngineFactory(PluginManager):
@@ -45,7 +46,7 @@ class EngineFactory(PluginManager):
 
 ENGINES = EngineFactory()
 
-scan_plugins("moban_", "moban", None, BUILTIN_EXENSIONS)
+scan_plugins_regex("^moban_.+$|^.+_mobans$", "moban", None, BUILTIN_EXENSIONS)
 
 
 @PluginInfo(
@@ -53,6 +54,7 @@ scan_plugins("moban_", "moban", None, BUILTIN_EXENSIONS)
 )
 class Engine(object):
     def __init__(self, template_dirs, context_dirs):
+        template_dirs = list(expand_template_directories(template_dirs))
         verify_the_existence_of_directories(template_dirs)
         template_loader = FileSystemLoader(template_dirs)
         self.jj2_environment = Environment(
@@ -206,9 +208,23 @@ def _append_to_array_item_to_dictionary_key(adict, key, array_item):
         adict[key].append(array_item)
 
 
+def expand_template_directories(dirs):
+    if not isinstance(dirs, list):
+        dirs = [dirs]
+
+    for directory in dirs:
+        if ':' in directory:
+            library_name, relative_path = directory.split(':')
+            library_path = LIBRARIES.resource_path_of(library_name)
+            yield os.path.join(library_path, relative_path)
+        else:
+            yield directory
+
+
 def verify_the_existence_of_directories(dirs):
     if not isinstance(dirs, list):
         dirs = [dirs]
+
     for directory in dirs:
         if os.path.exists(directory):
             continue

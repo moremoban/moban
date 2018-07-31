@@ -46,7 +46,7 @@ CLASSIFIERS = [
 INSTALL_REQUIRES = [
     'pyyaml>=3.11',
     'jinja2>=2.7.1',
-    'lml==0.0.3',
+    'lml==0.0.4',
     'crayons',
 ]
 SETUP_COMMANDS = {}

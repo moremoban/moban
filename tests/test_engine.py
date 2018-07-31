@@ -3,6 +3,24 @@ from nose.tools import raises, eq_
 from moban.engine import ENGINES, Engine, Context
 import moban.exceptions as exceptions
 from moban.extensions import jinja_global
+from moban.engine import expand_template_directories
+
+
+from lml.plugin import PluginInfo
+
+
+@PluginInfo('library', tags=['testmobans'])
+class TestPypkg():
+    def __init__(self):
+        __package_path__ = os.path.dirname(__file__)
+        self.resources_path = os.path.join(
+            __package_path__, "fixtures")
+
+
+def test_expand_dir():
+    dirs = list(expand_template_directories('testmobans:template-tests'))
+    for directory in dirs:
+        assert os.path.exists(directory)
 
 
 def test_default_template_type():

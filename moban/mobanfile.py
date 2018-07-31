@@ -34,6 +34,10 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if plugins_dirs:
         handle_plugin_dirs(plugins_dirs)
 
+    requires = moban_file_configurations.get(constants.LABEL_REQUIRES)
+    if requires:
+        handle_requires(requires)
+
     targets = moban_file_configurations.get(constants.LABEL_TARGETS)
     if targets:
         if target:
@@ -128,3 +132,7 @@ def extract_target(options):
         else:
             result = [{output: template}]
     return result
+
+
+def handle_requires(requires):
+    pass
