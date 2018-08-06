@@ -45,8 +45,11 @@ class EngineFactory(PluginManager):
 
 
 ENGINES = EngineFactory()
+MOBAN_EXTENSIONS = "^moban_.+$"
+MOBAN_TEMPLATES = "^.+_mobans$"
+MOBAN_ALL = "%s|%s" % (MOBAN_EXTENSIONS, MOBAN_TEMPLATES)
 
-scan_plugins_regex("^moban_.+$|^.+_mobans$", "moban", None, BUILTIN_EXENSIONS)
+scan_plugins_regex(MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
 
 
 @PluginInfo(
