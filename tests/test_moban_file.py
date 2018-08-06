@@ -24,7 +24,7 @@ class TestFinder:
         from moban.mobanfile import find_default_moban_file
 
         actual = find_default_moban_file()
-        eq_(".moban.yml", actual)
+        eq_(".moban.yaml", actual)
 
     def test_no_moban_file(self):
         self.fake_file_existence.side_effect = [False, False]
