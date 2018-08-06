@@ -1,5 +1,6 @@
 requires:
    - pypi-mobans
+   - abc
 configuration:
   template_dir:
     - "setupmobans:templates"

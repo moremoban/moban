@@ -24,7 +24,7 @@ class TestFinder:
         from moban.mobanfile import find_default_moban_file
 
         actual = find_default_moban_file()
-        eq_(".moban.yaml", actual)
+        eq_(".moban.yml", actual)
 
     def test_no_moban_file(self):
         self.fake_file_existence.side_effect = [False, False]
@@ -32,3 +32,12 @@ class TestFinder:
 
         actual = find_default_moban_file()
         assert actual is None
+
+
+@patch("moban.mobanfile.pip_install")
+def test_handle_requires(fake_pip_install):
+    modules = ['package1', 'package2']
+    from moban.mobanfile import handle_requires
+
+    handle_requires(modules)
+    fake_pip_install.assert_called_with(modules)

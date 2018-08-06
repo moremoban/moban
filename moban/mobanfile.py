@@ -8,7 +8,8 @@ from lml.utils import do_import
 import moban.constants as constants
 import moban.reporter as reporter
 from moban.engine import ENGINES
-from moban.utils import merge, parse_targets, expand_directories
+from moban.utils import merge, parse_targets
+from moban.utils import expand_directories, pip_install
 from moban.copier import Copier
 
 
@@ -135,4 +136,4 @@ def extract_target(options):
 
 
 def handle_requires(requires):
-    pass
+    pip_install(requires)

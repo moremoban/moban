@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import stat
 import errno
 
@@ -133,3 +134,12 @@ def mkdir_p(path):
             pass
         else:
             raise
+
+
+def pip_install(packages):
+    import subprocess
+
+    subprocess.check_call([
+        sys.executable,
+        '-m',
+        'pip', 'install', " ".join(packages)])
