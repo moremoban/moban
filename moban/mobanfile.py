@@ -121,7 +121,8 @@ def extract_target(options):
     if template:
         if output is None:
             raise Exception(
-                "Please specify a output file name for %s." % template)
+                "Please specify a output file name for %s." % template
+            )
         if config:
             result = [
                 {

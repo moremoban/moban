@@ -215,8 +215,8 @@ def expand_template_directories(dirs):
         dirs = [dirs]
 
     for directory in dirs:
-        if ':' in directory:
-            library_name, relative_path = directory.split(':')
+        if ":" in directory:
+            library_name, relative_path = directory.split(":")
             library_path = LIBRARIES.resource_path_of(library_name)
             yield os.path.join(library_path, relative_path)
         else:

@@ -36,7 +36,7 @@ class TestFinder:
 
 @patch("moban.mobanfile.pip_install")
 def test_handle_requires(fake_pip_install):
-    modules = ['package1', 'package2']
+    modules = ["package1", "package2"]
     from moban.mobanfile import handle_requires
 
     handle_requires(modules)

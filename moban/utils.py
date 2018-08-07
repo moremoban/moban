@@ -91,8 +91,13 @@ def expand_directories(file_list, template_dirs):
         if os.path.isdir(true_template_file):
             for file_name in os.listdir(true_template_file):
                 base_output_name, _ = os.path.splitext(file_name)
-                yield((os.path.join(template_file, file_name),
-                       data_file, os.path.join(output, base_output_name)))
+                yield (
+                    (
+                        os.path.join(template_file, file_name),
+                        data_file,
+                        os.path.join(output, base_output_name),
+                    )
+                )
         else:
             yield ((template_file, data_file, output))
 
@@ -139,7 +144,6 @@ def mkdir_p(path):
 def pip_install(packages):
     import subprocess
 
-    subprocess.check_call([
-        sys.executable,
-        '-m',
-        'pip', 'install', " ".join(packages)])
+    subprocess.check_call(
+        [sys.executable, "-m", "pip", "install", " ".join(packages)]
+    )
