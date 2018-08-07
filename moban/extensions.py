@@ -66,6 +66,5 @@ class LibraryManager(PluginManager):
         )
 
     def resource_path_of(self, library_name):
-        print(self.registry)
         library = self.get_a_plugin(library_name)
         return library.resources_path
