@@ -1,8 +1,8 @@
 requires:
-   - pypi-mobans
+   - pypi-mobans-pkg
 configuration:
   template_dir:
-    - "pypi-mobans:templates"
+    - "pypi-mobans-pkg:templates"
     - local
   configuration: config.yml
 targets:

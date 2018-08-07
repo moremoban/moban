@@ -91,10 +91,10 @@ Hello, you are not in level 7
         folder = "level-8-pass-a-folder-full-of-templates"
         self._raw_moban(["moban"], folder, expected, "templated-folder/my")
 
-    #def test_level_9(self):
-    #    expected = "moban dependency as pypi package"
-    #    folder = "level-9-moban-dependency-as-pypi-package"
-    #    self._raw_moban(["moban"], folder, expected, "test.txt")
+    def test_level_9(self):
+        expected = "moban dependency as pypi package"
+        folder = "level-9-moban-dependency-as-pypi-package"
+        self._raw_moban(["moban"], folder, expected, "test.txt")
 
     def test_misc_1(self):
         expected = "test file\n"
