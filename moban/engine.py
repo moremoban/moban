@@ -49,14 +49,13 @@ MOBAN_EXTENSIONS = "^moban_.+$"
 MOBAN_TEMPLATES = "^.+_mobans_pkg$"
 MOBAN_ALL = "%s|%s" % (MOBAN_EXTENSIONS, MOBAN_TEMPLATES)
 
-scan_plugins_regex(MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
-
 
 @PluginInfo(
     constants.TEMPLATE_ENGINE_EXTENSION, tags=["jinja2", "jinja", "jj2", "j2"]
 )
 class Engine(object):
     def __init__(self, template_dirs, context_dirs):
+        scan_plugins_regex(MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
         template_dirs = list(expand_template_directories(template_dirs))
         verify_the_existence_of_directories(template_dirs)
         template_loader = FileSystemLoader(template_dirs)
