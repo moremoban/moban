@@ -2,6 +2,7 @@ import os
 import stat
 from shutil import rmtree
 
+from mock import patch
 from nose.tools import eq_
 
 from moban.utils import file_permissions_copy
@@ -82,3 +83,14 @@ def test_expand_dir():
     results = list(expand_directories(file_list, template_dirs))
     expected = [("template-tests/a.jj2", "abc", "abc/a")]
     eq_(results, expected)
+
+
+@patch("subprocess.check_call")
+def test_pip_install(fake_check_all):
+    import sys
+    from moban.utils import pip_install
+
+    pip_install(["package1", "package2"])
+    fake_check_all.assert_called_with(
+        [sys.executable, "-m", "pip", "install", "package1 package2"]
+    )

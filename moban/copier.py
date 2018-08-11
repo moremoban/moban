@@ -70,7 +70,17 @@ class Copier(object):
             self._increment_file_count()
             src_file_under_dir = os.path.join(source, file_name)
             dest_file_under_dir = os.path.join(dest, file_name)
-            new_file_pair.append({dest_file_under_dir: src_file_under_dir})
+            real_src_file = os.path.join(actual_source_path, file_name)
+            if os.path.isfile(real_src_file):
+                new_file_pair.append({dest_file_under_dir: src_file_under_dir})
+            elif os.path.isdir(real_src_file):
+                new_file_pair.append(
+                    {
+                        dest_file_under_dir: os.path.join(
+                            src_file_under_dir, "**"
+                        )
+                    }
+                )
         self.copy_files(new_file_pair)
 
     def _copy(self, src_path, dest):

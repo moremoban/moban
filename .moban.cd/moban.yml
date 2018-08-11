@@ -3,8 +3,8 @@ organisation: moremoban
 author: C. W.
 contact: wangc_2011@hotmail.com
 license: MIT
-version: 0.2.4
-current_version: 0.2.4
+version: 0.3.0
+current_version: 0.3.0
 release: 0.2.4
 branch: master
 command_line_interface: "moban"
@@ -17,7 +17,7 @@ keywords:
 dependencies:
   - pyyaml>=3.11
   - jinja2>=2.7.1
-  - lml==0.0.3
+  - lml==0.0.4
   - crayons
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com

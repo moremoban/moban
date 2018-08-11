@@ -30,6 +30,7 @@ LABEL_COPY = "copy"
 LABEL_OVERRIDES = "overrides"
 LABEL_MOBANFILE = "mobanfile"
 LABEL_FORCE = "force"
+LABEL_REQUIRES = "requires"
 
 DEFAULT_CONFIGURATION_DIRNAME = ".moban.cd"
 DEFAULT_TEMPLATE_DIRNAME = ".moban.td"
@@ -77,3 +78,4 @@ JINJA_TEST_EXTENSION = "jinja_test"
 JINJA_GLOBALS_EXTENSION = "jinja_globals"
 
 TEMPLATE_ENGINE_EXTENSION = "template_engine"
+LIBRARY_EXTENSION = "library"
