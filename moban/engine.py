@@ -14,7 +14,6 @@ import moban.constants as constants
 import moban.exceptions as exceptions
 import moban.reporter as reporter
 
-
 BUILTIN_EXENSIONS = [
     "moban.filters.repr",
     "moban.filters.github",
@@ -129,17 +128,18 @@ class Engine(object):
                 self.__file_count += 1
 
     def _apply_template(self, template, data, output):
+        temp_file_path = get_template_path(self.template_dirs, template)
         rendered_content = template.render(**data)
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
         rendered_content = rendered_content.encode("utf-8")
         flag = HASH_STORE.is_file_changed(
-            output, rendered_content, template.filename
+            output, rendered_content, temp_file_path
         )
         if flag:
             utils.write_file_out(
                 output, rendered_content, strip=False, encode=False
             )
-            utils.file_permissions_copy(template.filename, output)
+            utils.file_permissions_copy(temp_file_path, output)
         return flag
 
     def _file_permissions_copy(self, template_file, output_file):
@@ -213,8 +213,8 @@ def verify_the_existence_of_directories(dirs):
         if os.path.exists(directory):
             continue
         should_I_ignore = (
-            constants.DEFAULT_CONFIGURATION_DIRNAME in directory
-            or constants.DEFAULT_TEMPLATE_DIRNAME in directory
+                constants.DEFAULT_CONFIGURATION_DIRNAME in directory
+                or constants.DEFAULT_TEMPLATE_DIRNAME in directory
         )
         if should_I_ignore:
             # ignore
@@ -223,3 +223,19 @@ def verify_the_existence_of_directories(dirs):
             raise exceptions.DirectoryNotFound(
                 constants.MESSAGE_DIR_NOT_EXIST % os.path.abspath(directory)
             )
+
+
+def get_template_path(template_dirs, template):
+    temp_dir = ''
+    for a_dir in template_dirs:
+        if os.path.exists(
+                os.path.join(a_dir, template.filename)) and \
+                os.path.isfile(
+                    os.path.join(a_dir, template.filename)
+                ):
+            temp_dir = a_dir
+            break
+    temp_file_path = os.path.join(
+        os.getcwd(), os.path.join(temp_dir, template.filename)
+    )
+    return temp_file_path

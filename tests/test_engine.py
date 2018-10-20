@@ -1,8 +1,11 @@
 import os
 from nose.tools import raises, eq_
 from moban.engine import ENGINES, Engine, Context
+from moban.engine import get_template_path
 import moban.exceptions as exceptions
 from moban.extensions import jinja_global
+from unittest.mock import Mock
+import unittest
 
 
 def test_default_template_type():
@@ -13,6 +16,14 @@ def test_default_template_type():
 def test_default_mako_type():  # fake mako
     engine_class = ENGINES.get_engine("mako")
     assert engine_class.__name__ == "MakoEngine"
+
+
+def test_get_template_path():
+    temp_dirs = ['globals', 'jinja_tests']
+    template_file = Mock()
+    template_file.filename = 'basic.template'
+    template_path = get_template_path(temp_dirs, template_file)
+    unittest.TestCase.assertEqual(first=template_path, second=os.path.join(os.getcwd(), 'globals/basic.template'))
 
 
 @raises(exceptions.NoThirdPartyEngine)
