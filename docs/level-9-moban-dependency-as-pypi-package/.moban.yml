@@ -1,0 +1,10 @@
+requires:
+   - pypi-mobans-pkg
+configuration:
+  template_dir:
+    - "pypi-mobans-pkg:templates"
+    - local
+  configuration: config.yml
+targets:
+  - mytravis.yml: travis.yml.jj2
+  - test.txt: demo.txt.jj2

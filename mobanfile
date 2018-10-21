@@ -1,10 +1,10 @@
+requires:
+   - pypi-mobans-pkg
 configuration:
   template_dir:
-    - "setupmobans/templates"
+    - "setupmobans:templates"
     - ".moban.d"
   configuration: moban.yml
-  plugin_dir:
-    - "setupmobans/plugins"
 targets:
   - setup.py: setup.py
   - moban/__init__.py: __init__.py.jj2
@@ -12,7 +12,7 @@ targets:
   - docs/conf.py: conf.py.jj2
   - .travis.yml: travis.yml
   - requirements.txt: requirements.txt.jj2
-  - .gitignore: gitignore.jj2
+  - .gitignore: moban_gitignore.jj2
   - MANIFEST.in: MANIFEST.in.jj2
   - output: CHANGELOG.rst
     configuration: changelog.yml
