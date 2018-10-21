@@ -12,7 +12,7 @@ def split_length(input_line, length):
         yield line
     else:
         while True:
-            if " " in line[start : start + limit]: # flake8: noqa 
+            if " " in line[start : start + limit]:  # flake8: noqa
                 # go back and find a space
                 while limit > 0 and line[start + limit] != " ":
                     limit -= 1
