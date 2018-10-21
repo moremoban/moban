@@ -4,8 +4,6 @@ from moban.engine import ENGINES, Engine, Context
 import moban.exceptions as exceptions
 from moban.extensions import jinja_global
 from moban.engine import expand_template_directories
-
-
 from lml.plugin import PluginInfo
 
 

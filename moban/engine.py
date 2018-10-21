@@ -1,11 +1,8 @@
 import os
-
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
-
 from lml.plugin import PluginManager, PluginInfo
 from lml.loader import scan_plugins_regex
-
 from moban.hashstore import HASH_STORE
 from moban.extensions import JinjaFilterManager, JinjaTestManager
 from moban.extensions import JinjaGlobalsManager, LibraryManager
@@ -13,7 +10,7 @@ import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
 import moban.reporter as reporter
-
+from moban.utils import get_template_path
 
 BUILTIN_EXENSIONS = [
     "moban.filters.repr",
@@ -133,17 +130,18 @@ class Engine(object):
                 self.__file_count += 1
 
     def _apply_template(self, template, data, output):
+        temp_file_path = get_template_path(self.template_dirs, template)
         rendered_content = template.render(**data)
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
         rendered_content = rendered_content.encode("utf-8")
         flag = HASH_STORE.is_file_changed(
-            output, rendered_content, template.filename
+            output, rendered_content, temp_file_path
         )
         if flag:
             utils.write_file_out(
                 output, rendered_content, strip=False, encode=False
             )
-            utils.file_permissions_copy(template.filename, output)
+            utils.file_permissions_copy(temp_file_path, output)
         return flag
 
     def _file_permissions_copy(self, template_file, output_file):
