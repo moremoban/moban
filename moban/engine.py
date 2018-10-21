@@ -1,11 +1,8 @@
 import os
-
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
-
 from lml.plugin import PluginManager, PluginInfo
 from lml.loader import scan_plugins_regex
-
 from moban.hashstore import HASH_STORE
 from moban.extensions import JinjaFilterManager, JinjaTestManager
 from moban.extensions import JinjaGlobalsManager, LibraryManager
@@ -13,6 +10,7 @@ import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
 import moban.reporter as reporter
+from moban.utils import get_template_path
 
 BUILTIN_EXENSIONS = [
     "moban.filters.repr",
@@ -231,8 +229,8 @@ def verify_the_existence_of_directories(dirs):
         if os.path.exists(directory):
             continue
         should_I_ignore = (
-                constants.DEFAULT_CONFIGURATION_DIRNAME in directory
-                or constants.DEFAULT_TEMPLATE_DIRNAME in directory
+            constants.DEFAULT_CONFIGURATION_DIRNAME in directory
+            or constants.DEFAULT_TEMPLATE_DIRNAME in directory
         )
         if should_I_ignore:
             # ignore
@@ -241,19 +239,3 @@ def verify_the_existence_of_directories(dirs):
             raise exceptions.DirectoryNotFound(
                 constants.MESSAGE_DIR_NOT_EXIST % os.path.abspath(directory)
             )
-
-
-def get_template_path(template_dirs, template):
-    temp_dir = ''
-    for a_dir in template_dirs:
-        if os.path.exists(
-                os.path.join(a_dir, template.filename)) and \
-                os.path.isfile(
-                    os.path.join(a_dir, template.filename)
-                ):
-            temp_dir = a_dir
-            break
-    temp_file_path = os.path.join(
-        os.getcwd(), os.path.join(temp_dir, template.filename)
-    )
-    return temp_file_path
