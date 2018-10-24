@@ -42,6 +42,17 @@ or clone it and install it:
     $ git clone http://github.com/moremoban/moban.git
     $ cd moban
     $ python setup.py install
+    
+
+Development
+================================================================================
+Follow these steps for setting up development environment:
+
+.. code-block:: bash
+
+    $ git clone http://github.com/moremoban/moban.git
+    $ cd moban
+    $ python setup.py develop
 
 
 Quick start
