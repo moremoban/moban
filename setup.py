@@ -24,7 +24,7 @@ DESCRIPTION = (
 )
 URL = 'https://github.com/moremoban/moban'
 DOWNLOAD_URL = '%s/archive/0.3.0.tar.gz' % URL
-FILES = ['README.rst', 'CHANGELOG.rst']
+FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'jinja2',
     'moban',
