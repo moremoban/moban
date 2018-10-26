@@ -6,13 +6,13 @@ from moban.extensions import JinjaFilter
 def split_length(input_line, length):
     start = 0
     limit = length
-    line = re.sub(r'\s+', " ", input_line)
+    line = re.sub(r"\s+", " ", input_line)
     line_length = len(line)
     if line_length <= length:
         yield line
     else:
         while True:
-            if " " in line[start: start + limit]:  # flake8: noqa
+            if " " in line[start : start + limit]:  # flake8: noqa
                 # go back and find a space
                 while limit > 0 and line[start + limit] != " ":
                     limit -= 1
@@ -24,7 +24,7 @@ def split_length(input_line, length):
                 ] != " ":
                     limit += 1
 
-            yield line[start: start + limit]  # flake8: noqa
+            yield line[start : start + limit]  # flake8: noqa
             start = start + limit + 1
             limit = length
             if len(line[start:]) < length or start + limit >= len(line):

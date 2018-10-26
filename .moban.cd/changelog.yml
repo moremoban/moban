@@ -4,6 +4,20 @@ releases:
 - changes:
   - action: Added
     details:
+    - "`#89`: Install pypi-hosted mobans through requires syntax"
+  - action: Updated
+    details:
+    - "`#96`: Fix for FileNotFoundError for plugins"
+    - "various documentation updates"
+  - action: Removed
+    details:
+    - "`#88`: removed python 2.6 support"
+    - removed python 3.3 support
+  date: 27-18-2018
+  version: 0.3.0
+- changes:
+  - action: Added
+    details:
     - "`#32`: option 1 copy a directory without its subdirectories."
     - "`#30`: command line template option is ignore when a moban file is present"
   date: 14-07-2018

@@ -114,7 +114,7 @@ def file_permissions(afile):
 
 
 def strip_off_trailing_new_lines(content):
-    return re.sub(r'(\n\s+)+$', r'\n', content)
+    return re.sub(r"(\n\s+)+$", r"\n", content)
 
 
 def write_file_out(filename, content, strip=True, encode=True):

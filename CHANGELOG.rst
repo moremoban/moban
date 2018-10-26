@@ -1,6 +1,29 @@
 Change log
 ================================================================================
 
+0.3.0 - 27-18-2018
+--------------------------------------------------------------------------------
+
+Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#89 <https://github.com/moremoban/moban/issues/89>`_: Install pypi-hosted
+   mobans through requires syntax
+
+Updated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#96 <https://github.com/moremoban/moban/issues/96>`_: Fix for
+   FileNotFoundError for plugins
+#. various documentation updates
+
+Removed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#88 <https://github.com/moremoban/moban/issues/88>`_: removed python 2.6
+   support
+#. removed python 3.3 support
+
 0.2.4 - 14-07-2018
 --------------------------------------------------------------------------------
 
