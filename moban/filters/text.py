@@ -6,7 +6,7 @@ from moban.extensions import JinjaFilter
 def split_length(input_line, length):
     start = 0
     limit = length
-    line = re.sub("\s+", " ", input_line)
+    line = re.sub(r'\s+', " ", input_line)
     line_length = len(line)
     if line_length <= length:
         yield line

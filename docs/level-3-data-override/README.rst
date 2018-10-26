@@ -1,7 +1,7 @@
 Level 3: data override
 ================================================================================
 
-What `moban` bring on the table is data inheritance by introducing `overrides` key word in the yaml file::
+What `moban` brings on the table is data inheritance by introducing `overrides` key word in the yaml file::
 
     overrides: data.base.yaml
     ....
