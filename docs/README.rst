@@ -11,6 +11,7 @@ This section covers the use cases for moban. Please check them out individually.
 #. `Complex configuration`_
 #. `Use custom jinja2 filter test n global`_
 #. `Pass a folder full of templates`_
+#. `Use pypi package as a moban dependency`_
 
 .. _Jinja2 command line: level-1-jinja2-cli
 .. _Template inheritance: level-2-template-inheritance
@@ -20,3 +21,4 @@ This section covers the use cases for moban. Please check them out individually.
 .. _Complex configuration: level-6-complex-configuration
 .. _Use custom jinja2 filter test n global: level-7-use-custom-jinja2-filter-test-n-global
 .. _Pass a folder full of templates: level-8-pass-a-folder-full-of-templates
+.. _Use pypi package as a moban dependency: level-9-moban-dependency-as-pypi-package
