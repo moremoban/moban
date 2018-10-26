@@ -9,8 +9,14 @@ Fork [moban](https://github.com/moremoban/moban) by clicking "Fork".
 5. `git clone https://github.com/YOUR_USERNAME/moban.git`
 6. `cd moban`
 7. `pip3 install -e .`
-7. `git remote add origin https://github.com/YOUR_USERNAME/moban.git`
 8. `git remote add upstream https://github.com/moremoban/moban.git`
+9. Type ` git remote -v ` and you should see <br>
+```
+   origin https://github.com/YOUR_USERNAME/moban.git (fetch)
+   origin https://github.com/YOUR_USERNAME/moban.git (push) 
+   upstream https://github.com/moremoban/moban.git (fetch)
+   upstream https://github.com/moremoban/moban.git (push)
+```
 
 When you want to update your local copy type <br> `git fetch upstream` <br> `git merge upstream/master` <br> `git push`
 
