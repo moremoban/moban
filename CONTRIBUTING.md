@@ -6,7 +6,7 @@ Fork [moban](https://github.com/moremoban/moban) by clicking "Fork".
 3. `cd moban`
 3. Type `virtualenv venv`
 4. `source venv/bin/activate`
-5. `git clone git clone https://github.com/YOUR_USERNAME/moban.git`
+5. `git clone https://github.com/YOUR_USERNAME/moban.git`
 6. `cd moban`
 7. `pip3 install -e .`
 7. `git remote add origin https://github.com/YOUR_USERNAME/moban.git`
@@ -22,4 +22,3 @@ Steps for creating a Pull Request
 6. Commit with a suitable message `git commit -m " Changes made "`
 7. Push `git push origin branch_name`
 8. Go to the Github Repository and create a pull request to the develop branch
-
