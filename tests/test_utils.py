@@ -1,13 +1,13 @@
 import os
 import stat
 from shutil import rmtree
-
+from mock import patch
 from nose.tools import eq_
-
 from moban.utils import file_permissions_copy
 from moban.utils import write_file_out
 from moban.utils import strip_off_trailing_new_lines
-from moban.utils import mkdir_p, expand_directories
+from moban.utils import mkdir_p, expand_directories, get_template_path
+from mock import Mock
 
 
 def create_file(test_file, permission):
@@ -82,3 +82,23 @@ def test_expand_dir():
     results = list(expand_directories(file_list, template_dirs))
     expected = [("template-tests/a.jj2", "abc", "abc/a")]
     eq_(results, expected)
+
+
+def test_get_template_path():
+    temp_dirs = ["tests/fixtures/template-tests", "tests/abc", "tests/abc"]
+    template = Mock()
+    template.filename = "a.jj2"
+    template_path = get_template_path(temp_dirs, template)
+    expected = os.path.join(os.getcwd(), "tests/fixtures/template-tests/a.jj2")
+    eq_(template_path, expected)
+
+
+@patch("subprocess.check_call")
+def test_pip_install(fake_check_all):
+    import sys
+    from moban.utils import pip_install
+
+    pip_install(["package1", "package2"])
+    fake_check_all.assert_called_with(
+        [sys.executable, "-m", "pip", "install", "package1 package2"]
+    )

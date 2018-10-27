@@ -8,7 +8,8 @@ from lml.utils import do_import
 import moban.constants as constants
 import moban.reporter as reporter
 from moban.engine import ENGINES
-from moban.utils import merge, parse_targets, expand_directories
+from moban.utils import merge, parse_targets
+from moban.utils import expand_directories, pip_install
 from moban.copier import Copier
 
 
@@ -33,6 +34,10 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     plugins_dirs = merged_options.get(constants.LABEL_PLUGIN_DIRS)
     if plugins_dirs:
         handle_plugin_dirs(plugins_dirs)
+
+    requires = moban_file_configurations.get(constants.LABEL_REQUIRES)
+    if requires:
+        handle_requires(requires)
 
     targets = moban_file_configurations.get(constants.LABEL_TARGETS)
     if targets:
@@ -116,7 +121,8 @@ def extract_target(options):
     if template:
         if output is None:
             raise Exception(
-                "Please specify a output file name for %s." % template)
+                "Please specify a output file name for %s." % template
+            )
         if config:
             result = [
                 {
@@ -128,3 +134,7 @@ def extract_target(options):
         else:
             result = [{output: template}]
     return result
+
+
+def handle_requires(requires):
+    pip_install(requires)

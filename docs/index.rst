@@ -22,6 +22,8 @@ examples folder.
    level-5-custom-configuration/README.rst
    level-6-complex-configuration/README.rst
    level-7-use-custom-jinja2-filter-test-n-global/README.rst
+   level-8-pass-a-folder-full-of-templates/README.rst
+   level-9-moban-dependency-as-pypi-package/README.rst
 
 In pratice, the following use cases were found interesting to go along with.
 

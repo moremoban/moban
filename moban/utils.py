@@ -1,10 +1,9 @@
 import os
 import re
+import sys
 import stat
 import errno
-
 import yaml
-
 import moban.constants as constants
 import moban.exceptions as exceptions
 
@@ -115,7 +114,7 @@ def file_permissions(afile):
 
 
 def strip_off_trailing_new_lines(content):
-    return re.sub(r'(\n\s+)+$', r'\n', content)
+    return re.sub(r"(\n\s+)+$", r"\n", content)
 
 
 def write_file_out(filename, content, strip=True, encode=True):
@@ -138,3 +137,28 @@ def mkdir_p(path):
             pass
         else:
             raise
+
+
+def pip_install(packages):
+    import subprocess
+
+    subprocess.check_call(
+        [sys.executable, "-m", "pip", "install", " ".join(packages)]
+    )
+
+
+def get_template_path(template_dirs, template):
+    temp_dir = ""
+    for a_dir in template_dirs:
+        template_file_exists = os.path.exists(
+            os.path.join(a_dir, template.filename)
+        ) and os.path.isfile(os.path.join(a_dir, template.filename))
+
+        if template_file_exists:
+            temp_dir = a_dir
+            break
+
+    temp_file_path = os.path.join(
+        os.getcwd(), os.path.join(temp_dir, template.filename)
+    )
+    return temp_file_path

@@ -1,0 +1,8 @@
+{% extends "gitignore.jj2" %}
+
+{% block extra %}
+docs/level-9-moban-dependency-as-pypi-package/mytravis.yml
+docs/misc-1-copying-templates/misc-1-copying/
+docs/misc-1-copying-templates/test-dir/
+docs/misc-1-copying-templates/test-recursive-dir/
+{% endblock %}
