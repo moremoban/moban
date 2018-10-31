@@ -102,3 +102,13 @@ def test_pip_install(fake_check_all):
     fake_check_all.assert_called_with(
         [sys.executable, "-m", "pip", "install", "package1 package2"]
     )
+
+
+@patch("subprocess.check_call")
+def test_git_clone(fake_check_all):
+    from moban.utils import git_clone
+
+    git_clone(["https://github.com/my/repo", "https://gitlab.com/my/repo"])
+    fake_check_all.assert_called_with(
+        ["git", "clone", "https://gitlab.com/my/repo"]
+    )

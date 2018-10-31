@@ -8,7 +8,7 @@ from lml.utils import do_import
 import moban.constants as constants
 import moban.reporter as reporter
 from moban.engine import ENGINES
-from moban.utils import merge, parse_targets
+from moban.utils import merge, parse_targets, git_clone
 from moban.utils import expand_directories, pip_install
 from moban.copier import Copier
 
@@ -137,4 +137,25 @@ def extract_target(options):
 
 
 def handle_requires(requires):
-    pip_install(requires)
+    pypi_pkgs = []
+    git_repos = []
+    for require in requires:
+        if is_repo(require):
+            git_repos.append(require)
+        else:
+            pypi_pkgs.append(require)
+    if pypi_pkgs:
+        pip_install(pypi_pkgs)
+    if git_repos:
+        git_clone(git_repos)
+
+
+def is_repo(require):
+    return (
+        require.startswith('http') and
+        (
+            'github.com' in require or
+            'gitlab.com' in require or
+            'bitbucket.com' in require
+        )
+    )

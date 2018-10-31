@@ -147,6 +147,15 @@ def pip_install(packages):
     )
 
 
+def git_clone(repos):
+    import subprocess
+
+    for repo in repos:
+        subprocess.check_call(
+            ['git', 'clone', repo]
+        )
+
+
 def get_template_path(template_dirs, template):
     temp_dir = ""
     for a_dir in template_dirs:

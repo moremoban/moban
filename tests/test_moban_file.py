@@ -35,9 +35,37 @@ class TestFinder:
 
 
 @patch("moban.mobanfile.pip_install")
-def test_handle_requires(fake_pip_install):
+def test_handle_requires_pypkg(fake_pip_install):
     modules = ["package1", "package2"]
     from moban.mobanfile import handle_requires
 
     handle_requires(modules)
     fake_pip_install.assert_called_with(modules)
+
+
+@patch("moban.mobanfile.git_clone")
+def test_handle_requires_repos(fake_git_clone):
+    repos = ["https://github.com/my/repo", "https://gitlab.com/my/repo"]
+    from moban.mobanfile import handle_requires
+
+    handle_requires(repos)
+    fake_git_clone.assert_called_with(repos)
+
+
+def test_is_repo():
+    repos = [
+        "https://github.com/my/repo",
+        "https://gitlab.com/my/repo",
+        "https://bitbucket.com/my/repo",
+        "https://unsupported.com/my/repo",
+        "invalid/repo/rul"
+    ]
+    from moban.mobanfile import is_repo
+
+    actual = [
+        is_repo(repo) for repo in repos
+    ]
+    expected = [
+        True, True, True, False, False
+    ]
+    eq_(expected, actual)
