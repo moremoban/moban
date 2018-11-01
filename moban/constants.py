@@ -49,6 +49,8 @@ DEFAULT_OPTIONS = {
 # moban file version
 MOBAN_VERSION = "moban_file_spec_version"
 DEFAULT_MOBAN_VERSION = "1.0"
+MOBAN_DIR_NAME_UNDER_USER_HOME = ".moban"
+MOBAN_REPOS_DIR_NAME = "reps"
 
 # error messages
 ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"

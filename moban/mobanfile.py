@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+from urllib.parse import urlparse
 from collections import defaultdict
 
 from lml.utils import do_import
@@ -153,10 +154,5 @@ def handle_requires(requires):
 
 
 def is_repo(require):
-    one_of_the_domain = False
-    for domain in KNOWN_DOMAIN_FOR_GIT:
-        if domain in require:
-            one_of_the_domain = True
-            break
-
-    return require.startswith("http") and one_of_the_domain
+    result = urlparse(require)
+    return result.scheme != '' and result.netloc in KNOWN_DOMAIN_FOR_GIT

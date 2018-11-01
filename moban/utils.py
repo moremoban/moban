@@ -149,9 +149,20 @@ def pip_install(packages):
 
 def git_clone(repos):
     import subprocess
+    moban_home = get_moban_home()
+    mkdir_p(moban_home)
 
     for repo in repos:
-        subprocess.check_call(["git", "clone", repo])
+        repo_name = get_repo_name(repo)
+        local_repo_folder = os.path.join(moban_home, repo_name)
+        current_working_dir = os.getcwd()
+        if os.path.exists(local_repo_folder):
+            os.chdir(local_repo_folder)
+            subprocess.check_call(["git", "pull"])
+        else:
+            os.chdir(moban_home)
+            subprocess.check_call(["git", "clone", repo, repo_name])
+        os.chdir(current_working_dir)
 
 
 def get_template_path(template_dirs, template):
@@ -169,3 +180,25 @@ def get_template_path(template_dirs, template):
         os.getcwd(), os.path.join(temp_dir, template.filename)
     )
     return temp_file_path
+
+
+def get_repo_name(repo_url):
+    path = repo_url.split('/')
+    repo_name = path[-1]
+    repo_name = _remove_dot_git(repo_name)
+    return repo_name
+
+
+def get_moban_home():
+    home_dir = os.path.expanduser('~')
+    if os.path.exists(home_dir):
+        return os.path.join(
+            home_dir,
+            constants.MOBAN_DIR_NAME_UNDER_USER_HOME,
+            constants.MOBAN_REPOS_DIR_NAME
+        )
+    raise IOError("Failed to find user home directory")
+
+
+def _remove_dot_git(repo_name):
+    return repo_name.split('.')[0]

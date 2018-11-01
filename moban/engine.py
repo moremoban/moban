@@ -214,9 +214,14 @@ def expand_template_directories(dirs):
 
     for directory in dirs:
         if ":" in directory:
-            library_name, relative_path = directory.split(":")
-            library_path = LIBRARIES.resource_path_of(library_name)
-            yield os.path.join(library_path, relative_path)
+            library_or_repo_name, relative_path = directory.split(":")
+            potential_repo_path = os.path.join(
+                utils.get_moban_home(), library_or_repo_name)
+            if os.path.exists(potential_repo_path):
+                yield potential_repo_path
+            else:
+                library_path = LIBRARIES.resource_path_of(library_or_repo_name)
+                yield os.path.join(library_path, relative_path)
         else:
             yield directory
 

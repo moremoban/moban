@@ -110,5 +110,5 @@ def test_git_clone(fake_check_all):
 
     git_clone(["https://github.com/my/repo", "https://gitlab.com/my/repo"])
     fake_check_all.assert_called_with(
-        ["git", "clone", "https://gitlab.com/my/repo"]
+        ["git", "clone", "https://gitlab.com/my/repo", "repo"]
     )
