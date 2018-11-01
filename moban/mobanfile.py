@@ -151,11 +151,8 @@ def handle_requires(requires):
 
 
 def is_repo(require):
-    return (
-        require.startswith('http') and
-        (
-            'github.com' in require or
-            'gitlab.com' in require or
-            'bitbucket.com' in require
-        )
+    return require.startswith("http") and (
+        "github.com" in require
+        or "gitlab.com" in require
+        or "bitbucket.com" in require
     )

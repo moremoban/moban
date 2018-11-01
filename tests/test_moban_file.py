@@ -58,14 +58,10 @@ def test_is_repo():
         "https://gitlab.com/my/repo",
         "https://bitbucket.com/my/repo",
         "https://unsupported.com/my/repo",
-        "invalid/repo/rul"
+        "invalid/repo/url",
     ]
     from moban.mobanfile import is_repo
 
-    actual = [
-        is_repo(repo) for repo in repos
-    ]
-    expected = [
-        True, True, True, False, False
-    ]
+    actual = [is_repo(repo) for repo in repos]
+    expected = [True, True, True, False, False]
     eq_(expected, actual)

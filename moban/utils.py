@@ -151,9 +151,7 @@ def git_clone(repos):
     import subprocess
 
     for repo in repos:
-        subprocess.check_call(
-            ['git', 'clone', repo]
-        )
+        subprocess.check_call(["git", "clone", repo])
 
 
 def get_template_path(template_dirs, template):
