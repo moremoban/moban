@@ -12,6 +12,8 @@ from moban.utils import merge, parse_targets, git_clone
 from moban.utils import expand_directories, pip_install
 from moban.copier import Copier
 
+KNOWN_DOMAIN_FOR_GIT = ["github.com", "gitlab.com", "bitbucket.com"]
+
 
 def find_default_moban_file():
     for moban_file in constants.DEFAULT_MOBAN_FILES:
@@ -151,8 +153,10 @@ def handle_requires(requires):
 
 
 def is_repo(require):
-    return require.startswith("http") and (
-        "github.com" in require
-        or "gitlab.com" in require
-        or "bitbucket.com" in require
-    )
+    one_of_the_domain = False
+    for domain in KNOWN_DOMAIN_FOR_GIT:
+        if domain in require:
+            one_of_the_domain = True
+            break
+
+    return require.startswith("http") and one_of_the_domain
