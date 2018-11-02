@@ -2,12 +2,14 @@ import os
 import stat
 from shutil import rmtree
 from mock import patch
-from nose.tools import eq_
+from nose.tools import eq_, raises
 from moban.utils import file_permissions_copy
+from moban.utils import file_permissions
 from moban.utils import write_file_out
 from moban.utils import strip_off_trailing_new_lines
 from moban.utils import mkdir_p, expand_directories, get_template_path
 from mock import Mock
+from moban.exceptions import FileNotFound
 
 
 def create_file(test_file, permission):
@@ -29,6 +31,11 @@ def test_file_permission_copy():
     )
     os.unlink(test_source)
     os.unlink(test_dest)
+
+
+@raises(FileNotFound)
+def test_file_permissions_file_not_found():
+    file_permissions('I does not exist')
 
 
 def test_file_permission_copy_symlink():
