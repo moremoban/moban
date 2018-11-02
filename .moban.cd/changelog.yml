@@ -5,7 +5,7 @@ releases:
   - action: Added
     details:
     - "`#97`: requires will clone a repo if given. Note: only github, gitlab, bitbucket for now"
-  date: unreleased
+  date: 02-11-2018
   version: 0.3.1
 - changes:
   - action: Added
