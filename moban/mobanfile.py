@@ -1,7 +1,11 @@
 import os
 import re
 import sys
-from urllib.parse import urlparse
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
+
 from collections import defaultdict
 
 from lml.utils import do_import
