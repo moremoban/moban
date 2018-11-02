@@ -1,6 +1,5 @@
 import os
 
-
 # Configurations
 PROGRAM_NAME = "moban"
 PROGRAM_DESCRIPTION = (
