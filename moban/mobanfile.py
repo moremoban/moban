@@ -155,4 +155,4 @@ def handle_requires(requires):
 
 def is_repo(require):
     result = urlparse(require)
-    return result.scheme != '' and result.netloc in KNOWN_DOMAIN_FOR_GIT
+    return result.scheme != "" and result.netloc in KNOWN_DOMAIN_FOR_GIT

@@ -27,7 +27,7 @@ def test_expand_pypi_dir():
 def test_expand_repo_dir(_, __):
     dirs = list(expand_template_directories("git_repo:template"))
 
-    expected = ['/user/home/.moban/repos/git_repo/template']
+    expected = ["/user/home/.moban/repos/git_repo/template"]
     eq_(expected, dirs)
 
 
