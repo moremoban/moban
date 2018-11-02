@@ -68,10 +68,6 @@ def report_copying(source_file, destination_file):
     )
 
 
-def report_no_copying_done():
-    print(crayons.red(MESSAGE_NO_COPY, bold=True))
-
-
 def report_copying_summary(total, copies):
     if total == copies:
         figure = crayons.green(str(total), bold=True)
