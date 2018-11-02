@@ -22,36 +22,38 @@ import moban.reporter as reporter
 
 
 def main():
-    """
-    program entry point
-    """
-    parser = create_parser()
-    options = vars(parser.parse_args())
-    HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
-    moban_file = options[constants.LABEL_MOBANFILE]
-    if moban_file is None:
-        moban_file = mobanfile.find_default_moban_file()
-    if moban_file:
-        try:
-            count = handle_moban_file(moban_file, options)
-            if count:
-                sys.exit(count)
-        except (
-            exceptions.DirectoryNotFound,
-            exceptions.NoThirdPartyEngine,
-            exceptions.MobanfileGrammarException,
-        ) as e:
-            reporter.report_error_message(str(e))
-            sys.exit(constants.ERROR)
-    else:
-        try:
-            count = handle_command_line(options)
-            if count:
-                sys.exit(count)
-        except exceptions.NoTemplate as e:
-            reporter.report_error_message(str(e))
-            sys.exit(constants.ERROR)
-
+    try:
+        """
+        program entry point
+        """
+        parser = create_parser()
+        options = vars(parser.parse_args())
+        HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
+        moban_file = options[constants.LABEL_MOBANFILE]
+        if moban_file is None:
+            moban_file = mobanfile.find_default_moban_file()
+        if moban_file:
+            try:
+                count = handle_moban_file(moban_file, options)
+                if count:
+                    sys.exit(count)
+            except (
+                exceptions.DirectoryNotFound,
+                exceptions.NoThirdPartyEngine,
+                exceptions.MobanfileGrammarException,
+            ) as e:
+                reporter.report_error_message(str(e))
+                sys.exit(constants.ERROR)
+        else:
+            try:
+                count = handle_command_line(options)
+                if count:
+                    sys.exit(count)
+            except exceptions.NoTemplate as e:
+                reporter.report_error_message(str(e))
+                sys.exit(constants.ERROR)
+    except Exception as e:
+            print(e)
 
 def create_parser():
     """
