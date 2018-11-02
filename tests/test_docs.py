@@ -96,6 +96,11 @@ Hello, you are not in level 7
         folder = "level-9-moban-dependency-as-pypi-package"
         self._raw_moban(["moban"], folder, expected, "test.txt")
 
+    def test_level_10(self):
+        expected = "moban dependency as pypi package"
+        folder = "level-10-moban-dependency-as-git-repo"
+        self._raw_moban(["moban"], folder, expected, "test.txt")
+
     def test_misc_1(self):
         expected = "test file\n"
 
