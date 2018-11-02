@@ -1,9 +1,10 @@
 import os
 import sys
 from shutil import copyfile
-from moban.main import main
+
 from mock import patch
-from nose.tools import raises, assert_raises, eq_
+from moban.main import main
+from nose.tools import eq_, raises, assert_raises
 
 
 class TestCustomOptions:

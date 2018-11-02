@@ -1,8 +1,15 @@
-from os.path import isdir, isfile, isabs, exists
-from os.path import lexists, islink, samefile, ismount
+from os.path import (
+    isabs,
+    isdir,
+    exists,
+    isfile,
+    islink,
+    ismount,
+    lexists,
+    samefile,
+)
 
 from moban.extensions import jinja_tests
-
 
 jinja_tests(
     is_dir=isdir,

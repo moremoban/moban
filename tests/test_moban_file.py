@@ -1,5 +1,5 @@
-from nose.tools import eq_
 from mock import patch
+from nose.tools import eq_
 
 
 class TestFinder:

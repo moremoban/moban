@@ -3,10 +3,11 @@ import re
 import sys
 import stat
 import errno
+
 import yaml
+import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions
-import moban.reporter as reporter
 
 
 def merge(left, right):
@@ -188,7 +189,7 @@ def get_template_path(template_dirs, template):
 
 def get_repo_name(repo_url):
     path = repo_url.split("/")
-    if repo_url.endswith('/'):
+    if repo_url.endswith("/"):
         repo_name = path[-2]
     else:
         repo_name = path[-1]

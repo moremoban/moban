@@ -1,4 +1,5 @@
-from lml.plugin import PluginManager, PluginInfo
+from lml.plugin import PluginInfo, PluginManager
+
 import moban.constants as constants
 
 

@@ -1,16 +1,22 @@
 import os
 from collections import defaultdict
+
 from jinja2 import Environment, FileSystemLoader
-from lml.plugin import PluginManager, PluginInfo
 from lml.loader import scan_plugins_regex
-from moban.hashstore import HASH_STORE
-from moban.extensions import JinjaFilterManager, JinjaTestManager
-from moban.extensions import JinjaGlobalsManager, LibraryManager
+from lml.plugin import PluginInfo, PluginManager
+
 import moban.utils as utils
+import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions
-import moban.reporter as reporter
 from moban.utils import get_template_path
+from moban.hashstore import HASH_STORE
+from moban.extensions import (
+    LibraryManager,
+    JinjaTestManager,
+    JinjaFilterManager,
+    JinjaGlobalsManager,
+)
 
 BUILTIN_EXENSIONS = [
     "moban.filters.repr",

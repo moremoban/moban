@@ -12,13 +12,13 @@
 import sys
 import argparse
 
+import moban.reporter as reporter
+import moban.constants as constants
+import moban.mobanfile as mobanfile
+import moban.exceptions as exceptions
+from moban.utils import merge, open_yaml
 from moban.engine import ENGINES
 from moban.hashstore import HASH_STORE
-from moban.utils import merge, open_yaml
-import moban.constants as constants
-import moban.exceptions as exceptions
-import moban.mobanfile as mobanfile
-import moban.reporter as reporter
 
 
 def main():

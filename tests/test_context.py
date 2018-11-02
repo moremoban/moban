@@ -1,7 +1,6 @@
 import os
 
 from nose.tools import eq_
-
 from moban.engine import Context
 
 

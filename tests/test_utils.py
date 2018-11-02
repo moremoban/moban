@@ -1,14 +1,19 @@
 import os
 import stat
 from shutil import rmtree
-from mock import patch
+
+from mock import Mock, patch
 from nose.tools import eq_, raises
-from moban.utils import file_permissions_copy
-from moban.utils import file_permissions
-from moban.utils import write_file_out
-from moban.utils import strip_off_trailing_new_lines, get_repo_name
-from moban.utils import mkdir_p, expand_directories, get_template_path
-from mock import Mock
+from moban.utils import (
+    mkdir_p,
+    get_repo_name,
+    write_file_out,
+    file_permissions,
+    get_template_path,
+    expand_directories,
+    file_permissions_copy,
+    strip_off_trailing_new_lines,
+)
 from moban.exceptions import FileNotFound
 
 
@@ -35,7 +40,7 @@ def test_file_permission_copy():
 
 @raises(FileNotFound)
 def test_file_permissions_file_not_found():
-    file_permissions('I does not exist')
+    file_permissions("I does not exist")
 
 
 def test_file_permission_copy_symlink():
@@ -122,12 +127,7 @@ def test_git_clone(fake_check_all):
 
 
 def test_get_repo_name():
-    repos = [
-        "https://github.com/abc/repo",
-        "https://github.com/abc/repo/"
-    ]
-    actual = [
-        get_repo_name(repo) for repo in repos
-    ]
-    expected = ['repo', 'repo']
+    repos = ["https://github.com/abc/repo", "https://github.com/abc/repo/"]
+    actual = [get_repo_name(repo) for repo in repos]
+    expected = ["repo", "repo"]
     eq_(expected, actual)

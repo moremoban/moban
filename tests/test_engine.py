@@ -1,12 +1,12 @@
 import os
 
-from mock import patch
-from nose.tools import raises, eq_
-from moban.engine import ENGINES, Engine, Context
-import moban.exceptions as exceptions
-from moban.extensions import jinja_global
-from moban.engine import expand_template_directories
 from lml.plugin import PluginInfo
+
+import moban.exceptions as exceptions
+from mock import patch
+from nose.tools import eq_, raises
+from moban.engine import ENGINES, Engine, Context, expand_template_directories
+from moban.extensions import jinja_global
 
 
 @PluginInfo("library", tags=["testmobans"])
