@@ -1,4 +1,6 @@
 import os
+
+from mock import patch
 from nose.tools import raises, eq_
 from moban.engine import ENGINES, Engine, Context
 import moban.exceptions as exceptions
@@ -14,10 +16,19 @@ class TestPypkg:
         self.resources_path = os.path.join(__package_path__, "fixtures")
 
 
-def test_expand_dir():
+def test_expand_pypi_dir():
     dirs = list(expand_template_directories("testmobans:template-tests"))
     for directory in dirs:
         assert os.path.exists(directory)
+
+
+@patch("moban.utils.get_moban_home", return_value="/user/home/.moban/repos")
+@patch("os.path.exists", return_value=True)
+def test_expand_repo_dir(_, __):
+    dirs = list(expand_template_directories("git_repo:template"))
+
+    expected = ['/user/home/.moban/repos/git_repo/template']
+    eq_(expected, dirs)
 
 
 def test_default_template_type():

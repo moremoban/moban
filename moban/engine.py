@@ -218,11 +218,14 @@ def expand_template_directories(dirs):
             potential_repo_path = os.path.join(
                 utils.get_moban_home(), library_or_repo_name)
             if os.path.exists(potential_repo_path):
-                yield potential_repo_path
+                # expand repo template path
+                yield os.path.join(potential_repo_path, relative_path)
             else:
+                # expand pypi template path
                 library_path = LIBRARIES.resource_path_of(library_or_repo_name)
                 yield os.path.join(library_path, relative_path)
         else:
+            # local template path
             yield directory
 
 
