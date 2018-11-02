@@ -6,6 +6,7 @@ import errno
 import yaml
 import moban.constants as constants
 import moban.exceptions as exceptions
+import moban.reporter as reporter
 
 
 def merge(left, right):
@@ -158,9 +159,11 @@ def git_clone(repos):
         local_repo_folder = os.path.join(moban_home, repo_name)
         current_working_dir = os.getcwd()
         if os.path.exists(local_repo_folder):
+            reporter.report_git_pull(repo_name)
             os.chdir(local_repo_folder)
             subprocess.check_call(["git", "pull"])
         else:
+            reporter.report_git_clone(repo_name)
             os.chdir(moban_home)
             subprocess.check_call(["git", "clone", repo, repo_name])
         os.chdir(current_working_dir)
@@ -185,7 +188,10 @@ def get_template_path(template_dirs, template):
 
 def get_repo_name(repo_url):
     path = repo_url.split("/")
-    repo_name = path[-1]
+    if repo_url.endswith('/'):
+        repo_name = path[-2]
+    else:
+        repo_name = path[-1]
     repo_name = _remove_dot_git(repo_name)
     return repo_name
 

@@ -12,7 +12,7 @@ from lml.utils import do_import
 
 import moban.constants as constants
 import moban.reporter as reporter
-from moban.engine import ENGINES
+from moban.engine import ENGINES, expand_template_directories
 from moban.utils import merge, parse_targets, git_clone
 from moban.utils import expand_directories, pip_install
 from moban.copier import Copier
@@ -71,7 +71,11 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
 
 def handle_copy(template_dirs, copy_config):
-    copier = Copier(template_dirs)
+    # expanding function is added so that
+    # copy function understands repo and pypi_pkg path, since 0.3.1
+    expanded_dirs = list(expand_template_directories(template_dirs))
+
+    copier = Copier(expanded_dirs)
     copier.copy_files(copy_config)
     copier.report()
     return copier.number_of_copied_files()

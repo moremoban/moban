@@ -220,14 +220,20 @@ def expand_template_directories(dirs):
             )
             if os.path.exists(potential_repo_path):
                 # expand repo template path
-                yield os.path.join(potential_repo_path, relative_path)
+                if relative_path:
+                    yield os.path.join(potential_repo_path, relative_path)
+                else:
+                    yield potential_repo_path
             else:
                 # expand pypi template path
                 library_path = LIBRARIES.resource_path_of(library_or_repo_name)
-                yield os.path.join(library_path, relative_path)
+                if relative_path:
+                    yield os.path.join(library_path, relative_path)
+                else:
+                    yield library_path
         else:
             # local template path
-            yield directory
+            yield os.path.abspath(directory)
 
 
 def verify_the_existence_of_directories(dirs):
