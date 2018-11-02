@@ -1,5 +1,4 @@
 import crayons
-
 import moban.constants as constants
 
 MESSAGE_TEMPLATING = "Templating {0} to {1}"
@@ -82,16 +81,12 @@ def report_copying_summary(total, copies):
 
 def report_git_pull(repo):
     colored_repo = crayons.green(repo, bold=True)
-    print(
-        MESSAGE_PULLING_REPO.format(colored_repo)
-    )
+    print(MESSAGE_PULLING_REPO.format(colored_repo))
 
 
 def report_git_clone(repo):
     colored_repo = crayons.green(repo, bold=True)
-    print(
-        MESSAGE_CLONING_REPO.format(colored_repo)
-    )
+    print(MESSAGE_CLONING_REPO.format(colored_repo))
 
 
 def _format_single(message, count):

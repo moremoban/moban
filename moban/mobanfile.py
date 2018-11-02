@@ -1,21 +1,27 @@
 import os
 import re
 import sys
+from collections import defaultdict
+
+from lml.utils import do_import
+
+import moban.reporter as reporter
+import moban.constants as constants
+from moban.utils import (
+    merge,
+    git_clone,
+    pip_install,
+    parse_targets,
+    expand_directories,
+)
+from moban.copier import Copier
+from moban.engine import ENGINES, expand_template_directories
+
 try:
     from urllib.parse import urlparse
 except ImportError:
     from urlparse import urlparse
 
-from collections import defaultdict
-
-from lml.utils import do_import
-
-import moban.constants as constants
-import moban.reporter as reporter
-from moban.engine import ENGINES, expand_template_directories
-from moban.utils import merge, parse_targets, git_clone
-from moban.utils import expand_directories, pip_install
-from moban.copier import Copier
 
 KNOWN_DOMAIN_FOR_GIT = ["github.com", "gitlab.com", "bitbucket.com"]
 

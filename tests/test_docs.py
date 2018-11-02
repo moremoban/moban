@@ -1,10 +1,9 @@
 import os
 import sys
 
-from nose.tools import eq_
-
 from mock import patch
 from moban.main import main
+from nose.tools import eq_
 
 
 class TestTutorial:

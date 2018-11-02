@@ -1,9 +1,10 @@
 import os
 import sys
 from shutil import copyfile
-from nose.tools import raises
-from mock import patch
+
 import moban.exceptions as exceptions
+from mock import patch
+from nose.tools import raises
 
 
 class TestException:

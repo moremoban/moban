@@ -6,7 +6,6 @@ import hashlib
 import moban.utils as utils
 import moban.constants as constants
 
-
 PY2 = sys.version_info[0] == 2
 
 

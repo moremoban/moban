@@ -1,6 +1,6 @@
 import re
-from moban.extensions import JinjaFilter
 
+from moban.extensions import JinjaFilter
 
 GITHUB_REF_PATTERN = "`([^`]*?#[0-9]+)`"
 ISSUE = "^.*?" + GITHUB_REF_PATTERN + ".*?$"
