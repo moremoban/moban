@@ -34,6 +34,10 @@ $ pip install tests/requirements.txt
 $ make
 ```
 
+##  In order to format the code automatically
+
+you will need python 3.6 to run "make format"
+
 When you enable travis-ci on your own account, you shall see travis-ci running a build on each of your pushed commit to your own fork.
 
 ## Steps for creating a Pull Request

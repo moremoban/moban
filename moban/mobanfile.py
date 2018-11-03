@@ -5,12 +5,25 @@ from collections import defaultdict
 
 from lml.utils import do_import
 
-import moban.constants as constants
 import moban.reporter as reporter
-from moban.engine import ENGINES
-from moban.utils import merge, parse_targets
-from moban.utils import expand_directories, pip_install
+import moban.constants as constants
+from moban.utils import (
+    merge,
+    git_clone,
+    pip_install,
+    parse_targets,
+    expand_directories,
+)
 from moban.copier import Copier
+from moban.engine import ENGINES, expand_template_directories
+
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
+
+
+KNOWN_DOMAIN_FOR_GIT = ["github.com", "gitlab.com", "bitbucket.com"]
 
 
 def find_default_moban_file():
@@ -64,7 +77,11 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
 
 def handle_copy(template_dirs, copy_config):
-    copier = Copier(template_dirs)
+    # expanding function is added so that
+    # copy function understands repo and pypi_pkg path, since 0.3.1
+    expanded_dirs = list(expand_template_directories(template_dirs))
+
+    copier = Copier(expanded_dirs)
     copier.copy_files(copy_config)
     copier.report()
     return copier.number_of_copied_files()
@@ -137,4 +154,19 @@ def extract_target(options):
 
 
 def handle_requires(requires):
-    pip_install(requires)
+    pypi_pkgs = []
+    git_repos = []
+    for require in requires:
+        if is_repo(require):
+            git_repos.append(require)
+        else:
+            pypi_pkgs.append(require)
+    if pypi_pkgs:
+        pip_install(pypi_pkgs)
+    if git_repos:
+        git_clone(git_repos)
+
+
+def is_repo(require):
+    result = urlparse(require)
+    return result.scheme != "" and result.netloc in KNOWN_DOMAIN_FOR_GIT

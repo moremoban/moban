@@ -4,6 +4,12 @@ releases:
 - changes:
   - action: Added
     details:
+    - "`#97`: requires will clone a repo if given. Note: only github, gitlab, bitbucket for now"
+  date: 02-11-2018
+  version: 0.3.1
+- changes:
+  - action: Added
+    details:
     - "`#89`: Install pypi-hosted mobans through requires syntax"
   - action: Updated
     details:

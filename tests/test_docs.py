@@ -1,10 +1,9 @@
 import os
 import sys
 
-from nose.tools import eq_
-
 from mock import patch
 from moban.main import main
+from nose.tools import eq_
 
 
 class TestTutorial:
@@ -94,6 +93,11 @@ Hello, you are not in level 7
     def test_level_9(self):
         expected = "moban dependency as pypi package"
         folder = "level-9-moban-dependency-as-pypi-package"
+        self._raw_moban(["moban"], folder, expected, "test.txt")
+
+    def test_level_10(self):
+        expected = "moban dependency as git repo"
+        folder = "level-10-moban-dependency-as-git-repo"
         self._raw_moban(["moban"], folder, expected, "test.txt")
 
     def test_misc_1(self):
