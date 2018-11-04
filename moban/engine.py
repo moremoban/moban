@@ -61,6 +61,7 @@ class Engine(object):
         scan_plugins_regex(MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
         template_dirs = list(expand_template_directories(template_dirs))
         verify_the_existence_of_directories(template_dirs)
+        context_dirs = expand_template_directory(context_dirs)
         template_loader = FileSystemLoader(template_dirs)
         self.jj2_environment = Environment(
             loader=template_loader,
@@ -219,27 +220,37 @@ def expand_template_directories(dirs):
         dirs = [dirs]
 
     for directory in dirs:
-        if ":" in directory:
-            library_or_repo_name, relative_path = directory.split(":")
-            potential_repo_path = os.path.join(
-                utils.get_moban_home(), library_or_repo_name
-            )
-            if os.path.exists(potential_repo_path):
-                # expand repo template path
-                if relative_path:
-                    yield os.path.join(potential_repo_path, relative_path)
-                else:
-                    yield potential_repo_path
+        yield expand_template_directory(directory)
+
+
+def expand_template_directory(directory):
+    translated_directory = None
+    if ":" in directory:
+        library_or_repo_name, relative_path = directory.split(":")
+        potential_repo_path = os.path.join(
+            utils.get_moban_home(), library_or_repo_name
+        )
+        if os.path.exists(potential_repo_path):
+            # expand repo template path
+            if relative_path:
+                translated_directory = os.path.join(
+                    potential_repo_path, relative_path
+                )
             else:
-                # expand pypi template path
-                library_path = LIBRARIES.resource_path_of(library_or_repo_name)
-                if relative_path:
-                    yield os.path.join(library_path, relative_path)
-                else:
-                    yield library_path
+                translated_directory = potential_repo_path
         else:
-            # local template path
-            yield os.path.abspath(directory)
+            # expand pypi template path
+            library_path = LIBRARIES.resource_path_of(library_or_repo_name)
+            if relative_path:
+                translated_directory = os.path.join(
+                    library_path, relative_path
+                )
+            else:
+                translated_directory = library_path
+    else:
+        # local template path
+        translated_directory = os.path.abspath(directory)
+    return translated_directory
 
 
 def verify_the_existence_of_directories(dirs):
