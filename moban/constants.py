@@ -72,6 +72,14 @@ HAS_CHANGES = 1
 ERROR = 2
 NO_CHANGES = 0
 
+# Require
+GIT_REQUIRE = "GIT"
+GIT_HAS_SUBMODULE = "submodule"
+GIT_URL = "url"
+PYPI_REQUIRE = "PYPI"
+PYPI_PACKAGE_NAME = "name"
+REQUIRE_TYPE = "type"
+
 
 # Extension
 JINJA_FILTER_EXTENSION = "jinja_filter"

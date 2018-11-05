@@ -149,7 +149,7 @@ def pip_install(packages):
     )
 
 
-def git_clone(repos):
+def git_clone(repos, submodule=False):
     import subprocess
 
     moban_home = get_moban_home()
@@ -163,10 +163,16 @@ def git_clone(repos):
             reporter.report_git_pull(repo_name)
             os.chdir(local_repo_folder)
             subprocess.check_call(["git", "pull"])
+            if submodule:
+                subprocess.check_call(["git", "submodule", "update"])
         else:
             reporter.report_git_clone(repo_name)
             os.chdir(moban_home)
             subprocess.check_call(["git", "clone", repo, repo_name])
+            if submodule:
+                os.chdir(os.path.join(moban_home, repo_name))
+                subprocess.check_call(["git", "submodule", "init"])
+                subprocess.check_call(["git", "submodule", "update"])
         os.chdir(current_working_dir)
 
 

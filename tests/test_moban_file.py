@@ -43,6 +43,15 @@ def test_handle_requires_pypkg(fake_pip_install):
     fake_pip_install.assert_called_with(modules)
 
 
+@patch("moban.mobanfile.pip_install")
+def test_handle_requires_pypkg_with_alternative_syntax(fake_pip_install):
+    modules = [{"type": "pypi", "name": "pypi-mobans"}]
+    from moban.mobanfile import handle_requires
+
+    handle_requires(modules)
+    fake_pip_install.assert_called_with(["pypi-mobans"])
+
+
 @patch("moban.mobanfile.git_clone")
 def test_handle_requires_repos(fake_git_clone):
     repos = ["https://github.com/my/repo", "https://gitlab.com/my/repo"]
@@ -50,6 +59,27 @@ def test_handle_requires_repos(fake_git_clone):
 
     handle_requires(repos)
     fake_git_clone.assert_called_with(repos)
+
+
+@patch("moban.mobanfile.git_clone")
+def test_handle_requires_repos_with_alternative_syntax(fake_git_clone):
+    repos = [{"type": "git", "url": "https://github.com/my/repo"}]
+    from moban.mobanfile import handle_requires
+
+    handle_requires(repos)
+    fake_git_clone.assert_called_with(["https://github.com/my/repo"])
+
+
+@patch("moban.mobanfile.git_clone")
+def test_handle_requires_repos_with_submodule(fake_git_clone):
+    repos = [
+        {"type": "git", "url": "https://github.com/my/repo", "submodule": True}
+    ]
+    from moban.mobanfile import handle_requires
+
+    expected = ["https://github.com/my/repo"]
+    handle_requires(repos)
+    fake_git_clone.assert_called_with(expected, submodule=True)
 
 
 def test_is_repo():
