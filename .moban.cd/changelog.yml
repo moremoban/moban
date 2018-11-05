@@ -4,6 +4,12 @@ releases:
 - changes:
   - action: Added
     details:
+    - "`requires` shall support configuration dirs. In other words, configuration file could be stored in python package or git repository."
+  date: unreleased
+  version: 0.3.2
+- changes:
+  - action: Added
+    details:
     - "`#97`: requires will clone a repo if given. Note: only github, gitlab, bitbucket for now"
   date: 02-11-2018
   version: 0.3.1
