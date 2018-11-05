@@ -23,4 +23,17 @@ Here are the sample file::
       - test.txt: demo.txt.jj2
 
 where `requires` lead to a list of pypi packages. And when you refer to it,
-please use "pypi-mobans:"
+as in level-9 section, please use "pypi-mobans:"
+
+
+Alternative syntax when submodule exists
+--------------------------------------------------------------------------------
+
+The alternative syntax is::
+  
+    requires:
+       - type: git
+         url: https://github.com/your-git-url
+         submodule: true
+    ...
+
