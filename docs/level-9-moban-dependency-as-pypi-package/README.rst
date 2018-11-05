@@ -21,5 +21,29 @@ Here are the sample file::
       - mytravis.yml: travis.yml.jj2
       - test.txt: demo.txt.jj2
 
-where `requires` lead to a list of pypi packages. And when you refer to it,
-please use "pypi-mobans:"
+where `requires` lead to a list of pypi packages. The short syntax is::
+
+    requires:
+      - python-package-name
+
+When you refer to it in configuration section, here is the syntax::
+
+    configuration:
+      - template_dir:
+        - "python-package-name:relative-folder-inside-the-package"
+
+Note: when you do not have relative directory, please keep semi-colon::
+
+    configuration:
+      template_dir:
+        - "python-package-name:"
+
+Alternative syntax
+--------------------------------------------------------------------------------
+
+The alternative syntax is::
+  
+    requires:
+       - type: pypi
+         name: pypi-mobans
+    ...
