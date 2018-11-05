@@ -156,15 +156,29 @@ def extract_target(options):
 def handle_requires(requires):
     pypi_pkgs = []
     git_repos = []
+    git_repos_with_sub = []
     for require in requires:
-        if is_repo(require):
-            git_repos.append(require)
+        if isinstance(require, dict):
+            require_type = require.get(constants.REQUIRE_TYPE, "")
+            if require_type.upper() == constants.GIT_REQUIRE:
+                submodule_flag = require.get(constants.GIT_HAS_SUBMODULE)
+                if submodule_flag is True:
+                    git_repos_with_sub.append(require.get(constants.GIT_URL))
+                else:
+                    git_repos.append(require.get(constants.GIT_URL))
+            elif require_type.upper() == constants.PYPI_REQUIRE:
+                pypi_pkgs.append(require.get(constants.PYPI_PACKAGE_NAME))
         else:
-            pypi_pkgs.append(require)
+            if is_repo(require):
+                git_repos.append(require)
+            else:
+                pypi_pkgs.append(require)
     if pypi_pkgs:
         pip_install(pypi_pkgs)
     if git_repos:
         git_clone(git_repos)
+    if git_repos_with_sub:
+        git_clone(git_repos_with_sub, submodule=True)
 
 
 def is_repo(require):
