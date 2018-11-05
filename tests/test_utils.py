@@ -126,6 +126,31 @@ def test_git_clone(fake_check_all):
     )
 
 
+@patch("os.chdir")
+@patch("subprocess.check_call")
+def test_git_clone_with_submodules(fake_check_all, _):
+    from moban.utils import git_clone
+
+    git_clone(
+        ["https://github.com/my/repo", "https://gitlab.com/my/repo"],
+        submodule=True,
+    )
+    fake_check_all.assert_called_with(["git", "submodule", "update"])
+
+
+@patch("os.path.exists", return_value=True)
+@patch("os.chdir")
+@patch("subprocess.check_call")
+def test_git_clone_with_existing_repo(fake_check_all, _, __):
+    from moban.utils import git_clone
+
+    git_clone(
+        ["https://github.com/my/repo", "https://gitlab.com/my/repo"],
+        submodule=True,
+    )
+    fake_check_all.assert_called_with(["git", "submodule", "update"])
+
+
 def test_get_repo_name():
     repos = ["https://github.com/abc/repo", "https://github.com/abc/repo/"]
     actual = [get_repo_name(repo) for repo in repos]
