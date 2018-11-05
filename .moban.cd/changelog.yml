@@ -4,6 +4,12 @@ releases:
 - changes:
   - action: Added
     details:
+    - "alternative and expanded syntax for requires, so as to accomendate github submodule recursive"
+  date: unreleased
+  version: 0.3.3
+- changes:
+  - action: Added
+    details:
     - "`requires` shall support configuration dirs. In other words, configuration file could be stored in python package or git repository."
   date: 05-11-2018
   version: 0.3.2
