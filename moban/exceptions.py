@@ -16,3 +16,7 @@ class MobanfileGrammarException(Exception):
 
 class NoTemplate(Exception):
     pass
+
+
+class IncorrectDataInput(Exception):
+    pass

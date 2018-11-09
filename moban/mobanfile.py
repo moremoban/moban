@@ -15,7 +15,7 @@ from moban.utils import (
     expand_directories,
 )
 from moban.copier import Copier
-from moban.engine import ENGINES, expand_template_directories
+from moban.engine_factory import ENGINES, expand_template_directories
 
 try:
     from urllib.parse import urlparse

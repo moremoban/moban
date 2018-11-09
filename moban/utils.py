@@ -5,6 +5,7 @@ import stat
 import errno
 
 import yaml
+import json
 import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions
@@ -49,6 +50,16 @@ def open_yaml(base_dir, file_name):
                 return data
         else:
             return None
+
+
+def open_json(base_dir, file_name):
+    """
+    returns json contents as string
+    """
+    the_json_file = search_file(base_dir, file_name)
+    with open(the_json_file, "r") as json_data:
+        data = json.loads(json_data.read())
+        return data
 
 
 def search_file(base_dir, file_name):
