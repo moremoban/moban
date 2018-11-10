@@ -27,6 +27,9 @@ def main():
     """
     parser = create_parser()
     options = vars(parser.parse_args())
+    if options[constants.LABEL_VERSION]:
+        print("Current Moban Version: " + version.__version__)
+        sys.exit()
     HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
     moban_file = options[constants.LABEL_MOBANFILE]
     if moban_file is None:
@@ -76,6 +79,12 @@ def create_parser():
     )
     parser.add_argument(
         "-t", "--%s" % constants.LABEL_TEMPLATE, help="the template file"
+    )
+    parser.add_argument(
+        "-v",
+        "--%s" % constants.LABEL_VERSION,
+        help="the current program version",
+        action="store_true",
     )
     parser.add_argument(
         "-o", "--%s" % constants.LABEL_OUTPUT, help="the output file"
