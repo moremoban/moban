@@ -12,10 +12,14 @@ class TestCustomOptions:
         self.config_file = "config.yaml"
         with open(self.config_file, "w") as f:
             f.write("hello: world")
-        self.patcher = patch(
+        self.patcher1 = patch(
             "moban.engine.verify_the_existence_of_directories"
         )
-        self.patcher.start()
+        self.patcher2 = patch(
+            "moban.engine_factory.verify_the_existence_of_directories"
+        )
+        self.patcher1.start()
+        self.patcher2.start()
 
     @patch("moban.engine.Engine.render_to_file")
     def test_custom_options(self, fake_template_doer):
@@ -52,7 +56,8 @@ class TestCustomOptions:
             main()
 
     def tearDown(self):
-        self.patcher.stop()
+        self.patcher1.stop()
+        self.patcher2.stop()
         os.unlink(self.config_file)
 
 
@@ -61,10 +66,14 @@ class TestOptions:
         self.config_file = "data.yml"
         with open(self.config_file, "w") as f:
             f.write("hello: world")
-        self.patcher = patch(
+        self.patcher1 = patch(
             "moban.engine.verify_the_existence_of_directories"
         )
-        self.patcher.start()
+        self.patcher2 = patch(
+            "moban.engine_factory.verify_the_existence_of_directories"
+        )
+        self.patcher1.start()
+        self.patcher2.start()
 
     @patch("moban.engine.Engine.render_to_file")
     def test_default_options(self, fake_template_doer):
@@ -82,7 +91,8 @@ class TestOptions:
             main()
 
     def tearDown(self):
-        self.patcher.stop()
+        self.patcher1.stop()
+        self.patcher2.stop()
         os.unlink(self.config_file)
 
 
@@ -103,10 +113,14 @@ class TestNoOptions:
         self.data_file = "data.yaml"
         with open(self.data_file, "w") as f:
             f.write("hello: world")
-        self.patcher = patch(
+        self.patcher1 = patch(
             "moban.engine.verify_the_existence_of_directories"
         )
-        self.patcher.start()
+        self.patcher2 = patch(
+            "moban.engine_factory.verify_the_existence_of_directories"
+        )
+        self.patcher1.start()
+        self.patcher2.start()
 
     @patch("moban.engine.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
@@ -170,7 +184,8 @@ class TestNoOptions:
     def tearDown(self):
         os.unlink(self.config_file)
         os.unlink(self.data_file)
-        self.patcher.stop()
+        self.patcher1.stop()
+        self.patcher2.stop()
 
 
 class TestNoOptions2:
@@ -183,10 +198,14 @@ class TestNoOptions2:
         self.data_file = "data.yaml"
         with open(self.data_file, "w") as f:
             f.write("hello: world")
-        self.patcher = patch(
+        self.patcher1 = patch(
             "moban.engine.verify_the_existence_of_directories"
         )
-        self.patcher.start()
+        self.patcher2 = patch(
+            "moban.engine_factory.verify_the_existence_of_directories"
+        )
+        self.patcher1.start()
+        self.patcher2.start()
 
     @patch("moban.engine.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
@@ -203,7 +222,8 @@ class TestNoOptions2:
             )
 
     def tearDown(self):
-        self.patcher.stop()
+        self.patcher1.stop()
+        self.patcher2.stop()
         os.unlink(self.config_file)
         os.unlink(self.data_file)
 
@@ -217,10 +237,14 @@ class TestCustomMobanFile:
         self.data_file = "data.yaml"
         with open(self.data_file, "w") as f:
             f.write("hello: world")
-        self.patcher = patch(
+        self.patcher1 = patch(
             "moban.engine.verify_the_existence_of_directories"
         )
-        self.patcher.start()
+        self.patcher2 = patch(
+            "moban.engine_factory.verify_the_existence_of_directories"
+        )
+        self.patcher1.start()
+        self.patcher2.start()
 
     @patch("moban.engine.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
@@ -237,7 +261,8 @@ class TestCustomMobanFile:
             )
 
     def tearDown(self):
-        self.patcher.stop()
+        self.patcher1.stop()
+        self.patcher2.stop()
         os.unlink(self.config_file)
         os.unlink(self.data_file)
 
@@ -296,10 +321,14 @@ class TestComplexOptions:
         self.data_file = "data.yaml"
         with open(self.data_file, "w") as f:
             f.write("hello: world")
-        self.patcher = patch(
+        self.patcher1 = patch(
             "moban.engine.verify_the_existence_of_directories"
         )
-        self.patcher.start()
+        self.patcher2 = patch(
+            "moban.engine_factory.verify_the_existence_of_directories"
+        )
+        self.patcher1.start()
+        self.patcher2.start()
 
     @patch("moban.engine.Engine.render_to_files")
     def test_single_command(self, fake_template_doer):
@@ -318,7 +347,8 @@ class TestComplexOptions:
     def tearDown(self):
         os.unlink(self.config_file)
         os.unlink(self.data_file)
-        self.patcher.stop()
+        self.patcher1.stop()
+        self.patcher2.stop()
 
 
 class TestTemplateTypeOption:

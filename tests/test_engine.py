@@ -5,8 +5,10 @@ from lml.plugin import PluginInfo
 import moban.exceptions as exceptions
 from mock import patch
 from nose.tools import eq_, raises
-from moban.engine import ENGINES, Engine, Context, expand_template_directories
+from moban.engine import Engine
 from moban.extensions import jinja_global
+from moban.engine_factory import ENGINES, Context, expand_template_directories
+from moban.engine_handlebars import EngineHandlebars
 
 
 @PluginInfo("library", tags=["testmobans"])
@@ -34,6 +36,11 @@ def test_expand_repo_dir(_, __):
 def test_default_template_type():
     engine_class = ENGINES.get_engine("jj2")
     assert engine_class == Engine
+
+
+def test_handlebars_template_type():
+    engine_class = ENGINES.get_engine("hbs")
+    assert engine_class == EngineHandlebars
 
 
 def test_default_mako_type():  # fake mako
@@ -70,6 +77,24 @@ def test_file_tests():
         content = output_file.read()
         eq_(content, "yes\nhere")
     os.unlink(output)
+
+
+def test_handlebars_file_tests():
+    output = "test.txt"
+    path = os.path.join("tests", "fixtures", "handlebars_tests")
+    engine = EngineHandlebars([path], path)
+    engine.render_to_file("file_tests.template", "file_tests.json", output)
+    with open(output, "r") as output_file:
+        content = output_file.read()
+        eq_(content, "here")
+    os.unlink(output)
+
+
+@raises(exceptions.FileNotFound)
+def test_handlebars_template_not_found():
+    path = os.path.join("tests", "fixtures", "handlebars_tests")
+    engine = EngineHandlebars([path], path)
+    engine.find_template_file("thisisnotafile.template")
 
 
 def test_globals():
