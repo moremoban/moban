@@ -13,6 +13,6 @@ Please go to `docs/level-2-template-inheritance`, here is the command to launch 
 
 .. code-block:: bash
 
-    moban -c data.yaml -t a.template
+    moban -c data.yml -t a.template
 
 `a.template` inherits `.moban.td/base.jj2`.
