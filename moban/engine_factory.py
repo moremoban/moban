@@ -4,39 +4,9 @@ from collections import defaultdict
 import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
-from lml.plugin import PluginManager
 from moban.extensions import LibraryManager
 
-BUILTIN_EXENSIONS = [
-    "moban.filters.repr",
-    "moban.filters.github",
-    "moban.filters.text",
-    "moban.tests.files",
-]
-
 LIBRARIES = LibraryManager()
-
-
-class EngineFactory(PluginManager):
-    def __init__(self):
-        super(EngineFactory, self).__init__(
-            constants.TEMPLATE_ENGINE_EXTENSION
-        )
-
-    def get_engine(self, template_type):
-        return self.load_me_now(template_type)
-
-    def all_types(self):
-        return list(self.registry.keys())
-
-    def raise_exception(self, key):
-        raise exceptions.NoThirdPartyEngine(key)
-
-
-ENGINES = EngineFactory()
-MOBAN_EXTENSIONS = "^moban_.+$"
-MOBAN_TEMPLATES = "^.+_mobans_pkg$"
-MOBAN_ALL = "%s|%s" % (MOBAN_EXTENSIONS, MOBAN_TEMPLATES)
 
 
 class Context(object):
