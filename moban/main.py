@@ -17,7 +17,7 @@ import moban.constants as constants
 import moban.mobanfile as mobanfile
 import moban.exceptions as exceptions
 from moban.utils import merge, open_yaml
-from moban.engine import ENGINES
+from moban.engine_factory import ENGINES
 from moban.hashstore import HASH_STORE
 
 
