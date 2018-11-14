@@ -5,8 +5,8 @@ from lml.plugin import PluginInfo
 import moban.exceptions as exceptions
 from mock import patch
 from nose.tools import eq_, raises
-from moban.engine import Engine
-from moban.extensions import jinja_global
+from moban.jinja2.engine import Engine
+from moban.jinja2.extensions import jinja_global
 from moban.engine_factory import Context
 from moban.plugins import expand_template_directories
 from moban.plugins import ENGINES

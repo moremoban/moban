@@ -1,6 +1,6 @@
 import re
 
-from moban.extensions import JinjaFilter
+from moban.jinja2.extensions import JinjaFilter
 
 
 @JinjaFilter()

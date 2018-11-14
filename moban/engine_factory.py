@@ -4,23 +4,6 @@ from collections import defaultdict
 import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
-from lml.plugin import PluginManager
-
-
-class EngineFactory(PluginManager):
-    def __init__(self):
-        super(EngineFactory, self).__init__(
-            constants.TEMPLATE_ENGINE_EXTENSION
-        )
-
-    def get_engine(self, template_type):
-        return self.load_me_now(template_type)
-
-    def all_types(self):
-        return list(self.registry.keys())
-
-    def raise_exception(self, key):
-        raise exceptions.NoThirdPartyEngine(key)
 
 
 class Context(object):

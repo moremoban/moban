@@ -9,7 +9,7 @@ from os.path import (
     samefile,
 )
 
-from moban.extensions import jinja_tests
+from moban.jinja2.extensions import jinja_tests
 
 jinja_tests(
     is_dir=isdir,

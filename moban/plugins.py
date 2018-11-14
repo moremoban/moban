@@ -1,32 +1,60 @@
 import os
 from moban import utils
 from lml.loader import scan_plugins_regex
+from lml.plugin import PluginManager
+from moban import constants
+from moban import exceptions
 
-from moban.extensions import (
+from moban.jinja2.extensions import (
     JinjaTestManager,
     JinjaFilterManager,
-    JinjaGlobalsManager
+    JinjaGlobalsManager,
 )
-from moban.extensions import LibraryManager
-from moban.engine_factory import EngineFactory
 from moban.constants import MOBAN_ALL
 
-LIBRARIES = LibraryManager()
 FILTERS = JinjaFilterManager()
 TESTS = JinjaTestManager()
 GLOBALS = JinjaGlobalsManager()
-ENGINES = EngineFactory()
 
 BUILTIN_EXENSIONS = [
-    "moban.filters.repr",
-    "moban.filters.github",
-    "moban.filters.text",
-    "moban.tests.files",
+    "moban.jinja2.filters.repr",
+    "moban.jinja2.filters.github",
+    "moban.jinja2.filters.text",
+    "moban.jinja2.tests.files",
 ]
 
 
 def refresh_plugins():
     scan_plugins_regex(MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
+
+
+class LibraryManager(PluginManager):
+    def __init__(self):
+        super(LibraryManager, self).__init__(constants.LIBRARY_EXTENSION)
+
+    def resource_path_of(self, library_name):
+        library = self.get_a_plugin(library_name)
+        return library.resources_path
+
+
+class EngineFactory(PluginManager):
+    def __init__(self):
+        super(EngineFactory, self).__init__(
+            constants.TEMPLATE_ENGINE_EXTENSION
+        )
+
+    def get_engine(self, template_type):
+        return self.load_me_now(template_type)
+
+    def all_types(self):
+        return list(self.registry.keys())
+
+    def raise_exception(self, key):
+        raise exceptions.NoThirdPartyEngine(key)
+
+
+LIBRARIES = LibraryManager()
+ENGINES = EngineFactory()
 
 
 def expand_template_directories(dirs):
