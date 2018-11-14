@@ -1,6 +1,9 @@
+import os
+
 from jinja2 import Environment, FileSystemLoader
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo
+from lml.plugin import PluginManager
 
 import moban.utils as utils
 import moban.reporter as reporter
@@ -14,17 +17,44 @@ from moban.extensions import (
     JinjaGlobalsManager
 )
 from moban.engine_factory import (
-    MOBAN_ALL,
-    BUILTIN_EXENSIONS,
     Context,
     expand_template_directory,
     expand_template_directories,
-    verify_the_existence_of_directories
+    verify_the_existence_of_directories,
+    Strategy
 )
+import moban.exceptions as exceptions
+from moban.constants import MOBAN_ALL
 
-FILTERS = JinjaFilterManager()
-TESTS = JinjaTestManager()
-GLOBALS = JinjaGlobalsManager()
+_FILTERS = JinjaFilterManager()
+_TESTS = JinjaTestManager()
+_GLOBALS = JinjaGlobalsManager()
+
+BUILTIN_EXENSIONS = [
+    "moban.filters.repr",
+    "moban.filters.github",
+    "moban.filters.text",
+    "moban.tests.files",
+]
+
+
+class EngineFactory(PluginManager):
+    def __init__(self):
+        super(EngineFactory, self).__init__(
+            constants.TEMPLATE_ENGINE_EXTENSION
+        )
+
+    def get_engine(self, template_type):
+        return self.load_me_now(template_type)
+
+    def all_types(self):
+        return list(self.registry.keys())
+
+    def raise_exception(self, key):
+        raise exceptions.NoThirdPartyEngine(key)
+
+
+ENGINES = EngineFactory()
 
 
 @PluginInfo(
@@ -44,13 +74,13 @@ class Engine(BaseEngine):
             trim_blocks=True,
             lstrip_blocks=True,
         )
-        for filter_name, filter_function in FILTERS.get_all():
+        for filter_name, filter_function in _FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
 
-        for test_name, test_function in TESTS.get_all():
+        for test_name, test_function in _TESTS.get_all():
             self.jj2_environment.tests[test_name] = test_function
 
-        for global_name, dict_obj in GLOBALS.get_all():
+        for global_name, dict_obj in _GLOBALS.get_all():
             self.jj2_environment.globals[global_name] = dict_obj
 
         self.context = Context(context_dirs)
@@ -64,6 +94,15 @@ class Engine(BaseEngine):
         rendered_content = template.render(**data)
         utils.write_file_out(output_file, rendered_content)
         self._file_permissions_copy(template_file, output_file)
+
+    def render_to_files(self, array_of_param_tuple):
+        sta = Strategy(array_of_param_tuple)
+        sta.process()
+        choice = sta.what_to_do()
+        if choice == Strategy.DATA_FIRST:
+            self._render_with_finding_data_first(sta.data_file_index)
+        else:
+            self._render_with_finding_template_first(sta.template_file_index)
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
@@ -86,6 +125,14 @@ class Engine(BaseEngine):
                     reporter.report_templating(template_file, output)
                     self.templated_count += 1
                 self.file_count += 1
+
+    def _file_permissions_copy(self, template_file, output_file):
+        true_template_file = template_file
+        for a_template_dir in self.template_dirs:
+            true_template_file = os.path.join(a_template_dir, template_file)
+            if os.path.exists(true_template_file):
+                break
+        utils.file_permissions_copy(true_template_file, output_file)
 
     def _apply_template(self, template, data, output):
         temp_file_path = get_template_path(self.template_dirs, template)
