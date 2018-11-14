@@ -5,18 +5,14 @@ import moban.utils as utils
 import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions
-from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo
 from moban.base_engine import BaseEngine
 from moban.engine_factory import (
     Context,
-    expand_template_directory,
-    expand_template_directories,
     verify_the_existence_of_directories,
     Strategy,
 )
-from moban.engine import MOBAN_ALL, BUILTIN_EXENSIONS
-
+from moban import plugins
 from pybars import Compiler
 
 
@@ -26,10 +22,11 @@ from pybars import Compiler
 class EngineHandlebars(BaseEngine):
     def __init__(self, template_dirs, context_dirs):
         BaseEngine.__init__(self)
-        scan_plugins_regex(MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
-        template_dirs = list(expand_template_directories(template_dirs))
+        plugins.refresh_plugins()
+        template_dirs = list(
+            plugins.expand_template_directories(template_dirs))
         verify_the_existence_of_directories(template_dirs)
-        context_dirs = expand_template_directory(context_dirs)
+        context_dirs = plugins.expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
         self.template_dirs = template_dirs
 

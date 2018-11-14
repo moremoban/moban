@@ -15,8 +15,7 @@ from moban.utils import (
     expand_directories,
 )
 from moban.copier import Copier
-from moban.engine_factory import expand_template_directories
-from moban.engine import ENGINES
+from moban import plugins
 
 try:
     from urllib.parse import urlparse
@@ -80,7 +79,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 def handle_copy(template_dirs, copy_config):
     # expanding function is added so that
     # copy function understands repo and pypi_pkg path, since 0.3.1
-    expanded_dirs = list(expand_template_directories(template_dirs))
+    expanded_dirs = list(plugins.expand_template_directories(template_dirs))
 
     copier = Copier(expanded_dirs)
     copier.copy_files(copy_config)
@@ -98,7 +97,7 @@ def handle_targets(merged_options, targets):
     for file_list in list_of_templating_parameters:
         _, extension = os.path.splitext(file_list[0])
         template_type = extension[1:]
-        primary_template_type = ENGINES.get_primary_key(template_type)
+        primary_template_type = plugins.ENGINES.get_primary_key(template_type)
         if primary_template_type is None:
             primary_template_type = merged_options[
                 constants.LABEL_TEMPLATE_TYPE
@@ -107,7 +106,7 @@ def handle_targets(merged_options, targets):
 
     count = 0
     for template_type in jobs_for_each_engine.keys():
-        engine_class = ENGINES.get_engine(template_type)
+        engine_class = plugins.ENGINES.get_engine(template_type)
         engine = engine_class(
             merged_options[constants.LABEL_TMPL_DIRS],
             merged_options[constants.LABEL_CONFIG_DIR],

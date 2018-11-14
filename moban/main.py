@@ -17,14 +17,15 @@ import moban.constants as constants
 import moban.mobanfile as mobanfile
 import moban.exceptions as exceptions
 from moban.utils import merge, open_yaml
-from moban.engine import ENGINES
 from moban.hashstore import HASH_STORE
+from moban import plugins
 
 
 def main():
     """
     program entry point
     """
+    plugins.refresh_plugins()
     parser = create_parser()
     options = vars(parser.parse_args())
     HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
@@ -132,7 +133,8 @@ def handle_command_line(options):
     options = merge(options, constants.DEFAULT_OPTIONS)
     if options[constants.LABEL_TEMPLATE] is None:
         raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
-    engine_class = ENGINES.get_engine(options[constants.LABEL_TEMPLATE_TYPE])
+    engine_class = plugins.ENGINES.get_engine(
+        options[constants.LABEL_TEMPLATE_TYPE])
     engine = engine_class(
         options[constants.LABEL_TMPL_DIRS], options[constants.LABEL_CONFIG_DIR]
     )

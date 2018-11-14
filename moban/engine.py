@@ -1,9 +1,7 @@
 import os
 
 from jinja2 import Environment, FileSystemLoader
-from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo
-from lml.plugin import PluginManager
 
 import moban.utils as utils
 import moban.reporter as reporter
@@ -11,50 +9,12 @@ import moban.constants as constants
 from moban.utils import get_template_path
 from moban.hashstore import HASH_STORE
 from moban.base_engine import BaseEngine
-from moban.extensions import (
-    JinjaTestManager,
-    JinjaFilterManager,
-    JinjaGlobalsManager
-)
 from moban.engine_factory import (
     Context,
-    expand_template_directory,
-    expand_template_directories,
     verify_the_existence_of_directories,
     Strategy
 )
-import moban.exceptions as exceptions
-from moban.constants import MOBAN_ALL
-
-_FILTERS = JinjaFilterManager()
-_TESTS = JinjaTestManager()
-_GLOBALS = JinjaGlobalsManager()
-
-BUILTIN_EXENSIONS = [
-    "moban.filters.repr",
-    "moban.filters.github",
-    "moban.filters.text",
-    "moban.tests.files",
-]
-
-
-class EngineFactory(PluginManager):
-    def __init__(self):
-        super(EngineFactory, self).__init__(
-            constants.TEMPLATE_ENGINE_EXTENSION
-        )
-
-    def get_engine(self, template_type):
-        return self.load_me_now(template_type)
-
-    def all_types(self):
-        return list(self.registry.keys())
-
-    def raise_exception(self, key):
-        raise exceptions.NoThirdPartyEngine(key)
-
-
-ENGINES = EngineFactory()
+from moban import plugins
 
 
 @PluginInfo(
@@ -63,10 +23,11 @@ ENGINES = EngineFactory()
 class Engine(BaseEngine):
     def __init__(self, template_dirs, context_dirs):
         BaseEngine.__init__(self)
-        scan_plugins_regex(MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
-        template_dirs = list(expand_template_directories(template_dirs))
+        plugins.refresh_plugins()
+        template_dirs = list(
+            plugins.expand_template_directories(template_dirs))
         verify_the_existence_of_directories(template_dirs)
-        context_dirs = expand_template_directory(context_dirs)
+        context_dirs = plugins.expand_template_directory(context_dirs)
         template_loader = FileSystemLoader(template_dirs)
         self.jj2_environment = Environment(
             loader=template_loader,
@@ -74,13 +35,13 @@ class Engine(BaseEngine):
             trim_blocks=True,
             lstrip_blocks=True,
         )
-        for filter_name, filter_function in _FILTERS.get_all():
+        for filter_name, filter_function in plugins.FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
 
-        for test_name, test_function in _TESTS.get_all():
+        for test_name, test_function in plugins.TESTS.get_all():
             self.jj2_environment.tests[test_name] = test_function
 
-        for global_name, dict_obj in _GLOBALS.get_all():
+        for global_name, dict_obj in plugins.GLOBALS.get_all():
             self.jj2_environment.globals[global_name] = dict_obj
 
         self.context = Context(context_dirs)
