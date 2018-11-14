@@ -1,11 +1,11 @@
 import os
 import re
 import sys
+import json
 import stat
 import errno
 
 import yaml
-import json
 import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions

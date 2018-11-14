@@ -6,15 +6,15 @@ from lml.plugin import PluginInfo
 import moban.utils as utils
 import moban.reporter as reporter
 import moban.constants as constants
+from moban import plugins
 from moban.utils import get_template_path
 from moban.hashstore import HASH_STORE
 from moban.base_engine import BaseEngine
 from moban.engine_factory import (
     Context,
+    Strategy,
     verify_the_existence_of_directories,
-    Strategy
 )
-from moban import plugins
 
 
 @PluginInfo(
@@ -25,7 +25,8 @@ class Engine(BaseEngine):
         BaseEngine.__init__(self)
         plugins.refresh_plugins()
         template_dirs = list(
-            plugins.expand_template_directories(template_dirs))
+            plugins.expand_template_directories(template_dirs)
+        )
         verify_the_existence_of_directories(template_dirs)
         context_dirs = plugins.expand_template_directory(context_dirs)
         template_loader = FileSystemLoader(template_dirs)

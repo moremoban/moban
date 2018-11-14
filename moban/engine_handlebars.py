@@ -1,30 +1,30 @@
 import os
 import sys
 
+from lml.plugin import PluginInfo
+
 import moban.utils as utils
 import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions
-from lml.plugin import PluginInfo
+from moban import plugins
+from pybars import Compiler
 from moban.base_engine import BaseEngine
 from moban.engine_factory import (
     Context,
-    verify_the_existence_of_directories,
     Strategy,
+    verify_the_existence_of_directories,
 )
-from moban import plugins
-from pybars import Compiler
 
 
-@PluginInfo(
-    constants.TEMPLATE_ENGINE_EXTENSION, tags=["handlebars", "hbs"]
-)
+@PluginInfo(constants.TEMPLATE_ENGINE_EXTENSION, tags=["handlebars", "hbs"])
 class EngineHandlebars(BaseEngine):
     def __init__(self, template_dirs, context_dirs):
         BaseEngine.__init__(self)
         plugins.refresh_plugins()
         template_dirs = list(
-            plugins.expand_template_directories(template_dirs))
+            plugins.expand_template_directories(template_dirs)
+        )
         verify_the_existence_of_directories(template_dirs)
         context_dirs = plugins.expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
@@ -63,7 +63,7 @@ class EngineHandlebars(BaseEngine):
         data = self.context.get_data(data_file)
         reporter.report_templating(template_file, output_file)
 
-        rendered_content = ''.join(template(data))
+        rendered_content = "".join(template(data))
         utils.write_file_out(output_file, rendered_content)
         self._file_permissions_copy(template_file, output_file)
 
@@ -94,7 +94,7 @@ class EngineHandlebars(BaseEngine):
                 template = Compiler().compile(unicode(source.read()))  # noqa
             else:
                 template = Compiler().compile(source.read())
-        rendered_content = ''.join(template(data))
+        rendered_content = "".join(template(data))
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
         rendered_content = rendered_content.encode("utf-8")
         utils.write_file_out(

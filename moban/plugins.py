@@ -1,16 +1,15 @@
 import os
-from moban import utils
+
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginManager
-from moban import constants
-from moban import exceptions
 
+from moban import utils, constants, exceptions
+from moban.constants import MOBAN_ALL
 from moban.jinja2.extensions import (
     JinjaTestManager,
     JinjaFilterManager,
     JinjaGlobalsManager,
 )
-from moban.constants import MOBAN_ALL
 
 FILTERS = JinjaFilterManager()
 TESTS = JinjaTestManager()

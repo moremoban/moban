@@ -12,9 +12,7 @@ class BaseEngine(object):
         elif self.templated_count == self.file_count:
             reporter.report_full_run(self.file_count)
         else:
-            reporter.report_partial_run(
-                self.templated_count, self.file_count
-            )
+            reporter.report_partial_run(self.templated_count, self.file_count)
 
     def number_of_templated_files(self):
         return self.templated_count
