@@ -5,18 +5,14 @@ import moban.utils as utils
 import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions
-from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo
 from moban.base_engine import BaseEngine
 from moban.engine_factory import (
-    MOBAN_ALL,
-    BUILTIN_EXENSIONS,
     Context,
-    expand_template_directory,
-    expand_template_directories,
-    verify_the_existence_of_directories
+    verify_the_existence_of_directories,
+    Strategy,
 )
-
+from moban import plugins
 from pybars import Compiler
 
 
@@ -26,10 +22,11 @@ from pybars import Compiler
 class EngineHandlebars(BaseEngine):
     def __init__(self, template_dirs, context_dirs):
         BaseEngine.__init__(self)
-        scan_plugins_regex(MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
-        template_dirs = list(expand_template_directories(template_dirs))
+        plugins.refresh_plugins()
+        template_dirs = list(
+            plugins.expand_template_directories(template_dirs))
         verify_the_existence_of_directories(template_dirs)
-        context_dirs = expand_template_directory(context_dirs)
+        context_dirs = plugins.expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
         self.template_dirs = template_dirs
 
@@ -39,11 +36,28 @@ class EngineHandlebars(BaseEngine):
                 return os.path.abspath(os.path.join(directory, template_file))
         raise exceptions.FileNotFound(template_file)
 
+    def render_to_files(self, array_of_param_tuple):
+        sta = Strategy(array_of_param_tuple)
+        sta.process()
+        choice = sta.what_to_do()
+        if choice == Strategy.DATA_FIRST:
+            self._render_with_finding_data_first(sta.data_file_index)
+        else:
+            self._render_with_finding_template_first(sta.template_file_index)
+
+    def _file_permissions_copy(self, template_file, output_file):
+        true_template_file = template_file
+        for a_template_dir in self.template_dirs:
+            true_template_file = os.path.join(a_template_dir, template_file)
+            if os.path.exists(true_template_file):
+                break
+        utils.file_permissions_copy(true_template_file, output_file)
+
     def render_to_file(self, template_file, data_file, output_file):
         template_file = self.find_template_file(template_file)
         with open(template_file, "r") as source:
             if sys.version_info[0] < 3:
-                template = Compiler().compile(unicode(source.read())) # noqa
+                template = Compiler().compile(unicode(source.read()))  # noqa
             else:
                 template = Compiler().compile(source.read())
         data = self.context.get_data(data_file)
@@ -77,7 +91,7 @@ class EngineHandlebars(BaseEngine):
         template_file = self.find_template_file(template)
         with open(template_file, "r") as source:
             if sys.version_info[0] < 3:
-                template = Compiler().compile(unicode(source.read())) # noqa
+                template = Compiler().compile(unicode(source.read()))  # noqa
             else:
                 template = Compiler().compile(source.read())
         rendered_content = ''.join(template(data))

@@ -88,3 +88,7 @@ JINJA_GLOBALS_EXTENSION = "jinja_globals"
 
 TEMPLATE_ENGINE_EXTENSION = "template_engine"
 LIBRARY_EXTENSION = "library"
+
+MOBAN_EXTENSIONS = "^moban_.+$"
+MOBAN_TEMPLATES = "^.+_mobans_pkg$"
+MOBAN_ALL = "%s|%s" % (MOBAN_EXTENSIONS, MOBAN_TEMPLATES)

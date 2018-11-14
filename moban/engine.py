@@ -1,5 +1,6 @@
+import os
+
 from jinja2 import Environment, FileSystemLoader
-from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo
 
 import moban.utils as utils
@@ -8,23 +9,12 @@ import moban.constants as constants
 from moban.utils import get_template_path
 from moban.hashstore import HASH_STORE
 from moban.base_engine import BaseEngine
-from moban.extensions import (
-    JinjaTestManager,
-    JinjaFilterManager,
-    JinjaGlobalsManager
-)
 from moban.engine_factory import (
-    MOBAN_ALL,
-    BUILTIN_EXENSIONS,
     Context,
-    expand_template_directory,
-    expand_template_directories,
-    verify_the_existence_of_directories
+    verify_the_existence_of_directories,
+    Strategy
 )
-
-FILTERS = JinjaFilterManager()
-TESTS = JinjaTestManager()
-GLOBALS = JinjaGlobalsManager()
+from moban import plugins
 
 
 @PluginInfo(
@@ -33,10 +23,11 @@ GLOBALS = JinjaGlobalsManager()
 class Engine(BaseEngine):
     def __init__(self, template_dirs, context_dirs):
         BaseEngine.__init__(self)
-        scan_plugins_regex(MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
-        template_dirs = list(expand_template_directories(template_dirs))
+        plugins.refresh_plugins()
+        template_dirs = list(
+            plugins.expand_template_directories(template_dirs))
         verify_the_existence_of_directories(template_dirs)
-        context_dirs = expand_template_directory(context_dirs)
+        context_dirs = plugins.expand_template_directory(context_dirs)
         template_loader = FileSystemLoader(template_dirs)
         self.jj2_environment = Environment(
             loader=template_loader,
@@ -44,13 +35,13 @@ class Engine(BaseEngine):
             trim_blocks=True,
             lstrip_blocks=True,
         )
-        for filter_name, filter_function in FILTERS.get_all():
+        for filter_name, filter_function in plugins.FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
 
-        for test_name, test_function in TESTS.get_all():
+        for test_name, test_function in plugins.TESTS.get_all():
             self.jj2_environment.tests[test_name] = test_function
 
-        for global_name, dict_obj in GLOBALS.get_all():
+        for global_name, dict_obj in plugins.GLOBALS.get_all():
             self.jj2_environment.globals[global_name] = dict_obj
 
         self.context = Context(context_dirs)
@@ -64,6 +55,15 @@ class Engine(BaseEngine):
         rendered_content = template.render(**data)
         utils.write_file_out(output_file, rendered_content)
         self._file_permissions_copy(template_file, output_file)
+
+    def render_to_files(self, array_of_param_tuple):
+        sta = Strategy(array_of_param_tuple)
+        sta.process()
+        choice = sta.what_to_do()
+        if choice == Strategy.DATA_FIRST:
+            self._render_with_finding_data_first(sta.data_file_index)
+        else:
+            self._render_with_finding_template_first(sta.template_file_index)
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
@@ -86,6 +86,14 @@ class Engine(BaseEngine):
                     reporter.report_templating(template_file, output)
                     self.templated_count += 1
                 self.file_count += 1
+
+    def _file_permissions_copy(self, template_file, output_file):
+        true_template_file = template_file
+        for a_template_dir in self.template_dirs:
+            true_template_file = os.path.join(a_template_dir, template_file)
+            if os.path.exists(true_template_file):
+                break
+        utils.file_permissions_copy(true_template_file, output_file)
 
     def _apply_template(self, template, data, output):
         temp_file_path = get_template_path(self.template_dirs, template)
