@@ -110,3 +110,25 @@ def test_globals():
         content = output_file.read()
         eq_(content, "world\n\ntest")
     os.unlink(output)
+
+
+def test_global_template_variables():
+    output = "test.txt"
+    path = os.path.join("tests", "fixtures", "globals")
+    engine = Engine([path], path)
+    engine.render_to_file("variables.template", "variables.yml", output)
+    with open(output, "r") as output_file:
+        content = output_file.read()
+        eq_(content, "template: variables.template\ntarget: test.txt\nhere")
+    os.unlink(output)
+
+
+def test_nested_global_template_variables():
+    output = "test.txt"
+    path = os.path.join("tests", "fixtures", "globals")
+    engine = Engine([path], path)
+    engine.render_to_file("nested.template", "variables.yml", output)
+    with open(output, "r") as output_file:
+        content = output_file.read()
+        eq_(content, "template: nested.template\ntarget: test.txt\nhere")
+    os.unlink(output)
