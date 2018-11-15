@@ -80,8 +80,8 @@ class EngineHandlebars(BaseEngine):
         with open(actual_template_file, "r") as source:
             if sys.version_info[0] < 3:
                 hbr_template = Compiler().compile(
-                    unicode(source.read())
-                )  # noqa
+                    unicode(source.read())   # noqa: F821
+                )
             else:
                 hbr_template = Compiler().compile(source.read())
         return actual_template_file, hbr_template
