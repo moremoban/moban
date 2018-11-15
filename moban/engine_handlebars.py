@@ -12,7 +12,6 @@ from pybars import Compiler
 from moban.base_engine import BaseEngine
 from moban.engine_factory import (
     Context,
-    Strategy,
     verify_the_existence_of_directories,
 )
 
@@ -35,15 +34,6 @@ class EngineHandlebars(BaseEngine):
             if os.path.exists(os.path.join(directory, template_file)):
                 return os.path.abspath(os.path.join(directory, template_file))
         raise exceptions.FileNotFound(template_file)
-
-    def render_to_files(self, array_of_param_tuple):
-        sta = Strategy(array_of_param_tuple)
-        sta.process()
-        choice = sta.what_to_do()
-        if choice == Strategy.DATA_FIRST:
-            self._render_with_finding_data_first(sta.data_file_index)
-        else:
-            self._render_with_finding_template_first(sta.template_file_index)
 
     def _file_permissions_copy(self, template_file, output_file):
         true_template_file = template_file

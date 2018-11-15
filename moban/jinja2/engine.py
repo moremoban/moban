@@ -12,7 +12,6 @@ from moban.hashstore import HASH_STORE
 from moban.base_engine import BaseEngine
 from moban.engine_factory import (
     Context,
-    Strategy,
     verify_the_existence_of_directories,
 )
 
@@ -58,15 +57,6 @@ class Engine(BaseEngine):
         rendered_content = template.render(**data)
         utils.write_file_out(output_file, rendered_content)
         self._file_permissions_copy(template_file, output_file)
-
-    def render_to_files(self, array_of_param_tuple):
-        sta = Strategy(array_of_param_tuple)
-        sta.process()
-        choice = sta.what_to_do()
-        if choice == Strategy.DATA_FIRST:
-            self._render_with_finding_data_first(sta.data_file_index)
-        else:
-            self._render_with_finding_template_first(sta.template_file_index)
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():

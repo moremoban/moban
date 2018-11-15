@@ -1,4 +1,5 @@
 import moban.reporter as reporter
+from moban.engine_factory import Strategy
 
 
 class BaseEngine(object):
@@ -16,3 +17,12 @@ class BaseEngine(object):
 
     def number_of_templated_files(self):
         return self.templated_count
+
+    def render_to_files(self, array_of_param_tuple):
+        sta = Strategy(array_of_param_tuple)
+        sta.process()
+        choice = sta.what_to_do()
+        if choice == Strategy.DATA_FIRST:
+            self._render_with_finding_data_first(sta.data_file_index)
+        else:
+            self._render_with_finding_template_first(sta.template_file_index)
