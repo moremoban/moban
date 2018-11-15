@@ -192,15 +192,15 @@ def get_template_path(template_dirs, template):
     temp_dir = ""
     for a_dir in template_dirs:
         template_file_exists = os.path.exists(
-            os.path.join(a_dir, template.filename)
-        ) and os.path.isfile(os.path.join(a_dir, template.filename))
+            os.path.join(a_dir, template)
+        ) and os.path.isfile(os.path.join(a_dir, template))
 
         if template_file_exists:
             temp_dir = a_dir
             break
 
     temp_file_path = os.path.join(
-        os.getcwd(), os.path.join(temp_dir, template.filename)
+        os.getcwd(), os.path.join(temp_dir, template)
     )
     return temp_file_path
 

@@ -35,16 +35,18 @@ class Engine(plugins.BaseEngine):
 
     def render_to_file(self, template_file, data_file, output_file):
         data = self.context.get_data(data_file)
-        template = self.jj2_environment.get_template(template_file)
-        self._apply_template(template, data, output_file)
+        template_file, template = self._get_jinja2_template(template_file)
+        self._apply_template(template_file, template, data, output_file)
         reporter.report_templating(template_file, output_file)
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
-            template = self.jj2_environment.get_template(template_file)
+            template_file, template = self._get_jinja2_template(template_file)
             for (data_file, output) in data_output_pairs:
                 data = self.context.get_data(data_file)
-                flag = self._apply_template(template, data, output)
+                flag = self._apply_template(
+                    template_file, template, data, output
+                )
                 if flag:
                     reporter.report_templating(template_file, output)
                     self.templated_count += 1
@@ -54,8 +56,12 @@ class Engine(plugins.BaseEngine):
         for (data_file, template_output_pairs) in data_file_index.items():
             data = self.context.get_data(data_file)
             for (template_file, output) in template_output_pairs:
-                template = self.jj2_environment.get_template(template_file)
-                flag = self._apply_template(template, data, output)
+                template_file, template = self._get_jinja2_template(
+                    template_file
+                )
+                flag = self._apply_template(
+                    template_file, template, data, output
+                )
                 if flag:
                     reporter.report_templating(template_file, output)
                     self.templated_count += 1
@@ -69,19 +75,25 @@ class Engine(plugins.BaseEngine):
                 break
         utils.file_permissions_copy(true_template_file, output_file)
 
-    def _apply_template(self, template, data, output):
+    def _apply_template(self, template_file, template, data, output):
         template.globals["__target__"] = output
         template.globals["__template__"] = template.name
-        temp_file_path = get_template_path(self.template_dirs, template)
         rendered_content = template.render(**data)
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
         rendered_content = rendered_content.encode("utf-8")
         flag = HASH_STORE.is_file_changed(
-            output, rendered_content, temp_file_path
+            output, rendered_content, template_file
         )
         if flag:
             utils.write_file_out(
                 output, rendered_content, strip=False, encode=False
             )
-            utils.file_permissions_copy(temp_file_path, output)
+            utils.file_permissions_copy(template_file, output)
         return flag
+
+    def _get_jinja2_template(self, template_file):
+        actual_template_file = get_template_path(
+            self.template_dirs, template_file
+        )
+        template = self.jj2_environment.get_template(template_file)
+        return actual_template_file, template
