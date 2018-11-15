@@ -9,7 +9,6 @@
 
 """
 import sys
-import logging
 import argparse
 
 import moban.reporter as reporter
@@ -19,8 +18,6 @@ import moban.exceptions as exceptions
 from moban import plugins
 from moban.utils import merge, open_yaml
 from moban.hashstore import HASH_STORE
-
-LOG = logging.getLogger(__name__)
 
 
 def main():
@@ -45,7 +42,6 @@ def main():
             exceptions.MobanfileGrammarException,
         ) as e:
             reporter.report_error_message(str(e))
-            LOG.exception(e)
             sys.exit(constants.ERROR)
     else:
         try:
