@@ -5,7 +5,7 @@ from lml.plugin import PluginManager
 
 import moban.reporter as reporter
 from moban import utils, constants, exceptions
-from moban.engine_factory import Strategy
+from moban.strategy import Strategy
 
 
 class PluginMixin:
