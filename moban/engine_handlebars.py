@@ -9,23 +9,10 @@ import moban.constants as constants
 import moban.exceptions as exceptions
 from moban import plugins
 from pybars import Compiler
-from moban.base_engine import BaseEngine
-from moban.engine_factory import Context, verify_the_existence_of_directories
 
 
 @PluginInfo(constants.TEMPLATE_ENGINE_EXTENSION, tags=["handlebars", "hbs"])
-class EngineHandlebars(BaseEngine):
-    def __init__(self, template_dirs, context_dirs):
-        BaseEngine.__init__(self)
-        plugins.refresh_plugins()
-        template_dirs = list(
-            plugins.expand_template_directories(template_dirs)
-        )
-        verify_the_existence_of_directories(template_dirs)
-        context_dirs = plugins.expand_template_directory(context_dirs)
-        self.context = Context(context_dirs)
-        self.template_dirs = template_dirs
-
+class EngineHandlebars(plugins.BaseEngine):
     def find_template_file(self, template_file):
         for directory in self.template_dirs:
             if os.path.exists(os.path.join(directory, template_file)):
@@ -80,7 +67,7 @@ class EngineHandlebars(BaseEngine):
         with open(actual_template_file, "r") as source:
             if sys.version_info[0] < 3:
                 hbr_template = Compiler().compile(
-                    unicode(source.read())   # noqa: F821
+                    unicode(source.read())  # noqa: F821
                 )
             else:
                 hbr_template = Compiler().compile(source.read())

@@ -9,23 +9,15 @@ import moban.constants as constants
 from moban import plugins
 from moban.utils import get_template_path
 from moban.hashstore import HASH_STORE
-from moban.base_engine import BaseEngine
-from moban.engine_factory import Context, verify_the_existence_of_directories
 
 
 @PluginInfo(
     constants.TEMPLATE_ENGINE_EXTENSION, tags=["jinja2", "jinja", "jj2", "j2"]
 )
-class Engine(BaseEngine):
+class Engine(plugins.BaseEngine):
     def __init__(self, template_dirs, context_dirs):
-        BaseEngine.__init__(self)
-        plugins.refresh_plugins()
-        template_dirs = list(
-            plugins.expand_template_directories(template_dirs)
-        )
-        verify_the_existence_of_directories(template_dirs)
-        context_dirs = plugins.expand_template_directory(context_dirs)
-        template_loader = FileSystemLoader(template_dirs)
+        super(Engine, self).__init__(template_dirs, context_dirs)
+        template_loader = FileSystemLoader(self.template_dirs)
         self.jj2_environment = Environment(
             loader=template_loader,
             keep_trailing_newline=True,
@@ -40,9 +32,6 @@ class Engine(BaseEngine):
 
         for global_name, dict_obj in plugins.GLOBALS.get_all():
             self.jj2_environment.globals[global_name] = dict_obj
-
-        self.context = Context(context_dirs)
-        self.template_dirs = template_dirs
 
     def render_to_file(self, template_file, data_file, output_file):
         data = self.context.get_data(data_file)

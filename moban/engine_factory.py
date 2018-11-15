@@ -1,29 +1,7 @@
-import os
 from collections import defaultdict
 
-import moban.utils as utils
 import moban.constants as constants
 import moban.exceptions as exceptions
-
-
-class Context(object):
-    def __init__(self, context_dirs):
-        verify_the_existence_of_directories(context_dirs)
-        self.context_dirs = context_dirs
-        self.__cached_environ_variables = dict(
-            (key, os.environ[key]) for key in os.environ
-        )
-
-    def get_data(self, file_name):
-        file_extension = os.path.splitext(file_name)[1]
-        if file_extension == ".json":
-            data = utils.open_json(self.context_dirs, file_name)
-        elif file_extension in [".yml", ".yaml"]:
-            data = utils.open_yaml(self.context_dirs, file_name)
-            utils.merge(data, self.__cached_environ_variables)
-        else:
-            raise exceptions.IncorrectDataInput
-        return data
 
 
 class Strategy(object):
@@ -65,23 +43,3 @@ def _append_to_array_item_to_dictionary_key(adict, key, array_item):
         )
     else:
         adict[key].append(array_item)
-
-
-def verify_the_existence_of_directories(dirs):
-    if not isinstance(dirs, list):
-        dirs = [dirs]
-
-    for directory in dirs:
-        if os.path.exists(directory):
-            continue
-        should_I_ignore = (
-            constants.DEFAULT_CONFIGURATION_DIRNAME in directory
-            or constants.DEFAULT_TEMPLATE_DIRNAME in directory
-        )
-        if should_I_ignore:
-            # ignore
-            pass
-        else:
-            raise exceptions.DirectoryNotFound(
-                constants.MESSAGE_DIR_NOT_EXIST % os.path.abspath(directory)
-            )
