@@ -50,6 +50,8 @@ class Engine(BaseEngine):
     def render_to_file(self, template_file, data_file, output_file):
         template = self.jj2_environment.get_template(template_file)
         data = self.context.get_data(data_file)
+        template.globals['__target__'] = output_file
+        template.globals['__template__'] = template.name
         reporter.report_templating(template_file, output_file)
 
         rendered_content = template.render(**data)
@@ -96,6 +98,8 @@ class Engine(BaseEngine):
         utils.file_permissions_copy(true_template_file, output_file)
 
     def _apply_template(self, template, data, output):
+        template.globals['__target__'] = output
+        template.globals['__template__'] = template.name
         temp_file_path = get_template_path(self.template_dirs, template)
         rendered_content = template.render(**data)
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
