@@ -44,18 +44,9 @@ class EngineHandlebars(BaseEngine):
         utils.file_permissions_copy(true_template_file, output_file)
 
     def render_to_file(self, template_file, data_file, output_file):
-        template_file = self.find_template_file(template_file)
-        with open(template_file, "r") as source:
-            if sys.version_info[0] < 3:
-                template = Compiler().compile(unicode(source.read()))  # noqa
-            else:
-                template = Compiler().compile(source.read())
         data = self.context.get_data(data_file)
+        self._apply_template(template_file, data, output_file)
         reporter.report_templating(template_file, output_file)
-
-        rendered_content = "".join(template(data))
-        utils.write_file_out(output_file, rendered_content)
-        self._file_permissions_copy(template_file, output_file)
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
