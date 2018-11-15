@@ -1,4 +1,3 @@
-import os
 import sys
 
 from lml.plugin import PluginInfo
@@ -12,14 +11,6 @@ from pybars import Compiler
 
 @PluginInfo(constants.TEMPLATE_ENGINE_EXTENSION, tags=["handlebars", "hbs"])
 class EngineHandlebars(plugins.BaseEngine):
-
-    def _file_permissions_copy(self, template_file, output_file):
-        true_template_file = template_file
-        for a_template_dir in self.template_dirs:
-            true_template_file = os.path.join(a_template_dir, template_file)
-            if os.path.exists(true_template_file):
-                break
-        utils.file_permissions_copy(true_template_file, output_file)
 
     def render_to_file(self, template_file, data_file, output_file):
         data = self.context.get_data(data_file)
