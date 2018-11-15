@@ -10,10 +10,7 @@ from moban import plugins
 from moban.utils import get_template_path
 from moban.hashstore import HASH_STORE
 from moban.base_engine import BaseEngine
-from moban.engine_factory import (
-    Context,
-    verify_the_existence_of_directories,
-)
+from moban.engine_factory import Context, verify_the_existence_of_directories
 
 
 @PluginInfo(
