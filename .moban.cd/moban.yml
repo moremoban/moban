@@ -19,5 +19,6 @@ dependencies:
   - jinja2>=2.7.1
   - lml==0.0.4
   - crayons
+  - pybars3
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com

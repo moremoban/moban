@@ -5,7 +5,9 @@ import os
 import sys
 import codecs
 from shutil import rmtree
-from setuptools import setup, find_packages, Command
+
+from setuptools import Command, setup, find_packages
+
 PY2 = sys.version_info[0] == 2
 PY26 = PY2 and sys.version_info[1] < 7
 
@@ -48,6 +50,7 @@ INSTALL_REQUIRES = [
     'jinja2>=2.7.1',
     'lml==0.0.4',
     'crayons',
+    'pybars3',
 ]
 SETUP_COMMANDS = {}
 
