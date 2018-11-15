@@ -1,7 +1,7 @@
 import sys
 import base64
 
-from moban.jinjia2.extensions import JinjaFilter
+from moban.extensions import JinjaFilter
 
 
 @JinjaFilter()

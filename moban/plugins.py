@@ -4,12 +4,34 @@ from lml.loader import scan_plugins_regex
 from lml.plugin import PluginManager
 
 from moban import utils, constants, exceptions
-from moban.constants import MOBAN_ALL
-from moban.jinja2.extensions import (
-    JinjaTestManager,
-    JinjaFilterManager,
-    JinjaGlobalsManager,
-)
+
+
+class PluginMixin:
+    def get_all(self):
+        for name in self.registry.keys():
+            # only the first matching one is returned
+            the_filter = self.load_me_now(name)
+            yield (name, the_filter)
+
+
+class JinjaFilterManager(PluginManager, PluginMixin):
+    def __init__(self):
+        super(JinjaFilterManager, self).__init__(
+            constants.JINJA_FILTER_EXTENSION
+        )
+
+
+class JinjaTestManager(PluginManager, PluginMixin):
+    def __init__(self):
+        super(JinjaTestManager, self).__init__(constants.JINJA_TEST_EXTENSION)
+
+
+class JinjaGlobalsManager(PluginManager, PluginMixin):
+    def __init__(self):
+        super(JinjaGlobalsManager, self).__init__(
+            constants.JINJA_GLOBALS_EXTENSION
+        )
+
 
 FILTERS = JinjaFilterManager()
 TESTS = JinjaTestManager()
@@ -21,12 +43,11 @@ BUILTIN_EXENSIONS = [
     "moban.jinja2.filters.text",
     "moban.jinja2.tests.files",
     "moban.jinja2.engine",
-    "moban.jinja2.extensions"
 ]
 
 
 def refresh_plugins():
-    scan_plugins_regex(MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
+    scan_plugins_regex(constants.MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
 
 
 class LibraryManager(PluginManager):

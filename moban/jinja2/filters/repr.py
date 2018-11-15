@@ -1,4 +1,4 @@
-from moban.jinja2.extensions import JinjaFilter
+from moban.extensions import JinjaFilter
 
 
 @JinjaFilter()
