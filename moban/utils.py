@@ -190,6 +190,7 @@ def git_clone(repos, submodule=False):
 
 def get_template_path(template_dirs, template):
     temp_dir = ""
+
     for a_dir in template_dirs:
         template_file_exists = os.path.exists(
             os.path.join(a_dir, template)
@@ -197,12 +198,11 @@ def get_template_path(template_dirs, template):
 
         if template_file_exists:
             temp_dir = a_dir
-            break
-
-    temp_file_path = os.path.join(
-        os.getcwd(), os.path.join(temp_dir, template)
-    )
-    return temp_file_path
+            temp_file_path = os.path.join(
+                os.getcwd(), os.path.join(temp_dir, template)
+            )
+            return temp_file_path
+    raise exceptions.FileNotFound
 
 
 def get_repo_name(repo_url):

@@ -2,7 +2,7 @@ import os
 import stat
 from shutil import rmtree
 
-from mock import Mock, patch
+from mock import patch
 from nose.tools import eq_, raises
 from moban.utils import (
     mkdir_p,

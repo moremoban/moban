@@ -6,18 +6,12 @@ from lml.plugin import PluginInfo
 import moban.utils as utils
 import moban.reporter as reporter
 import moban.constants as constants
-import moban.exceptions as exceptions
 from moban import plugins
 from pybars import Compiler
 
 
 @PluginInfo(constants.TEMPLATE_ENGINE_EXTENSION, tags=["handlebars", "hbs"])
 class EngineHandlebars(plugins.BaseEngine):
-    def find_template_file(self, template_file):
-        for directory in self.template_dirs:
-            if os.path.exists(os.path.join(directory, template_file)):
-                return os.path.abspath(os.path.join(directory, template_file))
-        raise exceptions.FileNotFound(template_file)
 
     def _file_permissions_copy(self, template_file, output_file):
         true_template_file = template_file
@@ -72,3 +66,6 @@ class EngineHandlebars(plugins.BaseEngine):
             else:
                 hbr_template = Compiler().compile(source.read())
         return actual_template_file, hbr_template
+
+    def find_template_file(self, template_file):
+        return utils.get_template_path(self.template_dirs, template_file)
