@@ -43,7 +43,7 @@ BUILTIN_EXENSIONS = [
     "moban.jinja2.filters.text",
     "moban.jinja2.tests.files",
     "moban.jinja2.engine",
-    "moban.jinja2.engine_handlebars",
+    "moban.engine_handlebars",
 ]
 
 
