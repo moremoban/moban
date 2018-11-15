@@ -48,15 +48,10 @@ class Engine(BaseEngine):
         self.template_dirs = template_dirs
 
     def render_to_file(self, template_file, data_file, output_file):
-        template = self.jj2_environment.get_template(template_file)
         data = self.context.get_data(data_file)
-        template.globals["__target__"] = output_file
-        template.globals["__template__"] = template.name
+        template = self.jj2_environment.get_template(template_file)
+        self._apply_template(template, data, output_file)
         reporter.report_templating(template_file, output_file)
-
-        rendered_content = template.render(**data)
-        utils.write_file_out(output_file, rendered_content)
-        self._file_permissions_copy(template_file, output_file)
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
