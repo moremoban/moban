@@ -8,7 +8,6 @@
     :license: MIT License, see LICENSE for more details
 
 """
-
 import sys
 import argparse
 
@@ -16,9 +15,9 @@ import moban.reporter as reporter
 import moban.constants as constants
 import moban.mobanfile as mobanfile
 import moban.exceptions as exceptions
+from moban import plugins
 from moban.utils import merge, open_yaml
 from moban.hashstore import HASH_STORE
-from moban import plugins
 
 
 def main():
@@ -134,7 +133,8 @@ def handle_command_line(options):
     if options[constants.LABEL_TEMPLATE] is None:
         raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
     engine_class = plugins.ENGINES.get_engine(
-        options[constants.LABEL_TEMPLATE_TYPE])
+        options[constants.LABEL_TEMPLATE_TYPE]
+    )
     engine = engine_class(
         options[constants.LABEL_TMPL_DIRS], options[constants.LABEL_CONFIG_DIR]
     )

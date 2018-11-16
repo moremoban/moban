@@ -2,7 +2,7 @@ import os
 import stat
 from shutil import rmtree
 
-from mock import Mock, patch
+from mock import patch
 from nose.tools import eq_, raises
 from moban.utils import (
     mkdir_p,
@@ -98,8 +98,7 @@ def test_expand_dir():
 
 def test_get_template_path():
     temp_dirs = ["tests/fixtures/template-tests", "tests/abc", "tests/abc"]
-    template = Mock()
-    template.filename = "a.jj2"
+    template = "a.jj2"
     template_path = get_template_path(temp_dirs, template)
     expected = os.path.join(os.getcwd(), "tests/fixtures/template-tests/a.jj2")
     eq_(template_path, expected)

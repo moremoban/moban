@@ -1,11 +1,11 @@
 import os
 
 from mock import patch
-from moban.engine import Engine
+from moban.jinja2.engine import Engine
 from moban.engine_handlebars import EngineHandlebars
 
 
-@patch("moban.engine.Engine._render_with_finding_data_first")
+@patch("moban.jinja2.engine.Engine._render_with_finding_data_first")
 def test_do_templates_1(_do_templates_with_more_shared_data):
     jobs = [
         ("1.template", "data.yml", "1.output"),
@@ -30,7 +30,7 @@ def test_do_templates_1(_do_templates_with_more_shared_data):
         os.unlink(".moban.hashes")
 
 
-@patch("moban.engine.Engine._render_with_finding_template_first")
+@patch("moban.jinja2.engine.Engine._render_with_finding_template_first")
 def test_do_templates_2(_do_templates_with_more_shared_templates):
     jobs = [
         ("1.template", "data1.yml", "1.output"),
@@ -83,8 +83,10 @@ def test_do_templates_with_more_shared_data():
         os.unlink(".moban.hashes")
 
 
-@patch("moban.engine_handlebars.EngineHandlebars."
-       "_render_with_finding_data_first")
+@patch(
+    "moban.engine_handlebars.EngineHandlebars."
+    "_render_with_finding_data_first"
+)
 def test_do_templates_1_handlebars(_do_templates_with_more_shared_data):
     jobs = [
         ("1.template", "data.yml", "1.output"),
@@ -109,8 +111,10 @@ def test_do_templates_1_handlebars(_do_templates_with_more_shared_data):
         os.unlink(".moban.hashes")
 
 
-@patch("moban.engine_handlebars.EngineHandlebars."
-       "_render_with_finding_template_first")
+@patch(
+    "moban.engine_handlebars.EngineHandlebars."
+    "_render_with_finding_template_first"
+)
 def test_do_templates_2_handlebars(_do_templates_with_more_shared_templates):
     jobs = [
         ("1.template", "data1.yml", "1.output"),

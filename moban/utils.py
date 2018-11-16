@@ -1,11 +1,11 @@
 import os
 import re
 import sys
+import json
 import stat
 import errno
 
 import yaml
-import json
 import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions
@@ -116,6 +116,7 @@ def expand_directories(file_list, template_dirs):
 def file_permissions_copy(source, dest):
     source_permissions = file_permissions(source)
     dest_permissions = file_permissions(dest)
+
     if source_permissions != dest_permissions:
         os.chmod(dest, source_permissions)
 
@@ -189,19 +190,19 @@ def git_clone(repos, submodule=False):
 
 def get_template_path(template_dirs, template):
     temp_dir = ""
+
     for a_dir in template_dirs:
         template_file_exists = os.path.exists(
-            os.path.join(a_dir, template.filename)
-        ) and os.path.isfile(os.path.join(a_dir, template.filename))
+            os.path.join(a_dir, template)
+        ) and os.path.isfile(os.path.join(a_dir, template))
 
         if template_file_exists:
             temp_dir = a_dir
-            break
-
-    temp_file_path = os.path.join(
-        os.getcwd(), os.path.join(temp_dir, template.filename)
-    )
-    return temp_file_path
+            temp_file_path = os.path.join(
+                os.getcwd(), os.path.join(temp_dir, template)
+            )
+            return temp_file_path
+    raise exceptions.FileNotFound
 
 
 def get_repo_name(repo_url):

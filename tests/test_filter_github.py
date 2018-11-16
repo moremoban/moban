@@ -1,5 +1,5 @@
 from nose.tools import eq_
-from moban.filters.github import github_expand
+from moban.jinja2.filters.github import github_expand
 
 
 def test_github_expand():

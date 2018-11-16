@@ -30,7 +30,7 @@ author = u'C. W.'
 # The short X.Y version
 version = u'0.3.3'
 # The full version, including alpha/beta/rc tags
-release = u'0.3.3'
+release = u'0.3.4'
 
 
 # -- General configuration ---------------------------------------------------
@@ -42,12 +42,7 @@ release = u'0.3.3'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.viewcode',
-]
+extensions = [    'sphinx.ext.autodoc',    'sphinx.ext.doctest',    'sphinx.ext.intersphinx',    'sphinx.ext.viewcode',]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -74,7 +69,7 @@ language = 'en'
 exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = None
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -161,6 +156,24 @@ texinfo_documents = [
      author, 'moban', 'One line description of project.',
      'Miscellaneous'),
 ]
+
+
+# -- Options for Epub output -------------------------------------------------
+
+# Bibliographic Dublin Core info.
+epub_title = project
+
+# The unique identifier of the text. This can be a ISBN number
+# or the project homepage.
+#
+# epub_identifier = ''
+
+# A unique identification for the text.
+#
+# epub_uid = ''
+
+# A list of files that should not be packed into the epub file.
+epub_exclude_files = ['search.html']
 
 # -- Extension configuration -------------------------------------------------
 # -- Options for intersphinx extension ---------------------------------------
