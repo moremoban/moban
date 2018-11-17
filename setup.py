@@ -28,9 +28,9 @@ URL = 'https://github.com/moremoban/moban'
 DOWNLOAD_URL = '%s/archive/0.3.3.tar.gz' % URL
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
+    'python',
     'jinja2',
     'moban',
-    'python'
 ]
 
 CLASSIFIERS = [
@@ -48,9 +48,8 @@ CLASSIFIERS = [
 INSTALL_REQUIRES = [
     'pyyaml>=3.11',
     'jinja2>=2.7.1',
-    'lml==0.0.4',
+    'lml>=0.0.7',
     'crayons',
-    'pybars3',
 ]
 SETUP_COMMANDS = {}
 
