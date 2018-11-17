@@ -44,7 +44,7 @@ class Engine(object):
         :return: a jinja2 template
 
         For example:
-            
+
         suppose your current working directory is: /User/moban-pro/ and your
         template folder list is: ['./my-template'], and the given template
         file equals to: 'templates/myfile.jj2', they as a group tells the
