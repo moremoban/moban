@@ -22,6 +22,5 @@ class EngineHandlebars(object):
 
     def apply_template(self, template, data, _):
         rendered_content = "".join(template(data))
-        rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
-        rendered_content = rendered_content.encode("utf-8")
+        rendered_content = rendered_content
         return rendered_content

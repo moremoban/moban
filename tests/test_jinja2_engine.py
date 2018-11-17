@@ -10,5 +10,5 @@ def test_handlebars_template_not_found():
     template = engine.get_template("file_tests.template")
     data = dict(test="here")
     result = engine.apply_template(template, data, None)
-    expected = "here".encode("utf-8")
+    expected = "here"
     eq_(expected, result)
