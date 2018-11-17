@@ -95,13 +95,6 @@ def test_handlebars_file_tests():
     os.unlink(output)
 
 
-@raises(exceptions.FileNotFound)
-def test_handlebars_template_not_found():
-    path = os.path.join("tests", "fixtures", "handlebars_tests")
-    engine = EngineHandlebars([path])
-    engine.find_template_file("thisisnotafile.template")
-
-
 def test_globals():
     output = "globals.txt"
     test_dict = dict(hello="world")

@@ -1,5 +1,4 @@
 import os
-from collections import namedtuple
 
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginManager
@@ -58,9 +57,6 @@ class LibraryManager(PluginManager):
     def resource_path_of(self, library_name):
         library = self.get_a_plugin(library_name)
         return library.resources_path
-
-
-Template = namedtuple("Template", ["abs_path", "template"])
 
 
 class BaseEngine(object):
