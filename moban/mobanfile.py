@@ -106,8 +106,8 @@ def handle_targets(merged_options, targets):
 
     count = 0
     for template_type in jobs_for_each_engine.keys():
-        engine_class = plugins.ENGINES.get_engine(template_type)
-        engine = engine_class(
+        engine = plugins.ENGINES.get_engine(
+            template_type,
             merged_options[constants.LABEL_TMPL_DIRS],
             merged_options[constants.LABEL_CONFIG_DIR],
         )

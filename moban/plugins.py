@@ -6,6 +6,7 @@ from lml.plugin import PluginManager
 import moban.reporter as reporter
 from moban import utils, constants, exceptions
 from moban.strategy import Strategy
+from moban.hashstore import HASH_STORE
 
 
 class PluginMixin:
@@ -58,14 +59,107 @@ class LibraryManager(PluginManager):
         return library.resources_path
 
 
+class BaseEngine(object):
+    def __init__(self, template_dirs, context_dirs, engine_cls):
+        refresh_plugins()
+        template_dirs = list(expand_template_directories(template_dirs))
+        verify_the_existence_of_directories(template_dirs)
+        context_dirs = expand_template_directory(context_dirs)
+        self.context = Context(context_dirs)
+        self.template_dirs = template_dirs
+        self.engine = engine_cls(self.template_dirs)
+        self.engine_cls = engine_cls
+        self.templated_count = 0
+        self.file_count = 0
+
+    def report(self):
+        if self.templated_count == 0:
+            reporter.report_no_action()
+        elif self.templated_count == self.file_count:
+            reporter.report_full_run(self.file_count)
+        else:
+            reporter.report_partial_run(self.templated_count, self.file_count)
+
+    def number_of_templated_files(self):
+        return self.templated_count
+
+    def render_to_file(self, template_file, data_file, output_file):
+        data = self.context.get_data(data_file)
+        template = self.engine.get_template(template_file)
+        template_abs_path = utils.get_template_path(
+            self.template_dirs, template_file
+        )
+        flag = self.apply_template(
+            template_abs_path, template, data, output_file
+        )
+        if flag:
+            reporter.report_templating(template_file, output_file)
+
+    def apply_template(self, template_abs_path, template, data, output_file):
+        rendered_content = self.engine.apply_template(
+            template, data, output_file
+        )
+        flag = HASH_STORE.is_file_changed(
+            output_file, rendered_content, template_abs_path
+        )
+        if flag:
+            utils.write_file_out(
+                output_file, rendered_content, strip=False, encode=False
+            )
+            utils.file_permissions_copy(template_abs_path, output_file)
+        return flag
+
+    def render_to_files(self, array_of_param_tuple):
+        sta = Strategy(array_of_param_tuple)
+        sta.process()
+        choice = sta.what_to_do()
+        if choice == Strategy.DATA_FIRST:
+            self._render_with_finding_data_first(sta.data_file_index)
+        else:
+            self._render_with_finding_template_first(sta.template_file_index)
+
+    def _render_with_finding_template_first(self, template_file_index):
+        for (template_file, data_output_pairs) in template_file_index.items():
+            template = self.engine.get_template(template_file)
+            template_abs_path = utils.get_template_path(
+                self.template_dirs, template_file
+            )
+            for (data_file, output) in data_output_pairs:
+                data = self.context.get_data(data_file)
+                flag = self.apply_template(
+                    template_abs_path, template, data, output
+                )
+                if flag:
+                    reporter.report_templating(template_file, output)
+                    self.templated_count += 1
+                self.file_count += 1
+
+    def _render_with_finding_data_first(self, data_file_index):
+        for (data_file, template_output_pairs) in data_file_index.items():
+            data = self.context.get_data(data_file)
+            for (template_file, output) in template_output_pairs:
+                template = self.engine.get_template(template_file)
+                template_abs_path = utils.get_template_path(
+                    self.template_dirs, template_file
+                )
+                flag = self.apply_template(
+                    template_abs_path, template, data, output
+                )
+                if flag:
+                    reporter.report_templating(template_file, output)
+                    self.templated_count += 1
+                self.file_count += 1
+
+
 class EngineFactory(PluginManager):
     def __init__(self):
         super(EngineFactory, self).__init__(
             constants.TEMPLATE_ENGINE_EXTENSION
         )
 
-    def get_engine(self, template_type):
-        return self.load_me_now(template_type)
+    def get_engine(self, template_type, template_dirs, context_dirs):
+        engine_cls = self.load_me_now(template_type)
+        return BaseEngine(template_dirs, context_dirs, engine_cls)
 
     def all_types(self):
         return list(self.registry.keys())
@@ -134,38 +228,6 @@ class Context(object):
         else:
             raise exceptions.IncorrectDataInput
         return data
-
-
-class BaseEngine(object):
-    def __init__(self, template_dirs, context_dirs):
-        refresh_plugins()
-        template_dirs = list(expand_template_directories(template_dirs))
-        verify_the_existence_of_directories(template_dirs)
-        context_dirs = expand_template_directory(context_dirs)
-        self.context = Context(context_dirs)
-        self.template_dirs = template_dirs
-        self.templated_count = 0
-        self.file_count = 0
-
-    def report(self):
-        if self.templated_count == 0:
-            reporter.report_no_action()
-        elif self.templated_count == self.file_count:
-            reporter.report_full_run(self.file_count)
-        else:
-            reporter.report_partial_run(self.templated_count, self.file_count)
-
-    def number_of_templated_files(self):
-        return self.templated_count
-
-    def render_to_files(self, array_of_param_tuple):
-        sta = Strategy(array_of_param_tuple)
-        sta.process()
-        choice = sta.what_to_do()
-        if choice == Strategy.DATA_FIRST:
-            self._render_with_finding_data_first(sta.data_file_index)
-        else:
-            self._render_with_finding_template_first(sta.template_file_index)
 
 
 def refresh_plugins():

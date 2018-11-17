@@ -1,23 +1,25 @@
-import os
-
 from jinja2 import Environment, FileSystemLoader
 from lml.plugin import PluginInfo
 
 import moban.utils as utils
-import moban.reporter as reporter
 import moban.constants as constants
 from moban import plugins
-from moban.utils import get_template_path
-from moban.hashstore import HASH_STORE
 
 
 @PluginInfo(
     constants.TEMPLATE_ENGINE_EXTENSION, tags=["jinja2", "jinja", "jj2", "j2"]
 )
-class Engine(plugins.BaseEngine):
-    def __init__(self, template_dirs, context_dirs):
-        super(Engine, self).__init__(template_dirs, context_dirs)
-        template_loader = FileSystemLoader(self.template_dirs)
+class Engine(object):
+    def __init__(self, template_dirs):
+        """
+        Contruct a jinja2 template engine
+
+        A list template directories will be given to your engine class
+
+        :param list temp_dirs: a list of template directories
+        """
+        self.template_dirs = template_dirs
+        template_loader = FileSystemLoader(template_dirs)
         self.jj2_environment = Environment(
             loader=template_loader,
             keep_trailing_newline=True,
@@ -33,67 +35,38 @@ class Engine(plugins.BaseEngine):
         for global_name, dict_obj in plugins.GLOBALS.get_all():
             self.jj2_environment.globals[global_name] = dict_obj
 
-    def render_to_file(self, template_file, data_file, output_file):
-        data = self.context.get_data(data_file)
-        template_file, template = self._get_jinja2_template(template_file)
-        self._apply_template(template_file, template, data, output_file)
-        reporter.report_templating(template_file, output_file)
+    def get_template(self, template_file):
+        """
+        :param str template_file: the template file name that appeared in moban
+                                  file. It could be a file name, or a relative
+                                  file path with reference to template
+                                  directories.
+        :return: a jinja2 template
 
-    def _render_with_finding_template_first(self, template_file_index):
-        for (template_file, data_output_pairs) in template_file_index.items():
-            template_file, template = self._get_jinja2_template(template_file)
-            for (data_file, output) in data_output_pairs:
-                data = self.context.get_data(data_file)
-                flag = self._apply_template(
-                    template_file, template, data, output
-                )
-                if flag:
-                    reporter.report_templating(template_file, output)
-                    self.templated_count += 1
-                self.file_count += 1
+        For example:
 
-    def _render_with_finding_data_first(self, data_file_index):
-        for (data_file, template_output_pairs) in data_file_index.items():
-            data = self.context.get_data(data_file)
-            for (template_file, output) in template_output_pairs:
-                template_file, template = self._get_jinja2_template(
-                    template_file
-                )
-                flag = self._apply_template(
-                    template_file, template, data, output
-                )
-                if flag:
-                    reporter.report_templating(template_file, output)
-                    self.templated_count += 1
-                self.file_count += 1
+        suppose your current working directory is: /User/moban-pro/ and your
+        template folder list is: ['./my-template'], and the given template
+        file equals to: 'templates/myfile.jj2', they as a group tells the
+        template file exists at:
+            '/User/moban-pro/my-template/templates/myfile.jj2'
+        """
+        template = self.jj2_environment.get_template(template_file)
+        return template
 
-    def _file_permissions_copy(self, template_file, output_file):
-        true_template_file = template_file
-        for a_template_dir in self.template_dirs:
-            true_template_file = os.path.join(a_template_dir, template_file)
-            if os.path.exists(true_template_file):
-                break
-        utils.file_permissions_copy(true_template_file, output_file)
+    def apply_template(self, template, data, output):
+        """
+        It is not expected this function to write content to file system.
+        Please just apply data inside the template and return utf-8 encoded
+        content.
 
-    def _apply_template(self, template_file, template, data, output):
+        :param template: a jinja2 template from :class:`.get_template`
+        :param dict data: python data dictionary
+        :param str output: output file name
+        """
         template.globals["__target__"] = output
         template.globals["__template__"] = template.name
         rendered_content = template.render(**data)
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
         rendered_content = rendered_content.encode("utf-8")
-        flag = HASH_STORE.is_file_changed(
-            output, rendered_content, template_file
-        )
-        if flag:
-            utils.write_file_out(
-                output, rendered_content, strip=False, encode=False
-            )
-            utils.file_permissions_copy(template_file, output)
-        return flag
-
-    def _get_jinja2_template(self, template_file):
-        actual_template_file = get_template_path(
-            self.template_dirs, template_file
-        )
-        template = self.jj2_environment.get_template(template_file)
-        return actual_template_file, template
+        return rendered_content
