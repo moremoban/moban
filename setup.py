@@ -28,9 +28,9 @@ URL = 'https://github.com/moremoban/moban'
 DOWNLOAD_URL = '%s/archive/0.3.3.tar.gz' % URL
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
-    'python',
     'jinja2',
     'moban',
+    'python'
 ]
 
 CLASSIFIERS = [
