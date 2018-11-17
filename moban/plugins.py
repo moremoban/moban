@@ -86,6 +86,15 @@ class BaseEngine(object):
     def number_of_templated_files(self):
         return self.templated_count
 
+    def render_to_file(self, template_file, data_file, output_file):
+        data = self.context.get_data(data_file)
+        template = self.engine.get_template(template_file)
+        self.apply_template(template, data, output_file)
+        reporter.report_templating(template_file, output_file)
+
+    def apply_template(self, template, data, output_file):
+        self.engine.apply_template(template, data, output_file)
+
     def render_to_files(self, array_of_param_tuple):
         sta = Strategy(array_of_param_tuple)
         sta.process()
@@ -95,18 +104,12 @@ class BaseEngine(object):
         else:
             self._render_with_finding_template_first(sta.template_file_index)
 
-    def render_to_file(self, template_file, data_file, output_file):
-        data = self.context.get_data(data_file)
-        template = self.engine.get_template(template_file)
-        self.engine.apply_template(template, data, output_file)
-        reporter.report_templating(template_file, output_file)
-
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
             template = self.engine.get_template(template_file)
             for (data_file, output) in data_output_pairs:
                 data = self.context.get_data(data_file)
-                self.engine.apply_template(template, data, output)
+                self.apply_template(template, data, output)
                 reporter.report_templating(template_file, output)
                 self.templated_count += 1
                 self.file_count += 1
@@ -116,7 +119,7 @@ class BaseEngine(object):
             data = self.context.get_data(data_file)
             for (template_file, output) in template_output_pairs:
                 template = self.engine.get_template(template_file)
-                self.engine.apply_template(template, data, output)
+                self.apply_template(template, data, output)
                 reporter.report_templating(template_file, output)
                 self.templated_count += 1
                 self.file_count += 1
