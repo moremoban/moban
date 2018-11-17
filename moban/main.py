@@ -24,7 +24,6 @@ def main():
     """
     program entry point
     """
-    plugins.refresh_plugins()
     parser = create_parser()
     options = vars(parser.parse_args())
     HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
@@ -147,3 +146,7 @@ def handle_command_line(options):
         engine.number_of_templated_files()
     )
     return exit_code
+
+
+def load_engine_factory_and_engines():
+    plugins.refresh_plugins()

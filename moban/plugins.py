@@ -22,6 +22,7 @@ class LibraryManager(PluginManager):
 
 class BaseEngine(object):
     def __init__(self, template_dirs, context_dirs, engine_cls):
+        make_sure_all_pkg_are_loaded()
         template_dirs = list(expand_template_directories(template_dirs))
         verify_the_existence_of_directories(template_dirs)
         context_dirs = expand_template_directory(context_dirs)
@@ -188,7 +189,7 @@ class Context(object):
         return data
 
 
-def refresh_plugins():
+def make_sure_all_pkg_are_loaded():
     scan_plugins_regex(constants.MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
 
 
