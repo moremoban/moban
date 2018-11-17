@@ -28,7 +28,7 @@ def main():
     options = vars(parser.parse_args())
     HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
     moban_file = options[constants.LABEL_MOBANFILE]
-    load_engine_factory_and_engines()
+    load_engine_factory_and_engines()  # Error: jinja2 if removed
     if moban_file is None:
         moban_file = mobanfile.find_default_moban_file()
     if moban_file:

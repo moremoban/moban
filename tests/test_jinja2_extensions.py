@@ -1,9 +1,8 @@
 import os
 
 from nose.tools import eq_
-
-from moban.jinja2.engine import Engine
 from moban.plugins import BaseEngine
+from moban.jinja2.engine import Engine
 from moban.jinja2.extensions import jinja_global
 
 
