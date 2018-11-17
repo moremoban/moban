@@ -91,15 +91,18 @@ class BaseEngine(object):
         data = self.context.get_data(data_file)
         template = self.engine.get_template(template_file)
         template_abs_path = utils.get_template_path(
-            self.template_dirs, template_file)
+            self.template_dirs, template_file
+        )
         flag = self.apply_template(
-            template_abs_path, template, data, output_file)
+            template_abs_path, template, data, output_file
+        )
         if flag:
             reporter.report_templating(template_file, output_file)
 
     def apply_template(self, template_abs_path, template, data, output_file):
         rendered_content = self.engine.apply_template(
-            template, data, output_file)
+            template, data, output_file
+        )
         flag = HASH_STORE.is_file_changed(
             output_file, rendered_content, template_abs_path
         )
@@ -123,11 +126,13 @@ class BaseEngine(object):
         for (template_file, data_output_pairs) in template_file_index.items():
             template = self.engine.get_template(template_file)
             template_abs_path = utils.get_template_path(
-                self.template_dirs, template_file)
+                self.template_dirs, template_file
+            )
             for (data_file, output) in data_output_pairs:
                 data = self.context.get_data(data_file)
                 flag = self.apply_template(
-                    template_abs_path, template, data, output)
+                    template_abs_path, template, data, output
+                )
                 if flag:
                     reporter.report_templating(template_file, output)
                     self.templated_count += 1
@@ -139,9 +144,11 @@ class BaseEngine(object):
             for (template_file, output) in template_output_pairs:
                 template = self.engine.get_template(template_file)
                 template_abs_path = utils.get_template_path(
-                    self.template_dirs, template_file)
+                    self.template_dirs, template_file
+                )
                 flag = self.apply_template(
-                    template_abs_path, template, data, output)
+                    template_abs_path, template, data, output
+                )
                 if flag:
                     reporter.report_templating(template_file, output)
                     self.templated_count += 1
