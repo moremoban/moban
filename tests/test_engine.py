@@ -11,7 +11,6 @@ from moban.plugins import (
     BaseEngine,
     expand_template_directories,
 )
-from moban.extensions import jinja_global
 from moban.jinja2.engine import Engine
 from moban.engine_handlebars import EngineHandlebars
 
@@ -92,19 +91,6 @@ def test_handlebars_file_tests():
     with open(output, "r") as output_file:
         content = output_file.read()
         eq_(content, "here")
-    os.unlink(output)
-
-
-def test_globals():
-    output = "globals.txt"
-    test_dict = dict(hello="world")
-    jinja_global("test", test_dict)
-    path = os.path.join("tests", "fixtures", "globals")
-    engine = BaseEngine([path], path, Engine)
-    engine.render_to_file("basic.template", "basic.yml", output)
-    with open(output, "r") as output_file:
-        content = output_file.read()
-        eq_(content, "world\n\ntest")
     os.unlink(output)
 
 
