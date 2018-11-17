@@ -4,8 +4,6 @@ from lml.plugin import PluginInfo
 import moban.utils as utils
 import moban.constants as constants
 from moban import plugins
-from moban.utils import get_template_path
-from moban.hashstore import HASH_STORE
 
 
 @PluginInfo(
@@ -31,24 +29,13 @@ class Engine(object):
             self.jj2_environment.globals[global_name] = dict_obj
 
     def apply_template(self, template, data, output):
-        template.template.globals["__target__"] = output
-        template.template.globals["__template__"] = template.template.name
-        rendered_content = template.template.render(**data)
+        template.globals["__target__"] = output
+        template.globals["__template__"] = template.name
+        rendered_content = template.render(**data)
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
         rendered_content = rendered_content.encode("utf-8")
-        flag = HASH_STORE.is_file_changed(
-            output, rendered_content, template.abs_path
-        )
-        if flag:
-            utils.write_file_out(
-                output, rendered_content, strip=False, encode=False
-            )
-            utils.file_permissions_copy(template.abs_path, output)
-        return flag
+        return rendered_content
 
     def get_template(self, template_file):
-        actual_template_file = get_template_path(
-            self.template_dirs, template_file
-        )
         template = self.jj2_environment.get_template(template_file)
-        return plugins.Template(actual_template_file, template)
+        return template
