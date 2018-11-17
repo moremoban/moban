@@ -8,46 +8,7 @@ from moban import utils, constants, exceptions
 from moban.strategy import Strategy
 from moban.hashstore import HASH_STORE
 
-
-class PluginMixin:
-    def get_all(self):
-        for name in self.registry.keys():
-            # only the first matching one is returned
-            the_filter = self.load_me_now(name)
-            yield (name, the_filter)
-
-
-class JinjaFilterManager(PluginManager, PluginMixin):
-    def __init__(self):
-        super(JinjaFilterManager, self).__init__(
-            constants.JINJA_FILTER_EXTENSION
-        )
-
-
-class JinjaTestManager(PluginManager, PluginMixin):
-    def __init__(self):
-        super(JinjaTestManager, self).__init__(constants.JINJA_TEST_EXTENSION)
-
-
-class JinjaGlobalsManager(PluginManager, PluginMixin):
-    def __init__(self):
-        super(JinjaGlobalsManager, self).__init__(
-            constants.JINJA_GLOBALS_EXTENSION
-        )
-
-
-FILTERS = JinjaFilterManager()
-TESTS = JinjaTestManager()
-GLOBALS = JinjaGlobalsManager()
-
-BUILTIN_EXENSIONS = [
-    "moban.jinja2.filters.repr",
-    "moban.jinja2.filters.github",
-    "moban.jinja2.filters.text",
-    "moban.jinja2.tests.files",
-    "moban.jinja2.engine",
-    "moban.engine_handlebars",
-]
+BUILTIN_EXENSIONS = ["moban.jinja2.engine", "moban.engine_handlebars"]
 
 
 class LibraryManager(PluginManager):
@@ -61,7 +22,9 @@ class LibraryManager(PluginManager):
 
 class BaseEngine(object):
     def __init__(self, template_dirs, context_dirs, engine_cls):
-        refresh_plugins()
+        # pypi-moban-pkg cannot be found if removed
+        make_sure_all_pkg_are_loaded()
+
         template_dirs = list(expand_template_directories(template_dirs))
         verify_the_existence_of_directories(template_dirs)
         context_dirs = expand_template_directory(context_dirs)
@@ -100,12 +63,10 @@ class BaseEngine(object):
             template, data, output_file
         )
         flag = HASH_STORE.is_file_changed(
-            output_file, rendered_content, template_abs_path
+            output_file, rendered_content.encode("utf-8"), template_abs_path
         )
         if flag:
-            utils.write_file_out(
-                output_file, rendered_content, strip=False, encode=False
-            )
+            utils.write_file_out(output_file, rendered_content)
             utils.file_permissions_copy(template_abs_path, output_file)
         return flag
 
@@ -230,7 +191,7 @@ class Context(object):
         return data
 
 
-def refresh_plugins():
+def make_sure_all_pkg_are_loaded():
     scan_plugins_regex(constants.MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
 
 
