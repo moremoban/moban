@@ -42,7 +42,29 @@ template engines, such as marko, haml can be plugged into moban seamless.
 In order plugin other template engines, it is to write a lml plugin. The following
 is an example starting point for any template engine.
 
-.. literalinclude:: ../tests/moban-mako/moban_mako/__init__.py
+.. code::
+
+   @PluginInfo(
+       constants.TEMPLATE_ENGINE_EXTENSION, tags=["file", "extensions", "for", "your", "template"]
+   )
+   class Engine(object):
+       def __init__(self, template_dirs):
+           """
+           A list template directories will be given to your engine class
+           """
+   
+       def get_template(self, template_file):
+           """
+           Given a relative path to your template file, please return a templatable thing that does
+           the templating function in next function below
+           """
+   
+       def apply_template(self, template, data, output):
+            """
+            Given the template object from `get_template` function, and data as python dictionary, 
+            and output as intended output file, please return "utf-8" encoded string.
+            """
+
 
 After you will have finished the engine plugin, you can either place it in `plugin_dir`
 in order to get it loaded, or make an installable python package. In the latter case,
