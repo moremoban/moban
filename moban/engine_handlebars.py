@@ -1,4 +1,4 @@
-import sys
+import codecs
 
 from lml.plugin import PluginInfo
 
@@ -13,14 +13,9 @@ class EngineHandlebars(object):
         self.template_dirs = template_dirs
 
     def get_template(self, template_file):
-        actual_template_file = self.find_template_file(template_file)
-        with open(actual_template_file, "r") as source:
-            if sys.version_info[0] < 3:
-                hbr_template = Compiler().compile(
-                    unicode(source.read())  # noqa: F821
-                )
-            else:
-                hbr_template = Compiler().compile(source.read())
+        actual_file = self.find_template_file(template_file)
+        with codecs.open(actual_file, "r", encoding='utf-8') as source:
+            hbr_template = Compiler().compile(source.read())
         return hbr_template
 
     def apply_template(self, template, data, output):
