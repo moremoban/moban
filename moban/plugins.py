@@ -8,7 +8,7 @@ from moban import utils, constants, exceptions
 from moban.strategy import Strategy
 from moban.hashstore import HASH_STORE
 
-BUILTIN_EXENSIONS = ["moban.jinja2.engine", "moban.engine_handlebars"]
+BUILTIN_EXENSIONS = ["moban.jinja2.engine"]
 
 
 class LibraryManager(PluginManager):
@@ -24,7 +24,6 @@ class BaseEngine(object):
     def __init__(self, template_dirs, context_dirs, engine_cls):
         # pypi-moban-pkg cannot be found if removed
         make_sure_all_pkg_are_loaded()
-
         template_dirs = list(expand_template_directories(template_dirs))
         verify_the_existence_of_directories(template_dirs)
         context_dirs = expand_template_directory(context_dirs)
@@ -62,11 +61,15 @@ class BaseEngine(object):
         rendered_content = self.engine.apply_template(
             template, data, output_file
         )
+        rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
+        rendered_content = rendered_content.encode("utf-8")
         flag = HASH_STORE.is_file_changed(
-            output_file, rendered_content.encode("utf-8"), template_abs_path
+            output_file, rendered_content, template_abs_path
         )
         if flag:
-            utils.write_file_out(output_file, rendered_content)
+            utils.write_file_out(
+                output_file, rendered_content, strip=False, encode=False
+            )
             utils.file_permissions_copy(template_abs_path, output_file)
         return flag
 
