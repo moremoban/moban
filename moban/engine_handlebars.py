@@ -20,7 +20,7 @@ class EngineHandlebars(object):
             hbr_template = Compiler().compile(source.read())
         return hbr_template
 
-    def apply_template(self, template, data, output):
+    def apply_template(self, template, data, _):
         rendered_content = "".join(template(data))
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
         rendered_content = rendered_content.encode("utf-8")
