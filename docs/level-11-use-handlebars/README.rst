@@ -8,14 +8,13 @@ kindly contributed moban-handlebars plugin.
 Evaluation
 --------------------------------------------------------------------------------
 
-Please go to `docs/level-11-use-handlebars` directory.
+Please go to `docs/level-11-use-handlebars` directory. You will have to::
+
+    $ pip install moban-handlebars
 
 
 Here is the `.moban.yml`, which replaces `jj2` with handlebars files in level 4::
 
-   requires:
-     - moban-handlebars
-   
    targets:
      - a.output: a.template.handlebars
      - b.output: base.hbs
