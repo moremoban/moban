@@ -9,7 +9,7 @@ releases:
   - action: Updated
     details:
     - Template engine interface has been clarified and documented
-  date: 14-11-2018
+  date: 18-11-2018
   version: 0.3.4
 - changes:
   - action: Added
