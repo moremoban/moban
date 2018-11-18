@@ -8,7 +8,6 @@
     :license: MIT License, see LICENSE for more details
 
 """
-
 import sys
 import argparse
 
@@ -16,20 +15,20 @@ import moban.reporter as reporter
 import moban.constants as constants
 import moban.mobanfile as mobanfile
 import moban.exceptions as exceptions
+from moban import plugins
 from moban.utils import merge, open_yaml
 from moban.hashstore import HASH_STORE
-from moban import plugins
 
 
 def main():
     """
     program entry point
     """
-    plugins.refresh_plugins()
     parser = create_parser()
     options = vars(parser.parse_args())
     HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
     moban_file = options[constants.LABEL_MOBANFILE]
+    load_engine_factory_and_engines()  # Error: jinja2 if removed
     if moban_file is None:
         moban_file = mobanfile.find_default_moban_file()
     if moban_file:
@@ -133,10 +132,10 @@ def handle_command_line(options):
     options = merge(options, constants.DEFAULT_OPTIONS)
     if options[constants.LABEL_TEMPLATE] is None:
         raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
-    engine_class = plugins.ENGINES.get_engine(
-        options[constants.LABEL_TEMPLATE_TYPE])
-    engine = engine_class(
-        options[constants.LABEL_TMPL_DIRS], options[constants.LABEL_CONFIG_DIR]
+    engine = plugins.ENGINES.get_engine(
+        options[constants.LABEL_TEMPLATE_TYPE],
+        options[constants.LABEL_TMPL_DIRS],
+        options[constants.LABEL_CONFIG_DIR],
     )
     engine.render_to_file(
         options[constants.LABEL_TEMPLATE],
@@ -148,3 +147,7 @@ def handle_command_line(options):
         engine.number_of_templated_files()
     )
     return exit_code
+
+
+def load_engine_factory_and_engines():
+    plugins.make_sure_all_pkg_are_loaded()

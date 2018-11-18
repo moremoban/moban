@@ -1,32 +1,139 @@
 import os
-from moban import utils
-from lml.loader import scan_plugins_regex
 
-from moban.extensions import (
-    JinjaTestManager,
-    JinjaFilterManager,
-    JinjaGlobalsManager
-)
-from moban.extensions import LibraryManager
-from moban.engine_factory import EngineFactory
-from moban.constants import MOBAN_ALL
+from lml.loader import scan_plugins_regex
+from lml.plugin import PluginManager
+
+import moban.reporter as reporter
+from moban import utils, constants, exceptions
+from moban.strategy import Strategy
+from moban.hashstore import HASH_STORE
+
+BUILTIN_EXENSIONS = ["moban.jinja2.engine"]
+
+
+class LibraryManager(PluginManager):
+    def __init__(self):
+        super(LibraryManager, self).__init__(constants.LIBRARY_EXTENSION)
+
+    def resource_path_of(self, library_name):
+        library = self.get_a_plugin(library_name)
+        return library.resources_path
+
+
+class BaseEngine(object):
+    def __init__(self, template_dirs, context_dirs, engine_cls):
+        # pypi-moban-pkg cannot be found if removed
+        make_sure_all_pkg_are_loaded()
+        template_dirs = list(expand_template_directories(template_dirs))
+        verify_the_existence_of_directories(template_dirs)
+        context_dirs = expand_template_directory(context_dirs)
+        self.context = Context(context_dirs)
+        self.template_dirs = template_dirs
+        self.engine = engine_cls(self.template_dirs)
+        self.engine_cls = engine_cls
+        self.templated_count = 0
+        self.file_count = 0
+
+    def report(self):
+        if self.templated_count == 0:
+            reporter.report_no_action()
+        elif self.templated_count == self.file_count:
+            reporter.report_full_run(self.file_count)
+        else:
+            reporter.report_partial_run(self.templated_count, self.file_count)
+
+    def number_of_templated_files(self):
+        return self.templated_count
+
+    def render_to_file(self, template_file, data_file, output_file):
+        data = self.context.get_data(data_file)
+        template = self.engine.get_template(template_file)
+        template_abs_path = utils.get_template_path(
+            self.template_dirs, template_file
+        )
+        flag = self.apply_template(
+            template_abs_path, template, data, output_file
+        )
+        if flag:
+            reporter.report_templating(template_file, output_file)
+
+    def apply_template(self, template_abs_path, template, data, output_file):
+        rendered_content = self.engine.apply_template(
+            template, data, output_file
+        )
+        rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
+        rendered_content = rendered_content.encode("utf-8")
+        flag = HASH_STORE.is_file_changed(
+            output_file, rendered_content, template_abs_path
+        )
+        if flag:
+            utils.write_file_out(
+                output_file, rendered_content, strip=False, encode=False
+            )
+            utils.file_permissions_copy(template_abs_path, output_file)
+        return flag
+
+    def render_to_files(self, array_of_param_tuple):
+        sta = Strategy(array_of_param_tuple)
+        sta.process()
+        choice = sta.what_to_do()
+        if choice == Strategy.DATA_FIRST:
+            self._render_with_finding_data_first(sta.data_file_index)
+        else:
+            self._render_with_finding_template_first(sta.template_file_index)
+
+    def _render_with_finding_template_first(self, template_file_index):
+        for (template_file, data_output_pairs) in template_file_index.items():
+            template = self.engine.get_template(template_file)
+            template_abs_path = utils.get_template_path(
+                self.template_dirs, template_file
+            )
+            for (data_file, output) in data_output_pairs:
+                data = self.context.get_data(data_file)
+                flag = self.apply_template(
+                    template_abs_path, template, data, output
+                )
+                if flag:
+                    reporter.report_templating(template_file, output)
+                    self.templated_count += 1
+                self.file_count += 1
+
+    def _render_with_finding_data_first(self, data_file_index):
+        for (data_file, template_output_pairs) in data_file_index.items():
+            data = self.context.get_data(data_file)
+            for (template_file, output) in template_output_pairs:
+                template = self.engine.get_template(template_file)
+                template_abs_path = utils.get_template_path(
+                    self.template_dirs, template_file
+                )
+                flag = self.apply_template(
+                    template_abs_path, template, data, output
+                )
+                if flag:
+                    reporter.report_templating(template_file, output)
+                    self.templated_count += 1
+                self.file_count += 1
+
+
+class EngineFactory(PluginManager):
+    def __init__(self):
+        super(EngineFactory, self).__init__(
+            constants.TEMPLATE_ENGINE_EXTENSION
+        )
+
+    def get_engine(self, template_type, template_dirs, context_dirs):
+        engine_cls = self.load_me_now(template_type)
+        return BaseEngine(template_dirs, context_dirs, engine_cls)
+
+    def all_types(self):
+        return list(self.registry.keys())
+
+    def raise_exception(self, key):
+        raise exceptions.NoThirdPartyEngine(key)
+
 
 LIBRARIES = LibraryManager()
-FILTERS = JinjaFilterManager()
-TESTS = JinjaTestManager()
-GLOBALS = JinjaGlobalsManager()
 ENGINES = EngineFactory()
-
-BUILTIN_EXENSIONS = [
-    "moban.filters.repr",
-    "moban.filters.github",
-    "moban.filters.text",
-    "moban.tests.files",
-]
-
-
-def refresh_plugins():
-    scan_plugins_regex(MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
 
 
 def expand_template_directories(dirs):
@@ -65,3 +172,47 @@ def expand_template_directory(directory):
         # local template path
         translated_directory = os.path.abspath(directory)
     return translated_directory
+
+
+class Context(object):
+    def __init__(self, context_dirs):
+        verify_the_existence_of_directories(context_dirs)
+        self.context_dirs = context_dirs
+        self.__cached_environ_variables = dict(
+            (key, os.environ[key]) for key in os.environ
+        )
+
+    def get_data(self, file_name):
+        file_extension = os.path.splitext(file_name)[1]
+        if file_extension == ".json":
+            data = utils.open_json(self.context_dirs, file_name)
+        elif file_extension in [".yml", ".yaml"]:
+            data = utils.open_yaml(self.context_dirs, file_name)
+            utils.merge(data, self.__cached_environ_variables)
+        else:
+            raise exceptions.IncorrectDataInput
+        return data
+
+
+def make_sure_all_pkg_are_loaded():
+    scan_plugins_regex(constants.MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
+
+
+def verify_the_existence_of_directories(dirs):
+    if not isinstance(dirs, list):
+        dirs = [dirs]
+
+    for directory in dirs:
+        if os.path.exists(directory):
+            continue
+        should_I_ignore = (
+            constants.DEFAULT_CONFIGURATION_DIRNAME in directory
+            or constants.DEFAULT_TEMPLATE_DIRNAME in directory
+        )
+        if should_I_ignore:
+            # ignore
+            pass
+        else:
+            raise exceptions.DirectoryNotFound(
+                constants.MESSAGE_DIR_NOT_EXIST % os.path.abspath(directory)
+            )

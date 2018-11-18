@@ -1,5 +1,4 @@
 pyyaml>=3.11
 jinja2>=2.7.1
-lml==0.0.4
+lml>=0.0.7
 crayons
-pybars3

@@ -5,12 +5,13 @@ from lml.plugin import PluginInfo
 import moban.exceptions as exceptions
 from mock import patch
 from nose.tools import eq_, raises
-from moban.engine import Engine
-from moban.extensions import jinja_global
-from moban.engine_factory import Context
-from moban.plugins import expand_template_directories
-from moban.plugins import ENGINES
-from moban.engine_handlebars import EngineHandlebars
+from moban.plugins import (
+    ENGINES,
+    Context,
+    BaseEngine,
+    expand_template_directories,
+)
+from moban.jinja2.engine import Engine
 
 
 @PluginInfo("library", tags=["testmobans"])
@@ -36,33 +37,28 @@ def test_expand_repo_dir(_, __):
 
 
 def test_default_template_type():
-    engine_class = ENGINES.get_engine("jj2")
-    assert engine_class == Engine
-
-
-def test_handlebars_template_type():
-    engine_class = ENGINES.get_engine("hbs")
-    assert engine_class == EngineHandlebars
+    engine = ENGINES.get_engine("jj2", [], "")
+    assert engine.engine_cls == Engine
 
 
 def test_default_mako_type():  # fake mako
-    engine_class = ENGINES.get_engine("mako")
-    assert engine_class.__name__ == "MakoEngine"
+    engine = ENGINES.get_engine("mako", [], "")
+    assert engine.engine_cls.__name__ == "MakoEngine"
 
 
 @raises(exceptions.NoThirdPartyEngine)
 def test_unknown_template_type():
-    ENGINES.get_engine("unknown_template_type")
+    ENGINES.get_engine("unknown_template_type", [], "")
 
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_tmpl_directries():
-    Engine("abc", "tests")
+    BaseEngine("abc", "tests", Engine)
 
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_config_directries():
-    Engine("tests", "abc")
+    BaseEngine("tests", "abc", Engine)
 
 
 @raises(exceptions.DirectoryNotFound)
@@ -73,7 +69,7 @@ def test_non_existent_ctx_directries():
 def test_file_tests():
     output = "test.txt"
     path = os.path.join("tests", "fixtures", "jinja_tests")
-    engine = Engine([path], path)
+    engine = BaseEngine([path], path, Engine)
     engine.render_to_file("file_tests.template", "file_tests.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
@@ -81,32 +77,23 @@ def test_file_tests():
     os.unlink(output)
 
 
-def test_handlebars_file_tests():
+def test_global_template_variables():
     output = "test.txt"
-    path = os.path.join("tests", "fixtures", "handlebars_tests")
-    engine = EngineHandlebars([path], path)
-    engine.render_to_file("file_tests.template", "file_tests.json", output)
+    path = os.path.join("tests", "fixtures", "globals")
+    engine = BaseEngine([path], path, Engine)
+    engine.render_to_file("variables.template", "variables.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
-        eq_(content, "here")
+        eq_(content, "template: variables.template\ntarget: test.txt\nhere")
     os.unlink(output)
 
 
-@raises(exceptions.FileNotFound)
-def test_handlebars_template_not_found():
-    path = os.path.join("tests", "fixtures", "handlebars_tests")
-    engine = EngineHandlebars([path], path)
-    engine.find_template_file("thisisnotafile.template")
-
-
-def test_globals():
-    output = "globals.txt"
-    test_dict = dict(hello="world")
-    jinja_global("test", test_dict)
+def test_nested_global_template_variables():
+    output = "test.txt"
     path = os.path.join("tests", "fixtures", "globals")
-    engine = Engine([path], path)
-    engine.render_to_file("basic.template", "basic.yml", output)
+    engine = BaseEngine([path], path, Engine)
+    engine.render_to_file("nested.template", "variables.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
-        eq_(content, "world\n\ntest")
+        eq_(content, "template: nested.template\ntarget: test.txt\nhere")
     os.unlink(output)

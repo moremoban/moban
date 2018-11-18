@@ -4,6 +4,16 @@ releases:
 - changes:
   - action: Added
     details:
+    - "global variables to store the target and template file names in the jinja2 engine"
+    - "moban-handlebars is tested to work well with this version and above"
+  - action: Updated
+    details:
+    - Template engine interface has been clarified and documented
+  date: 14-11-2018
+  version: 0.3.4
+- changes:
+  - action: Added
+    details:
     - "alternative and expanded syntax for requires, so as to accomendate github submodule recursive"
   date: 05-11-2018
   version: 0.3.3

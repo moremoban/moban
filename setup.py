@@ -13,7 +13,7 @@ PY26 = PY2 and sys.version_info[1] < 7
 
 NAME = 'moban'
 AUTHOR = 'C. W.'
-VERSION = '0.3.3'
+VERSION = '0.3.4'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -28,9 +28,9 @@ URL = 'https://github.com/moremoban/moban'
 DOWNLOAD_URL = '%s/archive/0.3.3.tar.gz' % URL
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
+    'python',
     'jinja2',
     'moban',
-    'python'
 ]
 
 CLASSIFIERS = [
@@ -48,7 +48,7 @@ CLASSIFIERS = [
 INSTALL_REQUIRES = [
     'pyyaml>=3.11',
     'jinja2>=2.7.1',
-    'lml==0.0.4',
+    'lml>=0.0.7',
     'crayons',
 ]
 SETUP_COMMANDS = {}

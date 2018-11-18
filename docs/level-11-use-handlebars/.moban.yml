@@ -1,0 +1,3 @@
+targets:
+  - a.output: a.template.handlebars
+  - b.output: base.hbs

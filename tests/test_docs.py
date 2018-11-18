@@ -100,6 +100,11 @@ Hello, you are not in level 7
         folder = "level-10-moban-dependency-as-git-repo"
         self._raw_moban(["moban"], folder, expected, "test.txt")
 
+    def test_level_11(self):
+        expected = "handlebars does not support inheritance\n"
+        folder = "level-11-use-handlebars"
+        self._raw_moban(["moban"], folder, expected, "a.output")
+
     def test_misc_1(self):
         expected = "test file\n"
 

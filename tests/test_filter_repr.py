@@ -1,5 +1,5 @@
 from nose.tools import eq_
-from moban.filters.repr import repr as repr_function
+from moban.jinja2.filters.repr import repr as repr_function
 
 
 def test_string():

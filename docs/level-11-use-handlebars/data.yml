@@ -1,0 +1,3 @@
+overrides: data.base.yaml
+hello: world
+no-inheritance: handlebars does not support inheritance
