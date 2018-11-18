@@ -1,7 +1,7 @@
 Level 11: use handlebars
 ================================================================================
 
-moban is extensible via lml. Charlie Liu through google code in 2018 has
+moban is extensible via lml. Charlie Liu through Google Code-in 2018 has
 kindly contributed moban-handlebars plugin.
 
 
@@ -11,7 +11,7 @@ Evaluation
 Please go to `docs/level-11-use-handlebars` directory.
 
 
-Here is the `.moban.yml`, whihc replaces the command in level 3::
+Here is the `.moban.yml`, which replaces `jj2` with handlebars files in level 4::
 
    requires:
      - moban-handlebars

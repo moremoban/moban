@@ -12,7 +12,7 @@ Evaluation
 Please go to `docs/level-4-single-command` directory.
 
 
-Here is the `.moban.yml`, whihc replaces the command in level 3::
+Here is the `.moban.yml`, which replaces the command in level 3::
 
     targets:
       - a.output: a.template
