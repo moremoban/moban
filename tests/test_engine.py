@@ -12,7 +12,6 @@ from moban.plugins import (
     expand_template_directories,
 )
 from moban.jinja2.engine import Engine
-from moban.engine_handlebars import EngineHandlebars
 
 
 @PluginInfo("library", tags=["testmobans"])
@@ -40,11 +39,6 @@ def test_expand_repo_dir(_, __):
 def test_default_template_type():
     engine = ENGINES.get_engine("jj2", [], "")
     assert engine.engine_cls == Engine
-
-
-def test_handlebars_template_type():
-    engine = ENGINES.get_engine("hbs", [], "")
-    assert engine.engine_cls == EngineHandlebars
 
 
 def test_default_mako_type():  # fake mako
@@ -80,17 +74,6 @@ def test_file_tests():
     with open(output, "r") as output_file:
         content = output_file.read()
         eq_(content, "yes\nhere")
-    os.unlink(output)
-
-
-def test_handlebars_file_tests():
-    output = "test.txt"
-    path = os.path.join("tests", "fixtures", "handlebars_tests")
-    engine = BaseEngine([path], path, EngineHandlebars)
-    engine.render_to_file("file_tests.template", "file_tests.json", output)
-    with open(output, "r") as output_file:
-        content = output_file.read()
-        eq_(content, "here")
     os.unlink(output)
 
 

@@ -25,6 +25,7 @@ examples folder.
    level-8-pass-a-folder-full-of-templates/README.rst
    level-9-moban-dependency-as-pypi-package/README.rst
    level-10-moban-dependency-as-git-repo/README.rst
+   level-11-use-handlebars/README.rst
 
 In pratice, the following use cases were found interesting to go along with.
 

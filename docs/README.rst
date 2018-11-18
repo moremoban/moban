@@ -13,6 +13,7 @@ This section covers the use cases for moban. Please check them out individually.
 #. `Pass a folder full of templates`_
 #. `Use pypi package as a moban dependency`_
 #. `Use git repository as a moban dependency`_
+#. `Use handlebars template with moban`_
 
 .. _Jinja2 command line: level-1-jinja2-cli
 .. _Template inheritance: level-2-template-inheritance
@@ -24,3 +25,4 @@ This section covers the use cases for moban. Please check them out individually.
 .. _Pass a folder full of templates: level-8-pass-a-folder-full-of-templates
 .. _Use pypi package as a moban dependency: level-9-moban-dependency-as-pypi-package
 .. _Use git repository as a moban dependency: level-10-moban-dependency-as-git-repo
+.. _Use handlebars template with moban: level-11-use-handlebars

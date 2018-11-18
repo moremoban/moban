@@ -9,6 +9,12 @@ Added
 
 #. global variables to store the target and template file names in the jinja2
    engine
+#. moban-handlebars is tested to work well with this version and above
+
+Updated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. Template engine interface has been clarified and documented
 
 0.3.3 - 05-11-2018
 --------------------------------------------------------------------------------
