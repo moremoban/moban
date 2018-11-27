@@ -2,6 +2,12 @@ name: moban
 organisation: moremoban
 releases:
 - changes:
+  - action: Updated
+    details:
+    - "`#137`: missing contributors.rst file"
+  date: 28-11-2018
+  version: 0.3.4.1
+- changes:
   - action: Added
     details:
     - "global variables to store the target and template file names in the jinja2 engine"
