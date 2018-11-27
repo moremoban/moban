@@ -13,7 +13,6 @@ targets:
   - .travis.yml: travis.yml
   - requirements.txt: requirements.txt.jj2
   - .gitignore: moban_gitignore.jj2
-  - MANIFEST.in: MANIFEST.in.jj2
   - output: CHANGELOG.rst
     configuration: changelog.yml
     template: CHANGELOG.rst.jj2
