@@ -5,7 +5,7 @@ import json
 import stat
 import errno
 
-import yaml
+from ruamel.yaml import YAML
 import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions
@@ -37,6 +37,7 @@ def open_yaml(base_dir, file_name):
     """
     the_yaml_file = search_file(base_dir, file_name)
     with open(the_yaml_file, "r") as data_yaml:
+        yaml = YAML(typ='safe')
         data = yaml.load(data_yaml)
         if data is not None:
             parent_data = None
