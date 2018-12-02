@@ -4,7 +4,7 @@ from shutil import copyfile
 
 import moban.exceptions as exceptions
 from mock import patch
-from nose.tools import raises
+from nose.tools import raises, assert_raises
 
 
 class TestException:
@@ -29,6 +29,41 @@ class TestException:
         import moban.main as main
 
         main.handle_moban_file(self.moban_file, {})
+
+    def test_check_none(self):
+        import moban.main as main
+        from ruamel.yaml import YAML
+
+        yaml = YAML()
+
+        invalid_data = [
+            """targets:
+              - output:""",
+            """configuration:
+              template_dir:
+                - cool-templates
+                -""",
+        ]
+
+        valid_data = [
+            """targets:
+              - output: template""",
+            """configuration:
+              template_dir:
+                - cool-templates
+                - custom-templates""",
+        ]
+
+        for data in (yaml.load(d) for d in invalid_data):
+            assert_raises(
+                exceptions.MobanfileGrammarException,
+                main.check_none,
+                data,
+                ".moban.yaml",
+            )
+
+        for data in (yaml.load(d) for d in valid_data):
+            main.check_none(data, ".moban.yaml")
 
     @raises(exceptions.MobanfileGrammarException)
     def test_version_1_is_recognized(self):

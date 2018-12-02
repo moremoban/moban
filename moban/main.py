@@ -113,6 +113,7 @@ def handle_moban_file(moban_file, options):
         raise exceptions.MobanfileGrammarException(
             constants.ERROR_NO_TARGETS % moban_file
         )
+    check_none(moban_file_configurations, moban_file)
     version = moban_file_configurations.get(
         constants.MOBAN_VERSION, constants.DEFAULT_MOBAN_VERSION
     )
@@ -123,6 +124,28 @@ def handle_moban_file(moban_file, options):
             constants.MESSAGE_FILE_VERSION_NOT_SUPPORTED % version
         )
     HASH_STORE.save_hashes()
+
+
+def check_none(data, moban_file):
+    """
+    check whether the yaml data has empty value such as:
+    """
+    if isinstance(data, dict):
+        for k, v in data.items():
+            if check_none(v, moban_file) is None:
+                loc = data.lc.key(k)
+                raise exceptions.MobanfileGrammarException(
+                    constants.ERROR_MALFORMED_YAML
+                    % (moban_file, loc[0] + 1)  # line number starts from 0
+                )
+    elif isinstance(data, list):
+        for i, x in enumerate(data):
+            if check_none(x, moban_file) is None:
+                loc = data.lc.item(i)
+                raise exceptions.MobanfileGrammarException(
+                    constants.ERROR_MALFORMED_YAML % (moban_file, loc[0] + 1)
+                )
+    return data
 
 
 def handle_command_line(options):
