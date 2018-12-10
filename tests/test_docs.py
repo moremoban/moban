@@ -2,8 +2,9 @@ import os
 import sys
 
 from mock import patch
-from moban.main import main
 from nose.tools import eq_
+
+from moban.main import main
 
 
 class TestTutorial:
@@ -88,7 +89,8 @@ Hello, you are not in level 7
     def test_level_8(self):
         expected = "it is a test\n"
         folder = "level-8-pass-a-folder-full-of-templates"
-        self._raw_moban(["moban"], folder, expected, "templated-folder/my")
+        check_file = os.path.join("templated-folder", "my")
+        self._raw_moban(["moban"], folder, expected, check_file)
 
     def test_level_9(self):
         expected = "pypi-mobans: moban dependency as pypi package"

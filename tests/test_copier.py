@@ -3,6 +3,7 @@ import shutil
 
 from mock import patch
 from nose.tools import eq_
+
 from moban.copier import Copier
 from moban.mobanfile import handle_copy
 

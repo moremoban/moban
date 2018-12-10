@@ -1,10 +1,10 @@
 import os
 
+from mock import patch
 from lml.plugin import PluginInfo
+from nose.tools import eq_, raises
 
 import moban.exceptions as exceptions
-from mock import patch
-from nose.tools import eq_, raises
 from moban.plugins import (
     ENGINES,
     Context,
@@ -12,6 +12,8 @@ from moban.plugins import (
     expand_template_directories,
 )
 from moban.jinja2.engine import Engine
+
+USER_HOME = os.path.join("user", "home", ".moban", "repos")
 
 
 @PluginInfo("library", tags=["testmobans"])
@@ -27,12 +29,12 @@ def test_expand_pypi_dir():
         assert os.path.exists(directory)
 
 
-@patch("moban.utils.get_moban_home", return_value="/user/home/.moban/repos")
+@patch("moban.utils.get_moban_home", return_value=USER_HOME)
 @patch("os.path.exists", return_value=True)
 def test_expand_repo_dir(_, __):
     dirs = list(expand_template_directories("git_repo:template"))
 
-    expected = ["/user/home/.moban/repos/git_repo/template"]
+    expected = [os.path.join(USER_HOME, "git_repo", "template")]
     eq_(expected, dirs)
 
 
