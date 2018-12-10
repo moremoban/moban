@@ -5,10 +5,11 @@ import json
 import stat
 import errno
 
+from ruamel.yaml import YAML
+
 import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions
-from ruamel.yaml import YAML
 
 
 def merge(left, right):
