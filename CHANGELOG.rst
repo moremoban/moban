@@ -9,6 +9,8 @@ Updated
 
 #. `#37 <https://github.com/moremoban/moban/issues/37>`_: switch from pyyaml to
    ruamel.yaml
+#. moban will report line number where the value is empty and the name of
+   mobanfile
 
 0.3.4.1 - 28-11-2018
 --------------------------------------------------------------------------------
