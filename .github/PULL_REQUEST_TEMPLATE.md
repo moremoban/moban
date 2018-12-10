@@ -8,3 +8,4 @@ Before raising the PR, here is a check list:
    5.1) can someone else understand your changes without your explanation?
 6) are you pround of your code changes?
    6.1) do you have the feeling of achievement?
+7) please add your name and github link to contributors.rst in alphabetical order.
