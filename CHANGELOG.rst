@@ -1,16 +1,15 @@
 Change log
 ================================================================================
 
-0.3.5 - 28-11-2018
+0.3.5 - 10-12-2018
 --------------------------------------------------------------------------------
 
 Updated
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. `#37 <https://github.com/moremoban/moban/issues/37>`_: switch from pyyaml to
-   ruamel.yaml
-#. moban will report line number where the value is empty and the name of
-   mobanfile
+#. `#37 <https://github.com/moremoban/moban/issues/37>`_: moban will report line
+   number where the value is empty and the name of mobanfile. Switch from pyyaml
+   to ruamel.yaml.
 
 0.3.4.1 - 28-11-2018
 --------------------------------------------------------------------------------
