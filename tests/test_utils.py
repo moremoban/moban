@@ -100,7 +100,7 @@ def test_expand_dir():
     results = list(expand_directories(file_list, template_dirs))
     expected = [
         (
-            os.path.join("template-tests", "a.jj2"),
+            "template-tests/a.jj2",
             "abc",
             os.path.join("abc", "a"),
         )
