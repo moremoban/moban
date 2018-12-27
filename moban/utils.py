@@ -103,8 +103,8 @@ def expand_directories(file_list, template_dirs):
                 break
         if os.path.isdir(true_template_file):
             for file_name in os.listdir(true_template_file):
-                template_file = '/'.join([template_file, file_name])
-                template_file = template_file.replace('\\', '/')
+                template_file = "/".join([template_file, file_name])
+                template_file = template_file.replace("\\", "/")
                 base_output_name, _ = os.path.splitext(file_name)
                 yield (
                     (
