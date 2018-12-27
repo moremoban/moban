@@ -5,7 +5,7 @@ releases:
   - action: Updated
     details:
     - "`#143`: moban shall report permission error and continue the rest of the copying task."
-  date: unreleased
+  date: 27-12-2018
   version: 0.3.6
 - changes:
   - action: Updated
