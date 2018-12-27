@@ -9,8 +9,9 @@ Updated
 
 #. `#143 <https://github.com/moremoban/moban/issues/143>`_: moban shall report
    permission error and continue the rest of the copying task.
-#. Since 0.3.6, moban is tested on windows and macos too, using azure build
-   pipelines. It is already tested extensively on travis-ci on linux os.
+#. `#122 <https://github.com/moremoban/moban/issues/122>`_: Since 0.3.6, moban
+   is tested on windows and macos too, using azure build pipelines. It is
+   already tested extensively on travis-ci on linux os.
 
 0.3.5 - 10-12-2018
 --------------------------------------------------------------------------------
