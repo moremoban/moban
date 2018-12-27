@@ -1,9 +1,14 @@
 import os
+import sys
 import shutil
 
 import moban.utils as utils
 import moban.reporter as reporter
 from moban.hashstore import HASH_STORE
+
+PY2 = sys.version_info[0] == 2
+if PY2:
+    PermissionError = IOError
 
 
 class Copier(object):
