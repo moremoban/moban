@@ -1,9 +1,14 @@
 import os
+import sys
 import shutil
 
 import moban.utils as utils
 import moban.reporter as reporter
 from moban.hashstore import HASH_STORE
+
+PY2 = sys.version_info[0] == 2
+if PY2:
+    PermissionError = IOError
 
 
 class Copier(object):
@@ -88,8 +93,11 @@ class Copier(object):
         if dest_folder:
             utils.mkdir_p(dest_folder)
         reporter.report_copying(src_path, dest)
-        shutil.copy(src_path, dest)
-        self._count = self._count + 1
+        try:
+            shutil.copy(src_path, dest)
+            self._count = self._count + 1
+        except PermissionError:
+            reporter.report_error_message("No permission to write %s" % dest)
 
     def _increment_file_count(self):
         self._file_count += 1

@@ -4,8 +4,9 @@ import stat
 from shutil import rmtree
 
 from mock import patch
-from nose.tools import eq_, raises
 from nose import SkipTest
+from nose.tools import eq_, raises
+
 from moban.utils import (
     mkdir_p,
     get_repo_name,
@@ -27,8 +28,8 @@ def create_file(test_file, permission):
 
 
 def test_file_permission_copy():
-    if sys.platform == 'win32':
-        raise SkipTest('No actual chmod on windows')
+    if sys.platform == "win32":
+        raise SkipTest("No actual chmod on windows")
     test_source = "test_file_permission_copy1"
     test_dest = "test_file_permission_copy2"
     create_file(test_source, 0o046)
@@ -48,8 +49,8 @@ def test_file_permissions_file_not_found():
 
 
 def test_file_permission_copy_symlink():
-    if sys.platform == 'win32':
-        raise SkipTest('No symlink on windows')
+    if sys.platform == "win32":
+        raise SkipTest("No symlink on windows")
     test_source = "test_file_permission_copy1"
     test_dest = "test_file_permission_copy2"
     test_symlink = "test_file_permission_symlink"
@@ -98,13 +99,7 @@ def test_expand_dir():
     file_list = [("template-tests", "abc", "abc")]
     template_dirs = [os.path.join("tests", "fixtures")]
     results = list(expand_directories(file_list, template_dirs))
-    expected = [
-        (
-            "template-tests/a.jj2",
-            "abc",
-            os.path.join("abc", "a"),
-        )
-    ]
+    expected = [("template-tests/a.jj2", "abc", os.path.join("abc", "a"))]
     eq_(results, expected)
 
 

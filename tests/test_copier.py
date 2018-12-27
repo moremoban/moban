@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 
 from mock import patch
@@ -6,6 +7,10 @@ from nose.tools import eq_
 
 from moban.copier import Copier
 from moban.mobanfile import handle_copy
+
+PY2 = sys.version_info[0] == 2
+if PY2:
+    PermissionError = IOError
 
 
 class TestCopier:
@@ -30,6 +35,16 @@ class TestCopier:
         copier.copy_files(file_list)
         reporter.assert_called_with(
             "copier-test-not-found.csv cannot be found"
+        )
+
+    @patch("moban.reporter.report_error_message")
+    def test_no_permission_to_write(self, reporter):
+        copier = Copier([os.path.join("tests", "fixtures")])
+        file_list = [{"/tmp/test_cannot_write": "copier-test01.csv"}]
+        self.fake_copy.side_effect = PermissionError
+        copier.copy_files(file_list)
+        reporter.assert_called_with(
+            "No permission to write /tmp/test_cannot_write"
         )
 
     def test_number_of_files(self):
