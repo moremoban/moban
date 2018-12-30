@@ -2,9 +2,10 @@ import os
 import sys
 from shutil import copyfile
 
-import moban.exceptions as exceptions
 from mock import patch
 from nose.tools import raises, assert_raises
+
+import moban.exceptions as exceptions
 
 
 class TestException:

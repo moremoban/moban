@@ -1,6 +1,7 @@
 import os
 
 from mock import patch
+
 from moban.plugins import BaseEngine
 from moban.jinja2.engine import Engine
 

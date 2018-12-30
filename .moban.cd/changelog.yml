@@ -4,6 +4,13 @@ releases:
 - changes:
   - action: Updated
     details:
+    - "`#143`: moban shall report permission error and continue the rest of the copying task."
+    - "`#122`: Since 0.3.6, moban is tested on windows and macos too, using azure build pipelines. It is already tested extensively on travis-ci on linux os."
+  date: 30-12-2018
+  version: 0.3.6
+- changes:
+  - action: Updated
+    details:
     - "`#37`: moban will report line number where the value is empty and the name of mobanfile. Switch from pyyaml to ruamel.yaml."
   date: 10-12-2018
   version: 0.3.5

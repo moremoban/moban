@@ -1,4 +1,7 @@
 import os
+import sys
+
+from nose import SkipTest
 
 from moban.hashstore import HashStore
 
@@ -13,7 +16,8 @@ class TestHashStore:
         )
 
     def tearDown(self):
-        os.unlink(".moban.hashes")
+        if os.path.exists(".moban.hashes"):
+            os.unlink(".moban.hashes")
 
     def test_simple_use_case(self):
         hs = HashStore()
@@ -76,6 +80,8 @@ class TestHashStore:
         Save as above, but this time,
         the generated file had file permision change
         """
+        if sys.platform == "win32":
+            raise SkipTest("No actual chmod on windows")
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
         if flag:

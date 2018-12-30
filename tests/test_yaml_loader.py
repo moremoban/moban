@@ -1,6 +1,7 @@
 import os
 
 from nose.tools import eq_, raises
+
 from moban.utils import open_yaml
 
 

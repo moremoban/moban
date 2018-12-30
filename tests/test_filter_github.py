@@ -1,4 +1,5 @@
 from nose.tools import eq_
+
 from moban.jinja2.filters.github import github_expand
 
 
