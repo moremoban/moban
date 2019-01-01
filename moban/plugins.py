@@ -46,7 +46,15 @@ class BaseEngine(object):
         return self.templated_count
 
     def render_to_file(self, template_file, data_file, output_file):
-        data = self.context.get_data(data_file)
+        try:
+            data = self.context.get_data(data_file)
+        except Exception as exception:
+            # If data file doesn't exist:
+            # 1. Alert the user of their (potential) mistake
+            # 2. Attempt to use environment vars as data
+            reporter.report_error_message(str(exception))
+            reporter.report_using_env_vars()
+            data = os.environ
         template = self.engine.get_template(template_file)
         template_abs_path = utils.get_template_path(
             self.template_dirs, template_file
@@ -89,7 +97,15 @@ class BaseEngine(object):
                 self.template_dirs, template_file
             )
             for (data_file, output) in data_output_pairs:
-                data = self.context.get_data(data_file)
+                try:
+                    data = self.context.get_data(data_file)
+                except Exception as exception:
+                    # If data file doesn't exist:
+                    # 1. Alert the user of their (potential) mistake
+                    # 2. Attempt to use environment vars as data
+                    reporter.report_error_message(exception)
+                    reporter.report_using_env_vars()
+                    data = os.environ
                 flag = self.apply_template(
                     template_abs_path, template, data, output
                 )
@@ -100,7 +116,15 @@ class BaseEngine(object):
 
     def _render_with_finding_data_first(self, data_file_index):
         for (data_file, template_output_pairs) in data_file_index.items():
-            data = self.context.get_data(data_file)
+            try:
+                data = self.context.get_data(data_file)
+            except Exception as exception:
+                # If data file doesn't exist:
+                # 1. Alert the user of their (potential) mistake
+                # 2. Attempt to use environment vars as data
+                reporter.report_error_message(exception)
+                reporter.report_using_env_vars()
+                data = os.environ
             for (template_file, output) in template_output_pairs:
                 template = self.engine.get_template(template_file)
                 template_abs_path = utils.get_template_path(

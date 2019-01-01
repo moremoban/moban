@@ -95,7 +95,7 @@ class TestOptions:
         os.unlink(self.config_file)
 
 
-@raises(IOError)
+@raises(Exception)
 def test_missing_configuration():
     test_args = ["moban", "-t", "a.jj2"]
     with patch.object(sys, "argv", test_args):
@@ -146,8 +146,6 @@ class TestNoOptions:
             eq_(
                 call_args,
                 [
-                    ("README.rst.jj2", "data.yaml", "README.rst"),
-                    ("setup.py.jj2", "data.yaml", "setup.py"),
                     ("abc.jj2", "data.yaml", "xyz.output"),
                 ],
             )
@@ -171,14 +169,11 @@ class TestNoOptions:
             eq_(
                 call_args,
                 [
-                    ("README.rst.jj2", "new.yml", "README.rst"),
-                    ("setup.py.jj2", "new.yml", "setup.py"),
                     ("abc.jj2", "new.yml", "xyz.output"),
                 ],
             )
 
     @raises(Exception)
-    @patch("moban.plugins.BaseEngine.render_to_files")
     def test_single_command_without_output_option(self, fake_template_doer):
         test_args = ["moban", "-t", "abc.jj2"]
         with patch.object(sys, "argv", test_args):
@@ -263,6 +258,44 @@ class TestCustomMobanFile:
         self.patcher1.stop()
         os.unlink(self.config_file)
         os.unlink(self.data_file)
+
+
+class TestTemplateOption:
+    def setUp(self):
+        self.config_file = "custom-moban.txt"
+        copyfile(
+            os.path.join("tests", "fixtures", ".moban.yml"), self.config_file
+        )
+        self.patcher1 = patch(
+            "moban.plugins.verify_the_existence_of_directories"
+        )
+        self.patcher1.start()
+
+    @patch("moban.plugins.BaseEngine.render_to_file")
+    def test_template_option_override_moban_file(self, fake_template_doer):
+        test_args = ["moban", "-t", "setup.py.jj2"]
+        with patch.object(sys, "argv", test_args):
+            from moban.main import main
+
+            main()
+            fake_template_doer.assert_called_with(
+                "setup.py.jj2", "data.yml", "moban.output"
+            )
+
+    @patch("moban.plugins.BaseEngine.render_to_file")
+    def test_template_option_not_in_moban_file(self, fake_template_doer):
+        test_args = ["moban", "-t", "foo.jj2"]
+        with patch.object(sys, "argv", test_args):
+            from moban.main import main
+
+            main()
+            fake_template_doer.assert_called_with(
+                "foo.jj2", "data.yml", "moban.output"
+            )
+
+    def tearDown(self):
+        self.patcher1.stop()
+        os.unlink(self.config_file)
 
 
 @patch("moban.plugins.verify_the_existence_of_directories")
