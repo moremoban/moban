@@ -12,6 +12,8 @@ MESSAGE_COPY_REPORT = "Copied {0} out of {1} files."
 MESSAGE_COPIED_ALL = "Copied {0} files."
 MESSAGE_PULLING_REPO = "Updating {0}..."
 MESSAGE_CLONING_REPO = "Cloning {0}..."
+MESSAGE_USING_ENV_VARS = "Attempting to use environment vars as data..."
+MESSAGE_TEMPLATE_NOT_IN_MOBAN_FILE = "{0} is not defined in your moban file!"
 
 
 def report_templating(source_file, destination_file):
@@ -87,6 +89,15 @@ def report_git_pull(repo):
 def report_git_clone(repo):
     colored_repo = crayons.green(repo, bold=True)
     print(MESSAGE_CLONING_REPO.format(colored_repo))
+
+
+def report_using_env_vars():
+    print(crayons.yellow(MESSAGE_USING_ENV_VARS, bold=True))
+
+
+def report_template_not_in_moban_file(template):
+    message = MESSAGE_TEMPLATE_NOT_IN_MOBAN_FILE.format(template)
+    print(crayons.yellow(message, bold=True))
 
 
 def _format_single(message, count):

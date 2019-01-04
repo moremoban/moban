@@ -2,7 +2,8 @@ Level 1 Jinja2 on command line
 ================================================================================
 
 `moban` reads data in yaml format, renders a template file in jinja2 format and
-outputs it to `moban.output`. By default, it looks for `data.yml` as its data file
+outputs it to `moban.output`. By default, it looks for `data.yml` as its data file,
+but it will fallback to environment variables if a data file cannot be found
 
 Evaluation
 --------------------------------------------------------------------------------
