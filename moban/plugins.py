@@ -46,15 +46,7 @@ class BaseEngine(object):
         return self.templated_count
 
     def render_to_file(self, template_file, data_file, output_file):
-        try:
-            data = self.context.get_data(data_file)
-        except Exception as exception:
-            # If data file doesn't exist:
-            # 1. Alert the user of their (potential) mistake
-            # 2. Attempt to use environment vars as data
-            reporter.report_error_message(str(exception))
-            reporter.report_using_env_vars()
-            data = os.environ
+        data = self.context.get_data(data_file)
         template = self.engine.get_template(template_file)
         template_abs_path = utils.get_template_path(
             self.template_dirs, template_file
@@ -97,15 +89,7 @@ class BaseEngine(object):
                 self.template_dirs, template_file
             )
             for (data_file, output) in data_output_pairs:
-                try:
-                    data = self.context.get_data(data_file)
-                except Exception as exception:
-                    # If data file doesn't exist:
-                    # 1. Alert the user of their (potential) mistake
-                    # 2. Attempt to use environment vars as data
-                    reporter.report_error_message(exception)
-                    reporter.report_using_env_vars()
-                    data = os.environ
+                data = self.context.get_data(data_file)
                 flag = self.apply_template(
                     template_abs_path, template, data, output
                 )
@@ -116,15 +100,7 @@ class BaseEngine(object):
 
     def _render_with_finding_data_first(self, data_file_index):
         for (data_file, template_output_pairs) in data_file_index.items():
-            try:
-                data = self.context.get_data(data_file)
-            except Exception as exception:
-                # If data file doesn't exist:
-                # 1. Alert the user of their (potential) mistake
-                # 2. Attempt to use environment vars as data
-                reporter.report_error_message(exception)
-                reporter.report_using_env_vars()
-                data = os.environ
+            data = self.context.get_data(data_file)
             for (template_file, output) in template_output_pairs:
                 template = self.engine.get_template(template_file)
                 template_abs_path = utils.get_template_path(
@@ -207,15 +183,24 @@ class Context(object):
         )
 
     def get_data(self, file_name):
-        file_extension = os.path.splitext(file_name)[1]
-        if file_extension == ".json":
-            data = utils.open_json(self.context_dirs, file_name)
-        elif file_extension in [".yml", ".yaml"]:
-            data = utils.open_yaml(self.context_dirs, file_name)
-            utils.merge(data, self.__cached_environ_variables)
-        else:
-            raise exceptions.IncorrectDataInput
-        return data
+        try:
+            file_extension = os.path.splitext(file_name)[1]
+            if file_extension == ".json":
+                data = utils.open_json(self.context_dirs, file_name)
+            elif file_extension in [".yml", ".yaml"]:
+                data = utils.open_yaml(self.context_dirs, file_name)
+                utils.merge(data, self.__cached_environ_variables)
+            else:
+                raise exceptions.IncorrectDataInput
+            return data
+        except Exception as exception:
+            # If data file doesn't exist:
+            # 1. Alert the user of their (potential) mistake
+            # 2. Attempt to use environment vars as data
+            reporter.report_error_message(str(exception))
+            reporter.report_using_env_vars()
+            data = os.environ
+            return data
 
 
 def make_sure_all_pkg_are_loaded():
