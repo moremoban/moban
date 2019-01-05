@@ -1,7 +1,7 @@
 Change log
 ================================================================================
 
-0.3.7 - 3-1-2019
+0.3.7 - 6-1-2019
 --------------------------------------------------------------------------------
 
 Updated
@@ -9,6 +9,9 @@ Updated
 
 #. `#146 <https://github.com/moremoban/moban/issues/146>`_: added a low-setup
    usage mode via environment variables to moban
+#. `#148 <https://github.com/moremoban/moban/issues/148>`_: include test related
+   files in the package for package validation when distributing via linux
+   system, i.e. OpenSuse
 
 0.3.6 - 30-12-2018
 --------------------------------------------------------------------------------
