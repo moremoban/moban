@@ -9,6 +9,7 @@ from nose.tools import eq_, raises
 
 from moban.utils import (
     mkdir_p,
+    open_json,
     get_repo_name,
     write_file_out,
     file_permissions,
@@ -169,3 +170,9 @@ def test_get_repo_name():
     actual = [get_repo_name(repo) for repo in repos]
     expected = ["repo", "repo"]
     eq_(expected, actual)
+
+
+def test_open_json():
+    content = open_json(os.path.join("tests", "fixtures"), "child.json")
+    expected = {"key": "hello world", "pass": "ox"}
+    eq_(expected, content)

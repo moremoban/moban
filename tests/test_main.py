@@ -108,6 +108,20 @@ class TestException:
         with patch.object(sys, "argv", ["moban"]):
             main()
 
+    @raises(SystemExit)
+    @patch("os.path.exists")
+    @patch("moban.main.handle_moban_file")
+    @patch("moban.reporter.report_error_message")
+    def test_double_underscore_main(
+        self, fake_reporter, fake_moban_file, fake_file
+    ):
+        fake_file.return_value = True
+        fake_moban_file.side_effect = exceptions.DirectoryNotFound
+        from moban.__main__ import main
+
+        with patch.object(sys, "argv", ["moban"]):
+            main()
+
 
 class TestExitCodes:
     def setUp(self):
