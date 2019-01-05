@@ -120,7 +120,10 @@ Hello, you are not in level 7
     def _raw_moban(self, args, folder, expected, output):
         os.chdir(os.path.join("docs", folder))
         with patch.object(sys, "argv", args):
-            main()
+            try:
+                main()
+            except SystemExit as e:
+                eq_("1", str(e))
             _verify_content(output, expected)
         os.unlink(output)
 

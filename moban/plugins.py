@@ -46,6 +46,7 @@ class BaseEngine(object):
         return self.templated_count
 
     def render_to_file(self, template_file, data_file, output_file):
+        self.file_count = 1
         data = self.context.get_data(data_file)
         template = self.engine.get_template(template_file)
         template_abs_path = utils.get_template_path(
@@ -56,6 +57,7 @@ class BaseEngine(object):
         )
         if flag:
             reporter.report_templating(template_file, output_file)
+            self.templated_count += 1
 
     def apply_template(self, template_abs_path, template, data, output_file):
         rendered_content = self.engine.apply_template(
