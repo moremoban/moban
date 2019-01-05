@@ -143,12 +143,7 @@ class TestNoOptions:
 
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            eq_(
-                call_args,
-                [
-                    ("abc.jj2", "data.yaml", "xyz.output"),
-                ],
-            )
+            eq_(call_args, [("abc.jj2", "data.yaml", "xyz.output")])
 
     @patch("moban.plugins.BaseEngine.render_to_files")
     def test_single_command_with_options(self, fake_template_doer):
@@ -166,12 +161,7 @@ class TestNoOptions:
 
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            eq_(
-                call_args,
-                [
-                    ("abc.jj2", "new.yml", "xyz.output"),
-                ],
-            )
+            eq_(call_args, [("abc.jj2", "new.yml", "xyz.output")])
 
     @raises(Exception)
     def test_single_command_without_output_option(self, fake_template_doer):
