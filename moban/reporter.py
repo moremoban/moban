@@ -49,6 +49,14 @@ def report_error_message(message):
     print(crayons.white("Error: ", bold=True) + crayons.red(message))
 
 
+def report_warning_message(message):
+    print(crayons.white("Warning: ", bold=True) + crayons.yellow(message))
+
+
+def report_info_message(message):
+    print(crayons.white("info: ") + crayons.green(message))
+
+
 def report_up_to_date():
     print(crayons.green(MESSAGE_UP_TO_DATE, bold=True))
 
@@ -92,12 +100,12 @@ def report_git_clone(repo):
 
 
 def report_using_env_vars():
-    print(crayons.yellow(MESSAGE_USING_ENV_VARS, bold=True))
+    report_warning_message(MESSAGE_USING_ENV_VARS)
 
 
 def report_template_not_in_moban_file(template):
     message = MESSAGE_TEMPLATE_NOT_IN_MOBAN_FILE.format(template)
-    print(crayons.yellow(message, bold=True))
+    report_warning_message(message)
 
 
 def _format_single(message, count):

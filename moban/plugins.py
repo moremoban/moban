@@ -197,7 +197,7 @@ class Context(object):
             # If data file doesn't exist:
             # 1. Alert the user of their (potential) mistake
             # 2. Attempt to use environment vars as data
-            reporter.report_error_message(str(exception))
+            reporter.report_info_message(str(exception))
             reporter.report_using_env_vars()
             data = os.environ
             return data
