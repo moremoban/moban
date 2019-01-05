@@ -123,7 +123,7 @@ Hello, you are not in level 7
             try:
                 main()
             except SystemExit as e:
-                eq_('1', str(e))
+                eq_("1", str(e))
             _verify_content(output, expected)
         os.unlink(output)
 
