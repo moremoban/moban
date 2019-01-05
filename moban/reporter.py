@@ -54,7 +54,7 @@ def report_warning_message(message):
 
 
 def report_info_message(message):
-    print(crayons.white("info: ") + crayons.green(message))
+    print(crayons.white("Info: ") + crayons.green(message))
 
 
 def report_up_to_date():
