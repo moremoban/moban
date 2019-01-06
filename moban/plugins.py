@@ -53,7 +53,7 @@ class BaseEngine(object):
             template_abs_path = utils.get_template_path(
                 self.template_dirs, template_file
             )
-        except exceptions.TemplateFileMissing:
+        except exceptions.FileNotFound:
             template = self.engine.get_template_from_string(template_file)
             template_abs_path = "string template"
 

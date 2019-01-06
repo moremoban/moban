@@ -94,6 +94,13 @@ def create_parser():
     parser.add_argument(
         "-m", "--%s" % constants.LABEL_MOBANFILE, help="custom moban file"
     )
+    parser.add_argument(
+        constants.POSITIONAL_LABEL_TEMPLATE,
+        metavar="template",
+        type=str,
+        nargs="?",
+        help="string templates",
+    )
     return parser
 
 
@@ -153,8 +160,14 @@ def handle_command_line(options):
     act upon command options
     """
     options = merge(options, constants.DEFAULT_OPTIONS)
+    print(options)
     if options[constants.LABEL_TEMPLATE] is None:
-        raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
+        if options[constants.POSITIONAL_LABEL_TEMPLATE] is None:
+            raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
+        else:
+            options[constants.LABEL_TEMPLATE] = options[
+                constants.POSITIONAL_LABEL_TEMPLATE
+            ]
     engine = plugins.ENGINES.get_engine(
         options[constants.LABEL_TEMPLATE_TYPE],
         options[constants.LABEL_TMPL_DIRS],
