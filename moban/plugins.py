@@ -191,18 +191,17 @@ class Context(object):
                 data = utils.open_json(self.context_dirs, file_name)
             elif file_extension in [".yml", ".yaml"]:
                 data = utils.open_yaml(self.context_dirs, file_name)
-                utils.merge(data, self.__cached_environ_variables)
             else:
                 raise exceptions.IncorrectDataInput
+            utils.merge(data, self.__cached_environ_variables)
             return data
-        except Exception as exception:
+        except (IOError, exceptions.IncorrectDataInput) as exception:
             # If data file doesn't exist:
             # 1. Alert the user of their (potential) mistake
             # 2. Attempt to use environment vars as data
-            reporter.report_info_message(str(exception))
+            reporter.report_warning_message(str(exception))
             reporter.report_using_env_vars()
-            data = os.environ
-            return data
+            return self.__cached_environ_variables
 
 
 def make_sure_all_pkg_are_loaded():
