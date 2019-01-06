@@ -48,10 +48,15 @@ class BaseEngine(object):
     def render_to_file(self, template_file, data_file, output_file):
         self.file_count = 1
         data = self.context.get_data(data_file)
-        template = self.engine.get_template(template_file)
-        template_abs_path = utils.get_template_path(
-            self.template_dirs, template_file
-        )
+        try:
+            template = self.engine.get_template(template_file)
+            template_abs_path = utils.get_template_path(
+                self.template_dirs, template_file
+            )
+        except exceptions.TemplateFileMissing:
+            template = self.engine.get_template_from_string(template_file)
+            template_abs_path = "string template"
+
         flag = self.apply_template(
             template_abs_path, template, data, output_file
         )
@@ -65,15 +70,21 @@ class BaseEngine(object):
         )
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
         rendered_content = rendered_content.encode("utf-8")
-        flag = HASH_STORE.is_file_changed(
-            output_file, rendered_content, template_abs_path
-        )
-        if flag:
+        try:
+            flag = HASH_STORE.is_file_changed(
+                output_file, rendered_content, template_abs_path
+            )
+            if flag:
+                utils.write_file_out(
+                    output_file, rendered_content, strip=False, encode=False
+                )
+                utils.file_permissions_copy(template_abs_path, output_file)
+            return flag
+        except exceptions.FileNotFound:
             utils.write_file_out(
                 output_file, rendered_content, strip=False, encode=False
             )
-            utils.file_permissions_copy(template_abs_path, output_file)
-        return flag
+            return True
 
     def render_to_files(self, array_of_param_tuple):
         sta = Strategy(array_of_param_tuple)
