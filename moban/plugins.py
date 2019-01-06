@@ -199,10 +199,13 @@ class Context(object):
             # If data file doesn't exist:
             # 1. Alert the user of their (potential) mistake
             # 2. Attempt to use environment vars as data
-            reporter.report_info_message(str(exception))
+            reporter.report_warning_message(str(exception))
             reporter.report_using_env_vars()
             return self.__cached_environ_variables
-        except exceptions.IncorrectDataInput:
+        except exceptions.IncorrectDataInput as exception2:
+            # If data file is not in the right format
+            # do the same as above
+            reporter.report_warning_message(str(exception2))
             reporter.report_using_env_vars()
             return self.__cached_environ_variables
 
