@@ -36,6 +36,22 @@ def test_error_message():
     eq_(fake_stdout.getvalue(), "Error: something wrong\n")
 
 
+def test_info_message():
+    patcher = patch("sys.stdout", new_callable=StringIO)
+    fake_stdout = patcher.start()
+    reporter.report_info_message("for your information")
+    patcher.stop()
+    eq_(fake_stdout.getvalue(), "Info: for your information\n")
+
+
+def test_warning_message():
+    patcher = patch("sys.stdout", new_callable=StringIO)
+    fake_stdout = patcher.start()
+    reporter.report_warning_message("Maybe you wanna know")
+    patcher.stop()
+    eq_(fake_stdout.getvalue(), "Warning: Maybe you wanna know\n")
+
+
 def test_report_templating():
     patcher = patch("sys.stdout", new_callable=StringIO)
     fake_stdout = patcher.start()
@@ -56,3 +72,14 @@ def test_format_single():
     message = "1 files"
     ret = reporter._format_single(message, 1)
     eq_(ret, "1 file")
+
+
+def test_report_template_not_in_moban_file():
+    patcher = patch("sys.stdout", new_callable=StringIO)
+    fake_stdout = patcher.start()
+    reporter.report_template_not_in_moban_file("test.jj2")
+    patcher.stop()
+    eq_(
+        fake_stdout.getvalue(),
+        "Warning: test.jj2 is not defined in your moban file!\n",
+    )

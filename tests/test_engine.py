@@ -99,3 +99,17 @@ def test_nested_global_template_variables():
         content = output_file.read()
         eq_(content, "template: nested.template\ntarget: test.txt\nhere")
     os.unlink(output)
+
+
+def test_environ_variables_as_data():
+    test_var = "TEST_ENVIRONMENT_VARIABLE"
+    test_value = "foo"
+    os.environ[test_var] = test_value
+    output = "test.txt"
+    path = os.path.join("tests", "fixtures", "environ_vars_as_data")
+    engine = BaseEngine([path], path, Engine)
+    engine.render_to_file("test.template", "this_does_not_exist.yml", output)
+    with open(output, "r") as output_file:
+        content = output_file.read()
+        eq_(content, "foo")
+    os.unlink(output)

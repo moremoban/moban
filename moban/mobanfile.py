@@ -37,7 +37,23 @@ def find_default_moban_file():
 
 def handle_moban_file_v1(moban_file_configurations, command_line_options):
     merged_options = None
-    target = extract_target(command_line_options)
+
+    targets = moban_file_configurations.get(constants.LABEL_TARGETS)
+    try:
+        target = extract_target(command_line_options)
+    except Exception as exception:
+        if targets:
+            template = command_line_options.get(constants.LABEL_TEMPLATE)
+            for t in targets:
+                found_template = template in t.values()
+                if found_template:
+                    target = [dict(t)]
+            if not found_template:
+                # Warn user if template not defined under targets in moban file
+                reporter.report_template_not_in_moban_file(template)
+        else:
+            raise exception
+
     if constants.LABEL_CONFIG in moban_file_configurations:
         merged_options = merge(
             command_line_options,
@@ -52,12 +68,14 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if requires:
         handle_requires(requires)
 
-    targets = moban_file_configurations.get(constants.LABEL_TARGETS)
     if targets:
+        # If template specified via CLI flag `-t:
+        # 1. Only update the specified template
+        # 2. Do not copy
         if target:
-            # if command line option exists, append its template to targets
-            # issue 30
-            targets += target
+            targets = target
+            if constants.LABEL_COPY in moban_file_configurations:
+                del moban_file_configurations[constants.LABEL_COPY]
         number_of_templated_files = handle_targets(merged_options, targets)
     else:
         number_of_templated_files = 0

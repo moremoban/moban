@@ -165,6 +165,7 @@ def handle_command_line(options):
         options[constants.LABEL_CONFIG],
         options[constants.LABEL_OUTPUT],
     )
+    engine.report()
     HASH_STORE.save_hashes()
     exit_code = reporter.convert_to_shell_exit_code(
         engine.number_of_templated_files()

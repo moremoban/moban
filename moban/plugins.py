@@ -46,6 +46,7 @@ class BaseEngine(object):
         return self.templated_count
 
     def render_to_file(self, template_file, data_file, output_file):
+        self.file_count = 1
         data = self.context.get_data(data_file)
         template = self.engine.get_template(template_file)
         template_abs_path = utils.get_template_path(
@@ -56,6 +57,7 @@ class BaseEngine(object):
         )
         if flag:
             reporter.report_templating(template_file, output_file)
+            self.templated_count += 1
 
     def apply_template(self, template_abs_path, template, data, output_file):
         rendered_content = self.engine.apply_template(
@@ -183,15 +185,23 @@ class Context(object):
         )
 
     def get_data(self, file_name):
-        file_extension = os.path.splitext(file_name)[1]
-        if file_extension == ".json":
-            data = utils.open_json(self.context_dirs, file_name)
-        elif file_extension in [".yml", ".yaml"]:
-            data = utils.open_yaml(self.context_dirs, file_name)
+        try:
+            file_extension = os.path.splitext(file_name)[1]
+            if file_extension == ".json":
+                data = utils.open_json(self.context_dirs, file_name)
+            elif file_extension in [".yml", ".yaml"]:
+                data = utils.open_yaml(self.context_dirs, file_name)
+            else:
+                raise exceptions.IncorrectDataInput
             utils.merge(data, self.__cached_environ_variables)
-        else:
-            raise exceptions.IncorrectDataInput
-        return data
+            return data
+        except (IOError, exceptions.IncorrectDataInput) as exception:
+            # If data file doesn't exist:
+            # 1. Alert the user of their (potential) mistake
+            # 2. Attempt to use environment vars as data
+            reporter.report_warning_message(str(exception))
+            reporter.report_using_env_vars()
+            return self.__cached_environ_variables
 
 
 def make_sure_all_pkg_are_loaded():

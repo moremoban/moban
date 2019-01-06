@@ -91,11 +91,13 @@ Usage
      -cd CONFIGURATION_DIR, --configuration_dir CONFIGURATION_DIR
                            the directory for configuration file lookup
      -c CONFIGURATION, --configuration CONFIGURATION
-                           the dictionary file
+                           the dictionary file. if not present, moban
+                           will try to use environment vars as data
      -td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]
                            the directories for template file lookup
      -t TEMPLATE, --template TEMPLATE
-                           the template file
+                           the template file. this overrides any targets
+                           defined in a custom moban file
      -o OUTPUT, --output OUTPUT
                            the output file
      --template_type TEMPLATE_TYPE
