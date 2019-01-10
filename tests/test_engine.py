@@ -43,9 +43,15 @@ def test_default_template_type():
     assert engine.engine_cls == Engine
 
 
-def test_default_mako_type():  # fake mako
-    engine = ENGINES.get_engine("mako", [], "")
-    assert engine.engine_cls.__name__ == "MakoEngine"
+class FakeEngine:
+    def __init__(self, template_dirs):
+        pass
+
+
+@patch('moban.plugins.PluginManager.load_me_now', return_value=FakeEngine)
+def test_default_mako_type(_):  # fake mako
+    engine = ENGINES.get_engine("fake", [], "")
+    assert engine.engine_cls.__name__ == "FakeEngine"
 
 
 @raises(exceptions.NoThirdPartyEngine)
