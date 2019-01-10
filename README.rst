@@ -52,7 +52,8 @@ Quick start
 
 .. code-block:: bash
 
-    $ HELLO="world" moban "{{HELLO}}"
+    $ export HELLO="world"
+    $ moban "{{HELLO}}"
     Warning: Both data.yml and /.../.moban.cd/data.yml does not exist
     Warning: Attempting to use environment vars as data...
     Templating {{HELLO}}... to moban.output
@@ -60,6 +61,12 @@ Quick start
     $ cat moban.output 
     world
 
+Or simply
+.. code-block:: bash
+
+    $ HELLO="world" moban "{{HELLO}}"
+
+   
 A bit formal example:
 
 .. code-block:: bash
@@ -78,6 +85,8 @@ and my.template as::
 moban.output will contain::
 
     world
+
+Please note that data.yml will take precedence over environment variables.
 
 `the tutorial`_ has more use cases.
 
