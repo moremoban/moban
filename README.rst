@@ -87,15 +87,19 @@ moban.output will contain::
 Usage
 ================================================================================
 
-::
+code-block:: bash
 
 
    usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
                 [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-t TEMPLATE] [-o OUTPUT]
                 [-f] [-m MOBANFILE]
-   
+                [template]
+
    Yet another jinja2 cli command for static text generation
    
+   positional arguments:
+     template              string templates
+
    optional arguments:
      -h, --help            show this help message and exit
      -cd CONFIGURATION_DIR, --configuration_dir CONFIGURATION_DIR
