@@ -160,24 +160,26 @@ def handle_command_line(options):
     act upon command options
     """
     options = merge(options, constants.DEFAULT_OPTIONS)
-    print(options)
-    if options[constants.LABEL_TEMPLATE] is None:
-        if options[constants.POSITIONAL_LABEL_TEMPLATE] is None:
-            raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
-        else:
-            options[constants.LABEL_TEMPLATE] = options[
-                constants.POSITIONAL_LABEL_TEMPLATE
-            ]
     engine = plugins.ENGINES.get_engine(
         options[constants.LABEL_TEMPLATE_TYPE],
         options[constants.LABEL_TMPL_DIRS],
         options[constants.LABEL_CONFIG_DIR],
     )
-    engine.render_to_file(
-        options[constants.LABEL_TEMPLATE],
-        options[constants.LABEL_CONFIG],
-        options[constants.LABEL_OUTPUT],
-    )
+    if options[constants.LABEL_TEMPLATE] is None:
+        if options[constants.POSITIONAL_LABEL_TEMPLATE] is None:
+            raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
+        else:
+            engine.render_string_to_file(
+                options[constants.POSITIONAL_LABEL_TEMPLATE],
+                options[constants.LABEL_CONFIG],
+                options[constants.LABEL_OUTPUT],
+            )
+    else:
+        engine.render_to_file(
+            options[constants.LABEL_TEMPLATE],
+            options[constants.LABEL_CONFIG],
+            options[constants.LABEL_OUTPUT],
+        )
     engine.report()
     HASH_STORE.save_hashes()
     exit_code = reporter.convert_to_shell_exit_code(

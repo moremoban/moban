@@ -48,7 +48,7 @@ class FakeEngine:
         pass
 
 
-@patch('moban.plugins.PluginManager.load_me_now', return_value=FakeEngine)
+@patch("moban.plugins.PluginManager.load_me_now", return_value=FakeEngine)
 def test_default_mako_type(_):  # fake mako
     engine = ENGINES.get_engine("fake", [], "")
     assert engine.engine_cls.__name__ == "FakeEngine"
@@ -118,4 +118,15 @@ def test_environ_variables_as_data():
     with open(output, "r") as output_file:
         content = output_file.read()
         eq_(content, "foo")
+    os.unlink(output)
+
+
+def test_string_template():
+    output = "test.txt"
+    path = os.path.join("tests", "fixtures")
+    engine = BaseEngine([path], path, Engine)
+    engine.render_string_to_file("{{simple}}", "simple.yaml", output)
+    with open(output, "r") as output_file:
+        content = output_file.read()
+        eq_(content, "yaml")
     os.unlink(output)

@@ -48,20 +48,30 @@ class BaseEngine(object):
     def render_to_file(self, template_file, data_file, output_file):
         self.file_count = 1
         data = self.context.get_data(data_file)
-        try:
-            template = self.engine.get_template(template_file)
-            template_abs_path = utils.get_template_path(
-                self.template_dirs, template_file
-            )
-        except exceptions.FileNotFound:
-            template = self.engine.get_template_from_string(template_file)
-            template_abs_path = "string template"
+        template = self.engine.get_template(template_file)
+        template_abs_path = utils.get_template_path(
+            self.template_dirs, template_file
+        )
 
         flag = self.apply_template(
             template_abs_path, template, data, output_file
         )
         if flag:
             reporter.report_templating(template_file, output_file)
+            self.templated_count += 1
+
+    def render_string_to_file(
+        self, template_in_string, data_file, output_file
+    ):
+        self.file_count = 1
+        template = self.engine.get_template_from_string(template_in_string)
+        template_abs_path = template_in_string[:10] + "..."
+        data = self.context.get_data(data_file)
+        flag = self.apply_template(
+            template_abs_path, template, data, output_file
+        )
+        if flag:
+            reporter.report_templating(template_abs_path, output_file)
             self.templated_count += 1
 
     def apply_template(self, template_abs_path, template, data, output_file):
