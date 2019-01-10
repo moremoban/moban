@@ -4,6 +4,12 @@ releases:
 - changes:
   - action: Updated
     details:
+    - "`#154`: introduce first ever positional argument for string base template."
+  date: 11-1-2019
+  version: 0.3.8
+- changes:
+  - action: Updated
+    details:
     - "`#146`: added a low-setup usage mode via environment variables to moban"
     - "`#148`: include test related files in the package for package validation when distributing via linux system, i.e. OpenSuse"
   date: 6-1-2019
