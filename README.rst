@@ -50,7 +50,17 @@ or clone it and install it:
 Quick start
 ================================================================================
 
-Here is a simple example:
+.. code-block:: bash
+
+    $ HELLO="world" moban "{{HELLO}}"
+    Warning: Both data.yml and /.../.moban.cd/data.yml does not exist
+    Warning: Attempting to use environment vars as data...
+    Templating {{HELLO}}... to moban.output
+    Templated 1 file.
+    $ cat moban.output 
+    world
+
+A bit formal example:
 
 .. code-block:: bash
 
