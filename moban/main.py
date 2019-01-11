@@ -34,23 +34,30 @@ def main():
     if moban_file:
         try:
             count = handle_moban_file(moban_file, options)
-            if count:
-                sys.exit(count)
+            moban_exit(options[constants.LABEL_EXIT_CODE], count)
         except (
             exceptions.DirectoryNotFound,
             exceptions.NoThirdPartyEngine,
             exceptions.MobanfileGrammarException,
         ) as e:
             reporter.report_error_message(str(e))
-            sys.exit(constants.ERROR)
+            moban_exit(options[constants.LABEL_EXIT_CODE], constants.ERROR)
     else:
         try:
             count = handle_command_line(options)
-            if count:
-                sys.exit(count)
+            moban_exit(options[constants.LABEL_EXIT_CODE], count)
         except exceptions.NoTemplate as e:
             reporter.report_error_message(str(e))
-            sys.exit(constants.ERROR)
+            moban_exit(options[constants.LABEL_EXIT_CODE], constants.ERROR)
+
+
+def moban_exit(exit_code_toggle_flag, exit_code):
+    if exit_code_toggle_flag:
+        if exit_code:
+            sys.exit(exit_code)
+    else:
+        if exit_code == constants.ERROR:
+            sys.exit(1)
 
 
 def create_parser():
@@ -90,6 +97,13 @@ def create_parser():
         dest=constants.LABEL_FORCE,
         default=False,
         help="force moban to template all files despite of .moban.hashes",
+    )
+    parser.add_argument(
+        "--%s" % constants.LABEL_EXIT_CODE,
+        action="store_true",
+        dest=constants.LABEL_EXIT_CODE,
+        default=False,
+        help="tell moban to change exit code",
     )
     parser.add_argument(
         "-m", "--%s" % constants.LABEL_MOBANFILE, help="custom moban file"
