@@ -97,7 +97,7 @@ Please note that data.yml will take precedence over environment variables.
 Usage
 ================================================================================
 
-code-block:: bash
+.. code-block:: bash
 
 
    usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
