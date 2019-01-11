@@ -5,6 +5,7 @@ releases:
   - action: Updated
     details:
     - "`#154`: introduce first ever positional argument for string base template."
+    - "`#141`: disable file permissions copy feature and not to check file permission changes on windows."
   date: 11-1-2019
   version: 0.3.8
 - changes:

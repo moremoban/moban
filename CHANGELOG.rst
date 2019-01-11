@@ -9,6 +9,8 @@ Updated
 
 #. `#154 <https://github.com/moremoban/moban/issues/154>`_: introduce first ever
    positional argument for string base template.
+#. `#141 <https://github.com/moremoban/moban/issues/141>`_: disable file
+   permissions copy feature and not to check file permission changes on windows.
 
 0.3.7 - 6-1-2019
 --------------------------------------------------------------------------------
