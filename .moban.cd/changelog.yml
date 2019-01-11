@@ -5,6 +5,7 @@ releases:
   - action: Updated
     details:
     - "`#154`: introduce first ever positional argument for string base template."
+    - "`#157`: the exit code behavior changed. for backward compactibility please use --exit-code. Otherwise, moban will not tell if there is any changes."
   date: 11-1-2019
   version: 0.3.8
 - changes:

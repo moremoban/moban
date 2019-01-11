@@ -128,12 +128,19 @@ Usage
                            the template type, default is jinja2
      -f                    force moban to template all files despite of
                            .moban.hashes
+     --exit-code           tell moban to change exit code                      
      -m MOBANFILE, --mobanfile MOBANFILE
                            custom moban file
    
 
-exit codes
+Exit codes
 --------------------------------------------------------------------------------
+By default:
+
+- 0 : no changes
+- 1 : error occured
+
+With `--exit-code`:
 
 - 0 : no changes
 - 1 : has changes
