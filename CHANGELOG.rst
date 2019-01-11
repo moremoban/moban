@@ -1,16 +1,16 @@
 Change log
 ================================================================================
 
-0.3.8 - 11-1-2019
+0.3.8 - 12-1-2019
 --------------------------------------------------------------------------------
 
 Updated
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. `#154 <https://github.com/moremoban/moban/issues/154>`_: introduce first ever
-   positional argument for string base template.
 #. `#141 <https://github.com/moremoban/moban/issues/141>`_: disable file
    permissions copy feature and not to check file permission changes on windows.
+#. `#154 <https://github.com/moremoban/moban/issues/154>`_: introduce first ever
+   positional argument for string base template.
 #. `#157 <https://github.com/moremoban/moban/issues/157>`_: the exit code
    behavior changed. for backward compactibility please use --exit-code.
    Otherwise, moban will not tell if there is any changes.
