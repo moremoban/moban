@@ -31,6 +31,7 @@ LABEL_OVERRIDES = "overrides"
 LABEL_MOBANFILE = "mobanfile"
 LABEL_FORCE = "force"
 LABEL_REQUIRES = "requires"
+LABEL_EXIT_CODE = "exit-code"
 
 DEFAULT_CONFIGURATION_DIRNAME = ".moban.cd"
 DEFAULT_TEMPLATE_DIRNAME = ".moban.td"

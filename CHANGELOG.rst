@@ -11,6 +11,9 @@ Updated
    positional argument for string base template.
 #. `#141 <https://github.com/moremoban/moban/issues/141>`_: disable file
    permissions copy feature and not to check file permission changes on windows.
+#. `#157 <https://github.com/moremoban/moban/issues/157>`_: the exit code
+   behavior changed. for backward compactibility please use --exit-code.
+   Otherwise, moban will not tell if there is any changes.
 
 0.3.7 - 6-1-2019
 --------------------------------------------------------------------------------
