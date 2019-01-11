@@ -82,6 +82,18 @@ class TestOptions:
                 "a.jj2", "data.yml", "moban.output"
             )
 
+    @patch("moban.plugins.BaseEngine.render_string_to_file")
+    def test_string_template(self, fake_template_doer):
+        string_template = "{{HELLO}}"
+        test_args = ["moban", string_template]
+        with patch.object(sys, "argv", test_args):
+            from moban.main import main
+
+            main()
+            fake_template_doer.assert_called_with(
+                string_template, "data.yml", "moban.output"
+            )
+
     @raises(SystemExit)
     def test_no_argments(self):
         test_args = ["moban"]

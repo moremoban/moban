@@ -52,11 +52,26 @@ class BaseEngine(object):
         template_abs_path = utils.get_template_path(
             self.template_dirs, template_file
         )
+
         flag = self.apply_template(
             template_abs_path, template, data, output_file
         )
         if flag:
             reporter.report_templating(template_file, output_file)
+            self.templated_count += 1
+
+    def render_string_to_file(
+        self, template_in_string, data_file, output_file
+    ):
+        self.file_count = 1
+        template = self.engine.get_template_from_string(template_in_string)
+        template_abs_path = template_in_string[:10] + "..."
+        data = self.context.get_data(data_file)
+        flag = self.apply_template(
+            template_abs_path, template, data, output_file
+        )
+        if flag:
+            reporter.report_templating(template_abs_path, output_file)
             self.templated_count += 1
 
     def apply_template(self, template_abs_path, template, data, output_file):
@@ -65,15 +80,21 @@ class BaseEngine(object):
         )
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
         rendered_content = rendered_content.encode("utf-8")
-        flag = HASH_STORE.is_file_changed(
-            output_file, rendered_content, template_abs_path
-        )
-        if flag:
+        try:
+            flag = HASH_STORE.is_file_changed(
+                output_file, rendered_content, template_abs_path
+            )
+            if flag:
+                utils.write_file_out(
+                    output_file, rendered_content, strip=False, encode=False
+                )
+                utils.file_permissions_copy(template_abs_path, output_file)
+            return flag
+        except exceptions.FileNotFound:
             utils.write_file_out(
                 output_file, rendered_content, strip=False, encode=False
             )
-            utils.file_permissions_copy(template_abs_path, output_file)
-        return flag
+            return True
 
     def render_to_files(self, array_of_param_tuple):
         sta = Strategy(array_of_param_tuple)

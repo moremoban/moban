@@ -1,8 +1,9 @@
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Template, Environment, FileSystemLoader
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
+from jinja2.exceptions import TemplateNotFound
 
-import moban.constants as constants
+from moban import constants, exceptions
 
 JINJA2_LIBRARIES = "^moban_jinja2_.+$"
 JINJA2_EXENSIONS = [
@@ -91,8 +92,14 @@ class Engine(object):
         template file exists at:
             '/User/moban-pro/my-template/templates/myfile.jj2'
         """
-        template = self.jj2_environment.get_template(template_file)
+        try:
+            template = self.jj2_environment.get_template(template_file)
+        except TemplateNotFound:
+            raise exceptions.FileNotFound("%s does not exist" % template_file)
         return template
+
+    def get_template_from_string(self, string):
+        return Template(string)
 
     def apply_template(self, template, data, output):
         """
