@@ -62,6 +62,7 @@ Quick start
     world
 
 Or simply
+
 .. code-block:: bash
 
     $ HELLO="world" moban "{{HELLO}}"
