@@ -4,9 +4,10 @@ releases:
 - changes:
   - action: Updated
     details:
+    - "`#141`: disable file permissions copy feature and not to check file permission changes on windows."
     - "`#154`: introduce first ever positional argument for string base template."
     - "`#157`: the exit code behavior changed. for backward compactibility please use --exit-code. Otherwise, moban will not tell if there is any changes."
-  date: 11-1-2019
+  date: 12-1-2019
   version: 0.3.8
 - changes:
   - action: Updated

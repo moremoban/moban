@@ -44,6 +44,14 @@ def test_file_permission_copy():
     os.unlink(test_dest)
 
 
+def file_permissions_disabled_on_windows():
+    if sys.platform == 'win32':
+        permissions = file_permissions('abc')
+        eq_('no-permission-support', permissions)
+    else:
+        raise SkipTest("No test required")
+
+
 @raises(FileNotFound)
 def test_file_permissions_file_not_found():
     file_permissions("I does not exist")
