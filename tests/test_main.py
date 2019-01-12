@@ -139,6 +139,31 @@ class TestExitCodes:
     @raises(SystemExit)
     @patch("moban.main.handle_moban_file")
     @patch("moban.mobanfile.find_default_moban_file")
+    def test_has_many_files_with_exit_code(
+        self, fake_find_file, fake_moban_file
+    ):
+        fake_find_file.return_value = "abc"
+        fake_moban_file.return_value = 1
+        from moban.main import main
+
+        with patch.object(sys, "argv", ["moban", "--exit-code"]):
+            main()
+
+    @raises(SystemExit)
+    @patch("moban.main.handle_command_line")
+    @patch("moban.mobanfile.find_default_moban_file")
+    def test_handle_single_change_with_exit_code(
+        self, fake_find_file, fake_command_line
+    ):
+        fake_find_file.return_value = None
+        fake_command_line.return_value = 1
+        from moban.main import main
+
+        with patch.object(sys, "argv", ["moban", "--exit-code"]):
+            main()
+
+    @patch("moban.main.handle_moban_file")
+    @patch("moban.mobanfile.find_default_moban_file")
     def test_has_many_files(self, fake_find_file, fake_moban_file):
         fake_find_file.return_value = "abc"
         fake_moban_file.return_value = 1
@@ -147,7 +172,6 @@ class TestExitCodes:
         with patch.object(sys, "argv", ["moban"]):
             main()
 
-    @raises(SystemExit)
     @patch("moban.main.handle_command_line")
     @patch("moban.mobanfile.find_default_moban_file")
     def test_handle_single_change(self, fake_find_file, fake_command_line):

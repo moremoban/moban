@@ -50,7 +50,25 @@ or clone it and install it:
 Quick start
 ================================================================================
 
-Here is a simple example:
+.. code-block:: bash
+
+    $ export HELLO="world"
+    $ moban "{{HELLO}}"
+    Warning: Both data.yml and /.../.moban.cd/data.yml does not exist
+    Warning: Attempting to use environment vars as data...
+    Templating {{HELLO}}... to moban.output
+    Templated 1 file.
+    $ cat moban.output 
+    world
+
+Or simply
+
+.. code-block:: bash
+
+    $ HELLO="world" moban "{{HELLO}}"
+
+   
+A bit formal example:
 
 .. code-block:: bash
 
@@ -69,6 +87,8 @@ moban.output will contain::
 
     world
 
+Please note that data.yml will take precedence over environment variables.
+
 `the tutorial`_ has more use cases.
 
 .. _the tutorial: http://moban.readthedocs.org/en/latest/#tutorial
@@ -77,15 +97,19 @@ moban.output will contain::
 Usage
 ================================================================================
 
-::
+.. code-block:: bash
 
 
    usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
                 [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-t TEMPLATE] [-o OUTPUT]
                 [-f] [-m MOBANFILE]
-   
+                [template]
+
    Yet another jinja2 cli command for static text generation
    
+   positional arguments:
+     template              string templates
+
    optional arguments:
      -h, --help            show this help message and exit
      -cd CONFIGURATION_DIR, --configuration_dir CONFIGURATION_DIR
@@ -104,12 +128,19 @@ Usage
                            the template type, default is jinja2
      -f                    force moban to template all files despite of
                            .moban.hashes
+     --exit-code           tell moban to change exit code                      
      -m MOBANFILE, --mobanfile MOBANFILE
                            custom moban file
    
 
-exit codes
+Exit codes
 --------------------------------------------------------------------------------
+By default:
+
+- 0 : no changes
+- 1 : error occured
+
+With `--exit-code`:
 
 - 0 : no changes
 - 1 : has changes
