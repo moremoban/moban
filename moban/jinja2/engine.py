@@ -12,6 +12,10 @@ JINJA2_EXENSIONS = [
     "moban.jinja2.filters.text",
     "moban.jinja2.tests.files",
 ]
+JINJA2_THIRD_PARTY_EXTENSIONS = [
+    'jinja2.ext.do',
+    'jinja2.ext.loopcontrols',
+]
 
 
 class PluginMixin:
@@ -66,6 +70,7 @@ class Engine(object):
             keep_trailing_newline=True,
             trim_blocks=True,
             lstrip_blocks=True,
+            extensions=JINJA2_THIRD_PARTY_EXTENSIONS,
         )
         for filter_name, filter_function in FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
