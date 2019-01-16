@@ -12,7 +12,10 @@ JINJA2_EXENSIONS = [
     "moban.jinja2.filters.text",
     "moban.jinja2.tests.files",
 ]
-
+JINJA2_THIRD_PARTY_EXTENSIONS = [
+    'jinja2.ext.do',
+    'jinja2.ext.loopcontrols',
+]
 
 class PluginMixin:
     def get_all(self):
@@ -68,7 +71,9 @@ class Engine(object):
             lstrip_blocks=True,
         )
         if is_extensions_valid(extensions):
-            env_params["extensions"] = extensions
+            env_params["extensions"] = (
+                extensions + JINJA2_THIRD_PARTY_EXTENSIONS
+            )
         self.jj2_environment = Environment(**env_params)
         for filter_name, filter_function in FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
