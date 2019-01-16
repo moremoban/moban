@@ -44,7 +44,7 @@ def test_default_template_type():
 
 
 class FakeEngine:
-    def __init__(self, template_dirs):
+    def __init__(self, template_dirs, extensions=None):
         pass
 
 
