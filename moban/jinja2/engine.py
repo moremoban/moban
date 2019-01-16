@@ -12,10 +12,8 @@ JINJA2_EXENSIONS = [
     "moban.jinja2.filters.text",
     "moban.jinja2.tests.files",
 ]
-JINJA2_THIRD_PARTY_EXTENSIONS = [
-    'jinja2.ext.do',
-    'jinja2.ext.loopcontrols',
-]
+JINJA2_THIRD_PARTY_EXTENSIONS = ["jinja2.ext.do", "jinja2.ext.loopcontrols"]
+
 
 class PluginMixin:
     def get_all(self):
