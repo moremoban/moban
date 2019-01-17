@@ -107,18 +107,21 @@ Hello, you are not in level 7
         folder = "level-11-use-handlebars"
         self._raw_moban(["moban"], folder, expected, "a.output")
 
-    def test_level_12(self):
+    def test_level_12_a(self):
         expected_a = """world
 world
 world
 world
 """
+        folder = "level-12-use-template-engine-extensions"
+        self._raw_moban(["moban"], folder, expected_a, "a.output")
+
+    def test_level_12_b(self):
         expected_b = """142
 42
 142
 """
         folder = "level-12-use-template-engine-extensions"
-        self._raw_moban(["moban"], folder, expected_a, "a.output")
         self._raw_moban(["moban"], folder, expected_b, "b.output")
 
     def test_misc_1(self):

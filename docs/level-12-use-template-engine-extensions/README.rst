@@ -1,4 +1,4 @@
-Level 11: use template engine extensions
+Level 12: use template engine extensions
 ================================================================================
 
 jinja2 comes with a lot of extensions. In order not to be the blocker in the
@@ -7,6 +7,12 @@ with desired extensions. Two extensions, expression-statement and loop-controls
 are enabled by default.
 
 The extensions syntax is::
+
+   extensions:
+     template_type:
+       - template.engine.specific.extension
+
+For example::
 
    extensions:
      jinja2:
