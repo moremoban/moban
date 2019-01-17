@@ -67,11 +67,13 @@ class Engine(object):
             keep_trailing_newline=True,
             trim_blocks=True,
             lstrip_blocks=True,
+            extensions=[
+                extension for extension in JINJA2_THIRD_PARTY_EXTENSIONS
+            ],  # get a copy of this global variable
         )
         if is_extensions_valid(extensions):
-            env_params["extensions"] = (
-                extensions + JINJA2_THIRD_PARTY_EXTENSIONS
-            )
+            # because it is modified here
+            env_params["extensions"] += extensions
         self.jj2_environment = Environment(**env_params)
         for filter_name, filter_function in FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
