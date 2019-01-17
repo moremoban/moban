@@ -18,6 +18,9 @@ For example::
      jinja2:
        - jinja2.ext.i18n
 
+Please also note that the following extensions are included by default:
+`jinja2.ext.do`, `jinja2.ext.loopcontrols`
+
 
 Evaluation
 --------------------------------------------------------------------------------

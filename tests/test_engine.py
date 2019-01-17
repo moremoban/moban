@@ -133,16 +133,8 @@ def test_string_template():
 
 
 def test_extensions_validator():
-    test_fixtures = [
-        None,
-        ['module1', 'module2'],
-        [],
-    ]
-    expected = [
-        False,
-        True,
-        False
-    ]
+    test_fixtures = [None, ["module1", "module2"], []]
+    expected = [False, True, False]
     actual = []
     for fixture in test_fixtures:
         actual.append(is_extension_list_valid(fixture))

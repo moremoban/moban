@@ -1,6 +1,19 @@
 Change log
 ================================================================================
 
+0.3.9 - 12-1-2019
+--------------------------------------------------------------------------------
+
+Updated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#90 <https://github.com/moremoban/moban/issues/90>`_: allow adding extra
+   jinja2 extensions. `jinja2.ext.do`, `jinja2.ext.loopcontrols` are included by
+   default. what's more, any other template enigne are eligible for extension
+   additions.
+#. `#158 <https://github.com/moremoban/moban/issues/158>`_: Empty file
+   base_engine.py is finally removed
+
 0.3.8 - 12-1-2019
 --------------------------------------------------------------------------------
 

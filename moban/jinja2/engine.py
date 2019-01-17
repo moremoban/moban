@@ -132,7 +132,7 @@ def load_jinja2_extensions():
 
 def is_extension_list_valid(extensions):
     return (
-        extensions is not None and
-        isinstance(extensions, list) and
-        len(extensions) > 0
+        extensions is not None
+        and isinstance(extensions, list)
+        and len(extensions) > 0
     )
