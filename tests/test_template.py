@@ -2,7 +2,7 @@ import os
 
 from mock import patch
 
-from moban.plugins import BaseEngine
+from moban.plugins import ENGINES
 from moban.jinja2.engine import Engine
 
 
@@ -24,7 +24,7 @@ def test_do_templates_1(_do_templates_with_more_shared_data):
             ("5.template", "6.output"),
         ]
     }
-    engine = BaseEngine(".", ".", Engine)
+    engine = ENGINES.get_engine("jinja2", ".", ".")
     engine.render_to_files(jobs)
     _do_templates_with_more_shared_data.assert_called_with(expected)
     if os.path.exists(".moban.hashes"):
@@ -49,7 +49,7 @@ def test_do_templates_2(_do_templates_with_more_shared_templates):
             ("data5.yml", "6.output"),
         ]
     }
-    engine = BaseEngine(".", ".", Engine)
+    engine = ENGINES.get_engine("jinja2", ".", ".")
     engine.render_to_files(jobs)
     _do_templates_with_more_shared_templates.assert_called_with(expected)
     if os.path.exists(".moban.hashes"):
@@ -58,7 +58,9 @@ def test_do_templates_2(_do_templates_with_more_shared_templates):
 
 def test_do_templates_with_more_shared_templates():
     base_dir = os.path.join("tests", "fixtures")
-    engine = BaseEngine(base_dir, os.path.join(base_dir, "config"), Engine)
+    engine = ENGINES.get_engine(
+        "jinja2", base_dir, os.path.join(base_dir, "config")
+    )
     engine._render_with_finding_template_first(
         {"a.jj2": [(os.path.join(base_dir, "child.yaml"), "test")]}
     )
@@ -72,7 +74,9 @@ def test_do_templates_with_more_shared_templates():
 
 def test_do_templates_with_more_shared_data():
     base_dir = os.path.join("tests", "fixtures")
-    engine = BaseEngine(base_dir, os.path.join(base_dir, "config"), Engine)
+    engine = ENGINES.get_engine(
+        "jinja2", base_dir, os.path.join(base_dir, "config")
+    )
     engine._render_with_finding_data_first(
         {os.path.join(base_dir, "child.yaml"): [("a.jj2", "test")]}
     )
