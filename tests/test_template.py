@@ -3,7 +3,6 @@ import os
 from mock import patch
 
 from moban.plugins import ENGINES
-from moban.jinja2.engine import Engine
 
 
 @patch("moban.plugins.BaseEngine._render_with_finding_data_first")

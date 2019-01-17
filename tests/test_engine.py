@@ -11,7 +11,7 @@ from moban.plugins import (
     BaseEngine,
     expand_template_directories,
 )
-from moban.jinja2.engine import Engine
+from moban.jinja2.engine import Engine, is_extension_list_valid
 
 USER_HOME = os.path.join("user", "home", ".moban", "repos")
 
@@ -130,3 +130,21 @@ def test_string_template():
         content = output_file.read()
         eq_(content, "yaml")
     os.unlink(output)
+
+
+def test_extensions_validator():
+    test_fixtures = [
+        None,
+        ['module1', 'module2'],
+        [],
+    ]
+    expected = [
+        False,
+        True,
+        False
+    ]
+    actual = []
+    for fixture in test_fixtures:
+        actual.append(is_extension_list_valid(fixture))
+
+    eq_(expected, actual)

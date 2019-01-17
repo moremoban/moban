@@ -71,7 +71,7 @@ class Engine(object):
                 extension for extension in JINJA2_THIRD_PARTY_EXTENSIONS
             ],  # get a copy of this global variable
         )
-        if is_extensions_valid(extensions):
+        if is_extension_list_valid(extensions):
             # because it is modified here
             env_params["extensions"] += extensions
         self.jj2_environment = Environment(**env_params)
@@ -130,5 +130,9 @@ def load_jinja2_extensions():
     scan_plugins_regex(JINJA2_LIBRARIES, "moban", None, JINJA2_EXENSIONS)
 
 
-def is_extensions_valid(extensions):
-    return extensions and isinstance(extensions, list)
+def is_extension_list_valid(extensions):
+    return (
+        extensions is not None and
+        isinstance(extensions, list) and
+        len(extensions) > 0
+    )
