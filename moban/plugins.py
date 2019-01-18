@@ -164,8 +164,42 @@ class EngineFactory(PluginManager):
         raise exceptions.NoThirdPartyEngine(key)
 
 
+class AnyDataLoader(PluginManager):
+    def __init__(self):
+        super(AnyDataLoader, self).__init__(
+            constants.DATA_LOADER_EXTENSION
+        )
+
+    def get_data(self, file_name):
+        file_extension = os.path.splitext(file_name)[1]
+        file_type = file_extension
+        if file_extension.startswith('.'):
+            file_type = file_type[1:]
+
+        loader_function = self.load_me_now(file_type)
+        return loader_function(file_name)
+
+
 LIBRARIES = LibraryManager()
 ENGINES = EngineFactory()
+LOADERS = AnyDataLoader()
+
+
+def load_data(base_dir, file_name):
+    abs_file_path = utils.search_file(base_dir, file_name)
+    data = LOADERS.get_data(abs_file_path)
+    if data is not None:
+        parent_data = None
+        if base_dir and constants.LABEL_OVERRIDES in data:
+            parent_data = load_data(
+                base_dir, data.pop(constants.LABEL_OVERRIDES)
+            )
+        if parent_data:
+            return utils.merge(data, parent_data)
+        else:
+            return data
+    else:
+        return None
 
 
 def expand_template_directories(dirs):
@@ -216,13 +250,7 @@ class Context(object):
 
     def get_data(self, file_name):
         try:
-            file_extension = os.path.splitext(file_name)[1]
-            if file_extension == ".json":
-                data = utils.open_json(self.context_dirs, file_name)
-            elif file_extension in [".yml", ".yaml"]:
-                data = utils.open_yaml(self.context_dirs, file_name)
-            else:
-                raise exceptions.IncorrectDataInput
+            data = load_data(self.context_dirs, file_name)
             utils.merge(data, self.__cached_environ_variables)
             return data
         except (IOError, exceptions.IncorrectDataInput) as exception:

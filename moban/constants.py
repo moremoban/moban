@@ -93,6 +93,7 @@ JINJA_TEST_EXTENSION = "jinja_test"
 JINJA_GLOBALS_EXTENSION = "jinja_globals"
 
 TEMPLATE_ENGINE_EXTENSION = "template_engine"
+DATA_LOADER_EXTENSION = "data_loader"
 LIBRARY_EXTENSION = "library"
 
 MOBAN_EXTENSIONS = "^moban_.+$"
