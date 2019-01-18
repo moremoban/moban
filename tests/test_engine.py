@@ -11,7 +11,7 @@ from moban.plugins import (
     BaseEngine,
     expand_template_directories,
 )
-from moban.jinja2.engine import Engine
+from moban.jinja2.engine import Engine, is_extension_list_valid
 
 USER_HOME = os.path.join("user", "home", ".moban", "repos")
 
@@ -44,7 +44,7 @@ def test_default_template_type():
 
 
 class FakeEngine:
-    def __init__(self, template_dirs):
+    def __init__(self, template_dirs, extensions=None):
         pass
 
 
@@ -77,7 +77,7 @@ def test_non_existent_ctx_directries():
 def test_file_tests():
     output = "test.txt"
     path = os.path.join("tests", "fixtures", "jinja_tests")
-    engine = BaseEngine([path], path, Engine)
+    engine = ENGINES.get_engine("jinja2", [path], path)
     engine.render_to_file("file_tests.template", "file_tests.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
@@ -88,7 +88,7 @@ def test_file_tests():
 def test_global_template_variables():
     output = "test.txt"
     path = os.path.join("tests", "fixtures", "globals")
-    engine = BaseEngine([path], path, Engine)
+    engine = ENGINES.get_engine("jinja2", [path], path)
     engine.render_to_file("variables.template", "variables.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
@@ -99,7 +99,7 @@ def test_global_template_variables():
 def test_nested_global_template_variables():
     output = "test.txt"
     path = os.path.join("tests", "fixtures", "globals")
-    engine = BaseEngine([path], path, Engine)
+    engine = ENGINES.get_engine("jinja2", [path], path)
     engine.render_to_file("nested.template", "variables.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
@@ -113,7 +113,7 @@ def test_environ_variables_as_data():
     os.environ[test_var] = test_value
     output = "test.txt"
     path = os.path.join("tests", "fixtures", "environ_vars_as_data")
-    engine = BaseEngine([path], path, Engine)
+    engine = ENGINES.get_engine("jinja2", [path], path)
     engine.render_to_file("test.template", "this_does_not_exist.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
@@ -124,9 +124,19 @@ def test_environ_variables_as_data():
 def test_string_template():
     output = "test.txt"
     path = os.path.join("tests", "fixtures")
-    engine = BaseEngine([path], path, Engine)
+    engine = ENGINES.get_engine("jinja2", [path], path)
     engine.render_string_to_file("{{simple}}", "simple.yaml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
         eq_(content, "yaml")
     os.unlink(output)
+
+
+def test_extensions_validator():
+    test_fixtures = [None, ["module1", "module2"], []]
+    expected = [False, True, False]
+    actual = []
+    for fixture in test_fixtures:
+        actual.append(is_extension_list_valid(fixture))
+
+    eq_(expected, actual)

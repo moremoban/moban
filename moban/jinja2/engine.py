@@ -12,10 +12,7 @@ JINJA2_EXENSIONS = [
     "moban.jinja2.filters.text",
     "moban.jinja2.tests.files",
 ]
-JINJA2_THIRD_PARTY_EXTENSIONS = [
-    'jinja2.ext.do',
-    'jinja2.ext.loopcontrols',
-]
+JINJA2_THIRD_PARTY_EXTENSIONS = ["jinja2.ext.do", "jinja2.ext.loopcontrols"]
 
 
 class PluginMixin:
@@ -54,7 +51,7 @@ GLOBALS = JinjaGlobalsManager()
     constants.TEMPLATE_ENGINE_EXTENSION, tags=["jinja2", "jinja", "jj2", "j2"]
 )
 class Engine(object):
-    def __init__(self, template_dirs):
+    def __init__(self, template_dirs, extensions=None):
         """
         Contruct a jinja2 template engine
 
@@ -65,13 +62,19 @@ class Engine(object):
         load_jinja2_extensions()
         self.template_dirs = template_dirs
         template_loader = FileSystemLoader(template_dirs)
-        self.jj2_environment = Environment(
+        env_params = dict(
             loader=template_loader,
             keep_trailing_newline=True,
             trim_blocks=True,
             lstrip_blocks=True,
-            extensions=JINJA2_THIRD_PARTY_EXTENSIONS,
+            extensions=[
+                extension for extension in JINJA2_THIRD_PARTY_EXTENSIONS
+            ],  # get a copy of this global variable
         )
+        if is_extension_list_valid(extensions):
+            # because it is modified here
+            env_params["extensions"] += extensions
+        self.jj2_environment = Environment(**env_params)
         for filter_name, filter_function in FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
 
@@ -125,3 +128,11 @@ class Engine(object):
 
 def load_jinja2_extensions():
     scan_plugins_regex(JINJA2_LIBRARIES, "moban", None, JINJA2_EXENSIONS)
+
+
+def is_extension_list_valid(extensions):
+    return (
+        extensions is not None
+        and isinstance(extensions, list)
+        and len(extensions) > 0
+    )
