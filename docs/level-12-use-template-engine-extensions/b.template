@@ -1,0 +1,9 @@
+{% with %}
+    {% set foo = 142 %}
+{{ foo }}
+    {% with %}
+        {% set foo = 42 %}
+{{ foo }}
+    {% endwith %}
+{{ foo }}
+{% endwith %}

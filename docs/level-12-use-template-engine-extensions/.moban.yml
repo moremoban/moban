@@ -1,0 +1,6 @@
+targets:
+  - a.output: a.template
+  - b.output: b.template
+extensions:
+  jinja2:
+    - jinja2.ext.with_

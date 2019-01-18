@@ -45,9 +45,9 @@ def test_file_permission_copy():
 
 
 def file_permissions_disabled_on_windows():
-    if sys.platform == 'win32':
-        permissions = file_permissions('abc')
-        eq_('no-permission-support', permissions)
+    if sys.platform == "win32":
+        permissions = file_permissions("abc")
+        eq_("no-permission-support", permissions)
     else:
         raise SkipTest("No test required")
 

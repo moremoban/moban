@@ -21,7 +21,9 @@ class LibraryManager(PluginManager):
 
 
 class BaseEngine(object):
-    def __init__(self, template_dirs, context_dirs, engine_cls):
+    def __init__(
+        self, template_dirs, context_dirs, engine_cls, engine_extensions=None
+    ):
         # pypi-moban-pkg cannot be found if removed
         make_sure_all_pkg_are_loaded()
         template_dirs = list(expand_template_directories(template_dirs))
@@ -29,7 +31,7 @@ class BaseEngine(object):
         context_dirs = expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
         self.template_dirs = template_dirs
-        self.engine = engine_cls(self.template_dirs)
+        self.engine = engine_cls(self.template_dirs, engine_extensions)
         self.engine_cls = engine_cls
         self.templated_count = 0
         self.file_count = 0
@@ -143,10 +145,17 @@ class EngineFactory(PluginManager):
         super(EngineFactory, self).__init__(
             constants.TEMPLATE_ENGINE_EXTENSION
         )
+        self.extensions = {}
+
+    def register_extensions(self, extensions):
+        self.extensions.update(extensions)
 
     def get_engine(self, template_type, template_dirs, context_dirs):
         engine_cls = self.load_me_now(template_type)
-        return BaseEngine(template_dirs, context_dirs, engine_cls)
+        engine_extensions = self.extensions.get(template_type)
+        return BaseEngine(
+            template_dirs, context_dirs, engine_cls, engine_extensions
+        )
 
     def all_types(self):
         return list(self.registry.keys())

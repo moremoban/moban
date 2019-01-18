@@ -68,6 +68,10 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if requires:
         handle_requires(requires)
 
+    extensions = moban_file_configurations.get(constants.LABEL_EXTENSIONS)
+    if extensions:
+        plugins.ENGINES.register_extensions(extensions)
+
     if targets:
         # If template specified via CLI flag `-t:
         # 1. Only update the specified template
