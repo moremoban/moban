@@ -6,7 +6,7 @@ releases:
     details:
     - "`#90`: allow adding extra jinja2 extensions. `jinja2.ext.do`, `jinja2.ext.loopcontrols` are included by default. what's more, any other template enigne are eligible for extension additions."
     - "`#158`: Empty file base_engine.py is finally removed"
-  date: 12-1-2019
+  date: 18-1-2019
   version: 0.3.9
 - changes:
   - action: Updated
