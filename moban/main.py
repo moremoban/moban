@@ -18,6 +18,7 @@ import moban.exceptions as exceptions
 from moban import plugins
 from moban.utils import merge, open_yaml
 from moban.hashstore import HASH_STORE
+from moban._version import __version__
 
 
 def main():
@@ -114,6 +115,12 @@ def create_parser():
         type=str,
         nargs="?",
         help="string templates",
+    )
+    parser.add_argument(
+        "-v",
+        "--%s" % constants.LABEL_VERSION,
+        action="version",
+        version="%(prog)s {v}".format(v=__version__)
     )
     return parser
 

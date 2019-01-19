@@ -4,6 +4,12 @@ releases:
 - changes:
   - action: Updated
     details:
+    - "`#107`: Add -v to show current moban version"
+  date: 22-1-2019
+  version: 0.4.0
+- changes:
+  - action: Updated
+    details:
     - "`#90`: allow adding extra jinja2 extensions. `jinja2.ext.do`, `jinja2.ext.loopcontrols` are included by default. what's more, any other template enigne are eligible for extension additions."
     - "`#158`: Empty file base_engine.py is finally removed"
   date: 18-1-2019

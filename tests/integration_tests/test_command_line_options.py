@@ -408,3 +408,12 @@ class TestTemplateTypeOption:
 
     def tearDown(self):
         os.unlink(self.config_file)
+
+
+@raises(SystemExit)
+def test_version_option():
+    test_args = ["moban", "-v"]
+    with patch.object(sys, "argv", test_args):
+        from moban.main import main
+
+        main()

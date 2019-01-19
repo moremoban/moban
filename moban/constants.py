@@ -29,6 +29,7 @@ LABEL_TEMPLATE_TYPE = "template_type"
 LABEL_OVERRIDES = "overrides"
 LABEL_MOBANFILE = "mobanfile"
 LABEL_FORCE = "force"
+LABEL_VERSION = "version"
 
 
 DEFAULT_CONFIGURATION_DIRNAME = ".moban.cd"
