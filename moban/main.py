@@ -11,11 +11,8 @@
 import sys
 import argparse
 
-import moban.reporter as reporter
-import moban.constants as constants
-import moban.mobanfile as mobanfile
-import moban.exceptions as exceptions
-from moban import plugins
+from moban import plugins, reporter, constants, mobanfile, exceptions
+from moban.utils import merge
 from moban.hashstore import HASH_STORE
 
 

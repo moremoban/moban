@@ -12,6 +12,7 @@ DEFAULT_MOBAN_FILES = [
     ".%s%s" % (PROGRAM_NAME, ".yaml"),
 ]
 DEFAULT_TEMPLATE_TYPE = "jinja2"
+DEFAULT_DATA_TYPE = "yaml"
 
 # .moban.hashes
 DEFAULT_MOBAN_CACHE_FILE = ".moban.hashes"
