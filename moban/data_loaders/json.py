@@ -11,5 +11,5 @@ def open_json(file_name):
     returns json contents as string
     """
     with open(file_name, "r") as json_data:
-        data = json.loads(json_data.read())
+        data = json.load(json_data)
         return data
