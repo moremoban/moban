@@ -7,11 +7,12 @@ import moban.reporter as reporter
 from moban import utils, constants, exceptions
 from moban.strategy import Strategy
 from moban.hashstore import HASH_STORE
+from moban.data_loaders.manager import AnyDataLoader
 
 BUILTIN_EXENSIONS = [
     "moban.jinja2.engine",
-    "moban.data_loader.yaml",
-    "moban.data_loader.json",
+    "moban.data_loaders.yaml",
+    "moban.data_loaders.json",
 ]
 
 
@@ -166,23 +167,6 @@ class EngineFactory(PluginManager):
 
     def raise_exception(self, key):
         raise exceptions.NoThirdPartyEngine(key)
-
-
-class AnyDataLoader(PluginManager):
-    def __init__(self):
-        super(AnyDataLoader, self).__init__(constants.DATA_LOADER_EXTENSION)
-
-    def get_data(self, file_name):
-        file_extension = os.path.splitext(file_name)[1]
-        file_type = file_extension
-        if file_extension.startswith("."):
-            file_type = file_type[1:]
-
-        try:
-            loader_function = self.load_me_now(file_type)
-        except Exception:
-            loader_function = self.load_me_now(constants.DEFAULT_DATA_TYPE)
-        return loader_function(file_name)
 
 
 LIBRARIES = LibraryManager()

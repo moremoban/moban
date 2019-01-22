@@ -2,7 +2,7 @@ import os
 
 from nose.tools import eq_
 
-from moban.data_loader.json import open_json
+from moban.data_loaders.json import open_json
 
 
 def test_open_json():

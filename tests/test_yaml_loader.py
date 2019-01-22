@@ -2,8 +2,8 @@ import os
 
 from nose.tools import eq_, raises
 
-from moban.plugins import load_data, make_sure_all_pkg_are_loaded
-from moban.data_loader.yaml import open_yaml
+from moban.plugins import load_data
+from moban.data_loaders.yaml import open_yaml
 
 
 def test_simple_yaml():
@@ -14,7 +14,6 @@ def test_simple_yaml():
 
 def test_inheritance_yaml():
     test_file = os.path.join("tests", "fixtures", "child.yaml")
-    make_sure_all_pkg_are_loaded()
     data = load_data(os.path.join("tests", "fixtures", "config"), test_file)
     eq_(data, {"key": "hello world", "pass": "ox"})
 
