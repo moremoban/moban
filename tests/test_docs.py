@@ -124,6 +124,32 @@ world
         folder = "level-12-use-template-engine-extensions"
         self._raw_moban(["moban"], folder, expected_b, "b.output")
 
+    def test_level_13_json(self):
+        expected = """========header============
+
+world from child.json
+
+shijie from parent.yaml
+
+========footer============
+"""
+        folder = "level-13-any-data-override-any-data"
+        commands = ["moban", "-c", "child.json", "-t", "a.template"]
+        self._raw_moban(commands, folder, expected, "moban.output")
+
+    def test_level_13_yaml(self):
+        expected = """========header============
+
+world from child.yaml
+
+shijie from parent.json
+
+========footer============
+"""
+        folder = "level-13-any-data-override-any-data"
+        commands = ["moban", "-c", "child.yaml", "-t", "a.template"]
+        self._raw_moban(commands, folder, expected, "moban.output")
+
     def test_misc_1(self):
         expected = "test file\n"
 

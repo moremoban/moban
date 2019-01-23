@@ -1,0 +1,2 @@
+overrides: parent.json
+hello: world from child.yaml
