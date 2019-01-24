@@ -12,7 +12,7 @@ from moban.data_loaders.manager import AnyDataLoader
 BUILTIN_EXENSIONS = [
     "moban.jinja2.engine",
     "moban.data_loaders.yaml",
-    "moban.data_loaders.json",
+    "moban.data_loaders.json_loader",
 ]
 
 
