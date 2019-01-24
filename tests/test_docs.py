@@ -56,11 +56,11 @@ class TestTutorial:
         expected = custom_dedent(
             """
         ========header============
-        
+
         world
-        
+
         shijie
-        
+
         ========footer============
         """
         )
@@ -71,13 +71,13 @@ class TestTutorial:
         expected = custom_dedent(
             """
         ========header============
-        
+
         world
-        
+
         shijie
-        
+
         this demonstrates jinja2's include statement
-        
+
         ========footer============
         """
         )
@@ -88,13 +88,13 @@ class TestTutorial:
         expected = custom_dedent(
             """
         ========header============
-        
+
         world2
-        
+
         shijie
-        
+
         this demonstrates jinja2's include statement
-        
+
         ========footer============
         """
         )
@@ -105,7 +105,7 @@ class TestTutorial:
         expected = custom_dedent(
             """
         Hello, you are in level 7 example
-        
+
         Hello, you are not in level 7
         """
         )
@@ -160,11 +160,11 @@ class TestTutorial:
         expected = custom_dedent(
             """
         ========header============
-        
+
         world from child.json
-        
+
         shijie from parent.yaml
-        
+
         ========footer============
         """
         )
@@ -176,11 +176,11 @@ class TestTutorial:
         expected = custom_dedent(
             """
         ========header============
-        
+
         world from child.yaml
-        
+
         shijie from parent.json
-        
+
         ========footer============
         """
         )
@@ -192,11 +192,11 @@ class TestTutorial:
         expected = custom_dedent(
             """
         ========header============
-        
+
         world from child.cusom
-        
+
         shijie from parent.json
-        
+
         ========footer============
         """
         )
