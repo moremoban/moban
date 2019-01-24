@@ -1,0 +1,2 @@
+overrides: parent.custom
+hello: world from override_custom.yaml

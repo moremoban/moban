@@ -150,6 +150,19 @@ shijie from parent.json
         commands = ["moban", "-c", "child.yaml", "-t", "a.template"]
         self._raw_moban(commands, folder, expected, "moban.output")
 
+    def test_level_14_custom(self):
+        expected = """========header============
+
+world from child.cusom
+
+shijie from parent.json
+
+========footer============
+"""
+        folder = "level-14-custom-data-loader"
+        commands = ["moban"]
+        self._raw_moban(commands, folder, expected, "a.output")
+
     def test_misc_1(self):
         expected = "test file\n"
 
