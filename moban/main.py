@@ -13,8 +13,8 @@ import argparse
 
 from moban import plugins, reporter, constants, mobanfile, exceptions
 from moban.utils import merge
-from moban.hashstore import HASH_STORE
 from moban._version import __version__
+from moban.hashstore import HASH_STORE
 
 
 def main():
@@ -116,7 +116,7 @@ def create_parser():
         "-v",
         "--%s" % constants.LABEL_VERSION,
         action="version",
-        version="%(prog)s {v}".format(v=__version__)
+        version="%(prog)s {v}".format(v=__version__),
     )
     return parser
 

@@ -1,5 +1,6 @@
-from lml.plugin import PluginInfo
 import csv
+
+from lml.plugin import PluginInfo
 
 from moban import constants
 
