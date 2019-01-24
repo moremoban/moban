@@ -9,6 +9,8 @@ Updated
 
 #. `#107 <https://github.com/moremoban/moban/issues/107>`_: Add -v to show
    current moban version
+#. `#164 <https://github.com/moremoban/moban/issues/164>`_: support additional
+   data formats
 
 0.3.9 - 18-1-2019
 --------------------------------------------------------------------------------
