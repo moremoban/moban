@@ -1,6 +1,6 @@
 configuration:
   plugin_dir:
-    - custom-data-loaders
+    - custom_data_loaders
   template: a.template
 targets:
   - output: a.output

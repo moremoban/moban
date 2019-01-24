@@ -31,7 +31,7 @@ extension. Here is the mobanfile::
      - output: b.output
        configuration: override_custom.yaml
 
-`custom-data-loaders` is a directory where custom.py lives. The protocol is
+`custom_data_loaders` is a directory where custom.py lives. The protocol is
 that the custom loader register itself to a file extension and return
 a data dictionary confirming mobanfile schema. On call, `moban` will provide
 an absolute file name for your loader to work on.
@@ -63,3 +63,10 @@ In order to evaluate, you can simply type::
    shijie from parent.custom
 
    ========footer============
+
+
+.. note::
+
+   Python 2 does not like plugin directory name to have dash, '-' in module names.
+   In other words, Python 2 does not like 'custom-data-loaders' but accept 
+   'custom_data_loaders'.
