@@ -23,7 +23,7 @@ extension. Here is the mobanfile::
 
    configuration:
      plugin_dir:
-       - custom-data-loaders
+       - custom-data-loader
      template: a.template
    targets:
      - output: a.output
@@ -31,7 +31,7 @@ extension. Here is the mobanfile::
      - output: b.output
        configuration: override_custom.yaml
 
-`custom_data_loaders` is a directory where custom.py lives. The protocol is
+`custom-data-loader` is a directory where custom.py lives. The protocol is
 that the custom loader register itself to a file extension and return
 a data dictionary confirming mobanfile schema. On call, `moban` will provide
 an absolute file name for your loader to work on.
@@ -65,8 +65,7 @@ In order to evaluate, you can simply type::
    ========footer============
 
 
-.. note::
+.. warning::
 
-   Python 2 does not like plugin directory name to have dash, '-' in module names.
-   In other words, Python 2 does not like 'custom-data-loaders' but accept 
-   'custom_data_loaders'.
+   Python 2 dictates the existence of __init__.py in the plugin directory. Otheriwse
+   your plugin won't load
