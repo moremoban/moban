@@ -4,6 +4,7 @@ releases:
 - changes:
   - action: Updated
     details:
+    - "`#174`: Store git cache in XDG_CACHE_DIR"
     - "`#107`: Add -v to show current moban version"
     - "`#164`: support additional data formats"
   date: 22-1-2019

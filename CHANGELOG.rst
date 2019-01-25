@@ -7,6 +7,8 @@ Change log
 Updated
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+#. `#174 <https://github.com/moremoban/moban/issues/174>`_: Store git cache in
+   XDG_CACHE_DIR
 #. `#107 <https://github.com/moremoban/moban/issues/107>`_: Add -v to show
    current moban version
 #. `#164 <https://github.com/moremoban/moban/issues/164>`_: support additional

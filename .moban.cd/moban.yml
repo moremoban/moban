@@ -15,9 +15,10 @@ keywords:
   - jinja2
   - moban
 dependencies:
-  - ruamel.yaml
+  - ruamel.yaml==0.15.86
   - jinja2>=2.7.1
-  - lml>=0.0.7
+  - lml>=0.0.9
+  - appdirs==1.4.3
   - crayons
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com

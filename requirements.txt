@@ -1,4 +1,5 @@
-ruamel.yaml
+ruamel.yaml==0.15.86
 jinja2>=2.7.1
-lml>=0.0.7
+lml>=0.0.9
+appdirs==1.4.3
 crayons
