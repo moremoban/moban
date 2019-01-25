@@ -30,7 +30,7 @@ author = u'C. W.'
 # The short X.Y version
 version = u'0.3.9'
 # The full version, including alpha/beta/rc tags
-release = u'0.3.9'
+release = u'0.4.0'
 
 
 # -- General configuration ---------------------------------------------------

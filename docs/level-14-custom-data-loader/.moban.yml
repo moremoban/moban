@@ -1,0 +1,9 @@
+configuration:
+  plugin_dir:
+    - custom-data-loader
+  template: a.template
+targets:
+  - output: a.output
+    configuration: child.custom
+  - output: b.output
+    configuration: override_custom.yaml

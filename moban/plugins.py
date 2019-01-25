@@ -7,8 +7,13 @@ import moban.reporter as reporter
 from moban import utils, constants, exceptions
 from moban.strategy import Strategy
 from moban.hashstore import HASH_STORE
+from moban.data_loaders.manager import AnyDataLoader
 
-BUILTIN_EXENSIONS = ["moban.jinja2.engine"]
+BUILTIN_EXENSIONS = [
+    "moban.jinja2.engine",
+    "moban.data_loaders.yaml",
+    "moban.data_loaders.json_loader",
+]
 
 
 class LibraryManager(PluginManager):
@@ -166,6 +171,24 @@ class EngineFactory(PluginManager):
 
 LIBRARIES = LibraryManager()
 ENGINES = EngineFactory()
+LOADERS = AnyDataLoader()
+
+
+def load_data(base_dir, file_name):
+    abs_file_path = utils.search_file(base_dir, file_name)
+    data = LOADERS.get_data(abs_file_path)
+    if data is not None:
+        parent_data = None
+        if base_dir and constants.LABEL_OVERRIDES in data:
+            parent_data = load_data(
+                base_dir, data.pop(constants.LABEL_OVERRIDES)
+            )
+        if parent_data:
+            return utils.merge(data, parent_data)
+        else:
+            return data
+    else:
+        return None
 
 
 def expand_template_directories(dirs):
@@ -216,13 +239,7 @@ class Context(object):
 
     def get_data(self, file_name):
         try:
-            file_extension = os.path.splitext(file_name)[1]
-            if file_extension == ".json":
-                data = utils.open_json(self.context_dirs, file_name)
-            elif file_extension in [".yml", ".yaml"]:
-                data = utils.open_yaml(self.context_dirs, file_name)
-            else:
-                raise exceptions.IncorrectDataInput
+            data = load_data(self.context_dirs, file_name)
             utils.merge(data, self.__cached_environ_variables)
             return data
         except (IOError, exceptions.IncorrectDataInput) as exception:

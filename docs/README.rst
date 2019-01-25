@@ -14,6 +14,9 @@ This section covers the use cases for moban. Please check them out individually.
 #. `Use pypi package as a moban dependency`_
 #. `Use git repository as a moban dependency`_
 #. `Use handlebars template with moban`_
+#. `Use template engine extensions`_
+#. `Any data overrides any data`_
+#. `Custom data loader`_
 
 .. _Jinja2 command line: level-1-jinja2-cli
 .. _Template inheritance: level-2-template-inheritance
@@ -26,3 +29,6 @@ This section covers the use cases for moban. Please check them out individually.
 .. _Use pypi package as a moban dependency: level-9-moban-dependency-as-pypi-package
 .. _Use git repository as a moban dependency: level-10-moban-dependency-as-git-repo
 .. _Use handlebars template with moban: level-11-use-handlebars
+.. _Use template engine extensions: level-12-use-template-engine-extensions
+.. _Any data overrides any data: level-13-any-data-override-any-data
+.. _Custom data loader: level-14-custom-data-loader

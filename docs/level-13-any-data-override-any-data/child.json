@@ -1,0 +1,4 @@
+{
+    "overrides": "parent.yaml",
+    "hello": "world from child.json"
+}

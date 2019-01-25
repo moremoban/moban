@@ -1,11 +1,8 @@
 import os
 import re
 import sys
-import json
 import stat
 import errno
-
-from ruamel.yaml import YAML
 
 import moban.reporter as reporter
 import moban.constants as constants
@@ -30,38 +27,6 @@ def merge(left, right):
             else:
                 left[key] = merge(left[key], value)
     return left
-
-
-def open_yaml(base_dir, file_name):
-    """
-    chained yaml loader
-    """
-    the_yaml_file = search_file(base_dir, file_name)
-    with open(the_yaml_file, "r") as data_yaml:
-        yaml = YAML(typ="rt")
-        data = yaml.load(data_yaml)
-        if data is not None:
-            parent_data = None
-            if base_dir and constants.LABEL_OVERRIDES in data:
-                parent_data = open_yaml(
-                    base_dir, data.pop(constants.LABEL_OVERRIDES)
-                )
-            if parent_data:
-                return merge(data, parent_data)
-            else:
-                return data
-        else:
-            return None
-
-
-def open_json(base_dir, file_name):
-    """
-    returns json contents as string
-    """
-    the_json_file = search_file(base_dir, file_name)
-    with open(the_json_file, "r") as json_data:
-        data = json.loads(json_data.read())
-        return data
 
 
 def search_file(base_dir, file_name):

@@ -12,6 +12,7 @@ DEFAULT_MOBAN_FILES = [
     ".%s%s" % (PROGRAM_NAME, ".yaml"),
 ]
 DEFAULT_TEMPLATE_TYPE = "jinja2"
+DEFAULT_DATA_TYPE = "yaml"
 
 # .moban.hashes
 DEFAULT_MOBAN_CACHE_FILE = ".moban.hashes"
@@ -94,6 +95,7 @@ JINJA_TEST_EXTENSION = "jinja_test"
 JINJA_GLOBALS_EXTENSION = "jinja_globals"
 
 TEMPLATE_ENGINE_EXTENSION = "template_engine"
+DATA_LOADER_EXTENSION = "data_loader"
 LIBRARY_EXTENSION = "library"
 
 MOBAN_EXTENSIONS = "^moban_.+$"

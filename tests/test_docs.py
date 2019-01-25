@@ -1,10 +1,18 @@
 import os
 import sys
+from textwrap import dedent
 
 from mock import patch
 from nose.tools import eq_
 
 from moban.main import main
+
+
+def custom_dedent(long_texts):
+    refined = dedent(long_texts)
+    if refined.startswith("\n"):
+        refined = refined[1:]
+    return refined
 
 
 class TestTutorial:
@@ -17,72 +25,90 @@ class TestTutorial:
         self._moban(folder, expected)
 
     def test_level_2(self):
-        expected = """========header============
+        expected = custom_dedent(
+            """
+        ========header============
 
-world
+        world
 
-========footer============
-"""
+        ========footer============
+        """
+        )
         folder = "level-2-template-inheritance"
         self._moban(folder, expected)
 
     def test_level_3(self):
-        expected = """========header============
+        expected = custom_dedent(
+            """
+        ========header============
 
-world
+        world
 
-shijie
+        shijie
 
-========footer============
-"""
+        ========footer============
+        """
+        )
         folder = "level-3-data-override"
         self._moban(folder, expected)
 
     def test_level_4(self):
-        expected = """========header============
+        expected = custom_dedent(
+            """
+        ========header============
 
-world
+        world
 
-shijie
+        shijie
 
-========footer============
-"""
+        ========footer============
+        """
+        )
         folder = "level-4-single-command"
         self._raw_moban(["moban"], folder, expected, "a.output")
 
     def test_level_5(self):
-        expected = """========header============
+        expected = custom_dedent(
+            """
+        ========header============
 
-world
+        world
 
-shijie
+        shijie
 
-this demonstrates jinja2's include statement
+        this demonstrates jinja2's include statement
 
-========footer============
-"""
+        ========footer============
+        """
+        )
         folder = "level-5-custom-configuration"
         self._raw_moban(["moban"], folder, expected, "a.output")
 
     def test_level_6(self):
-        expected = """========header============
+        expected = custom_dedent(
+            """
+        ========header============
 
-world2
+        world2
 
-shijie
+        shijie
 
-this demonstrates jinja2's include statement
+        this demonstrates jinja2's include statement
 
-========footer============
-"""
+        ========footer============
+        """
+        )
         folder = "level-6-complex-configuration"
         self._raw_moban(["moban"], folder, expected, "a.output2")
 
     def test_level_7(self):
-        expected = """Hello, you are in level 7 example
+        expected = custom_dedent(
+            """
+        Hello, you are in level 7 example
 
-Hello, you are not in level 7
-"""
+        Hello, you are not in level 7
+        """
+        )
         folder = "level-7-use-custom-jinja2-filter-test-n-global"
         self._raw_moban(["moban"], folder, expected, "test.output")
 
@@ -108,21 +134,75 @@ Hello, you are not in level 7
         self._raw_moban(["moban"], folder, expected, "a.output")
 
     def test_level_12_a(self):
-        expected_a = """world
-world
-world
-world
-"""
+        expected_a = custom_dedent(
+            """
+        world
+        world
+        world
+        world
+        """
+        )
         folder = "level-12-use-template-engine-extensions"
         self._raw_moban(["moban"], folder, expected_a, "a.output")
 
     def test_level_12_b(self):
-        expected_b = """142
-42
-142
-"""
+        expected_b = custom_dedent(
+            """
+        142
+        42
+        142
+        """
+        )
         folder = "level-12-use-template-engine-extensions"
         self._raw_moban(["moban"], folder, expected_b, "b.output")
+
+    def test_level_13_json(self):
+        expected = custom_dedent(
+            """
+        ========header============
+
+        world from child.json
+
+        shijie from parent.yaml
+
+        ========footer============
+        """
+        )
+        folder = "level-13-any-data-override-any-data"
+        commands = ["moban", "-c", "child.json", "-t", "a.template"]
+        self._raw_moban(commands, folder, expected, "moban.output")
+
+    def test_level_13_yaml(self):
+        expected = custom_dedent(
+            """
+        ========header============
+
+        world from child.yaml
+
+        shijie from parent.json
+
+        ========footer============
+        """
+        )
+        folder = "level-13-any-data-override-any-data"
+        commands = ["moban", "-c", "child.yaml", "-t", "a.template"]
+        self._raw_moban(commands, folder, expected, "moban.output")
+
+    def test_level_14_custom(self):
+        expected = custom_dedent(
+            """
+        ========header============
+
+        world from child.cusom
+
+        shijie from parent.json
+
+        ========footer============
+        """
+        )
+        folder = "level-14-custom-data-loader"
+        commands = ["moban"]
+        self._raw_moban(commands, folder, expected, "a.output")
 
     def test_misc_1(self):
         expected = "test file\n"
