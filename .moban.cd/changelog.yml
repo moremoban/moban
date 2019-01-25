@@ -6,7 +6,8 @@ releases:
     details:
     - "`#107`: Add -v to show current moban version"
     - "`#164`: support additional data formats"
-  date: 22-1-2019
+    - "`#178`: UnboundLocalError: local variable 'target' referenced before assignment"
+  date: unreleased
   version: 0.4.0
 - changes:
   - action: Updated
