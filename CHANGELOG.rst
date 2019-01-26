@@ -1,7 +1,7 @@
 Change log
 ================================================================================
 
-0.4.0 - 22-1-2019
+0.4.0 - unreleased
 --------------------------------------------------------------------------------
 
 Updated
@@ -11,6 +11,8 @@ Updated
    current moban version
 #. `#164 <https://github.com/moremoban/moban/issues/164>`_: support additional
    data formats
+#. `#178 <https://github.com/moremoban/moban/issues/178>`_: UnboundLocalError:
+   local variable 'target' referenced before assignment
 
 0.3.9 - 18-1-2019
 --------------------------------------------------------------------------------
