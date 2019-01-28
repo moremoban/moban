@@ -187,14 +187,12 @@ def get_repo_name(repo_url):
 
 
 def get_moban_home():
-    home_dir = os.path.expanduser("~")
-    if os.path.exists(home_dir):
-        return os.path.join(
-            home_dir,
-            constants.MOBAN_DIR_NAME_UNDER_USER_HOME,
-            constants.MOBAN_REPOS_DIR_NAME,
-        )
-    raise IOError("Failed to find user home directory")
+    from appdirs import user_cache_dir
+    home_dir = user_cache_dir(appname=constants.PROGRAM_NAME)
+    return os.path.join(
+        home_dir,
+        constants.MOBAN_REPOS_DIR_NAME,
+    )
 
 
 def _remove_dot_git(repo_name):

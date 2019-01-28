@@ -10,6 +10,7 @@ from nose.tools import eq_, raises
 from moban.utils import (
     mkdir_p,
     get_repo_name,
+    get_moban_home,
     write_file_out,
     file_permissions,
     get_template_path,
@@ -177,3 +178,9 @@ def test_get_repo_name():
     actual = [get_repo_name(repo) for repo in repos]
     expected = ["repo", "repo"]
     eq_(expected, actual)
+
+
+@patch('appdirs.user_cache_dir', return_value='root')
+def test_get_moban_home(_):
+    actual = get_moban_home()
+    eq_(os.path.join('root', 'repos'), actual)
