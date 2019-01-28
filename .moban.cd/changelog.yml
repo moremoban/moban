@@ -2,12 +2,15 @@ name: moban
 organisation: moremoban
 releases:
 - changes:
-  - action: Updated
+  - action: Added
     details:
     - "`#174`: Store git cache in XDG_CACHE_DIR"
     - "`#107`: Add -v to show current moban version"
     - "`#164`: support additional data formats"
+  - action: Updated
+    details:
     - "`#178`: UnboundLocalError: local variable 'target' referenced before assignment"
+    - "`#169`: uses GitPython instead of barebone git commands"
   date: unreleased
   version: 0.4.0
 - changes:
