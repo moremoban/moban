@@ -146,11 +146,13 @@ def git_clone(repos, submodule=False):
             repo = Repo(local_repo_folder)
             repo.git.pull()
             if submodule:
+                reporter.report_info_message("updating submodule")
                 repo.git.submodule("update")
         else:
             reporter.report_git_clone(repo_name)
             repo = Repo.clone_from(repo, local_repo_folder)
             if submodule:
+                reporter.report_info_message("checking out submodule")
                 repo.git.submodule("update", "--init")
 
 
