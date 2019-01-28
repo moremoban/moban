@@ -146,12 +146,12 @@ def git_clone(repos, submodule=False):
             repo = Repo(local_repo_folder)
             repo.git.pull()
             if submodule:
-                repo.git.submodule('update')
+                repo.git.submodule("update")
         else:
             reporter.report_git_clone(repo_name)
             repo = Repo.clone_from(repo, local_repo_folder)
             if submodule:
-                repo.git.submodule('update', '--init')
+                repo.git.submodule("update", "--init")
 
 
 def get_template_path(template_dirs, template):
@@ -183,11 +183,9 @@ def get_repo_name(repo_url):
 
 def get_moban_home():
     from appdirs import user_cache_dir
+
     home_dir = user_cache_dir(appname=constants.PROGRAM_NAME)
-    return os.path.join(
-        home_dir,
-        constants.MOBAN_REPOS_DIR_NAME,
-    )
+    return os.path.join(home_dir, constants.MOBAN_REPOS_DIR_NAME)
 
 
 def _remove_dot_git(repo_name):
