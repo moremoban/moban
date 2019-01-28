@@ -51,6 +51,7 @@ INSTALL_REQUIRES = [
     'lml>=0.0.9',
     'appdirs==1.4.3',
     'crayons',
+    'GitPython==2.1.11',
 ]
 SETUP_COMMANDS = {}
 

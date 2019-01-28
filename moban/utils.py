@@ -149,10 +149,9 @@ def git_clone(repos, submodule=False):
                 repo.git.submodule('update')
         else:
             reporter.report_git_clone(repo_name)
-            repo = Repo.clone_from(repo, moban_home)
+            repo = Repo.clone_from(repo, local_repo_folder)
             if submodule:
-                output = repo.git.submodule('update', '--init')
-                reporter.report_info_message(output)
+                repo.git.submodule('update', '--init')
 
 
 def get_template_path(template_dirs, template):

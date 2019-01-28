@@ -139,44 +139,67 @@ def test_pip_install(fake_check_all):
 
 
 @patch('os.path.exists', return_value=True)
+@patch('appdirs.user_cache_dir', return_value='root')
+@patch('moban.utils.mkdir_p')
 @patch('git.Repo', autospec=True)
-def test_git_clone(fake_repo, _):
+def test_git_update(fake_repo, fake_make_dir,  *_):
     from moban.utils import git_clone
 
-    repos = ["https://github.com/my/repo", "https://gitlab.com/my/repo"]
+    repos = ["https://github.com/my/repoA"]
     git_clone(repos)
     fake_repo.assert_called_with(
-        repos[1]
+        os.path.join('root', 'repos', 'repoA')
+    )
+    repo = fake_repo.return_value
+    eq_(repo.git.pull.called, True)
+
+
+@patch('os.path.exists', return_value=True)
+@patch('appdirs.user_cache_dir', return_value='root')
+@patch('moban.utils.mkdir_p')
+@patch('git.Repo', autospec=True)
+def test_git_update_with_submodules(fake_repo, fake_make_dir,  *_):
+    from moban.utils import git_clone
+
+    repos = ["https://github.com/my/repoA"]
+    git_clone(repos, submodule=True)
+    fake_repo.assert_called_with(
+        os.path.join('root', 'repos', 'repoA')
     )
     repo = fake_repo.return_value
     repo.git.submodule.assert_called_with('update')
 
 
-@patch("git.Repo", autospec=True)
-def test_git_clone_with_submodules(fake_repo):
+@patch('os.path.exists', return_value=False)
+@patch('appdirs.user_cache_dir', return_value='root')
+@patch('moban.utils.mkdir_p')
+@patch('git.Repo', autospec=True)
+def test_git_checkout_new(fake_repo, fake_make_dir,  *_):
     from moban.utils import git_clone
 
+    repos = ["https://github.com/my/repoA"]
+    git_clone(repos)
+    fake_repo.clone_from.assert_called_with(
+        repos[0], os.path.join('root', 'repos', 'repoA')
+    )
     repo = fake_repo.return_value
-
-    git_clone(
-        ["https://github.com/my/repo", "https://gitlab.com/my/repo"],
-        submodule=True,
-    )
-    #fake_check_all.assert_called_with(["git", "submodule", "update"])
-    
+    eq_(repo.git.submodule.called, False)
 
 
-@patch("os.path.exists", return_value=True)
-@patch("os.chdir")
-@patch("subprocess.check_call")
-def test_git_clone_with_existing_repo(fake_check_all, _, __):
+@patch('os.path.exists', return_value=False)
+@patch('appdirs.user_cache_dir', return_value='root')
+@patch('moban.utils.mkdir_p')
+@patch('git.Repo', autospec=True)
+def test_git_checkout_new_with_submodules(fake_repo, *_):
     from moban.utils import git_clone
 
-    git_clone(
-        ["https://github.com/my/repo", "https://gitlab.com/my/repo"],
-        submodule=True,
+    repos = ["https://github.com/my/repoA"]
+    git_clone(repos, submodule=True)
+    fake_repo.clone_from.assert_called_with(
+        repos[0], os.path.join('root', 'repos', 'repoA')
     )
-    fake_check_all.assert_called_with(["git", "submodule", "update"])
+    repo = fake_repo.clone_from.return_value
+    repo.git.submodule.assert_called_with('update', '--init')
 
 
 def test_get_repo_name():
