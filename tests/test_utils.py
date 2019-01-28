@@ -138,26 +138,32 @@ def test_pip_install(fake_check_all):
     )
 
 
-@patch("subprocess.check_call")
-def test_git_clone(fake_check_all):
+@patch('os.path.exists', return_value=True)
+@patch('git.Repo', autospec=True)
+def test_git_clone(fake_repo, _):
     from moban.utils import git_clone
 
-    git_clone(["https://github.com/my/repo", "https://gitlab.com/my/repo"])
-    fake_check_all.assert_called_with(
-        ["git", "clone", "https://gitlab.com/my/repo", "repo"]
+    repos = ["https://github.com/my/repo", "https://gitlab.com/my/repo"]
+    git_clone(repos)
+    fake_repo.assert_called_with(
+        repos[1]
     )
+    repo = fake_repo.return_value
+    repo.git.submodule.assert_called_with('update')
 
 
-@patch("os.chdir")
-@patch("subprocess.check_call")
-def test_git_clone_with_submodules(fake_check_all, _):
+@patch("git.Repo", autospec=True)
+def test_git_clone_with_submodules(fake_repo):
     from moban.utils import git_clone
+
+    repo = fake_repo.return_value
 
     git_clone(
         ["https://github.com/my/repo", "https://gitlab.com/my/repo"],
         submodule=True,
     )
-    fake_check_all.assert_called_with(["git", "submodule", "update"])
+    #fake_check_all.assert_called_with(["git", "submodule", "update"])
+    
 
 
 @patch("os.path.exists", return_value=True)

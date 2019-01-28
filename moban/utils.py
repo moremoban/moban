@@ -133,7 +133,7 @@ def pip_install(packages):
 
 
 def git_clone(repos, submodule=False):
-    import subprocess
+    from git import Repo
 
     moban_home = get_moban_home()
     mkdir_p(moban_home)
@@ -141,22 +141,18 @@ def git_clone(repos, submodule=False):
     for repo in repos:
         repo_name = get_repo_name(repo)
         local_repo_folder = os.path.join(moban_home, repo_name)
-        current_working_dir = os.getcwd()
         if os.path.exists(local_repo_folder):
             reporter.report_git_pull(repo_name)
-            os.chdir(local_repo_folder)
-            subprocess.check_call(["git", "pull"])
+            repo = Repo(local_repo_folder)
+            repo.git.pull()
             if submodule:
-                subprocess.check_call(["git", "submodule", "update"])
+                repo.git.submodule('update')
         else:
             reporter.report_git_clone(repo_name)
-            os.chdir(moban_home)
-            subprocess.check_call(["git", "clone", repo, repo_name])
+            repo = Repo.clone_from(repo, moban_home)
             if submodule:
-                os.chdir(os.path.join(moban_home, repo_name))
-                subprocess.check_call(["git", "submodule", "init"])
-                subprocess.check_call(["git", "submodule", "update"])
-        os.chdir(current_working_dir)
+                output = repo.git.submodule('update', '--init')
+                reporter.report_info_message(output)
 
 
 def get_template_path(template_dirs, template):
