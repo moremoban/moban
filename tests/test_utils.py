@@ -147,13 +147,20 @@ class TestGitFunctions:
     def setUp(self):
         self.repo_name = "repoA"
         self.repo = "https://github.com/my/" + self.repo_name
+        self.require = {
+            "url": self.repo
+        }
+        self.require_with_submodule = {
+            "url": self.repo,
+            "submodule": True
+        }
         self.expected_local_repo_path = os.path.join(
             "root", "repos", self.repo_name
         )
 
     def test_checkout_new(self, fake_repo, local_folder_exists, *_):
         local_folder_exists.return_value = False
-        git_clone([self.repo])
+        git_clone([self.require])
         fake_repo.clone_from.assert_called_with(
             self.repo, self.expected_local_repo_path
         )
@@ -164,7 +171,7 @@ class TestGitFunctions:
         self, fake_repo, local_folder_exists, *_
     ):
         local_folder_exists.return_value = False
-        git_clone([self.repo], submodule=True)
+        git_clone([self.require_with_submodule], submodule=True)
         fake_repo.clone_from.assert_called_with(
             self.repo, self.expected_local_repo_path
         )
@@ -173,7 +180,7 @@ class TestGitFunctions:
 
     def test_git_update(self, fake_repo, local_folder_exists, *_):
         local_folder_exists.return_value = True
-        git_clone([self.repo])
+        git_clone([self.require])
         fake_repo.assert_called_with(self.expected_local_repo_path)
         repo = fake_repo.return_value
         eq_(repo.git.pull.called, True)
@@ -182,7 +189,7 @@ class TestGitFunctions:
         self, fake_repo, local_folder_exists, *_
     ):
         local_folder_exists.return_value = True
-        git_clone([self.repo], submodule=True)
+        git_clone([self.require_with_submodule], submodule=True)
         fake_repo.assert_called_with(self.expected_local_repo_path)
         repo = fake_repo.return_value
         repo.git.submodule.assert_called_with("update")

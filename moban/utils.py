@@ -132,14 +132,16 @@ def pip_install(packages):
     )
 
 
-def git_clone(repos, submodule=False):
+def git_clone(requires, submodule=False):
     from git import Repo
 
     moban_home = get_moban_home()
     mkdir_p(moban_home)
 
-    for repo in repos:
-        repo_name = get_repo_name(repo)
+    for require in requires:
+        repo_url = require.get(constants.GIT_URL)
+        submodule = require.get(constants.GIT_HAS_SUBMODULE, False)
+        repo_name = get_repo_name(repo_url)
         local_repo_folder = os.path.join(moban_home, repo_name)
         if os.path.exists(local_repo_folder):
             reporter.report_git_pull(repo_name)
@@ -149,8 +151,8 @@ def git_clone(repos, submodule=False):
                 reporter.report_info_message("updating submodule")
                 repo.git.submodule("update")
         else:
-            reporter.report_git_clone(repo_name)
-            repo = Repo.clone_from(repo, local_repo_folder)
+            reporter.report_git_clone(repo_url)
+            repo = Repo.clone_from(repo_url, local_repo_folder)
             if submodule:
                 reporter.report_info_message("checking out submodule")
                 repo.git.submodule("update", "--init")
