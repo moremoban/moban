@@ -20,5 +20,6 @@ dependencies:
   - lml>=0.0.9
   - appdirs==1.4.3
   - crayons
+  - GitPython==2.1.11
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com

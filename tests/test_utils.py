@@ -9,6 +9,7 @@ from nose.tools import eq_, raises
 
 from moban.utils import (
     mkdir_p,
+    git_clone,
     get_repo_name,
     get_moban_home,
     write_file_out,
@@ -138,39 +139,53 @@ def test_pip_install(fake_check_all):
     )
 
 
-@patch("subprocess.check_call")
-def test_git_clone(fake_check_all):
-    from moban.utils import git_clone
+@patch("appdirs.user_cache_dir", return_value="root")
+@patch("moban.utils.mkdir_p")
+@patch("os.path.exists")
+@patch("git.Repo", autospec=True)
+class TestGitFunctions:
+    def setUp(self):
+        self.repo_name = "repoA"
+        self.repo = "https://github.com/my/" + self.repo_name
+        self.expected_local_repo_path = os.path.join(
+            "root", "repos", self.repo_name
+        )
 
-    git_clone(["https://github.com/my/repo", "https://gitlab.com/my/repo"])
-    fake_check_all.assert_called_with(
-        ["git", "clone", "https://gitlab.com/my/repo", "repo"]
-    )
+    def test_checkout_new(self, fake_repo, local_folder_exists, *_):
+        local_folder_exists.return_value = False
+        git_clone([self.repo])
+        fake_repo.clone_from.assert_called_with(
+            self.repo, self.expected_local_repo_path
+        )
+        repo = fake_repo.return_value
+        eq_(repo.git.submodule.called, False)
 
+    def test_checkout_new_with_submodules(
+        self, fake_repo, local_folder_exists, *_
+    ):
+        local_folder_exists.return_value = False
+        git_clone([self.repo], submodule=True)
+        fake_repo.clone_from.assert_called_with(
+            self.repo, self.expected_local_repo_path
+        )
+        repo = fake_repo.clone_from.return_value
+        repo.git.submodule.assert_called_with("update", "--init")
 
-@patch("os.chdir")
-@patch("subprocess.check_call")
-def test_git_clone_with_submodules(fake_check_all, _):
-    from moban.utils import git_clone
+    def test_git_update(self, fake_repo, local_folder_exists, *_):
+        local_folder_exists.return_value = True
+        git_clone([self.repo])
+        fake_repo.assert_called_with(self.expected_local_repo_path)
+        repo = fake_repo.return_value
+        eq_(repo.git.pull.called, True)
 
-    git_clone(
-        ["https://github.com/my/repo", "https://gitlab.com/my/repo"],
-        submodule=True,
-    )
-    fake_check_all.assert_called_with(["git", "submodule", "update"])
-
-
-@patch("os.path.exists", return_value=True)
-@patch("os.chdir")
-@patch("subprocess.check_call")
-def test_git_clone_with_existing_repo(fake_check_all, _, __):
-    from moban.utils import git_clone
-
-    git_clone(
-        ["https://github.com/my/repo", "https://gitlab.com/my/repo"],
-        submodule=True,
-    )
-    fake_check_all.assert_called_with(["git", "submodule", "update"])
+    def test_git_update_with_submodules(
+        self, fake_repo, local_folder_exists, *_
+    ):
+        local_folder_exists.return_value = True
+        git_clone([self.repo], submodule=True)
+        fake_repo.assert_called_with(self.expected_local_repo_path)
+        repo = fake_repo.return_value
+        repo.git.submodule.assert_called_with("update")
 
 
 def test_get_repo_name():
@@ -180,7 +195,7 @@ def test_get_repo_name():
     eq_(expected, actual)
 
 
-@patch('appdirs.user_cache_dir', return_value='root')
+@patch("appdirs.user_cache_dir", return_value="root")
 def test_get_moban_home(_):
     actual = get_moban_home()
-    eq_(os.path.join('root', 'repos'), actual)
+    eq_(os.path.join("root", "repos"), actual)
