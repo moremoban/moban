@@ -211,10 +211,26 @@ class TestGitFunctions:
 
 
 def test_get_repo_name():
-    repos = ["https://github.com/abc/repo", "https://github.com/abc/repo/"]
+    repos = [
+        "https://github.com/abc/repo",
+        "https://github.com/abc/repo.git",
+        "https://github.com/abc/repo/",
+        "git@github.com:moremoban/moban.git",
+    ]
     actual = [get_repo_name(repo) for repo in repos]
-    expected = ["repo", "repo"]
+    expected = ["repo", "repo", "repo", "moban"]
     eq_(expected, actual)
+
+
+@patch("moban.reporter.report_error_message")
+def test_get_repo_name_can_handle_invalid_url(fake_reporter):
+    invalid_repo = "invalid"
+    try:
+        get_repo_name(invalid_repo)
+    except Exception:
+        fake_reporter.assert_called_with(
+            'An invalid git url: "invalid" in mobanfile'
+        )
 
 
 @patch("appdirs.user_cache_dir", return_value="root")
