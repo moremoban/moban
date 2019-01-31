@@ -150,7 +150,9 @@ def git_clone(requires):
                 repo.git.submodule("update")
         else:
             reporter.report_git_clone(require.git_url)
-            repo = Repo.clone_from(require.git_url, local_repo_folder)
+            repo = Repo.clone_from(
+                require.git_url, local_repo_folder, **require.clone_params()
+            )
             if require.submodule:
                 reporter.report_info_message("checking out submodule")
                 repo.git.submodule("update", "--init")

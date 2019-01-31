@@ -35,5 +35,6 @@ The alternative syntax is::
        - type: git
          url: https://github.com/your-git-url
          submodule: true
+         branch: your_choice_or_default_branch_if_not_specified
     ...
 

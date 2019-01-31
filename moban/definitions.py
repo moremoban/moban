@@ -4,6 +4,12 @@ class GitRequire(object):
         self.submodule = submodule
         self.branch = branch
 
+    def clone_params(self):
+        clone_params = {"single_branch": True}
+        if self.branch is not None:
+            clone_params["branch"] = self.branch
+        return clone_params
+
     def __eq__(self, other):
         return (
             self.git_url == other.git_url
