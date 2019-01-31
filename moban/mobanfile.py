@@ -16,6 +16,7 @@ from moban.utils import (
     expand_directories,
 )
 from moban.copier import Copier
+from moban.definitions import GitRequire
 
 try:
     from urllib.parse import urlparse
@@ -169,15 +170,20 @@ def handle_requires(requires):
         if isinstance(require, dict):
             require_type = require.get(constants.REQUIRE_TYPE, "")
             if require_type.upper() == constants.GIT_REQUIRE:
-                git_repos.append(require)
+                git_repos.append(
+                    GitRequire(
+                        git_url=require.get(constants.GIT_URL),
+                        branch=require.get(constants.GIT_BRANCH),
+                        submodule=require.get(
+                            constants.GIT_HAS_SUBMODULE, False
+                        ),
+                    )
+                )
             elif require_type.upper() == constants.PYPI_REQUIRE:
                 pypi_pkgs.append(require.get(constants.PYPI_PACKAGE_NAME))
         else:
             if is_repo(require):
-                git_repos.append({
-                    constants.GIT_URL: require,
-                    constants.GIT_HAS_SUBMODULE: False
-                })
+                git_repos.append(GitRequire(require))
             else:
                 pypi_pkgs.append(require)
     if pypi_pkgs:
