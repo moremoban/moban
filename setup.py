@@ -46,7 +46,7 @@ CLASSIFIERS = [
 ]
 
 INSTALL_REQUIRES = [
-    'ruamel.yaml==0.15.86',
+    'ruamel.yaml==0.15.87',
     'jinja2>=2.7.1',
     'lml>=0.0.9',
     'appdirs==1.4.3',
