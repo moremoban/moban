@@ -52,6 +52,7 @@ INSTALL_REQUIRES = [
     'appdirs==1.4.3',
     'crayons',
     'GitPython==2.1.11',
+    'git-url-parse',
 ]
 SETUP_COMMANDS = {}
 

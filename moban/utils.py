@@ -176,13 +176,17 @@ def get_template_path(template_dirs, template):
 
 
 def get_repo_name(repo_url):
-    path = repo_url.split("/")
-    if repo_url.endswith("/"):
-        repo_name = path[-2]
-    else:
-        repo_name = path[-1]
-    repo_name = _remove_dot_git(repo_name)
-    return repo_name
+    import giturlparse
+    from giturlparse.parser import ParserError
+
+    try:
+        repo = giturlparse.parse(repo_url)
+        return repo.name
+    except ParserError:
+        reporter.report_error_message(
+            constants.MESSAGE_INVALID_GIT_URL % repo_url
+        )
+        raise
 
 
 def get_moban_home():

@@ -66,6 +66,7 @@ MESSAGE_SYNTAX_ERROR = "%s already exists in the target %s"
 MESSAGE_DIR_NOT_EXIST = "%s does not exist"
 MESSAGE_NO_THIRD_PARTY_ENGINE = "No such template support"
 MESSAGE_FILE_VERSION_NOT_SUPPORTED = "moban file version '%s' is not supported"
+MESSAGE_INVALID_GIT_URL = 'An invalid git url: "%s" in mobanfile'
 
 # I/O messages
 # Error handling
