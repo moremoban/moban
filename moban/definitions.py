@@ -1,3 +1,6 @@
+from moban import constants
+
+
 class GitRequire(object):
     def __init__(self, git_url=None, branch=None, submodule=False):
         self.git_url = git_url
@@ -19,3 +22,23 @@ class GitRequire(object):
 
     def __repr__(self):
         return "%s,%s,%s" % (self.git_url, self.branch, self.submodule)
+
+
+class Target(object):
+    def __init__(self, type):
+        self.type = type
+
+
+class TemplateTarget(Target):
+    def __init__(self, template_file, data_file, output):
+        super(TemplateTarget).__init__(constants.ACTION_TEMPLATE)
+        self.template_file = template_file
+        self.data_file = data_file
+        self.output = output
+
+
+class CopyTarget(Target):
+    def __init__(self, source, destination):
+        super(TemplateTarget).__init__(constants.ACTION_TEMPLATE)
+        self.source = source
+        self.destination = destination

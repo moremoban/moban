@@ -7,6 +7,7 @@ import errno
 import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions
+from moban.definitions import TemplateTarget
 
 
 def merge(left, right):
@@ -47,16 +48,21 @@ def parse_targets(options, targets):
     common_data_file = options[constants.LABEL_CONFIG]
     for target in targets:
         if constants.LABEL_OUTPUT in target:
-            template_file = target.get(
-                constants.LABEL_TEMPLATE,
-                options.get(constants.LABEL_TEMPLATE, None),
-            )
-            data_file = target.get(constants.LABEL_CONFIG, common_data_file)
-            output = target[constants.LABEL_OUTPUT]
-            yield ((template_file, data_file, output))
+            action = target.get(
+                constants.LABEL_ACTION,
+                constants.DEFAULT_ACTION)
+            if action == constants.ACTION_TEMPLATE:
+                template_file = target.get(
+                    constants.LABEL_TEMPLATE,
+                    options.get(constants.LABEL_TEMPLATE, None),
+                )
+                data_file = target.get(constants.LABEL_CONFIG,
+                                       common_data_file)
+                output = target[constants.LABEL_OUTPUT]
+                yield TemplateTarget(template_file, data_file, output)
         else:
             for output, template_file in target.items():
-                yield ((template_file, common_data_file, output))
+                yield TemplateTarget(template_file, common_data_file, output)
 
 
 def expand_directories(file_list, template_dirs):

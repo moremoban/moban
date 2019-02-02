@@ -13,6 +13,8 @@ DEFAULT_MOBAN_FILES = [
 ]
 DEFAULT_TEMPLATE_TYPE = "jinja2"
 DEFAULT_DATA_TYPE = "yaml"
+ACTION_COPY = "copy"
+DEFAULT_ACTION = ACTION_TEMPLATE = "template"
 
 # .moban.hashes
 DEFAULT_MOBAN_CACHE_FILE = ".moban.hashes"
@@ -57,6 +59,7 @@ LABEL_REQUIRES = "requires"
 LABEL_TARGETS = "targets"
 LABEL_COPY = "copy"
 LABEL_EXTENSIONS = "extensions"
+LABEL_ACTION = "action"
 
 # error messages
 ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"
