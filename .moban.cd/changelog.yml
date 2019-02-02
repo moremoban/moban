@@ -11,8 +11,8 @@ releases:
     details:
     - "`#178`: UnboundLocalError: local variable 'target' referenced before assignment"
     - "`#169`: uses GitPython instead of barebone git commands"
-  date: unreleased
-  version: 0.4.0
+  date: 3.2.2019 
+  version: 0.3.10
 - changes:
   - action: Updated
     details:
