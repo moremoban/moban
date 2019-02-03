@@ -1,0 +1,9 @@
+{%block header %}
+{%endblock%}
+
+{{hello}}
+
+{{nihao}}
+
+{%block footer %}
+{%endblock%}

@@ -16,6 +16,7 @@ from moban.utils import (
     expand_directories,
 )
 from moban.copier import Copier
+from moban.definitions import GitRequire
 
 try:
     from urllib.parse import urlparse
@@ -39,20 +40,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     merged_options = None
 
     targets = moban_file_configurations.get(constants.LABEL_TARGETS)
-    try:
-        target = extract_target(command_line_options)
-    except Exception as exception:
-        if targets:
-            template = command_line_options.get(constants.LABEL_TEMPLATE)
-            for t in targets:
-                found_template = template in t.values()
-                if found_template:
-                    target = [dict(t)]
-            if not found_template:
-                # Warn user if template not defined under targets in moban file
-                reporter.report_template_not_in_moban_file(template)
-        else:
-            raise exception
+    target = extract_target(command_line_options)
 
     if constants.LABEL_CONFIG in moban_file_configurations:
         merged_options = merge(
@@ -73,11 +61,11 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
         plugins.ENGINES.register_extensions(extensions)
 
     if targets:
-        # If template specified via CLI flag `-t:
-        # 1. Only update the specified template
-        # 2. Do not copy
         if target:
             targets = target
+            # If template specified via CLI flag `-t:
+            # 1. Only update the specified template
+            # 2. Do not copy
             if constants.LABEL_COPY in moban_file_configurations:
                 del moban_file_configurations[constants.LABEL_COPY]
         number_of_templated_files = handle_targets(merged_options, targets)
@@ -178,29 +166,30 @@ def extract_target(options):
 def handle_requires(requires):
     pypi_pkgs = []
     git_repos = []
-    git_repos_with_sub = []
     for require in requires:
         if isinstance(require, dict):
             require_type = require.get(constants.REQUIRE_TYPE, "")
             if require_type.upper() == constants.GIT_REQUIRE:
-                submodule_flag = require.get(constants.GIT_HAS_SUBMODULE)
-                if submodule_flag is True:
-                    git_repos_with_sub.append(require.get(constants.GIT_URL))
-                else:
-                    git_repos.append(require.get(constants.GIT_URL))
+                git_repos.append(
+                    GitRequire(
+                        git_url=require.get(constants.GIT_URL),
+                        branch=require.get(constants.GIT_BRANCH),
+                        submodule=require.get(
+                            constants.GIT_HAS_SUBMODULE, False
+                        ),
+                    )
+                )
             elif require_type.upper() == constants.PYPI_REQUIRE:
                 pypi_pkgs.append(require.get(constants.PYPI_PACKAGE_NAME))
         else:
             if is_repo(require):
-                git_repos.append(require)
+                git_repos.append(GitRequire(require))
             else:
                 pypi_pkgs.append(require)
     if pypi_pkgs:
         pip_install(pypi_pkgs)
     if git_repos:
         git_clone(git_repos)
-    if git_repos_with_sub:
-        git_clone(git_repos_with_sub, submodule=True)
 
 
 def is_repo(require):

@@ -1,11 +1,8 @@
 import os
 import re
 import sys
-import json
 import stat
 import errno
-
-from ruamel.yaml import YAML
 
 import moban.reporter as reporter
 import moban.constants as constants
@@ -30,38 +27,6 @@ def merge(left, right):
             else:
                 left[key] = merge(left[key], value)
     return left
-
-
-def open_yaml(base_dir, file_name):
-    """
-    chained yaml loader
-    """
-    the_yaml_file = search_file(base_dir, file_name)
-    with open(the_yaml_file, "r") as data_yaml:
-        yaml = YAML(typ="rt")
-        data = yaml.load(data_yaml)
-        if data is not None:
-            parent_data = None
-            if base_dir and constants.LABEL_OVERRIDES in data:
-                parent_data = open_yaml(
-                    base_dir, data.pop(constants.LABEL_OVERRIDES)
-                )
-            if parent_data:
-                return merge(data, parent_data)
-            else:
-                return data
-        else:
-            return None
-
-
-def open_json(base_dir, file_name):
-    """
-    returns json contents as string
-    """
-    the_json_file = search_file(base_dir, file_name)
-    with open(the_json_file, "r") as json_data:
-        data = json.loads(json_data.read())
-        return data
 
 
 def search_file(base_dir, file_name):
@@ -167,31 +132,30 @@ def pip_install(packages):
     )
 
 
-def git_clone(repos, submodule=False):
-    import subprocess
+def git_clone(requires):
+    from git import Repo
 
     moban_home = get_moban_home()
     mkdir_p(moban_home)
 
-    for repo in repos:
-        repo_name = get_repo_name(repo)
+    for require in requires:
+        repo_name = get_repo_name(require.git_url)
         local_repo_folder = os.path.join(moban_home, repo_name)
-        current_working_dir = os.getcwd()
         if os.path.exists(local_repo_folder):
             reporter.report_git_pull(repo_name)
-            os.chdir(local_repo_folder)
-            subprocess.check_call(["git", "pull"])
-            if submodule:
-                subprocess.check_call(["git", "submodule", "update"])
+            repo = Repo(local_repo_folder)
+            repo.git.pull()
+            if require.submodule:
+                reporter.report_info_message("updating submodule")
+                repo.git.submodule("update")
         else:
-            reporter.report_git_clone(repo_name)
-            os.chdir(moban_home)
-            subprocess.check_call(["git", "clone", repo, repo_name])
-            if submodule:
-                os.chdir(os.path.join(moban_home, repo_name))
-                subprocess.check_call(["git", "submodule", "init"])
-                subprocess.check_call(["git", "submodule", "update"])
-        os.chdir(current_working_dir)
+            reporter.report_git_clone(require.git_url)
+            repo = Repo.clone_from(
+                require.git_url, local_repo_folder, **require.clone_params()
+            )
+            if require.submodule:
+                reporter.report_info_message("checking out submodule")
+                repo.git.submodule("update", "--init")
 
 
 def get_template_path(template_dirs, template):
@@ -212,24 +176,24 @@ def get_template_path(template_dirs, template):
 
 
 def get_repo_name(repo_url):
-    path = repo_url.split("/")
-    if repo_url.endswith("/"):
-        repo_name = path[-2]
-    else:
-        repo_name = path[-1]
-    repo_name = _remove_dot_git(repo_name)
-    return repo_name
+    import giturlparse
+    from giturlparse.parser import ParserError
+
+    try:
+        repo = giturlparse.parse(repo_url)
+        return repo.name
+    except ParserError:
+        reporter.report_error_message(
+            constants.MESSAGE_INVALID_GIT_URL % repo_url
+        )
+        raise
 
 
 def get_moban_home():
-    home_dir = os.path.expanduser("~")
-    if os.path.exists(home_dir):
-        return os.path.join(
-            home_dir,
-            constants.MOBAN_DIR_NAME_UNDER_USER_HOME,
-            constants.MOBAN_REPOS_DIR_NAME,
-        )
-    raise IOError("Failed to find user home directory")
+    from appdirs import user_cache_dir
+
+    home_dir = user_cache_dir(appname=constants.PROGRAM_NAME)
+    return os.path.join(home_dir, constants.MOBAN_REPOS_DIR_NAME)
 
 
 def _remove_dot_git(repo_name):

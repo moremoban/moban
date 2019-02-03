@@ -137,7 +137,7 @@ Exit codes
 --------------------------------------------------------------------------------
 By default:
 
-- 0 : no changes
+- 0 : no error
 - 1 : error occured
 
 With `--exit-code`:

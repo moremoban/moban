@@ -28,9 +28,9 @@ copyright = u'2017-2019 Onni Software Ltd.'
 author = u'C. W.'
 
 # The short X.Y version
-version = u'0.3.9'
+version = u'0.3.10'
 # The full version, including alpha/beta/rc tags
-release = u'0.3.9'
+release = u'0.3.10'
 
 
 # -- General configuration ---------------------------------------------------

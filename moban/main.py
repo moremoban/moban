@@ -11,12 +11,9 @@
 import sys
 import argparse
 
-import moban.reporter as reporter
-import moban.constants as constants
-import moban.mobanfile as mobanfile
-import moban.exceptions as exceptions
-from moban import plugins
-from moban.utils import merge, open_yaml
+from moban import plugins, reporter, constants, mobanfile, exceptions
+from moban.utils import merge
+from moban._version import __version__
 from moban.hashstore import HASH_STORE
 
 
@@ -115,6 +112,12 @@ def create_parser():
         nargs="?",
         help="string templates",
     )
+    parser.add_argument(
+        "-v",
+        "--%s" % constants.LABEL_VERSION,
+        action="version",
+        version="%(prog)s {v}".format(v=__version__),
+    )
     return parser
 
 
@@ -122,7 +125,7 @@ def handle_moban_file(moban_file, options):
     """
     act upon default moban file
     """
-    moban_file_configurations = open_yaml(None, moban_file)
+    moban_file_configurations = plugins.load_data(None, moban_file)
     if moban_file_configurations is None:
         raise exceptions.MobanfileGrammarException(
             constants.ERROR_INVALID_MOBAN_FILE % moban_file

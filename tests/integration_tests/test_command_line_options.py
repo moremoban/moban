@@ -147,6 +147,15 @@ class TestNoOptions:
                 ],
             )
 
+    @raises(Exception)
+    @patch("moban.plugins.BaseEngine.render_to_files")
+    def test_single_command_with_missing_output(self, fake_template_doer):
+        test_args = ["moban", "-t", "abc.jj2"]
+        with patch.object(sys, "argv", test_args):
+            from moban.main import main
+
+            main()
+
     @patch("moban.plugins.BaseEngine.render_to_files")
     def test_single_command_with_a_few_options(self, fake_template_doer):
         test_args = ["moban", "-t", "abc.jj2", "-o", "xyz.output"]
@@ -408,3 +417,12 @@ class TestTemplateTypeOption:
 
     def tearDown(self):
         os.unlink(self.config_file)
+
+
+@raises(SystemExit)
+def test_version_option():
+    test_args = ["moban", "-v"]
+    with patch.object(sys, "argv", test_args):
+        from moban.main import main
+
+        main()

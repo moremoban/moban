@@ -21,7 +21,7 @@ command to launch it:
 
     moban -c data.yaml -t a.template
 
-'a.output' is the generated file::
+'moban.output' is the generated file::
 
     ========header============
     

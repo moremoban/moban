@@ -12,6 +12,7 @@ DEFAULT_MOBAN_FILES = [
     ".%s%s" % (PROGRAM_NAME, ".yaml"),
 ]
 DEFAULT_TEMPLATE_TYPE = "jinja2"
+DEFAULT_DATA_TYPE = "yaml"
 
 # .moban.hashes
 DEFAULT_MOBAN_CACHE_FILE = ".moban.hashes"
@@ -29,6 +30,7 @@ LABEL_TEMPLATE_TYPE = "template_type"
 LABEL_OVERRIDES = "overrides"
 LABEL_MOBANFILE = "mobanfile"
 LABEL_FORCE = "force"
+LABEL_VERSION = "version"
 
 
 DEFAULT_CONFIGURATION_DIRNAME = ".moban.cd"
@@ -64,6 +66,7 @@ MESSAGE_SYNTAX_ERROR = "%s already exists in the target %s"
 MESSAGE_DIR_NOT_EXIST = "%s does not exist"
 MESSAGE_NO_THIRD_PARTY_ENGINE = "No such template support"
 MESSAGE_FILE_VERSION_NOT_SUPPORTED = "moban file version '%s' is not supported"
+MESSAGE_INVALID_GIT_URL = 'An invalid git url: "%s" in mobanfile'
 
 # I/O messages
 # Error handling
@@ -82,6 +85,7 @@ NO_CHANGES = 0
 GIT_REQUIRE = "GIT"
 GIT_HAS_SUBMODULE = "submodule"
 GIT_URL = "url"
+GIT_BRANCH = "branch"
 PYPI_REQUIRE = "PYPI"
 PYPI_PACKAGE_NAME = "name"
 REQUIRE_TYPE = "type"
@@ -93,6 +97,7 @@ JINJA_TEST_EXTENSION = "jinja_test"
 JINJA_GLOBALS_EXTENSION = "jinja_globals"
 
 TEMPLATE_ENGINE_EXTENSION = "template_engine"
+DATA_LOADER_EXTENSION = "data_loader"
 LIBRARY_EXTENSION = "library"
 
 MOBAN_EXTENSIONS = "^moban_.+$"

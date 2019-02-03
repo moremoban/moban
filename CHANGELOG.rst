@@ -1,6 +1,27 @@
 Change log
 ================================================================================
 
+0.3.10 - 3.2.2019
+--------------------------------------------------------------------------------
+
+Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#174 <https://github.com/moremoban/moban/issues/174>`_: Store git cache in
+   XDG_CACHE_DIR
+#. `#107 <https://github.com/moremoban/moban/issues/107>`_: Add -v to show
+   current moban version
+#. `#164 <https://github.com/moremoban/moban/issues/164>`_: support additional
+   data formats
+
+Updated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#178 <https://github.com/moremoban/moban/issues/178>`_: UnboundLocalError:
+   local variable 'target' referenced before assignment
+#. `#169 <https://github.com/moremoban/moban/issues/169>`_: uses GitPython
+   instead of barebone git commands
+
 0.3.9 - 18-1-2019
 --------------------------------------------------------------------------------
 
