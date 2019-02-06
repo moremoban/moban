@@ -17,6 +17,7 @@ from moban.utils import (
 )
 from moban.copier import Copier
 from moban.definitions import CopyTarget, GitRequire
+from moban.deprecated import deprecated
 
 try:
     from urllib.parse import urlparse
@@ -86,6 +87,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     return exit_code
 
 
+@deprecated(constants.MESSAGE_DEPRECATE_COPY_SINCE_0_4_0)
 def handle_copy(template_dirs, copy_config):
     copy_targets = []
     for (dest, src) in _iterate_list_of_dicts(copy_config):
