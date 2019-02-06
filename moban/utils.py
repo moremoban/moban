@@ -7,7 +7,7 @@ import errno
 import moban.reporter as reporter
 import moban.constants as constants
 import moban.exceptions as exceptions
-from moban.definitions import TemplateTarget
+from moban.definitions import CopyTarget, TemplateTarget
 
 
 def merge(left, right):
@@ -49,43 +49,51 @@ def parse_targets(options, targets):
     for target in targets:
         if constants.LABEL_OUTPUT in target:
             action = target.get(
-                constants.LABEL_ACTION,
-                constants.DEFAULT_ACTION)
+                constants.LABEL_ACTION, constants.DEFAULT_ACTION
+            )
             if action == constants.ACTION_TEMPLATE:
                 template_file = target.get(
                     constants.LABEL_TEMPLATE,
                     options.get(constants.LABEL_TEMPLATE, None),
                 )
-                data_file = target.get(constants.LABEL_CONFIG,
-                                       common_data_file)
+                data_file = target.get(
+                    constants.LABEL_CONFIG, common_data_file
+                )
                 output = target[constants.LABEL_OUTPUT]
                 yield TemplateTarget(template_file, data_file, output)
+            else:
+                yield CopyTarget(
+                    target.get(constants.LABEL_SOURCE),
+                    target.get(constants.LABEL_DEST),
+                )
         else:
             for output, template_file in target.items():
                 yield TemplateTarget(template_file, common_data_file, output)
 
 
 def expand_directories(file_list, template_dirs):
-    for template_file, data_file, output in file_list:
-        true_template_file = template_file
+    for target in file_list:
+        true_template_file = target.template_file
         for a_template_dir in template_dirs:
-            true_template_file = os.path.join(a_template_dir, template_file)
+            true_template_file = os.path.join(
+                a_template_dir, target.template_file
+            )
             if os.path.exists(true_template_file):
                 break
         if os.path.isdir(true_template_file):
             for file_name in os.listdir(true_template_file):
-                template_file = "/".join([template_file, file_name])
+                template_file = "/".join([target.template_file, file_name])
                 template_file = template_file.replace("\\", "/")
                 base_output_name, _ = os.path.splitext(file_name)
                 yield (
                     (
                         template_file,
-                        data_file,
-                        os.path.join(output, base_output_name),
+                        target.data_file,
+                        os.path.join(target.output, base_output_name),
                     )
                 )
         else:
-            yield ((template_file, data_file, output))
+            yield ((target.template_file, target.data_file, target.output))
 
 
 def file_permissions_copy(source, dest):

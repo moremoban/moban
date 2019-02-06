@@ -31,7 +31,7 @@ class Target(object):
 
 class TemplateTarget(Target):
     def __init__(self, template_file, data_file, output):
-        super(TemplateTarget).__init__(constants.ACTION_TEMPLATE)
+        super(TemplateTarget, self).__init__(constants.ACTION_TEMPLATE)
         self.template_file = template_file
         self.data_file = data_file
         self.output = output
@@ -39,6 +39,6 @@ class TemplateTarget(Target):
 
 class CopyTarget(Target):
     def __init__(self, source, destination):
-        super(TemplateTarget).__init__(constants.ACTION_TEMPLATE)
+        super(CopyTarget, self).__init__(constants.ACTION_TEMPLATE)
         self.source = source
         self.destination = destination

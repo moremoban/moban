@@ -18,7 +18,7 @@ class Copier(object):
         self._count = 0
 
     def copy_files(self, file_list):
-        for dest, src in _iterate_list_of_dicts(file_list):
+        for dest, src in file_list:
             src_path = self._get_src_file(src)
             if src_path is None:
                 if src.endswith("**"):
@@ -65,7 +65,7 @@ class Copier(object):
                 self._increment_file_count()
                 src_file_under_dir = os.path.join(source, file_name)
                 dest_file_under_dir = os.path.join(dest, file_name)
-                new_file_pair.append({dest_file_under_dir: src_file_under_dir})
+                new_file_pair.append((dest_file_under_dir, src_file_under_dir))
         if len(new_file_pair) > 0:
             self.copy_files(new_file_pair)
 
@@ -77,14 +77,13 @@ class Copier(object):
             dest_file_under_dir = os.path.join(dest, file_name)
             real_src_file = os.path.join(actual_source_path, file_name)
             if os.path.isfile(real_src_file):
-                new_file_pair.append({dest_file_under_dir: src_file_under_dir})
+                new_file_pair.append((dest_file_under_dir, src_file_under_dir))
             elif os.path.isdir(real_src_file):
                 new_file_pair.append(
-                    {
-                        dest_file_under_dir: os.path.join(
-                            src_file_under_dir, "**"
-                        )
-                    }
+                    (
+                        dest_file_under_dir,
+                        os.path.join(src_file_under_dir, "**"),
+                    )
                 )
         self.copy_files(new_file_pair)
 
@@ -101,9 +100,3 @@ class Copier(object):
 
     def _increment_file_count(self):
         self._file_count += 1
-
-
-def _iterate_list_of_dicts(list_of_dict):
-    for adict in list_of_dict:
-        for key, value in adict.items():
-            yield (key, value)

@@ -60,6 +60,8 @@ LABEL_TARGETS = "targets"
 LABEL_COPY = "copy"
 LABEL_EXTENSIONS = "extensions"
 LABEL_ACTION = "action"
+LABEL_SOURCE = "source"
+LABEL_DEST = "dest"
 
 # error messages
 ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"

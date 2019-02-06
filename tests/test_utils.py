@@ -20,7 +20,7 @@ from moban.utils import (
     strip_off_trailing_new_lines,
 )
 from moban.exceptions import FileNotFound
-from moban.definitions import GitRequire
+from moban.definitions import GitRequire, TemplateTarget
 
 
 def create_file(test_file, permission):
@@ -107,7 +107,7 @@ def test_mkdir_p():
 
 
 def test_expand_dir():
-    file_list = [("template-tests", "abc", "abc")]
+    file_list = [TemplateTarget("template-tests", "abc", "abc")]
     template_dirs = [os.path.join("tests", "fixtures")]
     results = list(expand_directories(file_list, template_dirs))
     expected = [("template-tests/a.jj2", "abc", os.path.join("abc", "a"))]

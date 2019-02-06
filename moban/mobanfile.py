@@ -16,7 +16,7 @@ from moban.utils import (
     expand_directories,
 )
 from moban.copier import Copier
-from moban.definitions import GitRequire
+from moban.definitions import CopyTarget, GitRequire
 
 try:
     from urllib.parse import urlparse
@@ -87,21 +87,52 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
 
 def handle_copy(template_dirs, copy_config):
+    copy_targets = []
+    for (dest, src) in _iterate_list_of_dicts(copy_config):
+        copy_targets.append(CopyTarget(src, dest))
+    return handle_copy_targets(template_dirs, copy_targets)
+
+
+def _iterate_list_of_dicts(list_of_dict):
+    for adict in list_of_dict:
+        for key, value in adict.items():
+            yield (key, value)
+
+
+def handle_targets(merged_options, targets):
+    list_of_templating_parameters = parse_targets(merged_options, targets)
+    template_targets = []
+    copy_targets = []
+    for target in list_of_templating_parameters:
+        if target.type == constants.ACTION_COPY:
+            copy_targets.append(target)
+        elif target.type == constants.ACTION_TEMPLATE:
+            template_targets.append(target)
+    copy_count = handle_copy_targets(
+        merged_options[constants.LABEL_TMPL_DIRS], copy_targets
+    )
+    template_count = handle_template_targets(merged_options, template_targets)
+    return copy_count + template_count
+
+
+def handle_copy_targets(template_dirs, copy_targets):
     # expanding function is added so that
     # copy function understands repo and pypi_pkg path, since 0.3.1
     expanded_dirs = list(plugins.expand_template_directories(template_dirs))
 
     copier = Copier(expanded_dirs)
+    copy_config = []
+    for target in copy_targets:
+        copy_config.append((target.destination, target.source))
     copier.copy_files(copy_config)
     copier.report()
     return copier.number_of_copied_files()
 
 
-def handle_targets(merged_options, targets):
-    list_of_templating_parameters = parse_targets(merged_options, targets)
+def handle_template_targets(merged_options, template_targets):
+
     list_of_templating_parameters = expand_directories(
-        list_of_templating_parameters,
-        merged_options[constants.LABEL_TMPL_DIRS],
+        template_targets, merged_options[constants.LABEL_TMPL_DIRS]
     )
     jobs_for_each_engine = defaultdict(list)
     for file_list in list_of_templating_parameters:
