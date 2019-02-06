@@ -110,7 +110,9 @@ def test_expand_dir():
     file_list = [TemplateTarget("template-tests", "abc", "abc")]
     template_dirs = [os.path.join("tests", "fixtures")]
     results = list(expand_directories(file_list, template_dirs))
-    expected = [("template-tests/a.jj2", "abc", os.path.join("abc", "a"))]
+    expected = [
+        TemplateTarget("template-tests/a.jj2", "abc", os.path.join("abc", "a"))
+    ]
     eq_(results, expected)
 
 

@@ -86,14 +86,18 @@ def expand_directories(file_list, template_dirs):
                 template_file = template_file.replace("\\", "/")
                 base_output_name, _ = os.path.splitext(file_name)
                 yield (
-                    (
+                    TemplateTarget(
                         template_file,
                         target.data_file,
                         os.path.join(target.output, base_output_name),
                     )
                 )
         else:
-            yield ((target.template_file, target.data_file, target.output))
+            yield (
+                TemplateTarget(
+                    target.template_file, target.data_file, target.output
+                )
+            )
 
 
 def file_permissions_copy(source, dest):

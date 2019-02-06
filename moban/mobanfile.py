@@ -16,8 +16,8 @@ from moban.utils import (
     expand_directories,
 )
 from moban.copier import Copier
-from moban.definitions import CopyTarget, GitRequire
 from moban.deprecated import deprecated
+from moban.definitions import CopyTarget, GitRequire
 
 try:
     from urllib.parse import urlparse
@@ -137,15 +137,15 @@ def handle_template_targets(merged_options, template_targets):
         template_targets, merged_options[constants.LABEL_TMPL_DIRS]
     )
     jobs_for_each_engine = defaultdict(list)
-    for file_list in list_of_templating_parameters:
-        _, extension = os.path.splitext(file_list[0])
+    for target in list_of_templating_parameters:
+        _, extension = os.path.splitext(target.template_file)
         template_type = extension[1:]
         primary_template_type = plugins.ENGINES.get_primary_key(template_type)
         if primary_template_type is None:
             primary_template_type = merged_options[
                 constants.LABEL_TEMPLATE_TYPE
             ]
-        jobs_for_each_engine[primary_template_type].append(file_list)
+        jobs_for_each_engine[primary_template_type].append(target)
 
     count = 0
     for template_type in jobs_for_each_engine.keys():

@@ -75,8 +75,8 @@ MESSAGE_INVALID_GIT_URL = 'An invalid git url: "%s" in mobanfile'
 
 # deprecation message
 MESSAGE_DEPRECATE_COPY_SINCE_0_4_0 = (
-    "'copy:' is deprecated since 0.4.0! " +
-    "Please use 'targets:' instead")
+    "'copy:' is deprecated since 0.4.0! " + "Please use 'targets:' instead"
+)
 
 # I/O messages
 # Error handling

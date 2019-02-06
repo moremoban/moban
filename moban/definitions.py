@@ -36,6 +36,13 @@ class TemplateTarget(Target):
         self.data_file = data_file
         self.output = output
 
+    def __eq__(self, other):
+        return (
+            self.template_file == other.template_file
+            and self.data_file == other.data_file
+            and self.output == other.output
+        )
+
 
 class CopyTarget(Target):
     def __init__(self, source, destination):
