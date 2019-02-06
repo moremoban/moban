@@ -221,6 +221,7 @@ def handle_requires(requires):
                 pypi_pkgs.append(require)
     if pypi_pkgs:
         pip_install(pypi_pkgs)
+        plugins.make_sure_all_pkg_are_loaded()
     if git_repos:
         git_clone(git_repos)
 
