@@ -17,13 +17,13 @@ ACTION_COPY = "copy"
 DEFAULT_ACTION = ACTION_TEMPLATE = "template"
 
 # .moban.hashes
-DEFAULT_MOBAN_CACHE_FILE = ".moban.hashes"
+DEFAULT_MOBAN_CACHE_FILE = ".%s.hashes" % PROGRAM_NAME
 
 # Command line options
 LABEL_CONFIG = "configuration"
 LABEL_CONFIG_DIR = "configuration_dir"
 LABEL_PLUGIN_DIRS = "plugin_dir"
-LABEL_TEMPLATE = "template"
+LABEL_TEMPLATE = ACTION_TEMPLATE
 POSITIONAL_LABEL_TEMPLATE = "template_in_string"
 LABEL_TMPL_DIRS = "template_dir"
 LABEL_EXIT_CODE = "exit-code"
@@ -35,8 +35,8 @@ LABEL_FORCE = "force"
 LABEL_VERSION = "version"
 
 
-DEFAULT_CONFIGURATION_DIRNAME = ".moban.cd"
-DEFAULT_TEMPLATE_DIRNAME = ".moban.td"
+DEFAULT_CONFIGURATION_DIRNAME = ".%s.cd" % PROGRAM_NAME
+DEFAULT_TEMPLATE_DIRNAME = ".%s.td" % PROGRAM_NAME
 DEFAULT_OPTIONS = {
     # .moban.cd, default configuration dir
     LABEL_CONFIG_DIR: os.path.join(".", DEFAULT_CONFIGURATION_DIRNAME),
@@ -52,12 +52,11 @@ DEFAULT_OPTIONS = {
 # moban file version
 MOBAN_VERSION = "moban_file_spec_version"
 DEFAULT_MOBAN_VERSION = "1.0"
-MOBAN_DIR_NAME_UNDER_USER_HOME = ".moban"
 MOBAN_REPOS_DIR_NAME = "repos"
 # moban file configuration
 LABEL_REQUIRES = "requires"
 LABEL_TARGETS = "targets"
-LABEL_COPY = "copy"
+LABEL_COPY = ACTION_COPY
 LABEL_EXTENSIONS = "extensions"
 LABEL_ACTION = "action"
 LABEL_SOURCE = "source"
