@@ -29,8 +29,6 @@ class BaseEngine(object):
     def __init__(
         self, template_dirs, context_dirs, engine_cls, engine_extensions=None
     ):
-        # pypi-moban-pkg cannot be found if removed
-        make_sure_all_pkg_are_loaded()
         template_dirs = list(expand_template_directories(template_dirs))
         verify_the_existence_of_directories(template_dirs)
         context_dirs = expand_template_directory(context_dirs)
