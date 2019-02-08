@@ -10,4 +10,3 @@ def open_yaml(file_name):
         yaml = YAML(typ="rt")
         data = yaml.load(data_yaml)
         return data
-

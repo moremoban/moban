@@ -5,7 +5,7 @@ from lml.plugin import PluginManager
 
 import moban.reporter as reporter
 from moban import utils, constants, exceptions
-from moban.strategy import Strategy
+from moban.plugins.strategy import Strategy
 from moban.hashstore import HASH_STORE
 from moban.data_loaders.manager import AnyDataLoader
 
