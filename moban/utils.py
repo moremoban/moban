@@ -228,3 +228,23 @@ def get_moban_home():
 
 def _remove_dot_git(repo_name):
     return repo_name.split(".")[0]
+
+
+def verify_the_existence_of_directories(dirs):
+    if not isinstance(dirs, list):
+        dirs = [dirs]
+
+    for directory in dirs:
+        if os.path.exists(directory):
+            continue
+        should_I_ignore = (
+            constants.DEFAULT_CONFIGURATION_DIRNAME in directory
+            or constants.DEFAULT_TEMPLATE_DIRNAME in directory
+        )
+        if should_I_ignore:
+            # ignore
+            pass
+        else:
+            raise exceptions.DirectoryNotFound(
+                constants.MESSAGE_DIR_NOT_EXIST % os.path.abspath(directory)
+            )

@@ -15,6 +15,7 @@ from moban import plugins, reporter, constants, mobanfile, exceptions
 from moban.utils import merge
 from moban._version import __version__
 from moban.hashstore import HASH_STORE
+from moban.data_loaders.manager import load_data
 
 
 def main():
@@ -125,7 +126,7 @@ def handle_moban_file(moban_file, options):
     """
     act upon default moban file
     """
-    moban_file_configurations = plugins.load_data(None, moban_file)
+    moban_file_configurations = load_data(None, moban_file)
     if moban_file_configurations is None:
         raise exceptions.MobanfileGrammarException(
             constants.ERROR_INVALID_MOBAN_FILE % moban_file
