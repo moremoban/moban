@@ -101,8 +101,8 @@ class BaseEngine(object):
             )
             return True
 
-    def render_to_files(self, array_of_param_tuple):
-        sta = Strategy(array_of_param_tuple)
+    def render_to_files(self, array_of_template_targets):
+        sta = Strategy(array_of_template_targets)
         sta.process()
         choice = sta.what_to_do()
         if choice == Strategy.DATA_FIRST:

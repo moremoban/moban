@@ -28,7 +28,5 @@ Here is example moban file for copying::
 template copy does:
 
 
-#. copies any template inside pre-declared template directory to anywhere. moban will
-  create directory if needed.
-#. copies any directory to anywhere. If "**" is followed, moban attempts to do
-   recursive copying.
+#. copies any template inside pre-declared template directory to anywhere. moban will create directory if needed.
+#. copies any directory to anywhere. If "**" is followed, moban attempts to do recursive copying.
