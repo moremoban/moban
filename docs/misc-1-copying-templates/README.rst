@@ -1,7 +1,12 @@
-Misc 1: copying templates
+Misc 1: copying templates - Deprecated since version 0.4.0
 ================================================================================
 
-With `.moban.yml`, you can copy templates to your destination.
+.. warning::
+   This chapter is kept for regression testing. If you have moban v0.4.0 or
+   above, please do not use the syntax here
+
+With `.moban.yml`, you can copy templates to your destination. Please be
+aware that it is not the same as 'cp', 'copy' commands you have experienced.
 
 
 Please be aware that, your templates and template folder have to be inside

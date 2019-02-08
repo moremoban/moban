@@ -46,6 +46,6 @@ class TemplateTarget(Target):
 
 class CopyTarget(Target):
     def __init__(self, source, destination):
-        super(CopyTarget, self).__init__(constants.ACTION_TEMPLATE)
+        super(CopyTarget, self).__init__(constants.ACTION_COPY)
         self.source = source
         self.destination = destination

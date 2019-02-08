@@ -204,6 +204,12 @@ class TestTutorial:
         commands = ["moban"]
         self._raw_moban(commands, folder, expected, "a.output")
 
+    def test_level_15_copy_templates_as_target(self):
+        expected = "test file\n"
+
+        folder = "level-15-copy-templates-as-target"
+        self._raw_moban(["moban"], folder, expected, "simple.file.copy")
+
     def test_misc_1(self):
         expected = "test file\n"
 
