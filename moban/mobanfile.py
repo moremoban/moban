@@ -15,9 +15,9 @@ from moban.utils import (
     parse_targets,
     expand_directories,
 )
-from moban.copier import Copier
 from moban.deprecated import deprecated
 from moban.definitions import CopyTarget, GitRequire
+from moban.plugins.copier import Copier
 from moban.plugins.template import expand_template_directories
 
 try:

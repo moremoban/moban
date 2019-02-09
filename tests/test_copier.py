@@ -5,8 +5,8 @@ import shutil
 from mock import patch
 from nose.tools import eq_
 
-from moban.copier import Copier
 from moban.mobanfile import handle_copy
+from moban.plugins.copier import Copier
 
 PY2 = sys.version_info[0] == 2
 if PY2:
