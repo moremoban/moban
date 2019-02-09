@@ -1,7 +1,6 @@
 import os
-from moban import reporter
-from moban import utils
-from moban import exceptions
+
+from moban import utils, reporter, exceptions
 from moban.data_loaders.manager import load_data
 
 

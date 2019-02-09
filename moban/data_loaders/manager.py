@@ -2,8 +2,7 @@ import os
 
 from lml.plugin import PluginManager
 
-from moban import constants
-from moban import utils
+from moban import utils, constants
 
 
 class AnyDataLoader(PluginManager):

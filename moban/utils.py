@@ -80,7 +80,8 @@ def parse_targets(options, targets):
             else:
                 for output, template_file in target.items():
                     yield TemplateTarget(
-                        template_file, common_data_file, output)
+                        template_file, common_data_file, output
+                    )
 
 
 def expand_directories(file_list, template_dirs):

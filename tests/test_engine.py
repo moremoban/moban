@@ -5,13 +5,13 @@ from lml.plugin import PluginInfo
 from nose.tools import eq_, raises
 
 import moban.exceptions as exceptions
-from moban.plugins import (
-    ENGINES,
-    Context,
-    BaseEngine,
+from moban.plugins import ENGINES
+from moban.jinja2.engine import Engine, is_extension_list_valid
+from moban.plugins.context import Context
+from moban.plugins.template_engine import (
+    TemplateEngine,
     expand_template_directories,
 )
-from moban.jinja2.engine import Engine, is_extension_list_valid
 
 USER_HOME = os.path.join("user", "home", ".moban", "repos")
 
@@ -48,7 +48,7 @@ class FakeEngine:
         pass
 
 
-@patch("moban.plugins.PluginManager.load_me_now", return_value=FakeEngine)
+@patch("lml.plugin.PluginManager.load_me_now", return_value=FakeEngine)
 def test_default_mako_type(_):  # fake mako
     engine = ENGINES.get_engine("fake", [], "")
     assert engine.engine_cls.__name__ == "FakeEngine"
@@ -61,12 +61,12 @@ def test_unknown_template_type():
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_tmpl_directries():
-    BaseEngine("abc", "tests", Engine)
+    TemplateEngine("abc", "tests", Engine)
 
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_config_directries():
-    BaseEngine("tests", "abc", Engine)
+    TemplateEngine("tests", "abc", Engine)
 
 
 @raises(exceptions.DirectoryNotFound)

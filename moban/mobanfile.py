@@ -18,6 +18,7 @@ from moban.utils import (
 from moban.copier import Copier
 from moban.deprecated import deprecated
 from moban.definitions import CopyTarget, GitRequire
+from moban.plugins.template_engine import expand_template_directories
 
 try:
     from urllib.parse import urlparse
@@ -120,7 +121,7 @@ def handle_targets(merged_options, targets):
 def handle_copy_targets(template_dirs, copy_targets):
     # expanding function is added so that
     # copy function understands repo and pypi_pkg path, since 0.3.1
-    expanded_dirs = list(plugins.expand_template_directories(template_dirs))
+    expanded_dirs = list(expand_template_directories(template_dirs))
 
     copier = Copier(expanded_dirs)
     copy_config = []
