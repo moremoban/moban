@@ -1,5 +1,5 @@
 from lml.loader import scan_plugins_regex
-from moban.plugins.template_factory import TemplateFactory
+from moban.plugins.template import TemplateFactory
 from moban import constants
 
 

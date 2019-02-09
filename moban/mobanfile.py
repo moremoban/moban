@@ -18,7 +18,7 @@ from moban.utils import (
 from moban.copier import Copier
 from moban.deprecated import deprecated
 from moban.definitions import CopyTarget, GitRequire
-from moban.plugins.template_engine import expand_template_directories
+from moban.plugins.template import expand_template_directories
 
 try:
     from urllib.parse import urlparse

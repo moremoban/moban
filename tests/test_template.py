@@ -5,7 +5,7 @@ from mock import patch
 from moban.plugins import ENGINES
 from moban.definitions import TemplateTarget
 
-MODULE = "moban.plugins.template_engine"
+MODULE = "moban.plugins.template"
 
 
 @patch(MODULE + ".TemplateEngine._render_with_finding_data_first")

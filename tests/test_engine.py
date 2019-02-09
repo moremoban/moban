@@ -8,10 +8,7 @@ import moban.exceptions as exceptions
 from moban.plugins import ENGINES
 from moban.jinja2.engine import Engine, is_extension_list_valid
 from moban.plugins.context import Context
-from moban.plugins.template_engine import (
-    TemplateEngine,
-    expand_template_directories,
-)
+from moban.plugins.template import TemplateEngine, expand_template_directories
 
 USER_HOME = os.path.join("user", "home", ".moban", "repos")
 
