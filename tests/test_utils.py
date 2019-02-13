@@ -259,7 +259,7 @@ def test_handle_template_with_double_stars():
             "txt",
         ),
     ]
-    eq_(expected, templates)
+    eq_(sorted(expected), sorted(templates))
 
 
 def test_handle_template_with_a_directory():
