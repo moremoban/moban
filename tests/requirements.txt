@@ -7,3 +7,5 @@ moban
 black;python_version>="3.6"
 isort;python_version>="3.6"
 moban-handlebars
+pypi-mobans-pkg
+
