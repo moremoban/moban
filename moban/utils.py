@@ -141,10 +141,10 @@ def listing_directory_files_recusively(source, actual_source_path, dest):
             template_type = get_template_type(src_file_under_dir)
             yield (src_file_under_dir, dest_file_under_dir, template_type)
         elif os.path.isdir(real_src_file):
-            for pair in listing_directory_files_recusively(
+            for a_triple in listing_directory_files_recusively(
                 src_file_under_dir, real_src_file, dest_file_under_dir
             ):
-                yield pair
+                yield a_triple
 
 
 def expand_directories(file_list, template_dirs):

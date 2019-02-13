@@ -115,7 +115,7 @@ class TestTutorial:
     def test_level_8(self):
         expected = "it is a test\n"
         folder = "level-8-pass-a-folder-full-of-templates"
-        check_file = os.path.join("templated-folder", "my.jj2")
+        check_file = os.path.join("templated-folder", "my")
         self._raw_moban(["moban"], folder, expected, check_file)
 
     def test_level_9(self):
@@ -208,13 +208,13 @@ class TestTutorial:
         expected = "test file\n"
 
         folder = "level-15-copy-templates-as-target"
-        self._raw_moban(["moban"], folder, expected, "simple.file.copy")
+        self._raw_moban(["moban"], folder, expected, "simple.file")
 
     def test_misc_1(self):
         expected = "test file\n"
 
         folder = "misc-1-copying-templates"
-        self._raw_moban(["moban"], folder, expected, "simple.file.copy")
+        self._raw_moban(["moban"], folder, expected, "simple.file")
 
     def _moban(self, folder, expected):
         args = ["moban", "-c", "data.yml", "-t", "a.template"]

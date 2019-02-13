@@ -1,3 +1,4 @@
+import os
 from moban import constants
 
 
@@ -36,6 +37,8 @@ class TemplateTarget(object):
         self.data_file = data_file
         self.output = output
         self.template_type = template_type
+        if self.output.endswith(template_type):
+            self.output, _ = os.path.splitext(output)
 
     def __eq__(self, other):
         return (

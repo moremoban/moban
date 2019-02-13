@@ -111,13 +111,6 @@ def _iterate_list_of_dicts(list_of_dict):
 
 def handle_targets(merged_options, targets):
     list_of_templating_parameters = parse_targets(merged_options, targets)
-    return handle_template_targets(
-        merged_options, list_of_templating_parameters
-    )
-
-
-def handle_template_targets(merged_options, targets):
-    list_of_templating_parameters = targets
     jobs_for_each_engine = defaultdict(list)
     for target in list_of_templating_parameters:
         template_type = target.template_type
