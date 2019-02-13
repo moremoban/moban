@@ -13,6 +13,7 @@ from moban.utils import (
     get_repo_name,
     get_moban_home,
     write_file_out,
+    handle_template,
     file_permissions,
     get_template_path,
     expand_directories,
@@ -239,3 +240,33 @@ def test_get_repo_name_can_handle_invalid_url(fake_reporter):
 def test_get_moban_home(_):
     actual = get_moban_home()
     eq_(os.path.join("root", "repos"), actual)
+
+
+def test_handle_template_with_double_stars():
+    templates = list(
+        handle_template(
+            "test-recursive-dir/**", "dest", ["docs/misc-1-copying-templates"]
+        )
+    )
+    long_file = os.path.join("test-recursive-dir",
+                             "sub_directory_is_copied",
+                             "because_star_star_is_specified.txt")
+    expected = [
+        ("test-recursive-dir/fileb.txt", "dest/fileb.txt", "txt"),
+        (
+            long_file,
+            "dest/sub_directory_is_copied/because_star_star_is_specified.txt",
+            "txt",
+        ),
+    ]
+    eq_(expected, templates)
+
+
+def test_handle_template_with_a_directory():
+    templates = list(
+        handle_template(
+            "test-recursive-dir", "dest", ["docs/misc-1-copying-templates"]
+        )
+    )
+    expected = [("test-recursive-dir/fileb.txt", "dest/fileb.txt", "txt")]
+    eq_(expected, templates)

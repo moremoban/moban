@@ -24,28 +24,31 @@ class GitRequire(object):
         return "%s,%s,%s" % (self.git_url, self.branch, self.submodule)
 
 
-class Target(object):
-    def __init__(self, type):
-        self.type = type
-
-
-class TemplateTarget(Target):
-    def __init__(self, template_file, data_file, output):
-        super(TemplateTarget, self).__init__(constants.ACTION_TEMPLATE)
+class TemplateTarget(object):
+    def __init__(
+        self,
+        template_file,
+        data_file,
+        output,
+        template_type=constants.DEFAULT_TEMPLATE_TYPE,
+    ):
         self.template_file = template_file
         self.data_file = data_file
         self.output = output
+        self.template_type = template_type
 
     def __eq__(self, other):
         return (
             self.template_file == other.template_file
             and self.data_file == other.data_file
             and self.output == other.output
+            and self.template_type == self.template_type
         )
 
-
-class CopyTarget(Target):
-    def __init__(self, source, destination):
-        super(CopyTarget, self).__init__(constants.ACTION_COPY)
-        self.source = source
-        self.destination = destination
+    def __repr__(self):
+        return "%s,%s,%s,%s" % (
+            self.template_file,
+            self.data_file,
+            self.output,
+            self.template_type,
+        )

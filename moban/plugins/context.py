@@ -13,6 +13,8 @@ class Context(object):
         )
 
     def get_data(self, file_name):
+        if file_name is None:
+            return {}
         try:
             data = load_data(self.context_dirs, file_name)
             utils.merge(data, self.__cached_environ_variables)

@@ -1,4 +1,5 @@
 import os
+import logging
 
 from lml.plugin import PluginManager
 
@@ -7,6 +8,8 @@ from moban.hashstore import HASH_STORE
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES
 from moban.plugins.strategy import Strategy
+
+log = logging.getLogger(__name__)
 
 
 class TemplateFactory(PluginManager):
@@ -152,6 +155,7 @@ class TemplateEngine(object):
 
 
 def expand_template_directories(dirs):
+    log.debug("Expanding %s..." % dirs)
     if not isinstance(dirs, list):
         dirs = [dirs]
 

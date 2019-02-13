@@ -3,11 +3,12 @@ import re
 import sys
 import stat
 import errno
+import logging
 
-import moban.reporter as reporter
-import moban.constants as constants
-import moban.exceptions as exceptions
-from moban.definitions import CopyTarget, TemplateTarget
+from moban import reporter, constants, exceptions
+from moban.definitions import TemplateTarget
+
+log = logging.getLogger(__name__)
 
 
 def merge(left, right):
@@ -47,41 +48,103 @@ def search_file(base_dir, file_name):
 def parse_targets(options, targets):
     common_data_file = options[constants.LABEL_CONFIG]
     for target in targets:
-        if constants.LABEL_ACTION in target:
-            action = target.get(
-                constants.LABEL_ACTION, constants.DEFAULT_ACTION
+        if constants.LABEL_OUTPUT in target:
+            template_file = target.get(
+                constants.LABEL_TEMPLATE,
+                options.get(constants.LABEL_TEMPLATE, None),
             )
-            if action == constants.ACTION_TEMPLATE:
-                template_file = target.get(
-                    constants.LABEL_TEMPLATE,
-                    options.get(constants.LABEL_TEMPLATE, None),
-                )
-                data_file = target.get(
-                    constants.LABEL_CONFIG, common_data_file
-                )
-                output = target[constants.LABEL_OUTPUT]
-                yield TemplateTarget(template_file, data_file, output)
+            data_file = target.get(constants.LABEL_CONFIG, common_data_file)
+            output = target[constants.LABEL_OUTPUT]
+            template_type = target.get(constants.LABEL_TEMPLATE_TYPE)
+            for src, dest, t_type in handle_template(
+                template_file, output, options[constants.LABEL_TMPL_DIRS]
+            ):
+                if template_type:
+                    yield TemplateTarget(src, data_file, dest, template_type)
+                else:
+                    yield TemplateTarget(src, data_file, dest, t_type)
+        else:
+            for output, template_file in target.items():
+                for src, dest, t_type in handle_template(
+                    template_file, output, options[constants.LABEL_TMPL_DIRS]
+                ):
+                    yield TemplateTarget(src, common_data_file, dest, t_type)
+
+
+def get_template_type(template_file):
+    _, extension = os.path.splitext(template_file)
+    if extension:
+        template_type = extension[1:]
+    else:
+        template_type = constants.DEFAULT_TEMPLATE_TYPE
+    return template_type
+
+
+def handle_template(template_file, output, template_dirs):
+    log.info("handling %s" % template_file)
+    template_file_on_disk = find_file_in_template_dirs(
+        template_file, template_dirs
+    )
+    if template_file_on_disk is None:
+        if template_file.endswith("**"):
+            source_dir = template_file[:-3]
+            src_path = find_file_in_template_dirs(source_dir, template_dirs)
+            if src_path:
+                for a_triple in listing_directory_files_recusively(
+                    source_dir, src_path, output
+                ):
+                    yield a_triple
             else:
-                yield CopyTarget(
-                    target.get(constants.LABEL_SOURCE),
-                    target.get(constants.LABEL_DEST),
+                reporter.report_error_message(
+                    "{0} cannot be found".format(template_file)
                 )
         else:
-            if constants.LABEL_OUTPUT in target:
-                template_file = target.get(
-                    constants.LABEL_TEMPLATE,
-                    options.get(constants.LABEL_TEMPLATE, None),
-                )
-                data_file = target.get(
-                    constants.LABEL_CONFIG, common_data_file
-                )
-                output = target[constants.LABEL_OUTPUT]
-                yield TemplateTarget(template_file, data_file, output)
-            else:
-                for output, template_file in target.items():
-                    yield TemplateTarget(
-                        template_file, common_data_file, output
-                    )
+            reporter.report_error_message(
+                "{0} cannot be found".format(template_file)
+            )
+    elif os.path.isdir(template_file_on_disk):
+        for a_triple in list_dir_files(
+            template_file, template_file_on_disk, output
+        ):
+            yield a_triple
+    else:
+        template_type = get_template_type(template_file)
+        yield (template_file, output, template_type)
+
+
+def find_file_in_template_dirs(src, template_dirs):
+    log.debug(template_dirs)
+    for folder in template_dirs:
+        path = os.path.join(folder, src)
+        if os.path.exists(path):
+            return path
+    else:
+        return None
+
+
+def list_dir_files(source, actual_source_path, dest):
+    for file_name in os.listdir(actual_source_path):
+        real_src_file = os.path.join(actual_source_path, file_name)
+        if os.path.isfile(real_src_file):
+            src_file_under_dir = os.path.join(source, file_name)
+            dest_file_under_dir = os.path.join(dest, file_name)
+            template_type = get_template_type(src_file_under_dir)
+            yield (src_file_under_dir, dest_file_under_dir, template_type)
+
+
+def listing_directory_files_recusively(source, actual_source_path, dest):
+    for file_name in os.listdir(actual_source_path):
+        src_file_under_dir = os.path.join(source, file_name)
+        dest_file_under_dir = os.path.join(dest, file_name)
+        real_src_file = os.path.join(actual_source_path, file_name)
+        if os.path.isfile(real_src_file):
+            template_type = get_template_type(src_file_under_dir)
+            yield (src_file_under_dir, dest_file_under_dir, template_type)
+        elif os.path.isdir(real_src_file):
+            for pair in listing_directory_files_recusively(
+                src_file_under_dir, real_src_file, dest_file_under_dir
+            ):
+                yield pair
 
 
 def expand_directories(file_list, template_dirs):

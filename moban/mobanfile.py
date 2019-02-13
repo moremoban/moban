@@ -12,12 +12,10 @@ from moban.utils import (
     merge,
     git_clone,
     pip_install,
-    parse_targets,
-    expand_directories,
+    parse_targets
 )
 from moban.deprecated import deprecated
-from moban.definitions import CopyTarget, GitRequire
-from moban.plugins.copier import Copier
+from moban.definitions import GitRequire
 from moban.plugins.template import expand_template_directories
 
 try:
@@ -54,6 +52,9 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if plugins_dirs:
         handle_plugin_dirs(plugins_dirs)
 
+    merged_options[constants.LABEL_TMPL_DIRS] = list(
+        expand_template_directories(merged_options[constants.LABEL_TMPL_DIRS])
+    )
     requires = moban_file_configurations.get(constants.LABEL_REQUIRES)
     if requires:
         handle_requires(requires)
@@ -76,8 +77,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
     if constants.LABEL_COPY in moban_file_configurations:
         number_of_copied_files = handle_copy(
-            merged_options[constants.LABEL_TMPL_DIRS],
-            moban_file_configurations[constants.LABEL_COPY],
+            merged_options, moban_file_configurations[constants.LABEL_COPY]
         )
     else:
         number_of_copied_files = 0
@@ -89,11 +89,18 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
 
 @deprecated(constants.MESSAGE_DEPRECATE_COPY_SINCE_0_4_0)
-def handle_copy(template_dirs, copy_config):
+def handle_copy(merged_options, copy_config):
     copy_targets = []
     for (dest, src) in _iterate_list_of_dicts(copy_config):
-        copy_targets.append(CopyTarget(src, dest))
-    return handle_copy_targets(template_dirs, copy_targets)
+        copy_targets.append(
+            {
+                constants.LABEL_TEMPLATE: src,
+                constants.LABEL_CONFIG: None,
+                constants.LABEL_OUTPUT: dest,
+                constants.LABEL_TEMPLATE_TYPE: "copy",
+            }
+        )
+    return handle_targets(merged_options, copy_targets)
 
 
 def _iterate_list_of_dicts(list_of_dict):
@@ -104,48 +111,22 @@ def _iterate_list_of_dicts(list_of_dict):
 
 def handle_targets(merged_options, targets):
     list_of_templating_parameters = parse_targets(merged_options, targets)
-    template_targets = []
-    copy_targets = []
-    for target in list_of_templating_parameters:
-        if target.type == constants.ACTION_COPY:
-            copy_targets.append(target)
-        elif target.type == constants.ACTION_TEMPLATE:
-            template_targets.append(target)
-    copy_count = handle_copy_targets(
-        merged_options[constants.LABEL_TMPL_DIRS], copy_targets
+    return handle_template_targets(
+        merged_options, list_of_templating_parameters
     )
-    template_count = handle_template_targets(merged_options, template_targets)
-    return copy_count + template_count
 
 
-def handle_copy_targets(template_dirs, copy_targets):
-    # expanding function is added so that
-    # copy function understands repo and pypi_pkg path, since 0.3.1
-    expanded_dirs = list(expand_template_directories(template_dirs))
-
-    copier = Copier(expanded_dirs)
-    copy_config = []
-    for target in copy_targets:
-        copy_config.append((target.destination, target.source))
-    copier.copy_files(copy_config)
-    copier.report()
-    return copier.number_of_copied_files()
-
-
-def handle_template_targets(merged_options, template_targets):
-
-    list_of_templating_parameters = expand_directories(
-        template_targets, merged_options[constants.LABEL_TMPL_DIRS]
-    )
+def handle_template_targets(merged_options, targets):
+    list_of_templating_parameters = targets
     jobs_for_each_engine = defaultdict(list)
     for target in list_of_templating_parameters:
-        _, extension = os.path.splitext(target.template_file)
-        template_type = extension[1:]
+        template_type = target.template_type
         primary_template_type = plugins.ENGINES.get_primary_key(template_type)
         if primary_template_type is None:
             primary_template_type = merged_options[
                 constants.LABEL_TEMPLATE_TYPE
             ]
+
         jobs_for_each_engine[primary_template_type].append(target)
 
     count = 0

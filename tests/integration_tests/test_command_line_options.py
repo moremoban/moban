@@ -154,7 +154,7 @@ class TestNoOptions:
     @raises(Exception)
     @patch("moban.plugins.template.TemplateEngine.render_to_files")
     def test_single_command_with_missing_output(self, fake_template_doer):
-        test_args = ["moban", "-t", "abc.jj2"]
+        test_args = ["moban", "-t", "README.rst.jj2"]
         with patch.object(sys, "argv", test_args):
             from moban.main import main
 
@@ -162,7 +162,7 @@ class TestNoOptions:
 
     @patch("moban.plugins.template.TemplateEngine.render_to_files")
     def test_single_command_with_a_few_options(self, fake_template_doer):
-        test_args = ["moban", "-t", "abc.jj2", "-o", "xyz.output"]
+        test_args = ["moban", "-t", "README.rst.jj2", "-o", "xyz.output"]
         with patch.object(sys, "argv", test_args):
             from moban.main import main
 
@@ -170,7 +170,7 @@ class TestNoOptions:
             call_args = list(fake_template_doer.call_args[0][0])
             eq_(
                 call_args,
-                [TemplateTarget("abc.jj2", "data.yaml", "xyz.output")],
+                [TemplateTarget("README.rst.jj2", "data.yaml", "xyz.output")],
             )
 
     @patch("moban.plugins.template.TemplateEngine.render_to_files")
@@ -178,7 +178,7 @@ class TestNoOptions:
         test_args = [
             "moban",
             "-t",
-            "abc.jj2",
+            "README.rst.jj2",
             "-c",
             "new.yml",
             "-o",
@@ -190,7 +190,8 @@ class TestNoOptions:
             main()
             call_args = list(fake_template_doer.call_args[0][0])
             eq_(
-                call_args, [TemplateTarget("abc.jj2", "new.yml", "xyz.output")]
+                call_args,
+                [TemplateTarget("README.rst.jj2", "new.yml", "xyz.output")],
             )
 
     @raises(Exception)
@@ -384,12 +385,11 @@ class TestComplexOptions:
         self.data_file = "data.yaml"
         with open(self.data_file, "w") as f:
             f.write("hello: world")
-        self.patcher1 = patch(
-            "moban.utils.verify_the_existence_of_directories"
-        )
-        self.patcher1.start()
 
-    def test_single_command(self):
+    @patch(
+        "moban.utils.verify_the_existence_of_directories", return_value=True
+    )
+    def test_single_command(self, _):
         test_args = ["moban"]
         with patch.object(sys, "argv", test_args):
             from moban.main import main
@@ -412,7 +412,6 @@ class TestComplexOptions:
     def tearDown(self):
         os.unlink(self.config_file)
         os.unlink(self.data_file)
-        self.patcher1.stop()
 
 
 class TestTemplateTypeOption:

@@ -1,7 +1,9 @@
+requires:
+   - pypi-mobans-pkg
 configuration:
-  configuration_dir: "commons/config"
+  configuration_dir: "setupmobans:config"
   template_dir:
-    - "commons/templates"
+    - "setupmobans:templates"
     - ".moban.d"
 targets:
   - output: README.rst

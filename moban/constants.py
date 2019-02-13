@@ -13,8 +13,6 @@ DEFAULT_MOBAN_FILES = [
 ]
 DEFAULT_TEMPLATE_TYPE = "jinja2"
 DEFAULT_DATA_TYPE = "yaml"
-ACTION_COPY = "copy"
-DEFAULT_ACTION = ACTION_TEMPLATE = "template"
 
 # .moban.hashes
 DEFAULT_MOBAN_CACHE_FILE = ".%s.hashes" % PROGRAM_NAME
@@ -23,7 +21,7 @@ DEFAULT_MOBAN_CACHE_FILE = ".%s.hashes" % PROGRAM_NAME
 LABEL_CONFIG = "configuration"
 LABEL_CONFIG_DIR = "configuration_dir"
 LABEL_PLUGIN_DIRS = "plugin_dir"
-LABEL_TEMPLATE = ACTION_TEMPLATE
+LABEL_TEMPLATE = "template"
 POSITIONAL_LABEL_TEMPLATE = "template_in_string"
 LABEL_TMPL_DIRS = "template_dir"
 LABEL_EXIT_CODE = "exit-code"
@@ -56,7 +54,7 @@ MOBAN_REPOS_DIR_NAME = "repos"
 # moban file configuration
 LABEL_REQUIRES = "requires"
 LABEL_TARGETS = "targets"
-LABEL_COPY = ACTION_COPY
+LABEL_COPY = "copy"
 LABEL_EXTENSIONS = "extensions"
 LABEL_ACTION = "action"
 LABEL_SOURCE = "source"
