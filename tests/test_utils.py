@@ -248,9 +248,11 @@ def test_handle_template_with_double_stars():
             "test-recursive-dir/**", "dest", ["docs/misc-1-copying-templates"]
         )
     )
-    long_file = os.path.join("test-recursive-dir",
-                             "sub_directory_is_copied",
-                             "because_star_star_is_specified.txt")
+    long_file = os.path.join(
+        "test-recursive-dir",
+        "sub_directory_is_copied",
+        "because_star_star_is_specified.txt",
+    )
     expected = [
         ("test-recursive-dir/fileb.txt", "dest/fileb.txt", "txt"),
         (

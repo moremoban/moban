@@ -42,7 +42,7 @@ class TestCopier:
             (
                 "copier-directory/level1-file1",
                 "/tmp/copy-a-directory/level1-file1",
-                "jinja2",
+                None,
             )
         ]
         eq_(expected, results)
@@ -56,12 +56,12 @@ class TestCopier:
             (
                 "copier-directory/copier-sample-dir/file1",
                 "/tmp/copy-a-directory/copier-sample-dir/file1",
-                "jinja2",
+                None,
             ),
             (
                 "copier-directory/level1-file1",
                 "/tmp/copy-a-directory/level1-file1",
-                "jinja2",
+                None,
             ),
         ]
         eq_(expected, results)

@@ -8,12 +8,7 @@ from lml.utils import do_import
 import moban.reporter as reporter
 import moban.constants as constants
 from moban import plugins
-from moban.utils import (
-    merge,
-    git_clone,
-    pip_install,
-    parse_targets
-)
+from moban.utils import merge, git_clone, pip_install, parse_targets
 from moban.deprecated import deprecated
 from moban.definitions import GitRequire
 from moban.plugins.template import expand_template_directories

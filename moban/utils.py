@@ -47,6 +47,7 @@ def search_file(base_dir, file_name):
 
 def parse_targets(options, targets):
     common_data_file = options[constants.LABEL_CONFIG]
+    default_template_type = options[constants.LABEL_TEMPLATE_TYPE]
     for target in targets:
         if constants.LABEL_OUTPUT in target:
             template_file = target.get(
@@ -62,13 +63,25 @@ def parse_targets(options, targets):
                 if template_type:
                     yield TemplateTarget(src, data_file, dest, template_type)
                 else:
-                    yield TemplateTarget(src, data_file, dest, t_type)
+                    if t_type:
+                        yield TemplateTarget(src, data_file, dest, t_type)
+                    else:
+                        yield TemplateTarget(
+                            src, data_file, dest, default_template_type
+                        )
         else:
             for output, template_file in target.items():
                 for src, dest, t_type in handle_template(
                     template_file, output, options[constants.LABEL_TMPL_DIRS]
                 ):
-                    yield TemplateTarget(src, common_data_file, dest, t_type)
+                    if t_type:
+                        yield TemplateTarget(
+                            src, common_data_file, dest, t_type
+                        )
+                    else:
+                        yield TemplateTarget(
+                            src, common_data_file, dest, default_template_type
+                        )
 
 
 def get_template_type(template_file):
@@ -76,7 +89,7 @@ def get_template_type(template_file):
     if extension:
         template_type = extension[1:]
     else:
-        template_type = constants.DEFAULT_TEMPLATE_TYPE
+        template_type = None
     return template_type
 
 
