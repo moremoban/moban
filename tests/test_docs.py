@@ -216,10 +216,10 @@ class TestTutorial:
         folder = "level-16-group-targets-using-template-type"
         self._raw_moban(["moban"], folder, expected, "simple.file")
 
-    def test_level_17_override_template_type_from_moban_file(self):
+    def test_level_17_force_template_type_from_moban_file(self):
         expected = "test file\n"
 
-        folder = "level-17-override-template-type-from-moban-file"
+        folder = "level-17-force-template-type-from-moban-file"
         self._raw_moban(["moban"], folder, expected, "simple.file")
 
     def test_misc_1(self):
