@@ -40,6 +40,8 @@ class TemplateTarget(object):
         self.template_type = template_type
         if self.original_output.endswith(template_type):
             self.output, _ = os.path.splitext(output)
+        else:
+            self.output = self.original_output
 
     def set_template_type(self, new_template_type):
         self.template_type = new_template_type

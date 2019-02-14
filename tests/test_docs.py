@@ -220,7 +220,7 @@ class TestTutorial:
         expected = "test file\n"
 
         folder = "level-17-override-template-type-from-moban-file"
-        self._raw_moban(["moban"], folder, expected, "simple.file.copy")
+        self._raw_moban(["moban"], folder, expected, "simple.file")
 
     def test_misc_1(self):
         expected = "test file\n"
