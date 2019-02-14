@@ -274,10 +274,6 @@ def get_moban_home():
     return os.path.join(home_dir, constants.MOBAN_REPOS_DIR_NAME)
 
 
-def _remove_dot_git(repo_name):
-    return repo_name.split(".")[0]
-
-
 def verify_the_existence_of_directories(dirs):
     if not isinstance(dirs, list):
         dirs = [dirs]
