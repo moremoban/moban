@@ -160,35 +160,6 @@ def listing_directory_files_recusively(source, actual_source_path, dest):
                 yield a_triple
 
 
-def expand_directories(file_list, template_dirs):
-    for target in file_list:
-        true_template_file = target.template_file
-        for a_template_dir in template_dirs:
-            true_template_file = os.path.join(
-                a_template_dir, target.template_file
-            )
-            if os.path.exists(true_template_file):
-                break
-        if os.path.isdir(true_template_file):
-            for file_name in os.listdir(true_template_file):
-                template_file = "/".join([target.template_file, file_name])
-                template_file = template_file.replace("\\", "/")
-                base_output_name, _ = os.path.splitext(file_name)
-                yield (
-                    TemplateTarget(
-                        template_file,
-                        target.data_file,
-                        os.path.join(target.output, base_output_name),
-                    )
-                )
-        else:
-            yield (
-                TemplateTarget(
-                    target.template_file, target.data_file, target.output
-                )
-            )
-
-
 def file_permissions_copy(source, dest):
     source_permissions = file_permissions(source)
     dest_permissions = file_permissions(dest)
