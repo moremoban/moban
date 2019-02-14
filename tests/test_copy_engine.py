@@ -1,77 +1,26 @@
 import os
-import sys
 
-from mock import patch
 from nose.tools import eq_
 
-from moban.utils import handle_template
-
-PY2 = sys.version_info[0] == 2
-if PY2:
-    PermissionError = IOError
+from moban.copy import ContentForwardEngine
 
 
-class TestCopier:
+class TestContentForwardEngine:
+
     def setUp(self):
-        self.base_dir = [os.path.join("tests", "fixtures")]
+        template_path = os.path.join('tests', 'fixtures')
+        self.engine = ContentForwardEngine([template_path])
 
-    def test_copy_files(self):
-        results = list(
-            handle_template("copier-test01.csv", "/tmp/test", self.base_dir)
-        )
-        expected = [("copier-test01.csv", "/tmp/test", "csv")]
-        eq_(expected, results)
+    def test_get_template(self):
+        template_content = self.engine.get_template('copier-test01.csv')
+        eq_('test 01\n', template_content)
 
-    @patch("moban.reporter.report_error_message")
-    def test_copy_files_file_not_found(self, reporter):
-        list(
-            handle_template(
-                "copier-test-not-found.csv", "/tmp/test", self.base_dir
-            )
-        )
-        reporter.assert_called_with(
-            "copier-test-not-found.csv cannot be found"
-        )
+    def test_get_template_from_string(self):
+        test_content = 'simply forwarded'
+        template_content = self.engine.get_template_from_string(test_content)
+        eq_(test_content, template_content)
 
-    def test_copy_dir(self):
-        test_dir = "/tmp/copy-a-directory"
-        results = list(
-            handle_template("copier-directory", test_dir, self.base_dir)
-        )
-        expected = [
-            (
-                "copier-directory/level1-file1",
-                "/tmp/copy-a-directory/level1-file1",
-                None,
-            )
-        ]
-        eq_(expected, results)
-
-    def test_copy_dir_recusively(self):
-        test_dir = "/tmp/copy-a-directory"
-        results = list(
-            handle_template("copier-directory/**", test_dir, self.base_dir)
-        )
-        expected = [
-            (
-                "copier-directory/copier-sample-dir/file1",
-                "/tmp/copy-a-directory/copier-sample-dir/file1",
-                None,
-            ),
-            (
-                "copier-directory/level1-file1",
-                "/tmp/copy-a-directory/level1-file1",
-                None,
-            ),
-        ]
-        eq_(expected, results)
-
-    @patch("moban.reporter.report_error_message")
-    def test_copy_dir_recusively_with_error(self, reporter):
-        test_dir = "/tmp/copy-a-directory"
-        list(
-            handle_template(
-                "copier-directory-does-not-exist/**", test_dir, self.base_dir
-            )
-        )
-        eq_(reporter.call_count, 1)
+    def test_apply_template(self):
+        test_content = 'simply forwarded'
+        template_content = self.engine.apply_template(test_content, 'not used')
+        eq_(test_content, template_content)
