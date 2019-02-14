@@ -210,6 +210,12 @@ class TestTutorial:
         folder = "level-15-copy-templates-as-target"
         self._raw_moban(["moban"], folder, expected, "simple.file")
 
+    def test_level_16_group_targets_using_template_type(self):
+        expected = "test file\n"
+
+        folder = "level-16-group-targets-using-template-type"
+        self._raw_moban(["moban"], folder, expected, "simple.file")
+
     def test_misc_1(self):
         expected = "test file\n"
 

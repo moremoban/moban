@@ -71,17 +71,46 @@ def parse_targets(options, targets):
                         )
         else:
             for output, template_file in target.items():
-                for src, dest, t_type in handle_template(
-                    template_file, output, options[constants.LABEL_TMPL_DIRS]
-                ):
-                    if t_type:
-                        yield TemplateTarget(
-                            src, common_data_file, dest, t_type
-                        )
-                    else:
-                        yield TemplateTarget(
-                            src, common_data_file, dest, default_template_type
-                        )
+                if isinstance(template_file, str) is False:
+                    # grouping by template type feature
+                    group_template_type = output
+                    for _output, _template_file in iterate_list_of_dicts(
+                        template_file
+                    ):
+                        for src, dest, t_type in handle_template(
+                            _template_file,
+                            _output,
+                            options[constants.LABEL_TMPL_DIRS],
+                        ):
+                            yield TemplateTarget(
+                                src,
+                                common_data_file,
+                                dest,
+                                group_template_type,
+                            )
+                else:
+                    for src, dest, t_type in handle_template(
+                        template_file,
+                        output,
+                        options[constants.LABEL_TMPL_DIRS],
+                    ):
+                        if t_type:
+                            yield TemplateTarget(
+                                src, common_data_file, dest, t_type
+                            )
+                        else:
+                            yield TemplateTarget(
+                                src,
+                                common_data_file,
+                                dest,
+                                default_template_type,
+                            )
+
+
+def iterate_list_of_dicts(list_of_dict):
+    for adict in list_of_dict:
+        for key, value in adict.items():
+            yield (key, value)
 
 
 def get_template_type(template_file):

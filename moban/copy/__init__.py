@@ -7,8 +7,7 @@ from moban import constants
 
 
 @PluginInfo(
-    constants.TEMPLATE_ENGINE_EXTENSION,
-    tags=[constants.TEMPLATE_COPY]
+    constants.TEMPLATE_ENGINE_EXTENSION, tags=[constants.TEMPLATE_COPY]
 )
 class ContentForwardEngine(object):
     """
@@ -23,6 +22,7 @@ class ContentForwardEngine(object):
     the source file. Everything else is taken care of by moban
     templating mechanism.
     """
+
     def __init__(self, template_dirs, extensions=None):
         self.template_dirs = template_dirs
 

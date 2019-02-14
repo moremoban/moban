@@ -5,12 +5,12 @@ from moban.definitions import GitRequire, TemplateTarget
 
 def test_git_require_repr():
     require = GitRequire(git_url="http://github.com/some/repo")
-    eq_('http://github.com/some/repo,None,False', repr(require))
+    eq_("http://github.com/some/repo,None,False", repr(require))
 
 
 def test_template_target_repr():
-    require = TemplateTarget('template_file', 'dat_file', 'output')
-    eq_('template_file,dat_file,output,jinja2', repr(require))
+    require = TemplateTarget("template_file", "dat_file", "output")
+    eq_("template_file,dat_file,output,jinja2", repr(require))
 
 
 def test_clone_params():
