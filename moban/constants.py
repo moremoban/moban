@@ -1,5 +1,9 @@
 import os
 
+# Template type
+TEMPLATE_JINJA2 = "jinja2"
+TEMPLATE_COPY = "copy"
+
 # Configurations
 PROGRAM_NAME = "moban"
 PROGRAM_DESCRIPTION = (
@@ -11,7 +15,7 @@ DEFAULT_MOBAN_FILES = [
     ".%s%s" % (PROGRAM_NAME, DEFAULT_YAML_SUFFIX),
     ".%s%s" % (PROGRAM_NAME, ".yaml"),
 ]
-DEFAULT_TEMPLATE_TYPE = "jinja2"
+DEFAULT_TEMPLATE_TYPE = TEMPLATE_JINJA2
 DEFAULT_DATA_TYPE = "yaml"
 
 # .moban.hashes
@@ -54,7 +58,7 @@ MOBAN_REPOS_DIR_NAME = "repos"
 # moban file configuration
 LABEL_REQUIRES = "requires"
 LABEL_TARGETS = "targets"
-LABEL_COPY = "copy"
+LABEL_COPY = TEMPLATE_COPY
 LABEL_EXTENSIONS = "extensions"
 LABEL_ACTION = "action"
 LABEL_SOURCE = "source"
@@ -69,11 +73,6 @@ MESSAGE_DIR_NOT_EXIST = "%s does not exist"
 MESSAGE_NO_THIRD_PARTY_ENGINE = "No such template support"
 MESSAGE_FILE_VERSION_NOT_SUPPORTED = "moban file version '%s' is not supported"
 MESSAGE_INVALID_GIT_URL = 'An invalid git url: "%s" in mobanfile'
-
-# deprecation message
-MESSAGE_DEPRECATE_COPY_SINCE_0_4_0 = (
-    "'copy:' is deprecated since 0.4.0! " + "Please use 'targets:' instead"
-)
 
 # I/O messages
 # Error handling
@@ -110,3 +109,9 @@ LIBRARY_EXTENSION = "library"
 MOBAN_EXTENSIONS = "^moban_.+$"
 MOBAN_TEMPLATES = "^.+_mobans_pkg$"
 MOBAN_ALL = "%s|%s" % (MOBAN_EXTENSIONS, MOBAN_TEMPLATES)
+
+
+# deprecation message
+MESSAGE_DEPRECATE_COPY_SINCE_0_4_0 = (
+    "'%s:' is deprecated since 0.4.0! " + "Please use 'targets:' instead"
+) % TEMPLATE_COPY

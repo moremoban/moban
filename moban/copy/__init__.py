@@ -3,8 +3,7 @@ from lml.plugin import PluginInfo
 import codecs
 import sys
 
-
-import moban.utils as utils
+from moban import utils
 from moban import constants
 
 PY2 = sys.version_info[0] == 2
@@ -12,7 +11,10 @@ if PY2:
     PermissionError = IOError
 
 
-@PluginInfo(constants.TEMPLATE_ENGINE_EXTENSION, tags=["copy"])
+@PluginInfo(
+    constants.TEMPLATE_ENGINE_EXTENSION,
+    tags=[constants.TEMPLATE_COPY]
+)
 class Copier(object):
     def __init__(self, template_dirs, extensions=None):
         self.template_dirs = template_dirs

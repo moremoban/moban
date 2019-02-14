@@ -94,7 +94,7 @@ def handle_copy(merged_options, copy_config):
                 constants.LABEL_TEMPLATE: src,
                 constants.LABEL_CONFIG: None,
                 constants.LABEL_OUTPUT: dest,
-                constants.LABEL_TEMPLATE_TYPE: "copy",
+                constants.LABEL_TEMPLATE_TYPE: constants.TEMPLATE_COPY,
             }
         )
     return handle_targets(merged_options, copy_targets)
