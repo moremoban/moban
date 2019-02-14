@@ -111,7 +111,8 @@ def handle_targets(merged_options, targets):
     jobs_for_each_engine = defaultdict(list)
     for target in list_of_templating_parameters:
         forced_template_type = merged_options.get(
-            constants.LABEL_FORCE_TEMPLATE_TYPE)
+            constants.LABEL_FORCE_TEMPLATE_TYPE
+        )
         if forced_template_type:
             target.set_template_type(forced_template_type)
 
