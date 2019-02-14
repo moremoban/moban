@@ -63,6 +63,7 @@ LABEL_EXTENSIONS = "extensions"
 LABEL_ACTION = "action"
 LABEL_SOURCE = "source"
 LABEL_DEST = "destination"
+LABEL_FORCE_TEMPLATE_TYPE = "force_template_type"
 
 # error messages
 ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"
