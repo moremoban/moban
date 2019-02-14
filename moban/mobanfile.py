@@ -52,13 +52,15 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if plugins_dirs:
         handle_plugin_dirs(plugins_dirs)
 
-    merged_options[constants.LABEL_TMPL_DIRS] = list(
-        expand_template_directories(merged_options[constants.LABEL_TMPL_DIRS])
-    )
     requires = moban_file_configurations.get(constants.LABEL_REQUIRES)
     if requires:
         handle_requires(requires)
 
+    # call expand template directory always after handle require please
+    # the penalty is: newly clone repos are not visible
+    merged_options[constants.LABEL_TMPL_DIRS] = list(
+        expand_template_directories(merged_options[constants.LABEL_TMPL_DIRS])
+    )
     extensions = moban_file_configurations.get(constants.LABEL_EXTENSIONS)
     if extensions:
         plugins.ENGINES.register_extensions(extensions)
@@ -196,9 +198,9 @@ def handle_requires(requires):
                 pypi_pkgs.append(require)
     if pypi_pkgs:
         pip_install(pypi_pkgs)
+        plugins.make_sure_all_pkg_are_loaded()
     if git_repos:
         git_clone(git_repos)
-    plugins.make_sure_all_pkg_are_loaded()
 
 
 def is_repo(require):
