@@ -3,6 +3,7 @@ import logging
 
 from moban import reporter
 from moban.utils import find_file_in_template_dirs
+
 log = logging.getLogger(__name__)
 
 

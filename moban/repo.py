@@ -1,7 +1,7 @@
 import os
+
+from moban import reporter, constants
 from moban.utils import mkdir_p
-from moban import reporter
-from moban import constants
 
 
 def git_clone(requires):

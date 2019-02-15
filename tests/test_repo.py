@@ -2,7 +2,8 @@ import os
 
 from mock import patch
 from nose.tools import eq_
-from moban.repo import git_clone,    get_repo_name,    get_moban_home
+
+from moban.repo import git_clone, get_repo_name, get_moban_home
 from moban.definitions import GitRequire
 
 

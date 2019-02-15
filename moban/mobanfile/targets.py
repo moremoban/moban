@@ -1,6 +1,6 @@
 from moban import constants
-from moban.mobanfile.templates import handle_template
 from moban.definitions import TemplateTarget
+from moban.mobanfile.templates import handle_template
 
 
 def parse_targets(options, targets):

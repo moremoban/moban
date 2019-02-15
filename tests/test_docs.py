@@ -210,6 +210,19 @@ class TestTutorial:
         folder = "level-15-copy-templates-as-target"
         self._raw_moban(["moban"], folder, expected, "simple.file")
 
+        _verify_content(
+            "target_without_template_type",
+            "file extension will trigger copy engine\n",
+        )
+        _verify_content(
+            "target_in_short_form",
+            (
+                "it is OK to have a short form, "
+                + "but the file to be 'copied' shall have 'copy' extension, "
+                + "so as to trigger ContentForwardEngine, 'copy' engine.\n"
+            ),
+        )
+
     def test_level_16_group_targets_using_template_type(self):
         expected = "test file\n"
 

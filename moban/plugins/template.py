@@ -3,7 +3,7 @@ import logging
 
 from lml.plugin import PluginManager
 
-from moban import utils, reporter, constants, exceptions, repo
+from moban import repo, utils, reporter, constants, exceptions
 from moban.hashstore import HASH_STORE
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES
