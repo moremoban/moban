@@ -1,0 +1,1 @@
+it is OK to have a short form, but the file to be 'copied' shall have 'copy' extension, so as to trigger ContentForwardEngine, 'copy' engine.
