@@ -12,8 +12,10 @@ def parse_targets(options, targets):
             for output, template_file in target.items():
                 if isinstance(template_file, str) is False:
                     # grouping by template type feature
+                    group_template_type = output
+                    a_list_short_hand_targets = template_file
                     for template_target in _handle_group_target(
-                        options, template_file, output
+                        options, a_list_short_hand_targets, group_template_type
                     ):
                         yield template_target
                 else:
@@ -46,11 +48,14 @@ def _handle_explicit_target(options, target):
                 )
 
 
-def _handle_group_target(options, template_file, output):
+def _handle_group_target(
+    options, a_list_short_hand_targets, group_template_type
+):
     # grouping by template type feature
     common_data_file = options[constants.LABEL_CONFIG]
-    group_template_type = output
-    for _output, _template_file in _iterate_list_of_dicts(template_file):
+    for _output, _template_file in _iterate_list_of_dicts(
+        a_list_short_hand_targets
+    ):
         for src, dest, t_type in handle_template(
             _template_file, _output, options[constants.LABEL_TMPL_DIRS]
         ):
