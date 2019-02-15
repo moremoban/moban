@@ -7,6 +7,14 @@ Change log
 Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+#. `#165 <https://github.com/moremoban/moban/issues/165>`_: Copy as plugins
+
+0.3.10 - 04.02.2019
+--------------------------------------------------------------------------------
+
+Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 #. `#174 <https://github.com/moremoban/moban/issues/174>`_: Store git cache in
    XDG_CACHE_DIR
 #. `#107 <https://github.com/moremoban/moban/issues/107>`_: Add -v to show
