@@ -3,7 +3,7 @@ import logging
 
 from lml.plugin import PluginManager
 
-from moban import utils, reporter, constants, exceptions
+from moban import utils, reporter, constants, exceptions, repo
 from moban.hashstore import HASH_STORE
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES
@@ -168,7 +168,7 @@ def expand_template_directory(directory):
     if ":" in directory:
         library_or_repo_name, relative_path = directory.split(":")
         potential_repo_path = os.path.join(
-            utils.get_moban_home(), library_or_repo_name
+            repo.get_moban_home(), library_or_repo_name
         )
         if os.path.exists(potential_repo_path):
             # expand repo template path
