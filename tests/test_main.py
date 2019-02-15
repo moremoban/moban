@@ -18,8 +18,6 @@ class TestException:
             os.unlink(self.moban_file)
         if os.path.exists(self.data_file):
             os.unlink(self.data_file)
-        if os.path.exists(".moban.hashes"):
-            os.unlink(".moban.hashes")
 
     @raises(exceptions.MobanfileGrammarException)
     def test_handle_moban_file(self):
@@ -124,17 +122,6 @@ class TestException:
 
 
 class TestExitCodes:
-    def setUp(self):
-        self.moban_file = ".moban.yml"
-        self.data_file = "data.yml"
-
-    def tearDown(self):
-        if os.path.exists(self.moban_file):
-            os.unlink(self.moban_file)
-        if os.path.exists(self.data_file):
-            os.unlink(self.data_file)
-        if os.path.exists(".moban.hashes"):
-            os.unlink(".moban.hashes")
 
     @raises(SystemExit)
     @patch("moban.main.handle_moban_file")

@@ -195,7 +195,7 @@ class TestNoOptions:
             )
 
     @raises(Exception)
-    def test_single_command_without_output_option(self, fake_template_doer):
+    def test_single_command_without_output_option(self):
         test_args = ["moban", "-t", "abc.jj2"]
         with patch.object(sys, "argv", test_args):
             from moban.main import main

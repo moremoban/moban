@@ -248,10 +248,7 @@ class TestTutorial:
     def _raw_moban(self, args, folder, expected, output):
         os.chdir(os.path.join("docs", folder))
         with patch.object(sys, "argv", args):
-            try:
-                main()
-            except SystemExit as e:
-                eq_("1", str(e))
+            main()
             _verify_content(output, expected)
         os.unlink(output)
 
