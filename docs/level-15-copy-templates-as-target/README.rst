@@ -11,18 +11,18 @@ Here is example moban file for copying::
       template_dir:
         - template-sources
     targets:
-      - destination: simple.file.copy
-        source: file-in-template-sources-folder.txt
-        action: copy
-      - destination: "misc-1-copying/can-create-folder/if-not-exists.txt"
-        source: file-in-template-sources-folder.txt
-        action: copy
-      - destination: "test-dir"
-        source: dir-for-copying
-        action: copy
-      - destination: "test-recursive-dir"
-        source: dir-for-recusive-copying/**
-        action: copy
+      - output: simple.file.copy
+        template: file-in-template-sources-folder.txt
+        template_type: copy
+      - output: "misc-1-copying/can-create-folder/if-not-exists.txt"
+        template: file-in-template-sources-folder.txt
+        template_type: copy
+      - output: "test-dir"
+        template: dir-for-copying
+        template_type: copy
+      - output: "test-recursive-dir"
+        template: dir-for-recusive-copying/**
+        template_type: copy
 
 
 template copy does:
