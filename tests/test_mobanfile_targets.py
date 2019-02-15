@@ -1,20 +1,60 @@
 import os
 
-from mock import patch
 from nose.tools import eq_
 
 from moban.mobanfile import targets
 from moban.definitions import TemplateTarget
 
+TEMPLATE = "a.jj2"
+OUTPUT = "a.output"
+CONFIGURATION = "data.config"
+TEMPLATE_DIRS = [os.path.join("tests", "fixtures")]
+DEFAULT_TEMPLATE_TYPE = "default-template-type"
 
-def test_get_explicit_target():
-    target = dict(template_type="not-known", template="a.jj2", output="new")
-    options = dict(
-        configuration="data.config",
-        template_type="special",
-        template_dir=[os.path.join("tests", "fixtures")],
-    )
 
-    actual = list(targets._handle_explicit_target(options, target))
-    expected = [TemplateTarget("a.jj2", "data.config", "new", "not-known")]
-    eq_(expected, actual)
+class TestExplicitTarget:
+    def test_use_target_template_type(self):
+
+        target = dict(template_type="use-me", template=TEMPLATE, output=OUTPUT)
+        options = dict(
+            configuration=CONFIGURATION,
+            template_type=DEFAULT_TEMPLATE_TYPE,
+            template_dir=TEMPLATE_DIRS,
+        )
+
+        actual = list(targets._handle_explicit_target(options, target))
+        expected = [TemplateTarget(TEMPLATE, CONFIGURATION, OUTPUT, "use-me")]
+        eq_(expected, actual)
+
+    def test_derive_template_type_from_target_template_file(self):
+
+        target = dict(template=TEMPLATE, output=OUTPUT)
+        options = dict(
+            configuration=CONFIGURATION,
+            template_type=DEFAULT_TEMPLATE_TYPE,
+            template_dir=TEMPLATE_DIRS,
+        )
+
+        actual = list(targets._handle_explicit_target(options, target))
+        expected = [TemplateTarget(TEMPLATE, CONFIGURATION, OUTPUT, "jj2")]
+        eq_(expected, actual)
+
+    def test_use_moban_default_template_from_options(self):
+        template_without_suffix = "template"
+        target = dict(template=template_without_suffix, output=OUTPUT)
+        options = dict(
+            configuration=CONFIGURATION,
+            template_type=DEFAULT_TEMPLATE_TYPE,
+            template_dir=TEMPLATE_DIRS,
+        )
+
+        actual = list(targets._handle_explicit_target(options, target))
+        expected = [
+            TemplateTarget(
+                template_without_suffix,
+                CONFIGURATION,
+                OUTPUT,
+                DEFAULT_TEMPLATE_TYPE,
+            )
+        ]
+        eq_(expected, actual)
