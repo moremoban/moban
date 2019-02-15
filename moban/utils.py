@@ -5,7 +5,7 @@ import stat
 import errno
 import logging
 
-from moban import reporter, constants, exceptions
+from moban import constants, exceptions
 
 log = logging.getLogger(__name__)
 
@@ -42,82 +42,6 @@ def search_file(base_dir, file_name):
         else:
             raise IOError(constants.ERROR_DATA_FILE_ABSENT % the_file)
     return the_file
-
-
-def get_template_type(template_file):
-    _, extension = os.path.splitext(template_file)
-    if extension:
-        template_type = extension[1:]
-    else:
-        template_type = None
-    return template_type
-
-
-def handle_template(template_file, output, template_dirs):
-    log.info("handling %s" % template_file)
-    template_file_on_disk = find_file_in_template_dirs(
-        template_file, template_dirs
-    )
-    if template_file_on_disk is None:
-        if template_file.endswith("**"):
-            source_dir = template_file[:-3]
-            src_path = find_file_in_template_dirs(source_dir, template_dirs)
-            if src_path:
-                for a_triple in listing_directory_files_recusively(
-                    source_dir, src_path, output
-                ):
-                    yield a_triple
-            else:
-                reporter.report_error_message(
-                    "{0} cannot be found".format(template_file)
-                )
-        else:
-            reporter.report_error_message(
-                "{0} cannot be found".format(template_file)
-            )
-    elif os.path.isdir(template_file_on_disk):
-        for a_triple in list_dir_files(
-            template_file, template_file_on_disk, output
-        ):
-            yield a_triple
-    else:
-        template_type = get_template_type(template_file)
-        yield (template_file, output, template_type)
-
-
-def find_file_in_template_dirs(src, template_dirs):
-    log.debug(template_dirs)
-    for folder in template_dirs:
-        path = os.path.join(folder, src)
-        if os.path.exists(path):
-            return path
-    else:
-        return None
-
-
-def list_dir_files(source, actual_source_path, dest):
-    for file_name in os.listdir(actual_source_path):
-        real_src_file = os.path.join(actual_source_path, file_name)
-        if os.path.isfile(real_src_file):
-            src_file_under_dir = os.path.join(source, file_name)
-            dest_file_under_dir = os.path.join(dest, file_name)
-            template_type = get_template_type(src_file_under_dir)
-            yield (src_file_under_dir, dest_file_under_dir, template_type)
-
-
-def listing_directory_files_recusively(source, actual_source_path, dest):
-    for file_name in os.listdir(actual_source_path):
-        src_file_under_dir = os.path.join(source, file_name)
-        dest_file_under_dir = os.path.join(dest, file_name)
-        real_src_file = os.path.join(actual_source_path, file_name)
-        if os.path.isfile(real_src_file):
-            template_type = get_template_type(src_file_under_dir)
-            yield (src_file_under_dir, dest_file_under_dir, template_type)
-        elif os.path.isdir(real_src_file):
-            for a_triple in listing_directory_files_recusively(
-                src_file_under_dir, real_src_file, dest_file_under_dir
-            ):
-                yield a_triple
 
 
 def file_permissions_copy(source, dest):
@@ -205,3 +129,13 @@ def verify_the_existence_of_directories(dirs):
             raise exceptions.DirectoryNotFound(
                 constants.MESSAGE_DIR_NOT_EXIST % os.path.abspath(directory)
             )
+
+
+def find_file_in_template_dirs(src, template_dirs):
+    log.debug(template_dirs)
+    for folder in template_dirs:
+        path = os.path.join(folder, src)
+        if os.path.exists(path):
+            return path
+    else:
+        return None
