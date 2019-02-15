@@ -5,4 +5,15 @@ docs/level-9-moban-dependency-as-pypi-package/mytravis.yml
 docs/misc-1-copying-templates/misc-1-copying/
 docs/misc-1-copying-templates/test-dir/
 docs/misc-1-copying-templates/test-recursive-dir/
+docs/level-12-use-template-engine-extensions/a.output
+docs/level-13-any-data-override-any-data/a.output
+docs/level-13-any-data-override-any-data/b.output
+docs/level-15-copy-templates-as-target/target_in_short_form
+docs/level-15-copy-templates-as-target/target_without_template_type
+docs/level-15-copy-templates-as-target/test-dir/
+docs/level-15-copy-templates-as-target/test-recursive-dir/
+docs/level-16-group-targets-using-template-type/test-dir/
+docs/level-16-group-targets-using-template-type/test-recursive-dir/
+docs/level-17-force-template-type-from-moban-file/test-dir/
+docs/level-17-force-template-type-from-moban-file/test-recursive-dir/
 {% endblock %}
