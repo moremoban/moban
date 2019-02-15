@@ -122,7 +122,6 @@ class TestException:
 
 
 class TestExitCodes:
-
     @raises(SystemExit)
     @patch("moban.main.handle_moban_file")
     @patch("moban.mobanfile.find_default_moban_file")

@@ -101,6 +101,16 @@ def test_mkdir_p():
     rmtree(test_path)
 
 
+@raises(FileNotFound)
+def test_get_template_path_with_error():
+    temp_dirs = [
+        os.path.join("tests", "fixtures", "template-tests"),
+        os.path.join("tests", "abc"),
+    ]
+    template = "I-do-not-exist.jj2"
+    get_template_path(temp_dirs, template)
+
+
 def test_get_template_path():
     temp_dirs = [
         os.path.join("tests", "fixtures", "template-tests"),
