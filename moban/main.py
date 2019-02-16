@@ -4,7 +4,7 @@
 
     Bring jinja2 to command line
 
-    :copyright: (c) 2016-2017 by Onni Software Ltd.
+    :copyright: (c) 2016-2019 by Onni Software Ltd.
     :license: MIT License, see LICENSE for more details
 
 """
