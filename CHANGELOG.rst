@@ -9,6 +9,12 @@ Added
 
 #. `#165 <https://github.com/moremoban/moban/issues/165>`_: Copy as plugins
 
+Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#219 <https://github.com/moremoban/moban/issues/219>`_: git clone depth set
+   to 2
+
 0.3.10 - 03.02.2019
 --------------------------------------------------------------------------------
 

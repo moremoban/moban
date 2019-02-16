@@ -1,4 +1,5 @@
 name: moban
+project: moban
 organisation: moremoban
 author: C. W.
 contact: wangc_2011@hotmail.com
@@ -11,6 +12,7 @@ command_line_interface: "moban"
 entry_point: "moban.main:main"
 company: Onni Software Ltd.
 copyright_year: 2017-2019
+copyright: 2017-2019 Onni Software Ltd. and its contributors
 keywords:
   - jinja2
   - moban
