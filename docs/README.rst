@@ -17,6 +17,9 @@ This section covers the use cases for moban. Please check them out individually.
 #. `Use template engine extensions`_
 #. `Any data overrides any data`_
 #. `Custom data loader`_
+#. `Copy templates as target`_
+#. `Group targets by template type`_
+#. `Force template type from moban file`_
 
 .. _Jinja2 command line: level-1-jinja2-cli
 .. _Template inheritance: level-2-template-inheritance
@@ -32,3 +35,6 @@ This section covers the use cases for moban. Please check them out individually.
 .. _Use template engine extensions: level-12-use-template-engine-extensions
 .. _Any data overrides any data: level-13-any-data-override-any-data
 .. _Custom data loader: level-14-custom-data-loader
+.. _Copy templates as target: level-15-copy-templates-as-target
+.. _Group targets by template type: level-16-group-targets-using-template-type
+.. _Force template type from moban file: level-17-force-template-type-from-moban-file

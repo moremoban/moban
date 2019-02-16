@@ -8,15 +8,12 @@ from lml.utils import do_import
 import moban.reporter as reporter
 import moban.constants as constants
 from moban import plugins
-from moban.utils import (
-    merge,
-    git_clone,
-    pip_install,
-    parse_targets,
-    expand_directories,
-)
-from moban.copier import Copier
+from moban.repo import git_clone
+from moban.utils import merge, pip_install
+from moban.mobanfile.targets import parse_targets
+from moban.deprecated import deprecated
 from moban.definitions import GitRequire
+from moban.plugins.template import expand_template_directories
 
 try:
     from urllib.parse import urlparse
@@ -56,6 +53,11 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if requires:
         handle_requires(requires)
 
+    # call expand template directory always after handle require please
+    # the penalty is: newly clone repos are not visible
+    merged_options[constants.LABEL_TMPL_DIRS] = list(
+        expand_template_directories(merged_options[constants.LABEL_TMPL_DIRS])
+    )
     extensions = moban_file_configurations.get(constants.LABEL_EXTENSIONS)
     if extensions:
         plugins.ENGINES.register_extensions(extensions)
@@ -74,8 +76,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
     if constants.LABEL_COPY in moban_file_configurations:
         number_of_copied_files = handle_copy(
-            merged_options[constants.LABEL_TMPL_DIRS],
-            moban_file_configurations[constants.LABEL_COPY],
+            merged_options, moban_file_configurations[constants.LABEL_COPY]
         )
     else:
         number_of_copied_files = 0
@@ -86,33 +87,45 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     return exit_code
 
 
-def handle_copy(template_dirs, copy_config):
-    # expanding function is added so that
-    # copy function understands repo and pypi_pkg path, since 0.3.1
-    expanded_dirs = list(plugins.expand_template_directories(template_dirs))
+@deprecated(constants.MESSAGE_DEPRECATE_COPY_SINCE_0_4_0)
+def handle_copy(merged_options, copy_config):
+    copy_targets = []
+    for (dest, src) in _iterate_list_of_dicts(copy_config):
+        copy_targets.append(
+            {
+                constants.LABEL_TEMPLATE: src,
+                constants.LABEL_CONFIG: None,
+                constants.LABEL_OUTPUT: dest,
+                constants.LABEL_TEMPLATE_TYPE: constants.TEMPLATE_COPY,
+            }
+        )
+    return handle_targets(merged_options, copy_targets)
 
-    copier = Copier(expanded_dirs)
-    copier.copy_files(copy_config)
-    copier.report()
-    return copier.number_of_copied_files()
+
+def _iterate_list_of_dicts(list_of_dict):
+    for adict in list_of_dict:
+        for key, value in adict.items():
+            yield (key, value)
 
 
 def handle_targets(merged_options, targets):
     list_of_templating_parameters = parse_targets(merged_options, targets)
-    list_of_templating_parameters = expand_directories(
-        list_of_templating_parameters,
-        merged_options[constants.LABEL_TMPL_DIRS],
-    )
     jobs_for_each_engine = defaultdict(list)
-    for file_list in list_of_templating_parameters:
-        _, extension = os.path.splitext(file_list[0])
-        template_type = extension[1:]
+    for target in list_of_templating_parameters:
+        forced_template_type = merged_options.get(
+            constants.LABEL_FORCE_TEMPLATE_TYPE
+        )
+        if forced_template_type:
+            target.set_template_type(forced_template_type)
+
+        template_type = target.template_type
         primary_template_type = plugins.ENGINES.get_primary_key(template_type)
         if primary_template_type is None:
             primary_template_type = merged_options[
                 constants.LABEL_TEMPLATE_TYPE
             ]
-        jobs_for_each_engine[primary_template_type].append(file_list)
+
+        jobs_for_each_engine[primary_template_type].append(target)
 
     count = 0
     for template_type in jobs_for_each_engine.keys():
@@ -188,6 +201,7 @@ def handle_requires(requires):
                 pypi_pkgs.append(require)
     if pypi_pkgs:
         pip_install(pypi_pkgs)
+        plugins.make_sure_all_pkg_are_loaded()
     if git_repos:
         git_clone(git_repos)
 

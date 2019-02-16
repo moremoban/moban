@@ -14,14 +14,16 @@ class Strategy(object):
         self.tuples = array_of_param_tuple
 
     def process(self):
-        for (template_file, data_file, output_file) in self.tuples:
+        for target in self.tuples:
             _append_to_array_item_to_dictionary_key(
-                self.data_file_index, data_file, (template_file, output_file)
+                self.data_file_index,
+                target.data_file,
+                (target.template_file, target.output),
             )
             _append_to_array_item_to_dictionary_key(
                 self.template_file_index,
-                template_file,
-                (data_file, output_file),
+                target.template_file,
+                (target.data_file, target.output),
             )
 
     def what_to_do(self):

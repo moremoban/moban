@@ -204,11 +204,42 @@ class TestTutorial:
         commands = ["moban"]
         self._raw_moban(commands, folder, expected, "a.output")
 
+    def test_level_15_copy_templates_as_target(self):
+        expected = "test file\n"
+
+        folder = "level-15-copy-templates-as-target"
+        self._raw_moban(["moban"], folder, expected, "simple.file")
+
+        _verify_content(
+            "target_without_template_type",
+            "file extension will trigger copy engine\n",
+        )
+        _verify_content(
+            "target_in_short_form",
+            (
+                "it is OK to have a short form, "
+                + "but the file to be 'copied' shall have 'copy' extension, "
+                + "so as to trigger ContentForwardEngine, 'copy' engine.\n"
+            ),
+        )
+
+    def test_level_16_group_targets_using_template_type(self):
+        expected = "test file\n"
+
+        folder = "level-16-group-targets-using-template-type"
+        self._raw_moban(["moban"], folder, expected, "simple.file")
+
+    def test_level_17_force_template_type_from_moban_file(self):
+        expected = "test file\n"
+
+        folder = "level-17-force-template-type-from-moban-file"
+        self._raw_moban(["moban"], folder, expected, "simple.file")
+
     def test_misc_1(self):
         expected = "test file\n"
 
         folder = "misc-1-copying-templates"
-        self._raw_moban(["moban"], folder, expected, "simple.file.copy")
+        self._raw_moban(["moban"], folder, expected, "simple.file")
 
     def _moban(self, folder, expected):
         args = ["moban", "-c", "data.yml", "-t", "a.template"]
@@ -217,10 +248,7 @@ class TestTutorial:
     def _raw_moban(self, args, folder, expected, output):
         os.chdir(os.path.join("docs", folder))
         with patch.object(sys, "argv", args):
-            try:
-                main()
-            except SystemExit as e:
-                eq_("1", str(e))
+            main()
             _verify_content(output, expected)
         os.unlink(output)
 

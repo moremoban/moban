@@ -1,0 +1,9 @@
+configuration:
+  template_dir:
+    - template-sources
+targets:
+  - copy:
+    - simple.file.copy: file-in-template-sources-folder.txt
+    - "misc-1-copying/can-create-folder/if-not-exists.txt": file-in-template-sources-folder.txt
+    - "test-dir": dir-for-copying
+    - "test-recursive-dir": dir-for-recusive-copying/**
