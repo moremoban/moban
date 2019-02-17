@@ -9,6 +9,12 @@ Added
 
 #. `#165 <https://github.com/moremoban/moban/issues/165>`_: Copy as plugins
 
+Updated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#186 <https://github.com/moremoban/moban/issues/186>`_: lowest dependecy on
+   ruamel.yaml is 0.15.5, Jun 2017
+
 0.3.10 - 03.02.2019
 --------------------------------------------------------------------------------
 

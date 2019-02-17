@@ -5,6 +5,9 @@ releases:
   - action: Added
     details:
     - "`#165`: Copy as plugins"
+  - action: Updated
+    details:
+    - "`#186`: lowest dependecy on ruamel.yaml is 0.15.5, Jun 2017"
   date: unreleased
   version: 0.4.0    
 - changes:
