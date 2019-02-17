@@ -14,6 +14,8 @@ Added
 
 #. `#219 <https://github.com/moremoban/moban/issues/219>`_: git clone depth set
    to 2
+#. `#186 <https://github.com/moremoban/moban/issues/186>`_: lowest dependecy on
+   ruamel.yaml is 0.15.5, Jun 2017
 
 0.3.10 - 03.02.2019
 --------------------------------------------------------------------------------
