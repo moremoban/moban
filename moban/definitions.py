@@ -10,7 +10,10 @@ class GitRequire(object):
         self.branch = branch
 
     def clone_params(self):
-        clone_params = {"single_branch": True}
+        clone_params = {
+            "single_branch": True,
+            "depth": constants.DEFAULT_CLONE_DEPTH,
+        }
         if self.branch is not None:
             clone_params["branch"] = self.branch
         return clone_params

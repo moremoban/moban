@@ -89,6 +89,7 @@ ERROR = 2
 NO_CHANGES = 0
 
 # Require
+DEFAULT_CLONE_DEPTH = 2
 GIT_REQUIRE = "GIT"
 GIT_HAS_SUBMODULE = "submodule"
 GIT_URL = "url"
