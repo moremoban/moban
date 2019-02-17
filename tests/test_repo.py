@@ -30,7 +30,10 @@ class TestGitFunctions:
         local_folder_exists.return_value = False
         git_clone([self.require])
         fake_repo.clone_from.assert_called_with(
-            self.repo, self.expected_local_repo_path, single_branch=True
+            self.repo,
+            self.expected_local_repo_path,
+            single_branch=True,
+            depth=2,
         )
         repo = fake_repo.return_value
         eq_(repo.git.submodule.called, False)
@@ -41,7 +44,10 @@ class TestGitFunctions:
         local_folder_exists.return_value = False
         git_clone([self.require_with_submodule])
         fake_repo.clone_from.assert_called_with(
-            self.repo, self.expected_local_repo_path, single_branch=True
+            self.repo,
+            self.expected_local_repo_path,
+            single_branch=True,
+            depth=2,
         )
         repo = fake_repo.clone_from.return_value
         repo.git.submodule.assert_called_with("update", "--init")
@@ -72,6 +78,7 @@ class TestGitFunctions:
             self.expected_local_repo_path,
             branch="ghpages",
             single_branch=True,
+            depth=2,
         )
         repo = fake_repo.return_value
         eq_(repo.git.submodule.called, False)

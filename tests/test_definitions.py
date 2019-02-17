@@ -23,7 +23,7 @@ def test_template_target_output_suffix_change():
 def test_clone_params():
     require = GitRequire(git_url="http://github.com/some/repo")
     actual = require.clone_params()
-    expected = {"single_branch": True}
+    expected = {"single_branch": True, "depth": 2}
     eq_(expected, actual)
 
 
@@ -32,5 +32,5 @@ def test_branch_params():
         git_url="http://github.com/some/repo", branch="ghpages"
     )
     actual = require.clone_params()
-    expected = {"single_branch": True, "branch": "ghpages"}
+    expected = {"single_branch": True, "branch": "ghpages", "depth": 2}
     eq_(expected, actual)
