@@ -8,7 +8,7 @@ but it will fallback to environment variables if a data file cannot be found
 Evaluation
 --------------------------------------------------------------------------------
 
-Please clone the moban project and install moban:
+Please clone the moban project and install moban::
 
 
     $ git clone https://github.com/chfw/moban.git
