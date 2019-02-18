@@ -1,3 +1,4 @@
+import sys
 import os
 
 from mock import patch
@@ -6,7 +7,11 @@ from nose.tools import eq_, raises
 
 import moban.exceptions as exceptions
 from moban.plugins import ENGINES
-from moban.jinja2.engine import Engine, is_extension_list_valid
+from moban.jinja2.engine import (
+    Engine,
+    is_extension_list_valid,
+    import_module_of_extension,
+)
 from moban.plugins.context import Context
 from moban.plugins.template import TemplateEngine, expand_template_directories
 
@@ -137,3 +142,15 @@ def test_extensions_validator():
         actual.append(is_extension_list_valid(fixture))
 
     eq_(expected, actual)
+
+
+def test_import():
+    extensions = [
+        "jinja2.ext.do",
+        "jinja2_time.TimeExtension",
+        "jinja2.ext.loopcontrols",
+    ]
+    import_module_of_extension(extensions)
+    modules = ["jinja2", "jinja2_time"]
+    for module in modules:
+        assert module in sys.modules
