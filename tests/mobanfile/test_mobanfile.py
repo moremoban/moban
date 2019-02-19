@@ -1,7 +1,9 @@
+import os
+
 from mock import patch
 from nose.tools import eq_
 
-from moban.definitions import GitRequire
+from moban.definitions import GitRequire, TemplateTarget
 
 
 class TestFinder:
@@ -108,3 +110,36 @@ def test_is_repo():
     actual = [is_repo(repo) for repo in repos]
     expected = [True, True, True, False, False]
     eq_(expected, actual)
+
+
+@patch("moban.plugins.template.TemplateEngine.render_to_files")
+def test_handle_targets(fake_renderer):
+    from moban.mobanfile import handle_targets
+
+    TEMPLATE = "copier-test01.csv"
+    OUTPUT = "output.csv"
+    CONFIGURATION = "child.yaml"
+    TEMPLATE_DIRS = [os.path.join("tests", "fixtures")]
+    DEFAULT_TEMPLATE_TYPE = "jinja2"
+
+    options = dict(
+        configuration=CONFIGURATION,
+        template_type=DEFAULT_TEMPLATE_TYPE,
+        template_dir=TEMPLATE_DIRS,
+        configuration_dir=os.path.join("tests", "fixtures"),
+    )
+    short_hand_targets = [{OUTPUT: TEMPLATE}]
+    handle_targets(options, short_hand_targets)
+
+    call_args = list(fake_renderer.call_args[0][0])
+    eq_(
+        call_args,
+        [
+            TemplateTarget(
+                "copier-test01.csv",
+                "child.yaml",
+                "output.csv",
+                template_type="jinja2",
+            )
+        ],
+    )

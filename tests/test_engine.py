@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 from mock import patch
 from lml.plugin import PluginInfo

@@ -111,6 +111,7 @@ def _iterate_list_of_dicts(list_of_dict):
 def handle_targets(merged_options, targets):
     list_of_templating_parameters = parse_targets(merged_options, targets)
     jobs_for_each_engine = defaultdict(list)
+
     for target in list_of_templating_parameters:
         forced_template_type = merged_options.get(
             constants.LABEL_FORCE_TEMPLATE_TYPE
@@ -124,6 +125,7 @@ def handle_targets(merged_options, targets):
             primary_template_type = merged_options[
                 constants.LABEL_TEMPLATE_TYPE
             ]
+            target.set_template_type(primary_template_type)
 
         jobs_for_each_engine[primary_template_type].append(target)
 

@@ -20,6 +20,14 @@ def test_template_target_output_suffix_change():
     eq_("template_file,dat_file,output,copy", repr(require))
 
 
+def test_template_target_output_suffix_updates_after_set():
+    require = TemplateTarget(
+        "template_file", "dat_file", "output.copy", template_type="copy"
+    )
+    require.set_template_type("jinja2")
+    eq_("template_file,dat_file,output.copy,jinja2", repr(require))
+
+
 def test_clone_params():
     require = GitRequire(git_url="http://github.com/some/repo")
     actual = require.clone_params()
