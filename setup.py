@@ -29,7 +29,7 @@ except (ValueError, UnicodeError, locale.Error):
 
 NAME = 'moban'
 AUTHOR = 'C. W.'
-VERSION = '0.3.10'
+VERSION = '0.4.0'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -41,7 +41,7 @@ DESCRIPTION = (
     'Yet another jinja2 cli command for static text generation'
 )
 URL = 'https://github.com/moremoban/moban'
-DOWNLOAD_URL = '%s/archive/0.3.10.tar.gz' % URL
+DOWNLOAD_URL = '%s/archive/0.4.0.tar.gz' % URL
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'python',
@@ -62,13 +62,13 @@ CLASSIFIERS = [
 ]
 
 INSTALL_REQUIRES = [
-    'ruamel.yaml==0.15.87',
+    'ruamel.yaml>=0.15.5',
     'jinja2>=2.7.1',
     'lml>=0.0.9',
     'appdirs==1.4.3',
     'crayons',
     'GitPython==2.1.11',
-    'git-url-parse',
+    'giturlparse',
 ]
 SETUP_COMMANDS = {}
 
@@ -79,8 +79,8 @@ EXTRAS_REQUIRE = {
 # You do not need to read beyond this line
 PUBLISH_COMMAND = '{0} setup.py sdist bdist_wheel upload -r pypi'.format(
     sys.executable)
-GS_COMMAND = ('gs moban v0.3.10 ' +
-              "Find 0.3.10 in changelog for more details")
+GS_COMMAND = ('gs moban v0.4.0 ' +
+              "Find 0.4.0 in changelog for more details")
 NO_GS_MESSAGE = ('Automatic github release is disabled. ' +
                  'Please install gease to enable it.')
 UPLOAD_FAILED_MSG = (
