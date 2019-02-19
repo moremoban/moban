@@ -7,6 +7,12 @@ Change log
 Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+#. `#90 <https://github.com/moremoban/moban/issues/90>`_: Dynamically import
+   modules of extensions in order to support third-party extensions
+
+Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 #. `#165 <https://github.com/moremoban/moban/issues/165>`_: Copy as plugins
 
 Added

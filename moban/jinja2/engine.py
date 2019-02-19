@@ -1,3 +1,5 @@
+from importlib import import_module
+
 from jinja2 import Template, Environment, FileSystemLoader
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
@@ -74,6 +76,7 @@ class Engine(object):
         if is_extension_list_valid(extensions):
             # because it is modified here
             env_params["extensions"] += extensions
+        import_module_of_extension(extensions)
         self.jj2_environment = Environment(**env_params)
         for filter_name, filter_function in FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
@@ -136,3 +139,12 @@ def is_extension_list_valid(extensions):
         and isinstance(extensions, list)
         and len(extensions) > 0
     )
+
+
+def import_module_of_extension(extensions):
+    modules = set()
+    if extensions:
+        for extension in extensions:
+            modules.add(extension.split('.')[0])
+    for module in modules:
+        import_module(module)
