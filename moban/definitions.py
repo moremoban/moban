@@ -41,15 +41,16 @@ class TemplateTarget(object):
         self.data_file = data_file
         self.original_output = output
         self.template_type = template_type
-        if self.original_output.endswith(template_type):
-            self.output, _ = os.path.splitext(output)
-        else:
-            self.output = self.original_output
+        self.output = self.original_output
+
+        self.set_template_type(template_type)
 
     def set_template_type(self, new_template_type):
         self.template_type = new_template_type
         if self.original_output.endswith(self.template_type):
             self.output, _ = os.path.splitext(self.original_output)
+        else:
+            self.output = self.original_output
 
     def __eq__(self, other):
         return (

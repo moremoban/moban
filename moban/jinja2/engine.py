@@ -145,6 +145,6 @@ def import_module_of_extension(extensions):
     modules = set()
     if extensions:
         for extension in extensions:
-            modules.add(extension.split('.')[0])
+            modules.add(extension.split(".")[0])
     for module in modules:
         import_module(module)
