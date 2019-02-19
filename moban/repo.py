@@ -32,12 +32,14 @@ def git_clone(requires):
 
 def get_repo_name(repo_url):
     import giturlparse
-    from giturlparse.parser import ParserError
 
     try:
         repo = giturlparse.parse(repo_url)
-        return repo.name
-    except ParserError:
+        name = repo.repo
+        if name.endswith('/'):
+            name = name[:-1]
+        return name
+    except AttributeError:
         reporter.report_error_message(
             constants.MESSAGE_INVALID_GIT_URL % repo_url
         )
