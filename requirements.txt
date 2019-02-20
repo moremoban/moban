@@ -1,7 +1,7 @@
-ruamel.yaml==0.15.87
+ruamel.yaml>=0.15.5
 jinja2>=2.7.1
 lml>=0.0.9
 appdirs==1.4.3
 crayons
 GitPython==2.1.11
-git-url-parse
+giturlparse

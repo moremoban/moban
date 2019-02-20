@@ -1,5 +1,9 @@
 import os
 
+# Template type
+TEMPLATE_JINJA2 = "jinja2"
+TEMPLATE_COPY = "copy"
+
 # Configurations
 PROGRAM_NAME = "moban"
 PROGRAM_DESCRIPTION = (
@@ -11,11 +15,11 @@ DEFAULT_MOBAN_FILES = [
     ".%s%s" % (PROGRAM_NAME, DEFAULT_YAML_SUFFIX),
     ".%s%s" % (PROGRAM_NAME, ".yaml"),
 ]
-DEFAULT_TEMPLATE_TYPE = "jinja2"
+DEFAULT_TEMPLATE_TYPE = TEMPLATE_JINJA2
 DEFAULT_DATA_TYPE = "yaml"
 
 # .moban.hashes
-DEFAULT_MOBAN_CACHE_FILE = ".moban.hashes"
+DEFAULT_MOBAN_CACHE_FILE = ".%s.hashes" % PROGRAM_NAME
 
 # Command line options
 LABEL_CONFIG = "configuration"
@@ -33,8 +37,8 @@ LABEL_FORCE = "force"
 LABEL_VERSION = "version"
 
 
-DEFAULT_CONFIGURATION_DIRNAME = ".moban.cd"
-DEFAULT_TEMPLATE_DIRNAME = ".moban.td"
+DEFAULT_CONFIGURATION_DIRNAME = ".%s.cd" % PROGRAM_NAME
+DEFAULT_TEMPLATE_DIRNAME = ".%s.td" % PROGRAM_NAME
 DEFAULT_OPTIONS = {
     # .moban.cd, default configuration dir
     LABEL_CONFIG_DIR: os.path.join(".", DEFAULT_CONFIGURATION_DIRNAME),
@@ -50,13 +54,16 @@ DEFAULT_OPTIONS = {
 # moban file version
 MOBAN_VERSION = "moban_file_spec_version"
 DEFAULT_MOBAN_VERSION = "1.0"
-MOBAN_DIR_NAME_UNDER_USER_HOME = ".moban"
 MOBAN_REPOS_DIR_NAME = "repos"
 # moban file configuration
 LABEL_REQUIRES = "requires"
 LABEL_TARGETS = "targets"
-LABEL_COPY = "copy"
+LABEL_COPY = TEMPLATE_COPY
 LABEL_EXTENSIONS = "extensions"
+LABEL_ACTION = "action"
+LABEL_SOURCE = "source"
+LABEL_DEST = "destination"
+LABEL_FORCE_TEMPLATE_TYPE = "force_template_type"
 
 # error messages
 ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"
@@ -82,6 +89,7 @@ ERROR = 2
 NO_CHANGES = 0
 
 # Require
+DEFAULT_CLONE_DEPTH = 2
 GIT_REQUIRE = "GIT"
 GIT_HAS_SUBMODULE = "submodule"
 GIT_URL = "url"
@@ -103,3 +111,9 @@ LIBRARY_EXTENSION = "library"
 MOBAN_EXTENSIONS = "^moban_.+$"
 MOBAN_TEMPLATES = "^.+_mobans_pkg$"
 MOBAN_ALL = "%s|%s" % (MOBAN_EXTENSIONS, MOBAN_TEMPLATES)
+
+
+# deprecation message
+MESSAGE_DEPRECATE_COPY_SINCE_0_4_0 = (
+    "'%s:' is deprecated since 0.4.0! " + "Please use 'targets:' instead"
+) % TEMPLATE_COPY

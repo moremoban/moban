@@ -1,7 +1,7 @@
 level 10: moban dependency as git repo
 ================================================================================
 
-Since the support to have a pypi package as dependency, the pro user of moban
+Since the support to have a pypi package as dependency, the moban pro user will
 find it more useful to have git repo so that the changes to static content
 could get propagate as it happens using git push and git pull.
 

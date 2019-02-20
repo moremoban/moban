@@ -1,38 +1,47 @@
 import os
+import logging
 
-from lml.loader import scan_plugins_regex
 from lml.plugin import PluginManager
 
-import moban.reporter as reporter
-from moban import utils, constants, exceptions
-from moban.strategy import Strategy
+from moban import repo, utils, reporter, constants, exceptions
 from moban.hashstore import HASH_STORE
-from moban.data_loaders.manager import AnyDataLoader
+from moban.plugins.context import Context
+from moban.plugins.library import LIBRARIES
+from moban.plugins.strategy import Strategy
 
-BUILTIN_EXENSIONS = [
-    "moban.jinja2.engine",
-    "moban.data_loaders.yaml",
-    "moban.data_loaders.json_loader",
-]
+log = logging.getLogger(__name__)
 
 
-class LibraryManager(PluginManager):
+class TemplateFactory(PluginManager):
     def __init__(self):
-        super(LibraryManager, self).__init__(constants.LIBRARY_EXTENSION)
+        super(TemplateFactory, self).__init__(
+            constants.TEMPLATE_ENGINE_EXTENSION
+        )
+        self.extensions = {}
 
-    def resource_path_of(self, library_name):
-        library = self.get_a_plugin(library_name)
-        return library.resources_path
+    def register_extensions(self, extensions):
+        self.extensions.update(extensions)
+
+    def get_engine(self, template_type, template_dirs, context_dirs):
+        engine_cls = self.load_me_now(template_type)
+        engine_extensions = self.extensions.get(template_type)
+        return TemplateEngine(
+            template_dirs, context_dirs, engine_cls, engine_extensions
+        )
+
+    def all_types(self):
+        return list(self.registry.keys())
+
+    def raise_exception(self, key):
+        raise exceptions.NoThirdPartyEngine(key)
 
 
-class BaseEngine(object):
+class TemplateEngine(object):
     def __init__(
         self, template_dirs, context_dirs, engine_cls, engine_extensions=None
     ):
-        # pypi-moban-pkg cannot be found if removed
-        make_sure_all_pkg_are_loaded()
         template_dirs = list(expand_template_directories(template_dirs))
-        verify_the_existence_of_directories(template_dirs)
+        utils.verify_the_existence_of_directories(template_dirs)
         context_dirs = expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
         self.template_dirs = template_dirs
@@ -103,8 +112,8 @@ class BaseEngine(object):
             )
             return True
 
-    def render_to_files(self, array_of_param_tuple):
-        sta = Strategy(array_of_param_tuple)
+    def render_to_files(self, array_of_template_targets):
+        sta = Strategy(array_of_template_targets)
         sta.process()
         choice = sta.what_to_do()
         if choice == Strategy.DATA_FIRST:
@@ -145,53 +154,8 @@ class BaseEngine(object):
                 self.file_count += 1
 
 
-class EngineFactory(PluginManager):
-    def __init__(self):
-        super(EngineFactory, self).__init__(
-            constants.TEMPLATE_ENGINE_EXTENSION
-        )
-        self.extensions = {}
-
-    def register_extensions(self, extensions):
-        self.extensions.update(extensions)
-
-    def get_engine(self, template_type, template_dirs, context_dirs):
-        engine_cls = self.load_me_now(template_type)
-        engine_extensions = self.extensions.get(template_type)
-        return BaseEngine(
-            template_dirs, context_dirs, engine_cls, engine_extensions
-        )
-
-    def all_types(self):
-        return list(self.registry.keys())
-
-    def raise_exception(self, key):
-        raise exceptions.NoThirdPartyEngine(key)
-
-
-LIBRARIES = LibraryManager()
-ENGINES = EngineFactory()
-LOADERS = AnyDataLoader()
-
-
-def load_data(base_dir, file_name):
-    abs_file_path = utils.search_file(base_dir, file_name)
-    data = LOADERS.get_data(abs_file_path)
-    if data is not None:
-        parent_data = None
-        if base_dir and constants.LABEL_OVERRIDES in data:
-            parent_data = load_data(
-                base_dir, data.pop(constants.LABEL_OVERRIDES)
-            )
-        if parent_data:
-            return utils.merge(data, parent_data)
-        else:
-            return data
-    else:
-        return None
-
-
 def expand_template_directories(dirs):
+    log.debug("Expanding %s..." % dirs)
     if not isinstance(dirs, list):
         dirs = [dirs]
 
@@ -204,7 +168,7 @@ def expand_template_directory(directory):
     if ":" in directory:
         library_or_repo_name, relative_path = directory.split(":")
         potential_repo_path = os.path.join(
-            utils.get_moban_home(), library_or_repo_name
+            repo.get_moban_home(), library_or_repo_name
         )
         if os.path.exists(potential_repo_path):
             # expand repo template path
@@ -227,49 +191,3 @@ def expand_template_directory(directory):
         # local template path
         translated_directory = os.path.abspath(directory)
     return translated_directory
-
-
-class Context(object):
-    def __init__(self, context_dirs):
-        verify_the_existence_of_directories(context_dirs)
-        self.context_dirs = context_dirs
-        self.__cached_environ_variables = dict(
-            (key, os.environ[key]) for key in os.environ
-        )
-
-    def get_data(self, file_name):
-        try:
-            data = load_data(self.context_dirs, file_name)
-            utils.merge(data, self.__cached_environ_variables)
-            return data
-        except (IOError, exceptions.IncorrectDataInput) as exception:
-            # If data file doesn't exist:
-            # 1. Alert the user of their (potential) mistake
-            # 2. Attempt to use environment vars as data
-            reporter.report_warning_message(str(exception))
-            reporter.report_using_env_vars()
-            return self.__cached_environ_variables
-
-
-def make_sure_all_pkg_are_loaded():
-    scan_plugins_regex(constants.MOBAN_ALL, "moban", None, BUILTIN_EXENSIONS)
-
-
-def verify_the_existence_of_directories(dirs):
-    if not isinstance(dirs, list):
-        dirs = [dirs]
-
-    for directory in dirs:
-        if os.path.exists(directory):
-            continue
-        should_I_ignore = (
-            constants.DEFAULT_CONFIGURATION_DIRNAME in directory
-            or constants.DEFAULT_TEMPLATE_DIRNAME in directory
-        )
-        if should_I_ignore:
-            # ignore
-            pass
-        else:
-            raise exceptions.DirectoryNotFound(
-                constants.MESSAGE_DIR_NOT_EXIST % os.path.abspath(directory)
-            )

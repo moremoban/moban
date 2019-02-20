@@ -26,6 +26,12 @@ examples folder.
    level-9-moban-dependency-as-pypi-package/README.rst
    level-10-moban-dependency-as-git-repo/README.rst
    level-11-use-handlebars/README.rst
+   level-12-use-template-engine-extensions/README.rst
+   level-13-any-data-override-any-data/README.rst
+   level-14-custom-data-loader/README.rst
+   level-15-copy-templates-as-target/README.rst
+   level-16-group-targets-using-template-type/README.rst
+   level-17-force-template-type-from-moban-file/README.rst
 
 In pratice, the following use cases were found interesting to go along with.
 

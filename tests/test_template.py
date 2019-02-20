@@ -3,16 +3,19 @@ import os
 from mock import patch
 
 from moban.plugins import ENGINES
+from moban.definitions import TemplateTarget
+
+MODULE = "moban.plugins.template"
 
 
-@patch("moban.plugins.BaseEngine._render_with_finding_data_first")
+@patch(MODULE + ".TemplateEngine._render_with_finding_data_first")
 def test_do_templates_1(_do_templates_with_more_shared_data):
     jobs = [
-        ("1.template", "data.yml", "1.output"),
-        ("2.template", "data.yml", "2.output"),
-        ("3.template", "data.yml", "3.output"),
-        ("4.template", "data.yml", "4.output"),
-        ("5.template", "data.yml", "6.output"),
+        TemplateTarget("1.template", "data.yml", "1.output"),
+        TemplateTarget("2.template", "data.yml", "2.output"),
+        TemplateTarget("3.template", "data.yml", "3.output"),
+        TemplateTarget("4.template", "data.yml", "4.output"),
+        TemplateTarget("5.template", "data.yml", "6.output"),
     ]
     expected = {
         "data.yml": [
@@ -26,18 +29,16 @@ def test_do_templates_1(_do_templates_with_more_shared_data):
     engine = ENGINES.get_engine("jinja2", ".", ".")
     engine.render_to_files(jobs)
     _do_templates_with_more_shared_data.assert_called_with(expected)
-    if os.path.exists(".moban.hashes"):
-        os.unlink(".moban.hashes")
 
 
-@patch("moban.plugins.BaseEngine._render_with_finding_template_first")
+@patch(MODULE + ".TemplateEngine._render_with_finding_template_first")
 def test_do_templates_2(_do_templates_with_more_shared_templates):
     jobs = [
-        ("1.template", "data1.yml", "1.output"),
-        ("1.template", "data2.yml", "2.output"),
-        ("1.template", "data3.yml", "3.output"),
-        ("1.template", "data4.yml", "4.output"),
-        ("1.template", "data5.yml", "6.output"),
+        TemplateTarget("1.template", "data1.yml", "1.output"),
+        TemplateTarget("1.template", "data2.yml", "2.output"),
+        TemplateTarget("1.template", "data3.yml", "3.output"),
+        TemplateTarget("1.template", "data4.yml", "4.output"),
+        TemplateTarget("1.template", "data5.yml", "6.output"),
     ]
     expected = {
         "1.template": [
@@ -51,8 +52,6 @@ def test_do_templates_2(_do_templates_with_more_shared_templates):
     engine = ENGINES.get_engine("jinja2", ".", ".")
     engine.render_to_files(jobs)
     _do_templates_with_more_shared_templates.assert_called_with(expected)
-    if os.path.exists(".moban.hashes"):
-        os.unlink(".moban.hashes")
 
 
 def test_do_templates_with_more_shared_templates():
@@ -67,8 +66,6 @@ def test_do_templates_with_more_shared_templates():
         content = f.read()
         assert content == "hello world ox"
     os.unlink("test")
-    if os.path.exists(".moban.hashes"):
-        os.unlink(".moban.hashes")
 
 
 def test_do_templates_with_more_shared_data():
@@ -83,5 +80,3 @@ def test_do_templates_with_more_shared_data():
         content = f.read()
         assert content == "hello world ox"
     os.unlink("test")
-    if os.path.exists(".moban.hashes"):
-        os.unlink(".moban.hashes")

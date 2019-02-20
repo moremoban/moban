@@ -4,6 +4,16 @@ releases:
 - changes:
   - action: Added
     details:
+    - "`#165`: Copy as plugins"
+  - action: Added
+    details:
+    - "`#219`: git clone depth set to 2"
+    - "`#186`: lowest dependecy on ruamel.yaml is 0.15.5, Jun 2017"
+  date: 20.02.2019
+  version: 0.4.0
+- changes:
+  - action: Added
+    details:
     - "`#174`: Store git cache in XDG_CACHE_DIR"
     - "`#107`: Add -v to show current moban version"
     - "`#164`: support additional data formats"
@@ -11,7 +21,7 @@ releases:
     details:
     - "`#178`: UnboundLocalError: local variable 'target' referenced before assignment"
     - "`#169`: uses GitPython instead of barebone git commands"
-  date: 3.2.2019 
+  date: 03.02.2019
   version: 0.3.10
 - changes:
   - action: Updated

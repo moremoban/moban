@@ -2,7 +2,7 @@ import os
 
 from lml.plugin import PluginManager
 
-from moban import constants
+from moban import utils, constants
 
 
 class AnyDataLoader(PluginManager):
@@ -20,3 +20,23 @@ class AnyDataLoader(PluginManager):
         except Exception:
             loader_function = self.load_me_now(constants.DEFAULT_DATA_TYPE)
         return loader_function(file_name)
+
+
+LOADER = AnyDataLoader()
+
+
+def load_data(base_dir, file_name):
+    abs_file_path = utils.search_file(base_dir, file_name)
+    data = LOADER.get_data(abs_file_path)
+    if data is not None:
+        parent_data = None
+        if base_dir and constants.LABEL_OVERRIDES in data:
+            parent_data = load_data(
+                base_dir, data.pop(constants.LABEL_OVERRIDES)
+            )
+        if parent_data:
+            return utils.merge(data, parent_data)
+        else:
+            return data
+    else:
+        return None

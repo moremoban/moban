@@ -1,17 +1,19 @@
 import os
+import sys
 
 from mock import patch
 from lml.plugin import PluginInfo
 from nose.tools import eq_, raises
 
 import moban.exceptions as exceptions
-from moban.plugins import (
-    ENGINES,
-    Context,
-    BaseEngine,
-    expand_template_directories,
+from moban.plugins import ENGINES
+from moban.jinja2.engine import (
+    Engine,
+    is_extension_list_valid,
+    import_module_of_extension,
 )
-from moban.jinja2.engine import Engine, is_extension_list_valid
+from moban.plugins.context import Context
+from moban.plugins.template import TemplateEngine, expand_template_directories
 
 USER_HOME = os.path.join("user", "home", ".moban", "repos")
 
@@ -29,7 +31,7 @@ def test_expand_pypi_dir():
         assert os.path.exists(directory)
 
 
-@patch("moban.utils.get_moban_home", return_value=USER_HOME)
+@patch("moban.repo.get_moban_home", return_value=USER_HOME)
 @patch("os.path.exists", return_value=True)
 def test_expand_repo_dir(_, __):
     dirs = list(expand_template_directories("git_repo:template"))
@@ -48,7 +50,7 @@ class FakeEngine:
         pass
 
 
-@patch("moban.plugins.PluginManager.load_me_now", return_value=FakeEngine)
+@patch("lml.plugin.PluginManager.load_me_now", return_value=FakeEngine)
 def test_default_mako_type(_):  # fake mako
     engine = ENGINES.get_engine("fake", [], "")
     assert engine.engine_cls.__name__ == "FakeEngine"
@@ -61,12 +63,12 @@ def test_unknown_template_type():
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_tmpl_directries():
-    BaseEngine("abc", "tests", Engine)
+    TemplateEngine("abc", "tests", Engine)
 
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_config_directries():
-    BaseEngine("tests", "abc", Engine)
+    TemplateEngine("tests", "abc", Engine)
 
 
 @raises(exceptions.DirectoryNotFound)
@@ -140,3 +142,15 @@ def test_extensions_validator():
         actual.append(is_extension_list_valid(fixture))
 
     eq_(expected, actual)
+
+
+def test_import():
+    extensions = [
+        "jinja2.ext.do",
+        "jinja2_time.TimeExtension",
+        "jinja2.ext.loopcontrols",
+    ]
+    import_module_of_extension(extensions)
+    modules = ["jinja2", "jinja2_time"]
+    for module in modules:
+        assert module in sys.modules

@@ -2,7 +2,7 @@ import os
 
 from nose.tools import eq_
 
-from moban.plugins import Context
+from moban.plugins.context import Context
 
 
 def test_context():
