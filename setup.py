@@ -65,10 +65,10 @@ INSTALL_REQUIRES = [
     'ruamel.yaml>=0.15.5',
     'jinja2>=2.7.1',
     'lml>=0.0.9',
-    'appdirs==1.4.3',
-    'crayons',
-    'GitPython==2.1.11',
-    'giturlparse',
+    'appdirs>=1.2.0',
+    'crayons>= 0.1.0',
+    'GitPython>=2.0.0',
+    'giturlparse>=0.9.1',
 ]
 SETUP_COMMANDS = {}
 
@@ -189,6 +189,7 @@ def filter_out_test_code(file_handle):
 
 if __name__ == '__main__':
     setup(
+        test_suite="tests",
         name=NAME,
         author=AUTHOR,
         version=VERSION,

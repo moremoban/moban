@@ -16,3 +16,4 @@ targets:
   - output: CHANGELOG.rst
     configuration: changelog.yml
     template: CHANGELOG.rst.jj2
+  - min_requirements.txt: min_requirements.txt.jj2
