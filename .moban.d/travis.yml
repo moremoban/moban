@@ -8,6 +8,7 @@ matrix:
 {%endblock%}
 
 {%block custom_python_versions%}
+python:
   - &pypy2 pypy2.7-6.0
   - 3.8-dev
   - 3.7
