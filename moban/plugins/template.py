@@ -14,9 +14,7 @@ log = logging.getLogger(__name__)
 
 class MobanFactory(PluginManager):
     def __init__(self):
-        super(MobanFactory, self).__init__(
-            constants.TEMPLATE_ENGINE_EXTENSION
-        )
+        super(MobanFactory, self).__init__(constants.TEMPLATE_ENGINE_EXTENSION)
         self.extensions = {}
 
     def register_extensions(self, extensions):

@@ -59,8 +59,10 @@ class TestHandleTemplateFunction:
                 None,
             ),
         ]
-        eq_(sorted(expected, key=lambda x: x[0]),
-            sorted(results, key=lambda x: x[0]))
+        eq_(
+            sorted(expected, key=lambda x: x[0]),
+            sorted(results, key=lambda x: x[0]),
+        )
 
     @patch("moban.reporter.report_error_message")
     def test_listing_dir_recusively_with_error(self, reporter):

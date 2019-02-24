@@ -36,7 +36,7 @@ def get_repo_name(repo_url):
     try:
         repo = giturlparse.parse(repo_url)
         name = repo.repo
-        if name.endswith('/'):
+        if name.endswith("/"):
             name = name[:-1]
         return name
     except AttributeError:
