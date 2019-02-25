@@ -23,8 +23,9 @@ class MobanFactory(PluginManager):
     def get_engine(self, template_type, template_dirs, context_dirs):
         engine_cls = self.load_me_now(template_type)
         engine_extensions = self.extensions.get(template_type)
+        engine = engine_cls(template_dirs, engine_extensions)
         return MobanEngine(
-            template_dirs, context_dirs, engine_cls, engine_extensions
+            template_dirs, context_dirs, engine
         )
 
     def all_types(self):
@@ -36,14 +37,14 @@ class MobanFactory(PluginManager):
 
 class MobanEngine(object):
     def __init__(
-        self, template_dirs, context_dirs, engine_cls, engine_extensions=None
+        self, template_dirs, context_dirs, engine
     ):
         template_dirs = list(expand_template_directories(template_dirs))
         utils.verify_the_existence_of_directories(template_dirs)
         context_dirs = expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
         self.template_dirs = template_dirs
-        self.engine = engine_cls(self.template_dirs, engine_extensions)
+        self.engine = engine
         self.templated_count = 0
         self.file_count = 0
 
