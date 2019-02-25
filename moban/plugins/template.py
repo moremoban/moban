@@ -44,7 +44,6 @@ class MobanEngine(object):
         self.context = Context(context_dirs)
         self.template_dirs = template_dirs
         self.engine = engine_cls(self.template_dirs, engine_extensions)
-        self.engine_cls = engine_cls
         self.templated_count = 0
         self.file_count = 0
 
