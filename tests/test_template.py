@@ -8,7 +8,7 @@ from moban.definitions import TemplateTarget
 MODULE = "moban.plugins.template"
 
 
-@patch(MODULE + ".TemplateEngine._render_with_finding_data_first")
+@patch(MODULE + ".MobanEngine._render_with_finding_data_first")
 def test_do_templates_1(_do_templates_with_more_shared_data):
     jobs = [
         TemplateTarget("1.template", "data.yml", "1.output"),
@@ -31,7 +31,7 @@ def test_do_templates_1(_do_templates_with_more_shared_data):
     _do_templates_with_more_shared_data.assert_called_with(expected)
 
 
-@patch(MODULE + ".TemplateEngine._render_with_finding_template_first")
+@patch(MODULE + ".MobanEngine._render_with_finding_template_first")
 def test_do_templates_2(_do_templates_with_more_shared_templates):
     jobs = [
         TemplateTarget("1.template", "data1.yml", "1.output"),
