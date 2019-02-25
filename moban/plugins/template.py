@@ -16,14 +16,29 @@ class MobanFactory(PluginManager):
     def __init__(self):
         super(MobanFactory, self).__init__(constants.TEMPLATE_ENGINE_EXTENSION)
         self.extensions = {}
+        self.options_registry = {}
 
     def register_extensions(self, extensions):
         self.extensions.update(extensions)
 
+    def register_options(self, template_types):
+        self.options_registry.update(template_types)
+
     def get_engine(self, template_type, template_dirs, context_dirs):
-        engine_cls = self.load_me_now(template_type)
-        engine_extensions = self.extensions.get(template_type)
-        engine = engine_cls(template_dirs, engine_extensions)
+        try:
+            engine_cls = self.load_me_now(template_type)
+            engine_extensions = self.extensions.get(template_type)
+            options = dict(extensions=engine_extensions)
+        except exceptions.NoThirdPartyEngine:
+            if template_type not in self.options_registry:
+                raise
+            else:
+                custom_engine_spec = self.options_registry[template_type]
+                engine_cls = self.load_me_now(custom_engine_spec.base_type)
+                # TODO:
+                # support other jinja2 options
+                options = custom_engine_spec['options']
+        engine = engine_cls(template_dirs, options)
         return MobanEngine(
             template_dirs, context_dirs, engine
         )

@@ -53,7 +53,7 @@ GLOBALS = JinjaGlobalsManager()
     constants.TEMPLATE_ENGINE_EXTENSION, tags=["jinja2", "jinja", "jj2", "j2"]
 )
 class Engine(object):
-    def __init__(self, template_dirs, extensions=None):
+    def __init__(self, template_dirs, options=None):
         """
         Contruct a jinja2 template engine
 
@@ -73,10 +73,16 @@ class Engine(object):
                 extension for extension in JINJA2_THIRD_PARTY_EXTENSIONS
             ],  # get a copy of this global variable
         )
-        if is_extension_list_valid(extensions):
-            # because it is modified here
-            env_params["extensions"] += extensions
-        import_module_of_extension(extensions)
+        if options:
+            if options.get('extensions'):
+                if is_extension_list_valid(options['extensions']):
+                    # because it is modified here
+                    env_params["extensions"] += options['extensions']
+                    import_module_of_extension(options['extensions'])
+
+            if 'extensions' in options:
+                options.pop('extensions')
+            env_params.update(options)
         self.jj2_environment = Environment(**env_params)
         for filter_name, filter_function in FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
