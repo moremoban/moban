@@ -74,14 +74,13 @@ class Engine(object):
             ],  # get a copy of this global variable
         )
         if options:
-            if options.get('extensions'):
-                if is_extension_list_valid(options['extensions']):
-                    # because it is modified here
-                    env_params["extensions"] += options['extensions']
-                    import_module_of_extension(options['extensions'])
-
             if 'extensions' in options:
-                options.pop('extensions')
+                extensions = options.pop('extensions')
+                if is_extension_list_valid(extensions):
+                    # because it is modified here
+                    env_params["extensions"] += extensions
+                    import_module_of_extension(extensions)
+
             env_params.update(options)
         self.jj2_environment = Environment(**env_params)
         for filter_name, filter_function in FILTERS.get_all():
