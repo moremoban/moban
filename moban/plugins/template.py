@@ -30,16 +30,15 @@ class MobanFactory(PluginManager):
         if template_type in self.options_registry:
             custom_engine_spec = self.options_registry[template_type]
             engine_cls = self.load_me_now(
-                custom_engine_spec[constants.TEMPLATE_TYPES_BASE_TYPE])
+                custom_engine_spec[constants.TEMPLATE_TYPES_BASE_TYPE]
+            )
             options = custom_engine_spec[constants.TEMPLATE_TYPES_OPTIONS]
         else:
             engine_cls = self.load_me_now(template_type)
             engine_extensions = self.extensions.get(template_type)
             options = dict(extensions=engine_extensions)
         engine = engine_cls(template_dirs, options)
-        return MobanEngine(
-            template_dirs, context_dirs, engine
-        )
+        return MobanEngine(template_dirs, context_dirs, engine)
 
     def get_primary_key(self, template_type):
         for key, item in self.options_registry.items():
@@ -56,9 +55,7 @@ class MobanFactory(PluginManager):
 
 
 class MobanEngine(object):
-    def __init__(
-        self, template_dirs, context_dirs, engine
-    ):
+    def __init__(self, template_dirs, context_dirs, engine):
         template_dirs = list(expand_template_directories(template_dirs))
         utils.verify_the_existence_of_directories(template_dirs)
         context_dirs = expand_template_directory(context_dirs)

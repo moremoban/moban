@@ -74,8 +74,8 @@ class Engine(object):
             ],  # get a copy of this global variable
         )
         if options:
-            if 'extensions' in options:
-                extensions = options.pop('extensions')
+            if "extensions" in options:
+                extensions = options.pop("extensions")
                 if is_extension_list_valid(extensions):
                     # because it is modified here
                     env_params["extensions"] += extensions
