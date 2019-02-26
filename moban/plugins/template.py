@@ -40,6 +40,13 @@ class MobanFactory(PluginManager):
             template_dirs, context_dirs, engine
         )
 
+    def get_primary_key(self, template_type):
+        for key, item in self.options_registry.items():
+            if template_type in item['file_extensions']:
+                return key
+
+        return super(MobanFactory, self).get_primary_key(template_type)
+
     def all_types(self):
         return list(self.registry.keys()) + list(self.options_registry.keys())
 
