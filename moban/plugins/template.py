@@ -16,35 +16,52 @@ class MobanFactory(PluginManager):
     def __init__(self):
         super(MobanFactory, self).__init__(constants.TEMPLATE_ENGINE_EXTENSION)
         self.extensions = {}
+        self.options_registry = {}
 
     def register_extensions(self, extensions):
         self.extensions.update(extensions)
 
+    def register_options(self, template_types):
+        # need the value of 'template_types'
+        # see test_get_user_defined_engine for help
+        self.options_registry.update(template_types)
+
     def get_engine(self, template_type, template_dirs, context_dirs):
-        engine_cls = self.load_me_now(template_type)
-        engine_extensions = self.extensions.get(template_type)
-        return MobanEngine(
-            template_dirs, context_dirs, engine_cls, engine_extensions
-        )
+        if template_type in self.options_registry:
+            custom_engine_spec = self.options_registry[template_type]
+            engine_cls = self.load_me_now(
+                custom_engine_spec[constants.TEMPLATE_TYPES_BASE_TYPE]
+            )
+            options = custom_engine_spec[constants.TEMPLATE_TYPES_OPTIONS]
+        else:
+            engine_cls = self.load_me_now(template_type)
+            engine_extensions = self.extensions.get(template_type)
+            options = dict(extensions=engine_extensions)
+        engine = engine_cls(template_dirs, options)
+        return MobanEngine(template_dirs, context_dirs, engine)
+
+    def get_primary_key(self, template_type):
+        for key, item in self.options_registry.items():
+            if template_type in item[constants.TEMPLATE_TYPES_FILE_EXTENSIONS]:
+                return key
+
+        return super(MobanFactory, self).get_primary_key(template_type)
 
     def all_types(self):
-        return list(self.registry.keys())
+        return list(self.registry.keys()) + list(self.options_registry.keys())
 
     def raise_exception(self, key):
         raise exceptions.NoThirdPartyEngine(key)
 
 
 class MobanEngine(object):
-    def __init__(
-        self, template_dirs, context_dirs, engine_cls, engine_extensions=None
-    ):
+    def __init__(self, template_dirs, context_dirs, engine):
         template_dirs = list(expand_template_directories(template_dirs))
         utils.verify_the_existence_of_directories(template_dirs)
         context_dirs = expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
         self.template_dirs = template_dirs
-        self.engine = engine_cls(self.template_dirs, engine_extensions)
-        self.engine_cls = engine_cls
+        self.engine = engine
         self.templated_count = 0
         self.file_count = 0
 

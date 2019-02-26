@@ -1,0 +1,10 @@
+template_types:
+  custom_jinja:
+      base_type: jinja2  # use base_type, instead of overrides
+      file_extensions:
+        - moban
+        - new
+        - demo_file_suffix
+      options:
+        extensions:
+          - jinja2.ext.do
