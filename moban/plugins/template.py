@@ -29,8 +29,9 @@ class MobanFactory(PluginManager):
     def get_engine(self, template_type, template_dirs, context_dirs):
         if template_type in self.options_registry:
             custom_engine_spec = self.options_registry[template_type]
-            engine_cls = self.load_me_now(custom_engine_spec['base_type'])
-            options = custom_engine_spec['options']
+            engine_cls = self.load_me_now(
+                custom_engine_spec[constants.TEMPLATE_TYPES_BASE_TYPE])
+            options = custom_engine_spec[constants.TEMPLATE_TYPES_OPTIONS]
         else:
             engine_cls = self.load_me_now(template_type)
             engine_extensions = self.extensions.get(template_type)
@@ -42,7 +43,7 @@ class MobanFactory(PluginManager):
 
     def get_primary_key(self, template_type):
         for key, item in self.options_registry.items():
-            if template_type in item['file_extensions']:
+            if template_type in item[constants.TEMPLATE_TYPES_FILE_EXTENSIONS]:
                 return key
 
         return super(MobanFactory, self).get_primary_key(template_type)
