@@ -62,6 +62,12 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if extensions:
         plugins.ENGINES.register_extensions(extensions)
 
+    template_types = merged_options.get(
+        constants.LABEL_TEMPLATE_TYPES
+    )
+    if template_types:
+        plugins.ENGINES.register_options(template_types)
+
     if targets:
         if target:
             targets = target

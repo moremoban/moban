@@ -1,5 +1,5 @@
 from lml.loader import scan_plugins_regex
-from moban.plugins.template import TemplateFactory
+from moban.plugins.template import MobanFactory
 from moban import constants
 
 
@@ -11,7 +11,7 @@ BUILTIN_EXENSIONS = [
 ]
 
 
-ENGINES = TemplateFactory()
+ENGINES = MobanFactory()
 
 
 def make_sure_all_pkg_are_loaded():

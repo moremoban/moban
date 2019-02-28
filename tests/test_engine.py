@@ -13,7 +13,7 @@ from moban.jinja2.engine import (
     import_module_of_extension,
 )
 from moban.plugins.context import Context
-from moban.plugins.template import TemplateEngine, expand_template_directories
+from moban.plugins.template import MobanEngine, expand_template_directories
 
 USER_HOME = os.path.join("user", "home", ".moban", "repos")
 
@@ -42,7 +42,7 @@ def test_expand_repo_dir(_, __):
 
 def test_default_template_type():
     engine = ENGINES.get_engine("jj2", [], "")
-    assert engine.engine_cls == Engine
+    assert engine.engine.__class__ == Engine
 
 
 class FakeEngine:
@@ -53,7 +53,7 @@ class FakeEngine:
 @patch("lml.plugin.PluginManager.load_me_now", return_value=FakeEngine)
 def test_default_mako_type(_):  # fake mako
     engine = ENGINES.get_engine("fake", [], "")
-    assert engine.engine_cls.__name__ == "FakeEngine"
+    assert engine.engine.__class__ == FakeEngine
 
 
 @raises(exceptions.NoThirdPartyEngine)
@@ -63,12 +63,12 @@ def test_unknown_template_type():
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_tmpl_directries():
-    TemplateEngine("abc", "tests", Engine)
+    MobanEngine("abc", "tests", Engine)
 
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_config_directries():
-    TemplateEngine("tests", "abc", Engine)
+    MobanEngine("tests", "abc", Engine)
 
 
 @raises(exceptions.DirectoryNotFound)

@@ -1,0 +1,11 @@
+configuration:
+  template_types:
+    my_own_type:
+      base_type: jinja2
+      file_extensions:
+        - file_type_of_my_choice
+      options:
+        extensions:
+          - jinja2_time.TimeExtension
+targets:
+  - a.output: a.template.file_type_of_my_choice

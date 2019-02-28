@@ -4,9 +4,9 @@ organisation: moremoban
 author: C. W.
 contact: wangc_2011@hotmail.com
 license: MIT
-version: 0.4.0
-current_version: 0.4.0
-release: 0.4.0
+version: 0.4.1
+current_version: 0.4.1
+release: 0.4.1
 branch: master
 master: index
 command_line_interface: "moban"
@@ -21,9 +21,9 @@ dependencies:
   - ruamel.yaml>=0.15.5
   - jinja2>=2.7.1
   - lml>=0.0.9
-  - appdirs==1.4.3
-  - crayons
-  - GitPython==2.1.11
-  - giturlparse
+  - appdirs>=1.2.0
+  - crayons>= 0.1.0
+  - GitPython>=2.0.0
+  - giturlparse>=0.9.1
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com
