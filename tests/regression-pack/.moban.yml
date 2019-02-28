@@ -1,0 +1,3 @@
+targets:
+  - a.output: symbolic-link
+  - b.output: sym-link-to-file
