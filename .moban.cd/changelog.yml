@@ -4,6 +4,13 @@ releases:
 - changes:
   - action: Added
     details:
+    - "`#235`: user defined template types so that custom file extensions, template configurations can be controlled by moban user"
+    - "`#232`: the package dependencies have been fine tuning to lower versions, most of them are dated back to 2017."
+  date: unreleased
+  version: 0.4.1
+- changes:
+  - action: Added
+    details:
     - "`#165`: Copy as plugins"
   - action: Added
     details:
