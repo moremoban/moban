@@ -42,3 +42,11 @@ def test_branch_params():
     actual = require.clone_params()
     expected = {"single_branch": True, "branch": "ghpages", "depth": 2}
     eq_(expected, actual)
+
+
+def test_set_template_parameters():
+    template_type = [{'overrides': 'jinja2'}, {'options': {'param': 'value'}}]
+    require = TemplateTarget("template_file", "dat_file", "output.copy",
+                             template_type=template_type, needs_ad_hoc=True)
+    assert require.template_type['overrides'] is template_type[0]['overrides']
+    assert require.template_type['options'] is template_type[1]['options']
