@@ -26,8 +26,14 @@ class MobanFactory(PluginManager):
         # see test_get_user_defined_engine for help
         self.options_registry.update(template_types)
 
-    def get_engine(self, template_type, template_dirs, context_dirs):
-        if template_type in self.options_registry:
+    def get_engine(self, template_type, template_dirs, context_dirs,
+                   needs_ad_hoc=False):
+        if needs_ad_hoc:
+            engine_cls = self.load_me_now(
+                template_type[constants.LABEL_OVERRIDES]
+            )
+            options = template_type[constants.TEMPLATE_TYPES_OPTIONS]
+        elif template_type in self.options_registry:
             custom_engine_spec = self.options_registry[template_type]
             engine_cls = self.load_me_now(
                 custom_engine_spec[constants.TEMPLATE_TYPES_BASE_TYPE]

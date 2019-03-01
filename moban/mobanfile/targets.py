@@ -34,11 +34,16 @@ def _handle_explicit_target(options, target):
     data_file = target.get(constants.LABEL_CONFIG, common_data_file)
     output = target[constants.LABEL_OUTPUT]
     template_type = target.get(constants.LABEL_TEMPLATE_TYPE)
+    needs_ad_hoc = False
+    if template_type and len(template_type) > 0:
+        if constants.LABEL_OVERRIDES in template_type[0]:
+            needs_ad_hoc = True
     for src, dest, t_type in handle_template(
         template_file, output, options[constants.LABEL_TMPL_DIRS]
     ):
         if template_type:
-            yield TemplateTarget(src, data_file, dest, template_type)
+            yield TemplateTarget(src, data_file, dest, template_type,
+                                 needs_ad_hoc)
         else:
             if t_type:
                 yield TemplateTarget(src, data_file, dest, t_type)

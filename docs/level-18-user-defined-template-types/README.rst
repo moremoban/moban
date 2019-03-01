@@ -32,4 +32,18 @@ file found in level 4::
       - a.output: a.template.file_type_of_my_choice
 
 
-where `template_types` is a dictionary of different custom types
+where `template_types` is a dictionary of different custom types.
+
+Also, you can define your `template` on the fly by putting the template
+parameters inside targets. One such example is::
+
+    targets:
+      - output: b.output
+        template: a.template.jj2
+        template_type:
+        - overrides: jinja2
+        - options:
+            block_end_string: '*))'
+            block_start_string: '((*'
+            variable_start_string: '((('
+            variable_end_string: ')))'

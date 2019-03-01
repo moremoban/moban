@@ -36,14 +36,19 @@ class TemplateTarget(object):
         data_file,
         output,
         template_type=constants.DEFAULT_TEMPLATE_TYPE,
+        needs_ad_hoc=False,
     ):
         self.template_file = template_file
         self.data_file = data_file
         self.original_output = output
         self.template_type = template_type
         self.output = self.original_output
+        self.needs_ad_hoc = needs_ad_hoc
 
-        self.set_template_type(template_type)
+        if needs_ad_hoc:
+            self.set_template_parameters(template_type)
+        else:
+            self.set_template_type(template_type)
 
     def set_template_type(self, new_template_type):
         self.template_type = new_template_type
@@ -51,6 +56,14 @@ class TemplateTarget(object):
             self.output, _ = os.path.splitext(self.original_output)
         else:
             self.output = self.original_output
+
+    def set_template_parameters(self, template_type):
+        template_parameters = self.template_type
+        self.template_type = {}
+        self.template_type[constants.LABEL_OVERRIDES] = (
+            template_parameters[0][constants.LABEL_OVERRIDES])
+        self.template_type[constants.TEMPLATE_TYPES_OPTIONS] = (
+            template_parameters[1][constants.TEMPLATE_TYPES_OPTIONS])
 
     def __eq__(self, other):
         return (
