@@ -3,7 +3,8 @@ import sys
 from textwrap import dedent
 
 from mock import patch
-from nose.tools import eq_, SkipTest
+from nose.tools import eq_
+from nose import SkipTest
 
 from moban.main import main
 
