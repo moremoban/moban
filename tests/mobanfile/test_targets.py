@@ -1,4 +1,5 @@
 import os
+import uuid
 
 from nose.tools import eq_
 
@@ -118,3 +119,20 @@ class TestExplicitTarget:
             )
         ]
         eq_(expected, actual)
+
+    def test_ad_hoc_type(self):
+        target = dict(template=TEMPLATE, output=OUTPUT)
+        template_type = [{'base_type': 'jinja2'},
+                         {'options': [{'block_end_string': '*))'},
+                                      {'block_start_string': '((*'}]}]
+        options = dict(
+            configuration=CONFIGURATION,
+            template_type=template_type,
+            template_dir=TEMPLATE_DIRS,
+        )
+
+        actual = list(targets._handle_explicit_target(options, target))
+        file_extension = uuid.uuid4().hex
+        expected = [TemplateTarget(TEMPLATE, CONFIGURATION, OUTPUT,
+                    file_extension)]
+        eq_(actual, expected)
