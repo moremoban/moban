@@ -35,7 +35,7 @@ extension in the `.moban.yml` file following the above syntax. Now, the
 extension can be used in the jinja2 templates. One such example is shown in the
 `b.template` file.
 
-.. note:
+.. note::
   
   For some extensions, you may need to define `template environment parameters`.
   In that case, you can take help of our `user defined template types` feature.

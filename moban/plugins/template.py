@@ -30,7 +30,7 @@ class MobanFactory(PluginManager):
                    needs_ad_hoc=False):
         if needs_ad_hoc:
             engine_cls = self.load_me_now(
-                template_type[constants.LABEL_OVERRIDES]
+                template_type[constants.TEMPLATE_TYPES_BASE_TYPE]
             )
             options = template_type[constants.TEMPLATE_TYPES_OPTIONS]
         elif template_type in self.options_registry:

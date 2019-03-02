@@ -36,7 +36,7 @@ def _handle_explicit_target(options, target):
     template_type = target.get(constants.LABEL_TEMPLATE_TYPE)
     needs_ad_hoc = False
     if template_type and len(template_type) > 0:
-        if constants.LABEL_OVERRIDES in template_type[0]:
+        if constants.TEMPLATE_TYPES_BASE_TYPE in template_type[0]:
             needs_ad_hoc = True
     for src, dest, t_type in handle_template(
         template_file, output, options[constants.LABEL_TMPL_DIRS]

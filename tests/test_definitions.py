@@ -45,8 +45,8 @@ def test_branch_params():
 
 
 def test_set_template_parameters():
-    template_type = [{'overrides': 'jinja2'}, {'options': {'param': 'value'}}]
+    template_type = [{'base_type': 'jinja2'}, {'options': {'param': 'value'}}]
     require = TemplateTarget("template_file", "dat_file", "output.copy",
                              template_type=template_type, needs_ad_hoc=True)
-    assert require.template_type['overrides'] is template_type[0]['overrides']
+    assert require.template_type['base_type'] is template_type[0]['base_type']
     assert require.template_type['options'] is template_type[1]['options']

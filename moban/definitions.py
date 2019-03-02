@@ -60,8 +60,8 @@ class TemplateTarget(object):
     def set_template_parameters(self, template_type):
         template_parameters = self.template_type
         self.template_type = {}
-        self.template_type[constants.LABEL_OVERRIDES] = (
-            template_parameters[0][constants.LABEL_OVERRIDES])
+        self.template_type[constants.TEMPLATE_TYPES_BASE_TYPE] = (
+            template_parameters[0][constants.TEMPLATE_TYPES_BASE_TYPE])
         self.template_type[constants.TEMPLATE_TYPES_OPTIONS] = (
             template_parameters[1][constants.TEMPLATE_TYPES_OPTIONS])
 

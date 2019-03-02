@@ -41,7 +41,7 @@ parameters inside targets. One such example is::
       - output: b.output
         template: a.template.jj2
         template_type:
-        - overrides: jinja2
+        - base_type: jinja2
         - options:
             block_end_string: '*))'
             block_start_string: '((*'
