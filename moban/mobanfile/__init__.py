@@ -118,36 +118,24 @@ def handle_targets(merged_options, targets):
     list_of_templating_parameters = parse_targets(merged_options, targets)
     jobs_for_each_engine = defaultdict(list)
 
-    count = 0
     for target in list_of_templating_parameters:
-        if target.needs_ad_hoc:
-            engine = plugins.ENGINES.get_engine(
-                target.template_type,
-                merged_options[constants.LABEL_TMPL_DIRS],
-                merged_options[constants.LABEL_CONFIG_DIR],
-                needs_ad_hoc=True,
-            )
-            engine.render_to_files([target])
-            count = count + engine.number_of_templated_files()
-        else:
-            forced_template_type = merged_options.get(
-                constants.LABEL_FORCE_TEMPLATE_TYPE
-            )
-            if forced_template_type:
-                target.set_template_type(forced_template_type)
+        forced_template_type = merged_options.get(
+            constants.LABEL_FORCE_TEMPLATE_TYPE
+        )
+        if forced_template_type:
+            target.set_template_type(forced_template_type)
 
-            template_type = target.template_type
-            primary_template_type = plugins.ENGINES.get_primary_key(
-                template_type
-            )
-            if primary_template_type is None:
-                primary_template_type = merged_options[
-                    constants.LABEL_TEMPLATE_TYPE
-                ]
-                target.set_template_type(primary_template_type)
+        template_type = target.template_type
+        primary_template_type = plugins.ENGINES.get_primary_key(template_type)
+        if primary_template_type is None:
+            primary_template_type = merged_options[
+                constants.LABEL_TEMPLATE_TYPE
+            ]
+            target.set_template_type(primary_template_type)
 
-            jobs_for_each_engine[primary_template_type].append(target)
+        jobs_for_each_engine[primary_template_type].append(target)
 
+    count = 0
     for template_type in jobs_for_each_engine.keys():
         engine = plugins.ENGINES.get_engine(
             template_type,

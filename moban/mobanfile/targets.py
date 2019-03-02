@@ -1,6 +1,9 @@
+import uuid
+
 from moban import constants
 from moban.definitions import TemplateTarget
 from moban.mobanfile.templates import handle_template
+import moban.plugins as plugins
 
 
 def parse_targets(options, targets):
@@ -34,16 +37,28 @@ def _handle_explicit_target(options, target):
     data_file = target.get(constants.LABEL_CONFIG, common_data_file)
     output = target[constants.LABEL_OUTPUT]
     template_type = target.get(constants.LABEL_TEMPLATE_TYPE)
-    needs_ad_hoc = False
     if template_type and len(template_type) > 0:
         if constants.TEMPLATE_TYPES_BASE_TYPE in template_type[0]:
-            needs_ad_hoc = True
+            adhoc_type = uuid.uuid4().hex
+            file_extension = uuid.uuid4().hex
+            base_type = template_type[0][constants.TEMPLATE_TYPES_BASE_TYPE]
+            template_types_options = template_type[1][
+                constants.TEMPLATE_TYPES_OPTIONS
+            ]
+            the_adhoc_type = {
+                adhoc_type: {
+                    "file_extensions": [file_extension],
+                    constants.TEMPLATE_TYPES_BASE_TYPE: base_type,
+                    constants.TEMPLATE_TYPES_OPTIONS: template_types_options,
+                }
+            }
+            plugins.ENGINES.register_options(the_adhoc_type)
+            template_type = file_extension
     for src, dest, t_type in handle_template(
         template_file, output, options[constants.LABEL_TMPL_DIRS]
     ):
         if template_type:
-            yield TemplateTarget(src, data_file, dest, template_type,
-                                 needs_ad_hoc)
+            yield TemplateTarget(src, data_file, dest, template_type)
         else:
             if t_type:
                 yield TemplateTarget(src, data_file, dest, t_type)
