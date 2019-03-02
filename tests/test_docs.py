@@ -235,18 +235,14 @@ class TestTutorial:
         folder = "level-17-force-template-type-from-moban-file"
         self._raw_moban(["moban"], folder, expected, "simple.file")
 
-    def test_level_18_user_defined_template_types_a(self):
+    def test_level_18_user_defined_template_types(self):
         from datetime import datetime
         expected = "{date}\n".format(date=datetime.now().strftime("%Y-%m-%d"))
 
         folder = "level-18-user-defined-template-types"
         self._raw_moban(["moban"], folder, expected, "a.output")
 
-    def test_level_18_user_defined_template_types_b(self):
-        expected = "shijie\n"
-
-        folder = "level-18-user-defined-template-types"
-        self._raw_moban(["moban"], folder, expected, "b.output")
+        _verify_content("b.output", "shijie\n")
 
     def test_misc_1(self):
         expected = "test file\n"
