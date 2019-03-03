@@ -12,7 +12,7 @@ targets:
   - output: b.output
     template: a.template.jj2
     template_type:
-    - base_type: jinja2
-    - options:
+      base_type: jinja2
+      options:
         variable_start_string: '((('
         variable_end_string: ')))'
