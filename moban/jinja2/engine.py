@@ -60,7 +60,7 @@ class Engine(object):
         A list template directories will be given to your engine class
 
         :param list temp_dirs: a list of template directories
-        :param dict options: a dictionary containing environmenta parameters
+        :param dict options: a dictionary containing environmental parameters
         """
         load_jinja2_extensions()
         self.template_dirs = template_dirs
