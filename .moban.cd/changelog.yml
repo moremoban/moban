@@ -4,6 +4,12 @@ releases:
 - changes:
   - action: Added
     details:
+    - "`#234`: Define template parameters on the fly inside `targets` section"
+  date: 01.03.2019
+  version: 0.4.2
+- changes:
+  - action: Added
+    details:
     - "`#235`: user defined template types so that custom file extensions, template configurations can be controlled by moban user"
     - "`#232`: the package dependencies have been fine tuning to lower versions, most of them are dated back to 2017."
   date: 28.02.2019

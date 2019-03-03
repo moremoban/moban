@@ -1,6 +1,11 @@
+import uuid
+
 from moban import constants
 from moban.definitions import TemplateTarget
 from moban.mobanfile.templates import handle_template
+import moban.plugins as plugins
+
+from moban import reporter
 
 
 def parse_targets(options, targets):
@@ -34,6 +39,25 @@ def _handle_explicit_target(options, target):
     data_file = target.get(constants.LABEL_CONFIG, common_data_file)
     output = target[constants.LABEL_OUTPUT]
     template_type = target.get(constants.LABEL_TEMPLATE_TYPE)
+    if template_type and len(template_type) > 0:
+        if constants.TEMPLATE_TYPES_FILE_EXTENSIONS in template_type:
+            reporter.report_file_extension_not_needed()
+        if constants.TEMPLATE_TYPES_BASE_TYPE in template_type:
+            adhoc_type = uuid.uuid4().hex
+            file_extension = uuid.uuid4().hex
+            base_type = template_type[constants.TEMPLATE_TYPES_BASE_TYPE]
+            template_types_options = template_type[
+                constants.TEMPLATE_TYPES_OPTIONS
+            ]
+            the_adhoc_type = {
+                adhoc_type: {
+                    constants.TEMPLATE_TYPES_FILE_EXTENSIONS: [file_extension],
+                    constants.TEMPLATE_TYPES_BASE_TYPE: base_type,
+                    constants.TEMPLATE_TYPES_OPTIONS: template_types_options,
+                }
+            }
+            plugins.ENGINES.register_options(the_adhoc_type)
+            template_type = file_extension
     for src, dest, t_type in handle_template(
         template_file, output, options[constants.LABEL_TMPL_DIRS]
     ):

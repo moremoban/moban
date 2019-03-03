@@ -242,6 +242,8 @@ class TestTutorial:
         folder = "level-18-user-defined-template-types"
         self._raw_moban(["moban"], folder, expected, "a.output")
 
+        _verify_content("b.output", "shijie\n")
+
     def test_misc_1(self):
         expected = "test file\n"
 
