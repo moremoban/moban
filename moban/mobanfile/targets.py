@@ -41,7 +41,7 @@ def _handle_explicit_target(options, target):
     template_type = target.get(constants.LABEL_TEMPLATE_TYPE)
     if template_type and len(template_type) > 0:
         if constants.TEMPLATE_TYPES_FILE_EXTENSIONS in template_type:
-            print(reporter.report_file_extension_not_needed())
+            reporter.report_file_extension_not_needed()
         if constants.TEMPLATE_TYPES_BASE_TYPE in template_type:
             adhoc_type = uuid.uuid4().hex
             file_extension = uuid.uuid4().hex
@@ -51,7 +51,7 @@ def _handle_explicit_target(options, target):
             ]
             the_adhoc_type = {
                 adhoc_type: {
-                    "file_extensions": [file_extension],
+                    constants.TEMPLATE_TYPES_FILE_EXTENSIONS: [file_extension],
                     constants.TEMPLATE_TYPES_BASE_TYPE: base_type,
                     constants.TEMPLATE_TYPES_OPTIONS: template_types_options,
                 }
