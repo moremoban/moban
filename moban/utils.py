@@ -54,7 +54,7 @@ def file_permissions_copy(source, dest):
 
 def file_permissions(afile):
     if sys.platform == "win32":
-        return "no-permission-support"
+        return "0"
     if not os.path.exists(afile):
         raise exceptions.FileNotFound(afile)
     return stat.S_IMODE(os.stat(afile).st_mode)

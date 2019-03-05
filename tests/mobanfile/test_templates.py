@@ -35,8 +35,8 @@ class TestHandleTemplateFunction:
         )
         expected = [
             (
-                "copier-directory/level1-file1",
-                "/tmp/copy-a-directory/level1-file1",
+                os.path.join("copier-directory", "level1-file1"),
+                os.path.join("/tmp/copy-a-directory", "level1-file1"),
                 None,
             )
         ]
@@ -49,13 +49,13 @@ class TestHandleTemplateFunction:
         )
         expected = [
             (
-                "copier-directory/copier-sample-dir/file1",
-                "/tmp/copy-a-directory/copier-sample-dir/file1",
+                os.path.join("copier-directory", "copier-sample-dir", "file1"),
+                os.path.join("/tmp/copy-a-directory", "copier-sample-dir", "file1"),
                 None,
             ),
             (
-                "copier-directory/level1-file1",
-                "/tmp/copy-a-directory/level1-file1",
+                os.path.join("copier-directory", "level1-file1"),
+                os.path.join("/tmp/copy-a-directory", "level1-file1"),
                 None,
             ),
         ]
