@@ -5,7 +5,7 @@ releases:
   - action: Added
     details:
     - "`#234`: Define template parameters on the fly inside `targets` section"
-    - "`#180`: No longer two stastistics will be shown in v0.4.x. legacy copy targets are injected into a normal targets. cli target is made a clear priority."
+    - "`#180`: No longer two statistics will be shown in v0.4.x. legacy copy targets are injected into a normal targets. cli target is made a clear priority."
   date: unreleased
   version: 0.4.2
 - changes:
