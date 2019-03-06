@@ -1,10 +1,11 @@
 import os
 import uuid
 
-from nose.tools import eq_
+from nose.tools import eq_, raises
 
 from moban.mobanfile import targets
 from moban.definitions import TemplateTarget
+from moban.exceptions import GroupTargetNotFound
 
 TEMPLATE = "a.jj2"
 OUTPUT = "a.output"
@@ -30,6 +31,49 @@ def test_handling_group_target():
     expected = [
         TemplateTarget(TEMPLATE, CONFIGURATION, OUTPUT, group_template_type)
     ]
+    eq_(expected, actual)
+
+
+def test_extract_group_targets():
+    test_targets = [
+        {
+            "copy": [
+                {
+                    "output": "source"
+                }
+            ],
+            "copy1": [
+                {
+                    "output1": "source1"
+                }
+            ]
+
+        }
+    ]
+    actual = targets.extract_group_targets("copy1", test_targets)
+    expected = [{'copy1': [{'output1': 'source1'}]}]
+    eq_(expected, actual)
+
+
+@raises(GroupTargetNotFound)
+def test_extract_group_targets_not_found():
+    test_targets = [
+        {
+            "copy": [
+                {
+                    "output": "source"
+                }
+            ],
+            "copy1": [
+                {
+                    "output1": "source1"
+                }
+            ]
+
+        }
+    ]
+    actual = targets.extract_group_targets("copy2", test_targets)
+    expected = []
     eq_(expected, actual)
 
 

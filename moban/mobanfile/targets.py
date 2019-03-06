@@ -3,7 +3,8 @@ import uuid
 from moban import constants
 from moban.definitions import TemplateTarget
 from moban.mobanfile.templates import handle_template
-import moban.plugins as plugins
+from moban import plugins
+from moban import exceptions
 
 from moban import reporter
 
@@ -17,7 +18,7 @@ def extract_group_targets(group, targets):
             if isinstance(group_targets, str) is False and group_name == group:
                 # grouping by template type feature
                 return [{group_name: group_targets}]
-    return []
+    raise exceptions.GroupTargetNotFound("%s is not found" % group)
 
 
 def parse_targets(options, targets):

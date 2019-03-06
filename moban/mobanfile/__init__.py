@@ -5,8 +5,8 @@ from collections import defaultdict
 
 from lml.utils import do_import
 
-import moban.reporter as reporter
-import moban.constants as constants
+from moban import reporter
+from moban import constants
 from moban import plugins
 from moban.repo import git_clone
 from moban.utils import merge, pip_install
@@ -46,6 +46,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     cli_target = extract_target(command_line_options)
     group_target = command_line_options.get(constants.LABEL_GROUP)
     if group_target:
+        # will raise exception when group target not found
         targets = extract_group_targets(group_target, targets)
 
     if constants.LABEL_CONFIG in moban_file_configurations:
