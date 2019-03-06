@@ -36,8 +36,14 @@ def find_default_moban_file():
 def handle_moban_file_v1(moban_file_configurations, command_line_options):
     merged_options = None
 
-    targets = moban_file_configurations.get(constants.LABEL_TARGETS)
-    target = extract_target(command_line_options)
+    targets = moban_file_configurations.get(constants.LABEL_TARGETS, [])
+    if constants.LABEL_COPY in moban_file_configurations:
+        legacy_copy_targets = handle_copy(
+            merged_options, moban_file_configurations[constants.LABEL_COPY]
+        )
+        targets += legacy_copy_targets
+
+    cli_target = extract_target(command_line_options)
 
     if constants.LABEL_CONFIG in moban_file_configurations:
         merged_options = merge(
@@ -68,27 +74,16 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if template_types:
         plugins.ENGINES.register_options(template_types)
 
-    if targets:
-        if target:
-            targets = target
-            # If template specified via CLI flag `-t:
-            # 1. Only update the specified template
-            # 2. Do not copy
-            if constants.LABEL_COPY in moban_file_configurations:
-                del moban_file_configurations[constants.LABEL_COPY]
-        number_of_templated_files = handle_targets(merged_options, targets)
+    if cli_target:
+        number_of_templated_files = handle_targets(
+            merged_options, [cli_target])
+    elif targets:
+        number_of_templated_files = handle_targets(
+            merged_options, targets)
     else:
         number_of_templated_files = 0
 
-    if constants.LABEL_COPY in moban_file_configurations:
-        number_of_copied_files = handle_copy(
-            merged_options, moban_file_configurations[constants.LABEL_COPY]
-        )
-    else:
-        number_of_copied_files = 0
-    exit_code = reporter.convert_to_shell_exit_code(
-        number_of_templated_files + number_of_copied_files
-    )
+    exit_code = reporter.convert_to_shell_exit_code(number_of_templated_files)
     reporter.report_up_to_date()
     return exit_code
 
@@ -100,12 +95,11 @@ def handle_copy(merged_options, copy_config):
         copy_targets.append(
             {
                 constants.LABEL_TEMPLATE: src,
-                constants.LABEL_CONFIG: None,
                 constants.LABEL_OUTPUT: dest,
                 constants.LABEL_TEMPLATE_TYPE: constants.TEMPLATE_COPY,
             }
         )
-    return handle_targets(merged_options, copy_targets)
+    return copy_targets
 
 
 def _iterate_list_of_dicts(list_of_dict):
@@ -134,6 +128,7 @@ def handle_targets(merged_options, targets):
             target.set_template_type(primary_template_type)
 
         jobs_for_each_engine[primary_template_type].append(target)
+        print(target)
 
     count = 0
     for template_type in jobs_for_each_engine.keys():
@@ -172,15 +167,14 @@ def extract_target(options):
                 "Please specify a output file name for %s." % template
             )
         if config:
-            result = [
-                {
+            result = {
                     constants.LABEL_TEMPLATE: template,
                     constants.LABEL_CONFIG: config,
                     constants.LABEL_OUTPUT: output,
                 }
-            ]
+
         else:
-            result = [{output: template}]
+            result = {output: template}
     return result
 
 
