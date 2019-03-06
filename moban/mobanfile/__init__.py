@@ -10,7 +10,7 @@ import moban.constants as constants
 from moban import plugins
 from moban.repo import git_clone
 from moban.utils import merge, pip_install
-from moban.mobanfile.targets import parse_targets
+from moban.mobanfile.targets import parse_targets, extract_group_targets
 from moban.deprecated import deprecated
 from moban.definitions import GitRequire
 from moban.plugins.template import expand_template_directories
@@ -44,6 +44,9 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
         targets += legacy_copy_targets
 
     cli_target = extract_target(command_line_options)
+    group_target = command_line_options.get(constants.LABEL_GROUP)
+    if group_target:
+        targets = extract_group_targets(group_target, targets)
 
     if constants.LABEL_CONFIG in moban_file_configurations:
         merged_options = merge(

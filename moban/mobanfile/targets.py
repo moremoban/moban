@@ -8,6 +8,18 @@ import moban.plugins as plugins
 from moban import reporter
 
 
+def extract_group_targets(group, targets):
+    for target in targets:
+        if constants.LABEL_OUTPUT in target:
+            continue
+
+        for group_name, group_targets in target.items():
+            if isinstance(group_targets, str) is False and group_name == group:
+                # grouping by template type feature
+                return [{group_name: group_targets}]
+    return []
+
+
 def parse_targets(options, targets):
     for target in targets:
         if constants.LABEL_OUTPUT in target:
