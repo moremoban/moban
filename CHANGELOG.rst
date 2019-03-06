@@ -1,7 +1,7 @@
 Change log
 ================================================================================
 
-0.4.2 - 01.03.2019
+0.4.2 - unreleased
 --------------------------------------------------------------------------------
 
 Added
@@ -9,6 +9,9 @@ Added
 
 #. `#234 <https://github.com/moremoban/moban/issues/234>`_: Define template
    parameters on the fly inside `targets` section
+#. `#180 <https://github.com/moremoban/moban/issues/180>`_: No longer two
+   statistics will be shown in v0.4.x. legacy copy targets are injected into a
+   normal targets. cli target is made a clear priority.
 
 0.4.1 - 28.02.2019
 --------------------------------------------------------------------------------
