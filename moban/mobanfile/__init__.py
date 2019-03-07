@@ -5,12 +5,12 @@ from collections import defaultdict
 
 from lml.utils import do_import
 
-import moban.reporter as reporter
-import moban.constants as constants
+from moban import reporter
+from moban import constants
 from moban import plugins
 from moban.repo import git_clone
 from moban.utils import merge, pip_install
-from moban.mobanfile.targets import parse_targets
+from moban.mobanfile.targets import parse_targets, extract_group_targets
 from moban.deprecated import deprecated
 from moban.definitions import GitRequire
 from moban.plugins.template import expand_template_directories
@@ -44,6 +44,10 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
         targets += legacy_copy_targets
 
     cli_target = extract_target(command_line_options)
+    group_target = command_line_options.get(constants.LABEL_GROUP)
+    if group_target:
+        # will raise exception when group target not found
+        targets = extract_group_targets(group_target, targets)
 
     if constants.LABEL_CONFIG in moban_file_configurations:
         merged_options = merge(
@@ -68,18 +72,16 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if extensions:
         plugins.ENGINES.register_extensions(extensions)
 
-    template_types = merged_options.get(
-        constants.LABEL_TEMPLATE_TYPES
-    )
+    template_types = merged_options.get(constants.LABEL_TEMPLATE_TYPES)
     if template_types:
         plugins.ENGINES.register_options(template_types)
 
     if cli_target:
         number_of_templated_files = handle_targets(
-            merged_options, [cli_target])
+            merged_options, [cli_target]
+        )
     elif targets:
-        number_of_templated_files = handle_targets(
-            merged_options, targets)
+        number_of_templated_files = handle_targets(merged_options, targets)
     else:
         number_of_templated_files = 0
 
@@ -128,7 +130,6 @@ def handle_targets(merged_options, targets):
             target.set_template_type(primary_template_type)
 
         jobs_for_each_engine[primary_template_type].append(target)
-        print(target)
 
     count = 0
     for template_type in jobs_for_each_engine.keys():
@@ -168,10 +169,10 @@ def extract_target(options):
             )
         if config:
             result = {
-                    constants.LABEL_TEMPLATE: template,
-                    constants.LABEL_CONFIG: config,
-                    constants.LABEL_OUTPUT: output,
-                }
+                constants.LABEL_TEMPLATE: template,
+                constants.LABEL_CONFIG: config,
+                constants.LABEL_OUTPUT: output,
+            }
 
         else:
             result = {output: template}
