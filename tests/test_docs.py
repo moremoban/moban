@@ -244,6 +244,23 @@ class TestTutorial:
 
         _verify_content("b.output", "shijie\n")
 
+    def test_level_19_without_group_target(self):
+        expected = "test file\n"
+
+        folder = "level-19-moban-a-sub-group-in-targets"
+        self._raw_moban(["moban"], folder, expected, "simple.file")
+        _verify_content("a.output", "I will not be selected in level 19\n")
+        os.unlink("a.output")
+
+    def test_level_19_with_group_target(self):
+        expected = "test file\n"
+
+        folder = "level-19-moban-a-sub-group-in-targets"
+        self._raw_moban(["moban", "-g", "copy"],
+                        folder, expected, "simple.file")
+        # make sure only copy target is executed
+        eq_(False, os.path.exists('a.output'))
+
     def test_misc_1(self):
         expected = "test file\n"
 
