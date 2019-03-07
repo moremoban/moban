@@ -24,10 +24,10 @@ class TestTutorial:
         if sys.platform != 'win32':
             raise SkipTest("No need to test on linux nor macos")
 
-        expected = "test file\n"
+        expected = "/tmp"
 
         folder = "symbolic-link-gets-junk"
-        self._raw_moban(["moban"], folder, expected, "simple.file")
+        self._raw_moban(["moban"], folder, expected, "a.output")
 
     def _moban(self, folder, expected):
         args = ["moban", "-c", "data.yml", "-t", "a.template"]
