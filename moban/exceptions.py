@@ -20,3 +20,7 @@ class NoTemplate(Exception):
 
 class IncorrectDataInput(Exception):
     pass
+
+
+class GroupTargetNotFound(Exception):
+    pass

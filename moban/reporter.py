@@ -10,6 +10,8 @@ MESSAGE_PULLING_REPO = "Updating {0}..."
 MESSAGE_CLONING_REPO = "Cloning {0}..."
 MESSAGE_USING_ENV_VARS = "Attempting to use environment vars as data..."
 MESSAGE_TEMPLATE_NOT_IN_MOBAN_FILE = "{0} is not defined in your moban file!"
+MESSAGE_FILE_EXTENSION_NOT_NEEDED = "File extension is not required for ad-hoc\
+ type"
 
 
 def report_templating(source_file, destination_file):
@@ -84,3 +86,7 @@ def _format_single(message, count):
     if count == 1:
         return message.replace("files", "file")
     return message
+
+
+def report_file_extension_not_needed():
+    report_info_message(MESSAGE_FILE_EXTENSION_NOT_NEEDED)

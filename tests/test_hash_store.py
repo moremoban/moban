@@ -2,6 +2,7 @@ import os
 import sys
 
 from nose import SkipTest
+
 from moban.hashstore import HashStore
 
 

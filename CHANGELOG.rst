@@ -1,6 +1,33 @@
 Change log
 ================================================================================
 
+0.4.2 - unreleased
+--------------------------------------------------------------------------------
+
+Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#234 <https://github.com/moremoban/moban/issues/234>`_: Define template
+   parameters on the fly inside `targets` section
+#. `#180 <https://github.com/moremoban/moban/issues/180>`_: No longer two
+   statistics will be shown in v0.4.x. legacy copy targets are injected into a
+   normal targets. cli target is made a clear priority.
+#. `#62 <https://github.com/moremoban/moban/issues/62>`_: select a group target
+   to run
+
+0.4.1 - 28.02.2019
+--------------------------------------------------------------------------------
+
+Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#235 <https://github.com/moremoban/moban/issues/235>`_: user defined
+   template types so that custom file extensions, template configurations can be
+   controlled by moban user
+#. `#232 <https://github.com/moremoban/moban/issues/232>`_: the package
+   dependencies have been fine tuning to lower versions, most of them are dated
+   back to 2017.
+
 0.4.0 - 20.02.2019
 --------------------------------------------------------------------------------
 

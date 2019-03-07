@@ -1,6 +1,9 @@
 {% extends "gitignore.jj2" %}
 
 {% block extra %}
+docs/level-1-jinja2-cli/testout
+docs/level-10-moban-dependency-as-git-repo/mytravis.yml
+docs/level-18-user-defined-template-types/b.output
 docs/level-9-moban-dependency-as-pypi-package/mytravis.yml
 docs/misc-1-copying-templates/misc-1-copying/
 docs/misc-1-copying-templates/test-dir/
