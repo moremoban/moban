@@ -35,7 +35,7 @@ class TestHandleTemplateFunction:
         )
         expected = [
             (
-                os.path.join("copier-directory", "level1-file1"),
+                "copier-directory/level1-file1",
                 os.path.join("/tmp/copy-a-directory", "level1-file1"),
                 None,
             )
