@@ -13,7 +13,7 @@ class TestContentForwardEngine:
     def test_get_template(self):
         template_content = self.engine.get_template("copier-test01.csv")
         #  remove '\r' for windows
-        eq_("test 01\n", template_content.replace('\r', ''))
+        eq_("test 01\n", template_content.replace("\r", ""))
 
     def test_get_template_from_string(self):
         test_content = "simply forwarded"

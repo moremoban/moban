@@ -3,8 +3,8 @@ import sys
 from textwrap import dedent
 
 from mock import patch
-from nose.tools import eq_
 from nose import SkipTest
+from nose.tools import eq_
 
 from moban.main import main
 
@@ -21,7 +21,7 @@ class TestTutorial:
         self.current = os.getcwd()
 
     def test_symbolic_link_on_windows(self):
-        if sys.platform != 'win32':
+        if sys.platform != "win32":
             raise SkipTest("No need to test on linux nor macos")
 
         expected = "/tmp"
