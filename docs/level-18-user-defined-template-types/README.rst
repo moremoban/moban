@@ -7,7 +7,6 @@ possibilities are:
 
 #. associate your own file extensions
 #. choose your own template engine extensions
-#. 
 
 
 Evaluation

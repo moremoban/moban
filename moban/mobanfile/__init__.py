@@ -72,18 +72,16 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if extensions:
         plugins.ENGINES.register_extensions(extensions)
 
-    template_types = merged_options.get(
-        constants.LABEL_TEMPLATE_TYPES
-    )
+    template_types = merged_options.get(constants.LABEL_TEMPLATE_TYPES)
     if template_types:
         plugins.ENGINES.register_options(template_types)
 
     if cli_target:
         number_of_templated_files = handle_targets(
-            merged_options, [cli_target])
+            merged_options, [cli_target]
+        )
     elif targets:
-        number_of_templated_files = handle_targets(
-            merged_options, targets)
+        number_of_templated_files = handle_targets(merged_options, targets)
     else:
         number_of_templated_files = 0
 
@@ -132,7 +130,6 @@ def handle_targets(merged_options, targets):
             target.set_template_type(primary_template_type)
 
         jobs_for_each_engine[primary_template_type].append(target)
-        print(target)
 
     count = 0
     for template_type in jobs_for_each_engine.keys():
@@ -172,10 +169,10 @@ def extract_target(options):
             )
         if config:
             result = {
-                    constants.LABEL_TEMPLATE: template,
-                    constants.LABEL_CONFIG: config,
-                    constants.LABEL_OUTPUT: output,
-                }
+                constants.LABEL_TEMPLATE: template,
+                constants.LABEL_CONFIG: config,
+                constants.LABEL_OUTPUT: output,
+            }
 
         else:
             result = {output: template}

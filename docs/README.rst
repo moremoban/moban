@@ -20,6 +20,8 @@ This section covers the use cases for moban. Please check them out individually.
 #. `Copy templates as target`_
 #. `Group targets by template type`_
 #. `Force template type from moban file`_
+#. `User defined template types`_
+#. `Select a group target to run`_
 
 .. _Jinja2 command line: level-1-jinja2-cli
 .. _Template inheritance: level-2-template-inheritance
@@ -38,3 +40,5 @@ This section covers the use cases for moban. Please check them out individually.
 .. _Copy templates as target: level-15-copy-templates-as-target
 .. _Group targets by template type: level-16-group-targets-using-template-type
 .. _Force template type from moban file: level-17-force-template-type-from-moban-file
+.. _User defined template types: level-18-user-defined-template-types
+.. _Select a group target to run: level-19-moban-a-sub-group-in-targets

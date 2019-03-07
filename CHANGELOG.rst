@@ -12,6 +12,8 @@ Added
 #. `#180 <https://github.com/moremoban/moban/issues/180>`_: No longer two
    statistics will be shown in v0.4.x. legacy copy targets are injected into a
    normal targets. cli target is made a clear priority.
+#. `#62 <https://github.com/moremoban/moban/issues/62>`_: select a group target
+   to run
 
 0.4.1 - 28.02.2019
 --------------------------------------------------------------------------------

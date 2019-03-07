@@ -1,12 +1,8 @@
 import uuid
 
-from moban import constants
+from moban import plugins, reporter, constants, exceptions
 from moban.definitions import TemplateTarget
 from moban.mobanfile.templates import handle_template
-from moban import plugins
-from moban import exceptions
-
-from moban import reporter
 
 
 def extract_group_targets(group, targets):

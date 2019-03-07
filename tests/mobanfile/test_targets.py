@@ -4,8 +4,8 @@ import uuid
 from nose.tools import eq_, raises
 
 from moban.mobanfile import targets
-from moban.definitions import TemplateTarget
 from moban.exceptions import GroupTargetNotFound
+from moban.definitions import TemplateTarget
 
 TEMPLATE = "a.jj2"
 OUTPUT = "a.output"
@@ -36,41 +36,17 @@ def test_handling_group_target():
 
 def test_extract_group_targets():
     test_targets = [
-        {
-            "copy": [
-                {
-                    "output": "source"
-                }
-            ],
-            "copy1": [
-                {
-                    "output1": "source1"
-                }
-            ]
-
-        }
+        {"copy": [{"output": "source"}], "copy1": [{"output1": "source1"}]}
     ]
     actual = targets.extract_group_targets("copy1", test_targets)
-    expected = [{'copy1': [{'output1': 'source1'}]}]
+    expected = [{"copy1": [{"output1": "source1"}]}]
     eq_(expected, actual)
 
 
 @raises(GroupTargetNotFound)
 def test_extract_group_targets_not_found():
     test_targets = [
-        {
-            "copy": [
-                {
-                    "output": "source"
-                }
-            ],
-            "copy1": [
-                {
-                    "output1": "source1"
-                }
-            ]
-
-        }
+        {"copy": [{"output": "source"}], "copy1": [{"output1": "source1"}]}
     ]
     actual = targets.extract_group_targets("copy2", test_targets)
     expected = []
@@ -166,9 +142,15 @@ class TestExplicitTarget:
 
     def test_ad_hoc_type(self):
         target = dict(template=TEMPLATE, output=OUTPUT)
-        template_type = [{'base_type': 'jinja2'},
-                         {'options': [{'block_end_string': '*))'},
-                                      {'block_start_string': '((*'}]}]
+        template_type = [
+            {"base_type": "jinja2"},
+            {
+                "options": [
+                    {"block_end_string": "*))"},
+                    {"block_start_string": "((*"},
+                ]
+            },
+        ]
         options = dict(
             configuration=CONFIGURATION,
             template_type=template_type,
@@ -177,6 +159,7 @@ class TestExplicitTarget:
 
         actual = list(targets._handle_explicit_target(options, target))
         file_extension = uuid.uuid4().hex
-        expected = [TemplateTarget(TEMPLATE, CONFIGURATION, OUTPUT,
-                    file_extension)]
+        expected = [
+            TemplateTarget(TEMPLATE, CONFIGURATION, OUTPUT, file_extension)
+        ]
         eq_(actual, expected)

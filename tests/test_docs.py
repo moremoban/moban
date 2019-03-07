@@ -237,6 +237,7 @@ class TestTutorial:
 
     def test_level_18_user_defined_template_types(self):
         from datetime import datetime
+
         expected = "{date}\n".format(date=datetime.now().strftime("%Y-%m-%d"))
 
         folder = "level-18-user-defined-template-types"
@@ -256,10 +257,11 @@ class TestTutorial:
         expected = "test file\n"
 
         folder = "level-19-moban-a-sub-group-in-targets"
-        self._raw_moban(["moban", "-g", "copy"],
-                        folder, expected, "simple.file")
+        self._raw_moban(
+            ["moban", "-g", "copy"], folder, expected, "simple.file"
+        )
         # make sure only copy target is executed
-        eq_(False, os.path.exists('a.output'))
+        eq_(False, os.path.exists("a.output"))
 
     def test_misc_1(self):
         expected = "test file\n"
