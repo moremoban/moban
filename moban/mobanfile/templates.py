@@ -47,7 +47,7 @@ def _list_dir_files(source, actual_source_path, dest):
             # hence the following statement looks like cross platform
             #  src_file_under_dir = os.path.join(source, file_name)
             # but actually it breaks windows instead.
-            src_file_under_dir = '%s/%s' % (source, file_name)
+            src_file_under_dir = "%s/%s" % (source, file_name)
 
             dest_file_under_dir = os.path.join(dest, file_name)
             template_type = _get_template_type(src_file_under_dir)
