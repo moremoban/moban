@@ -1,11 +1,19 @@
 import os
+import sys
+import subprocess
 
-from moban import reporter, constants
+from moban import reporter, constants, exceptions
 from moban.utils import mkdir_p
 
 
 def git_clone(requires):
     from git import Repo
+
+    if sys.platform != "win32":
+        # Unfortunately for windows user, the following function
+        # needs shell=True, which expose security risk. I would
+        # rather not to trade it with its marginal benefit
+        make_sure_git_is_available()
 
     moban_home = get_moban_home()
     mkdir_p(moban_home)
@@ -51,3 +59,10 @@ def get_moban_home():
 
     home_dir = user_cache_dir(appname=constants.PROGRAM_NAME)
     return os.path.join(home_dir, constants.MOBAN_REPOS_DIR_NAME)
+
+
+def make_sure_git_is_available():
+    try:
+        subprocess.check_output(["git", "--help"])
+    except Exception:
+        raise exceptions.NoGitCommand("Please install git command")
