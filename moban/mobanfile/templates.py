@@ -43,7 +43,12 @@ def _list_dir_files(source, actual_source_path, dest):
     for file_name in os.listdir(actual_source_path):
         real_src_file = os.path.join(actual_source_path, file_name)
         if os.path.isfile(real_src_file):
-            src_file_under_dir = os.path.join(source, file_name)
+            # please note jinja2 does NOT like windows path
+            # hence the following statement looks like cross platform
+            #  src_file_under_dir = os.path.join(source, file_name)
+            # but actually it breaks windows instead.
+            src_file_under_dir = "%s/%s" % (source, file_name)
+
             dest_file_under_dir = os.path.join(dest, file_name)
             template_type = _get_template_type(src_file_under_dir)
             yield (src_file_under_dir, dest_file_under_dir, template_type)

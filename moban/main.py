@@ -107,6 +107,9 @@ def create_parser():
         "-m", "--%s" % constants.LABEL_MOBANFILE, help="custom moban file"
     )
     parser.add_argument(
+        "-g", "--%s" % constants.LABEL_GROUP, help="a subset of targets"
+    )
+    parser.add_argument(
         constants.POSITIONAL_LABEL_TEMPLATE,
         metavar="template",
         type=str,

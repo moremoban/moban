@@ -83,3 +83,14 @@ def test_report_template_not_in_moban_file():
         fake_stdout.getvalue(),
         "Warning: test.jj2 is not defined in your moban file!\n",
     )
+
+
+def test_report_file_extension_not_needed():
+    patcher = patch("sys.stdout", new_callable=StringIO)
+    fake_stdout = patcher.start()
+    reporter.report_file_extension_not_needed()
+    patcher.stop()
+    eq_(
+        fake_stdout.getvalue(),
+        "Info: File extension is not required for ad-hoc type\n",
+    )

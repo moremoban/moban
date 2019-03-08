@@ -32,6 +32,8 @@ examples folder.
    level-15-copy-templates-as-target/README.rst
    level-16-group-targets-using-template-type/README.rst
    level-17-force-template-type-from-moban-file/README.rst
+   level-18-user-defined-template-types/README.rst
+   level-19-moban-a-sub-group-in-targets/README.rst
 
 In pratice, the following use cases were found interesting to go along with.
 

@@ -34,3 +34,29 @@ Now, let us try to use the extension `with`. To do that, we have to enable the
 extension in the `.moban.yml` file following the above syntax. Now, the
 extension can be used in the jinja2 templates. One such example is shown in the
 `b.template` file.
+
+.. note::
+  
+  For some extensions, you may need to define `template environment parameters`.
+  In that case, you can take help of our `user defined template types` feature.
+  Please read level-18 for more info. We have explained it using an example
+  here.
+
+  Let us consider the example of `jinja2_time`. If you want to use
+  `datetime_format` attribute, you need to specify the same using environmental
+  parameters, *i.e*  `env.datetime_format = '%a, %d %b %Y %H:%M:%S'`. In order
+  to do this, you can specify `datetime_format` using environmental parameters,
+  something like::
+
+    configuration:
+      template_types:
+        my_own_type:
+          base_type: jinja2
+          file_extensions:
+            - file_type_of_my_choice
+          options:
+            datetime_format: %a, %d %b %Y %H:%M:%S
+            extensions:
+              - jinja2_time.TimeExtension
+    targets:
+      - a.output: a.template.file_type_of_my_choice

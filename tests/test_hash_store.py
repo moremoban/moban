@@ -1,4 +1,7 @@
 import os
+import sys
+
+from nose import SkipTest
 
 from moban.hashstore import HashStore
 
@@ -77,6 +80,8 @@ class TestHashStore:
         Save as above, but this time,
         the generated file had file permision change
         """
+        if sys.platform == "win32":
+            raise SkipTest("No file permission check on windows")
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
         if flag:
@@ -95,26 +100,3 @@ class TestHashStore:
         assert flag is True
         hs3.save_hashes()
         os.unlink(self.fixture[0])
-
-
-class TestHashStore2:
-    def setUp(self):
-        self.source_file = os.path.join("tests", "fixtures", "a.jj2")
-        self.dest_file = os.path.join("tests", "fixtures", "copier-test02.csv")
-
-    def test_simple_use_case(self):
-        hs = HashStore()
-        flag = hs.are_two_file_different(self.source_file, "/tmp/abc")
-        assert flag is True
-
-    def test_laziness_with_same_file(self):
-        hs = HashStore()
-        flag = hs.are_two_file_different(self.source_file, self.source_file)
-        assert flag is True  # because we don't know it before
-        flag = hs.are_two_file_different(self.source_file, self.source_file)
-        assert flag is False
-
-    def test_different_files(self):
-        hs = HashStore()
-        flag = hs.are_two_file_different(self.source_file, self.dest_file)
-        assert flag is True
