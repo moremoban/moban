@@ -1,7 +1,7 @@
 Change log
 ================================================================================
 
-0.4.2 - unreleased
+0.4.2 - 08.03.2019
 --------------------------------------------------------------------------------
 
 Added
@@ -14,6 +14,12 @@ Added
    normal targets. cli target is made a clear priority.
 #. `#62 <https://github.com/moremoban/moban/issues/62>`_: select a group target
    to run
+#. `#244 <https://github.com/moremoban/moban/issues/244>`_: version 0.4.2 is
+   first version which would work perfectly on windows since 17 Nov 2018. Note
+   that: file permissions are not used on windows. Why the date? because
+   samefile is not avaiable on windows, causing unit tests to fail hence it lead
+   to my conclusion that moban version between 17 Nov 2018 and March 2019 wont
+   work well on Windows.
 
 0.4.1 - 28.02.2019
 --------------------------------------------------------------------------------

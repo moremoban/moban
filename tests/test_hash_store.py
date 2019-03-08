@@ -1,4 +1,7 @@
 import os
+import sys
+
+from nose import SkipTest
 
 from moban.hashstore import HashStore
 
@@ -77,6 +80,8 @@ class TestHashStore:
         Save as above, but this time,
         the generated file had file permision change
         """
+        if sys.platform == "win32":
+            raise SkipTest("No file permission check on windows")
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
         if flag:
