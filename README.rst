@@ -25,9 +25,13 @@ moban - 模板 Yet another jinja2 cli command for static text generation
 
 
 **moban** brings the high performance template engine (JINJA2) for web into
-static text generation. It is used in pyexcel project to keep documentation
+static text generation. It is used in `pyexcel` and `coala` project to keep documentation
 consistent across the documentations of individual libraries.
 
+Our vision is: any template, any data. Our current architecture enables moban
+to plugin any python template engine: mako, handlebars, velocity, haml, slim and tornado
+and to plugin any data format: json and yaml. Please look at our issues. We have many
+more template engines and data format on the road map.
 
 Installation
 ================================================================================
