@@ -12,8 +12,8 @@ Please clone the moban project and install moban::
 
 
     $ git clone https://github.com/chfw/moban.git
-	$ cd moban
-	$ python setup.py install
+    $ cd moban
+    $ python setup.py install
 
 
 Then go to `docs/level-1-jinja2-cli`. here are different commands to evaluate it:
