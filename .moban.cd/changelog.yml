@@ -2,11 +2,19 @@ name: moban
 organisation: moremoban
 releases:
 - changes:
+  - action: Removed
+    details:
+    - "`#253`: symbolic link in regression pack causes python setup.py to do recursive include"
+  date: unreleased
+  version: 0.4.3
+- changes:
   - action: Added
     details:
     - "`#234`: Define template parameters on the fly inside `targets` section"
-    - "`#180`: No longer two statistics will be shown in v0.4.x. legacy copy targets are injected into a normal targets. cli target is made a clear priority."
     - "`#62`: select a group target to run"
+  - action: Updated
+    details:
+    - "`#180`: No longer two statistics will be shown in v0.4.x. legacy copy targets are injected into a normal targets. cli target is made a clear priority."
     - "`#244`: version 0.4.2 is first version which would work perfectly on windows since 17 Nov 2018. Note that: file permissions are not used on windows. Why the date? because samefile is not avaiable on windows, causing unit tests to fail hence it lead to my conclusion that moban version between 17 Nov 2018 and March 2019 wont work well on Windows."
   date: 08.03.2019
   version: 0.4.2
@@ -21,7 +29,7 @@ releases:
   - action: Added
     details:
     - "`#165`: Copy as plugins"
-  - action: Added
+  - action: Updated
     details:
     - "`#219`: git clone depth set to 2"
     - "`#186`: lowest dependecy on ruamel.yaml is 0.15.5, Jun 2017"
