@@ -36,6 +36,7 @@ def test_handling_group_target():
 
 def test_extract_group_targets():
     test_targets = [
+        {"output": "a.output", "template": "a.template.jj2"},
         {"copy": [{"output": "source"}], "copy1": [{"output1": "source1"}]}
     ]
     actual = targets.extract_group_targets("copy1", test_targets)
