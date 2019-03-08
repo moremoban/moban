@@ -5,6 +5,7 @@ releases:
   - action: Removed
     details:
     - "`#253`: symbolic link in regression pack causes python setup.py to do recursive include"
+    - "`#209`: Alert moban user when `git` is not available and is used."
   date: unreleased
   version: 0.4.3
 - changes:
