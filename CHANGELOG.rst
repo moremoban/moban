@@ -9,6 +9,8 @@ Removed
 
 #. `#253 <https://github.com/moremoban/moban/issues/253>`_: symbolic link in
    regression pack causes python setup.py to do recursive include
+#. `#209 <https://github.com/moremoban/moban/issues/209>`_: Alert moban user
+   when `git` is not available and is used.
 
 0.4.2 - 08.03.2019
 --------------------------------------------------------------------------------
