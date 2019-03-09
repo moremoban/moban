@@ -35,13 +35,6 @@ examples folder.
    level-18-user-defined-template-types/README.rst
    level-19-moban-a-sub-group-in-targets/README.rst
 
-In pratice, the following use cases were found interesting to go along with.
-
-.. toctree::
-   :maxdepth: 1
-
-   misc-1-copying-templates/README.rst
-
 
 For more complex use case, please look at `its usage in pyexcel project <http://pyexcel.readthedocs.io/en/latest/guide.html>`_
 
