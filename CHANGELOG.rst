@@ -11,6 +11,9 @@ Removed
    regression pack causes python setup.py to do recursive include
 #. `#209 <https://github.com/moremoban/moban/issues/209>`_: Alert moban user
    when `git` is not available and is used.
+#. `#261 <https://github.com/moremoban/moban/issues/261>`_: since moban group
+   template files per template type, this fill use first come first register to
+   order moban group
 
 0.4.2 - 08.03.2019
 --------------------------------------------------------------------------------
