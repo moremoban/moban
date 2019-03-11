@@ -1,7 +1,7 @@
 import os
 import re
 import sys
-from collections import defaultdict
+from collections import OrderedDict
 
 from lml.utils import do_import
 
@@ -112,7 +112,7 @@ def _iterate_list_of_dicts(list_of_dict):
 
 def handle_targets(merged_options, targets):
     list_of_templating_parameters = parse_targets(merged_options, targets)
-    jobs_for_each_engine = defaultdict(list)
+    jobs_for_each_engine = OrderedDict()
 
     for target in list_of_templating_parameters:
         forced_template_type = merged_options.get(
@@ -128,6 +128,9 @@ def handle_targets(merged_options, targets):
                 constants.LABEL_TEMPLATE_TYPE
             ]
             target.set_template_type(primary_template_type)
+
+        if primary_template_type not in jobs_for_each_engine:
+            jobs_for_each_engine[primary_template_type] = []
 
         jobs_for_each_engine[primary_template_type].append(target)
 
