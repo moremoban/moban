@@ -24,3 +24,7 @@ class IncorrectDataInput(Exception):
 
 class GroupTargetNotFound(Exception):
     pass
+
+
+class NoGitCommand(Exception):
+    pass

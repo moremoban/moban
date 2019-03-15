@@ -1,9 +1,15 @@
 import os
 
 from mock import patch
-from nose.tools import eq_
+from nose.tools import eq_, raises
 
-from moban.repo import git_clone, get_repo_name, get_moban_home
+from moban.repo import (
+    git_clone,
+    get_repo_name,
+    get_moban_home,
+    make_sure_git_is_available,
+)
+from moban.exceptions import NoGitCommand
 from moban.definitions import GitRequire
 
 
@@ -112,3 +118,9 @@ def test_get_repo_name_can_handle_invalid_url(fake_reporter):
 def test_get_moban_home(_):
     actual = get_moban_home()
     eq_(os.path.join("root", "repos"), actual)
+
+
+@raises(NoGitCommand)
+@patch("subprocess.check_output", side_effect=Exception)
+def test_make_git_is_available(_):
+    make_sure_git_is_available()

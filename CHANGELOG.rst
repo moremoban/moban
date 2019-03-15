@@ -1,6 +1,28 @@
 Change log
 ================================================================================
 
+0.4.3 - 16.03.2019
+--------------------------------------------------------------------------------
+
+Removed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#253 <https://github.com/moremoban/moban/issues/253>`_: symbolic link in
+   regression pack causes python setup.py to do recursive include
+
+Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#209 <https://github.com/moremoban/moban/issues/209>`_: Alert moban user
+   when `git` is not available and is used.
+
+Updated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#261 <https://github.com/moremoban/moban/issues/261>`_: since moban group
+   template files per template type, this fill use first come first register to
+   order moban group
+
 0.4.2 - 08.03.2019
 --------------------------------------------------------------------------------
 
@@ -9,11 +31,15 @@ Added
 
 #. `#234 <https://github.com/moremoban/moban/issues/234>`_: Define template
    parameters on the fly inside `targets` section
+#. `#62 <https://github.com/moremoban/moban/issues/62>`_: select a group target
+   to run
+
+Updated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 #. `#180 <https://github.com/moremoban/moban/issues/180>`_: No longer two
    statistics will be shown in v0.4.x. legacy copy targets are injected into a
    normal targets. cli target is made a clear priority.
-#. `#62 <https://github.com/moremoban/moban/issues/62>`_: select a group target
-   to run
 #. `#244 <https://github.com/moremoban/moban/issues/244>`_: version 0.4.2 is
    first version which would work perfectly on windows since 17 Nov 2018. Note
    that: file permissions are not used on windows. Why the date? because
@@ -42,7 +68,7 @@ Added
 
 #. `#165 <https://github.com/moremoban/moban/issues/165>`_: Copy as plugins
 
-Added
+Updated
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. `#219 <https://github.com/moremoban/moban/issues/219>`_: git clone depth set
