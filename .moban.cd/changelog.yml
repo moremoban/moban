@@ -5,7 +5,11 @@ releases:
   - action: Removed
     details:
     - "`#253`: symbolic link in regression pack causes python setup.py to do recursive include"
+  - action: Added
+    details:
     - "`#209`: Alert moban user when `git` is not available and is used."
+  - action: Updated
+    details:
     - "`#261`: since moban group template files per template type, this fill use first come first register to order moban group"
   date: 16.03.2019
   version: 0.4.3
