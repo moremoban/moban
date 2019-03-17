@@ -27,6 +27,12 @@ default template across `targets`. And in this example, the expand form of
         "template": "the template file"
     }
 
+.. warning::
+
+   `a.template` could be a symbolic link on Unix/Linux. It will not work if you
+   template a symbolic link on Windows. Use symbolic link at your own
+   calculated risk.
+
 
 Evaluation
 --------------------------------------------------------------------------------
