@@ -61,6 +61,8 @@ def file_permissions(afile):
 
 
 def strip_off_trailing_new_lines(content):
+    if isinstance(content, bytes):
+        content = content.decode("utf-8")
     return re.sub(r"(\n\s+)+$", r"\n", content)
 
 

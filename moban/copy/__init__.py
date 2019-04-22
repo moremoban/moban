@@ -1,6 +1,5 @@
 from lml.plugin import PluginInfo
 
-import codecs
 
 from moban import utils
 from moban import constants
@@ -30,7 +29,7 @@ class ContentForwardEngine(object):
         real_file_name = utils.find_file_in_template_dirs(
             template_file, self.template_dirs
         )
-        with codecs.open(real_file_name, encoding="utf-8") as file_handle:
+        with open(real_file_name, "rb") as file_handle:
             return file_handle.read()
 
     def get_template_from_string(self, string):
