@@ -12,9 +12,9 @@ class TestCopyEncoding:
 
     def test_encoding_of_template(self):
         template_content = self.engine.get_template("coala_color.svg")
-        with open("tests/fixtures/coala_color.svg", "r") as expected:
+        with open("tests/fixtures/coala_color.svg", "rb") as expected:
             expected = expected.read()
-        eq_(expected, template_content.decode("utf-8").replace("\r", ""))
+        eq_(expected, template_content)
         template_content = self.engine.get_template("non-unicode.char")
         with open("tests/fixtures/non-unicode.char", "rb") as expected:
             expected = expected.read()
