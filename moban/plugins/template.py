@@ -110,7 +110,8 @@ class MobanEngine(object):
             template, data, output_file
         )
         rendered_content = utils.strip_off_trailing_new_lines(rendered_content)
-        rendered_content = rendered_content.encode("utf-8")
+        if not isinstance(rendered_content, bytes):
+            rendered_content = rendered_content.encode("utf-8")
         try:
             flag = HASH_STORE.is_file_changed(
                 output_file, rendered_content, template_abs_path
