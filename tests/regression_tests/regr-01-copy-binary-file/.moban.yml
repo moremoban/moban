@@ -1,0 +1,7 @@
+configuration:
+  template_dir:
+    - copy-source
+targets:
+  - output: regression-test.png
+    template: image.png
+    template_type: copy
