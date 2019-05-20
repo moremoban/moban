@@ -13,7 +13,13 @@ class TestContentForwardEngine:
     def test_get_template(self):
         template_content = self.engine.get_template("copier-test01.csv")
         #  remove '\r' for windows
-        eq_("test 01\n", template_content.replace("\r", ""))
+        eq_("test 01\n", template_content.decode("utf-8").replace("\r", ""))
+
+    def test_encoding_of_template(self):
+        template_content_ = self.engine.get_template("coala_color.svg")
+        with open("tests/fixtures/coala_color.svg", "r") as expected:
+            expected = expected.read()
+        eq_(expected, template_content_.decode("utf-8").replace("\r", ""))
 
     def test_get_template_from_string(self):
         test_content = "simply forwarded"
