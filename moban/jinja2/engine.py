@@ -131,7 +131,6 @@ class Engine(object):
         template.globals["__target__"] = output
         template.globals["__template__"] = template.name
         rendered_content = template.render(**data)
-        rendered_content = rendered_content
         return rendered_content
 
 
