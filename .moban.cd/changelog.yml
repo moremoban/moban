@@ -5,7 +5,7 @@ releases:
   - action: Updated
     details:
     - "`#265`: Use simple `read binary` to read instead of encoding"
-  date: unreleased
+  date: 27.05.2019
   version: 0.4.4
 - changes:
   - action: Removed
