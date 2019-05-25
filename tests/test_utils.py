@@ -13,7 +13,6 @@ from moban.utils import (
     file_permissions,
     get_template_path,
     file_permissions_copy,
-    strip_off_trailing_new_lines,
 )
 from moban.exceptions import FileNotFound
 
@@ -74,7 +73,7 @@ def test_file_permission_copy_symlink():
 
 
 def test_write_file_out():
-    content = """
+    content = b"""
     helloworld
 
 
@@ -85,13 +84,7 @@ def test_write_file_out():
     write_file_out(test_file, content)
     with open(test_file, "r") as f:
         content = f.read()
-        eq_(content, "\n    helloworld\n")
-
-
-def test_strip_new_lines():
-    content = "test\n\n\n\n\n"
-    actual = strip_off_trailing_new_lines(content)
-    eq_(actual, "test\n")
+        eq_(content, "\n    helloworld\n\n\n\n\n    ")
 
 
 def test_mkdir_p():

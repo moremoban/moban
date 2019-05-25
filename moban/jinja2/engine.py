@@ -1,3 +1,4 @@
+import re
 from importlib import import_module
 
 from jinja2 import Template, Environment, FileSystemLoader
@@ -131,6 +132,7 @@ class Engine(object):
         template.globals["__target__"] = output
         template.globals["__template__"] = template.name
         rendered_content = template.render(**data)
+        rendered_content = strip_off_trailing_new_lines(rendered_content)
         return rendered_content
 
 
@@ -153,3 +155,7 @@ def import_module_of_extension(extensions):
             modules.add(extension.split(".")[0])
     for module in modules:
         import_module(module)
+
+
+def strip_off_trailing_new_lines(content):
+    return re.sub(r"(\n\s+)+$", r"\n", content)

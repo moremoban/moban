@@ -1,12 +1,12 @@
 import os
 import sys
+import filecmp
 from textwrap import dedent
 
 from mock import patch
 from nose.tools import eq_
 
 from moban.main import main
-import filecmp
 
 
 def custom_dedent(long_texts):
@@ -27,7 +27,8 @@ class TestRegression:
             args,
             folder,
             os.path.join("copy-source", "image.png"),
-            "regression-test.png")
+            "regression-test.png",
+        )
 
     def _raw_moban(self, args, folder, expected, output):
         base_dir = os.path.join("tests", "regression_tests")

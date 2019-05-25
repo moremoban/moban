@@ -1,5 +1,4 @@
 import os
-import re
 import sys
 import stat
 import errno
@@ -60,25 +59,11 @@ def file_permissions(afile):
     return stat.S_IMODE(os.stat(afile).st_mode)
 
 
-def strip_off_trailing_new_lines(content):
-    if isinstance(content, bytes):
-        try:
-            content = content.decode("utf-8")
-            return re.sub(r"(\n\s+)+$", r"\n", content)
-        except UnicodeDecodeError:
-            return content
-    return re.sub(r"(\n\s+)+$", r"\n", content)
-
-
-def write_file_out(filename, content, strip=True, encode=True):
+def write_file_out(filename, content):
     dest_folder = os.path.dirname(filename)
     if dest_folder:
         mkdir_p(dest_folder)
     with open(filename, "wb") as out:
-        if strip:
-            content = strip_off_trailing_new_lines(content)
-        if encode:
-            content = content.encode("utf-8")
         out.write(content)
 
 
