@@ -2,6 +2,12 @@ name: moban
 organisation: moremoban
 releases:
 - changes:
+  - action: Updated
+    details:
+    - "`#265`: Use simple `read binary` to read instead of encoding"
+  date: 27.05.2019
+  version: 0.4.4
+- changes:
   - action: Removed
     details:
     - "`#253`: symbolic link in regression pack causes python setup.py to do recursive include"
