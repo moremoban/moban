@@ -25,6 +25,8 @@ def git_clone(requires):
             reporter.report_git_pull(repo_name)
             repo = Repo(local_repo_folder)
             repo.git.pull()
+            if require.branch:
+                repo.git.checkout('HEAD', require.branch)
             if require.submodule:
                 reporter.report_info_message("updating submodule")
                 repo.git.submodule("update")
