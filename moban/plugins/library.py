@@ -1,6 +1,5 @@
-from lml.plugin import PluginManager
-
 from moban import constants
+from lml.plugin import PluginManager
 
 
 class LibraryManager(PluginManager):

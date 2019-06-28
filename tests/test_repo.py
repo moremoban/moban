@@ -1,14 +1,13 @@
 import os
 
 from mock import patch
-from nose.tools import eq_, raises
-
 from moban.repo import (
     git_clone,
     get_repo_name,
     get_moban_home,
     make_sure_git_is_available,
 )
+from nose.tools import eq_, raises
 from moban.exceptions import NoGitCommand
 from moban.definitions import GitRequire
 

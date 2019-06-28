@@ -3,17 +3,14 @@ import re
 import sys
 from collections import OrderedDict
 
+from moban import plugins, reporter, constants
 from lml.utils import do_import
-
-from moban import reporter
-from moban import constants
-from moban import plugins
 from moban.repo import git_clone
 from moban.utils import merge, pip_install
-from moban.mobanfile.targets import parse_targets, extract_group_targets
 from moban.deprecated import deprecated
 from moban.definitions import GitRequire
 from moban.plugins.template import expand_template_directories
+from moban.mobanfile.targets import parse_targets, extract_group_targets
 
 try:
     from urllib.parse import urlparse

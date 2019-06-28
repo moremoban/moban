@@ -2,9 +2,8 @@ import os
 import sys
 import logging
 
-from lml.plugin import PluginManager
-
 from moban import repo, utils, reporter, constants, exceptions
+from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES

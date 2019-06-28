@@ -1,11 +1,10 @@
 import os
 import sys
 
+import moban.exceptions as exceptions
 from mock import patch
 from lml.plugin import PluginInfo
 from nose.tools import eq_, raises
-
-import moban.exceptions as exceptions
 from moban.plugins import ENGINES
 from moban.jinja2.engine import (
     Engine,
