@@ -88,6 +88,14 @@ class TestGitFunctions:
         repo = fake_repo.return_value
         eq_(repo.git.submodule.called, False)
 
+    def test_update_existing_with_branch_parameter(
+        self, fake_repo, local_folder_exists, *_
+    ):
+        local_folder_exists.return_value = True
+        git_clone([self.require_with_branch])
+        repo = fake_repo.return_value
+        repo.git.checkout.assert_called_with('HEAD', 'ghpages')
+
 
 def test_get_repo_name():
     repos = [
