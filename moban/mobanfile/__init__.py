@@ -190,6 +190,7 @@ def handle_requires(requires):
                     GitRequire(
                         git_url=require.get(constants.GIT_URL),
                         branch=require.get(constants.GIT_BRANCH),
+                        reference=require.get(constants.GIT_REFERENCE),
                         submodule=require.get(
                             constants.GIT_HAS_SUBMODULE, False
                         ),

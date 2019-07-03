@@ -27,6 +27,9 @@ class TestGitFunctions:
         self.require_with_branch = GitRequire(
             git_url=self.repo, branch="ghpages"
         )
+        self.require_with_reference = GitRequire(
+            git_url=self.repo, reference="a-commit-reference"
+        )
         self.expected_local_repo_path = os.path.join(
             "root", "repos", self.repo_name
         )
@@ -94,7 +97,30 @@ class TestGitFunctions:
         local_folder_exists.return_value = True
         git_clone([self.require_with_branch])
         repo = fake_repo.return_value
-        repo.git.checkout.assert_called_with('ghpages')
+        repo.git.checkout.assert_called_with("ghpages")
+
+    def test_checkout_new_with_reference(
+        self, fake_repo, local_folder_exists, *_
+    ):
+        local_folder_exists.return_value = False
+        git_clone([self.require_with_reference])
+        fake_repo.clone_from.assert_called_with(
+            self.repo,
+            self.expected_local_repo_path,
+            reference="a-commit-reference",
+            single_branch=True,
+            depth=2,
+        )
+        repo = fake_repo.return_value
+        eq_(repo.git.submodule.called, False)
+
+    def test_update_existing_with_reference_parameter(
+        self, fake_repo, local_folder_exists, *_
+    ):
+        local_folder_exists.return_value = True
+        git_clone([self.require_with_reference])
+        repo = fake_repo.return_value
+        repo.git.checkout.assert_called_with("a-commit-reference")
 
 
 def test_get_repo_name():
