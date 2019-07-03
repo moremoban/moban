@@ -36,5 +36,6 @@ The alternative syntax is::
          url: https://github.com/your-git-url
          submodule: true
          branch: your_choice_or_default_branch_if_not_specified
+         reference: your_alternative_reference_but_not_used_together_with_branch
     ...
 
