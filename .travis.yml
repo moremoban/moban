@@ -32,7 +32,7 @@ stages:
   python: 3.6
   stage: lint
   install: pip install flake8
-  script: flake8
+  script: sh lint.sh
 
 jobs:
   include:
