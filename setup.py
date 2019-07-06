@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
+import os
+import sys
+
 # Template by pypi-mobans
 import codecs
 import locale
-import os
 import platform
-import sys
 from shutil import rmtree
 
-from setuptools import Command, find_packages, setup
+from setuptools import Command, setup, find_packages
 
 PY2 = sys.version_info[0] == 2
 PY26 = PY2 and sys.version_info[1] < 7
@@ -32,22 +33,12 @@ AUTHOR = "C. W."
 VERSION = "0.4.5"
 EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
-ENTRY_POINTS = {
-    "console_scripts": [
-        "moban = moban.main:main"
-    ],
-}
-DESCRIPTION = (
-    "Yet another jinja2 cli command for static text generation"
-)
+ENTRY_POINTS = {"console_scripts": ["moban = moban.main:main"]}
+DESCRIPTION = "Yet another jinja2 cli command for static text generation"
 URL = "https://github.com/moremoban/moban"
 DOWNLOAD_URL = "%s/archive/0.4.4.tar.gz" % URL
-FILES = ["README.rst", 'CONTRIBUTORS.rst', "CHANGELOG.rst"]
-KEYWORDS = [
-    "python",
-    "jinja2",
-    "moban",
-]
+FILES = ["README.rst", "CONTRIBUTORS.rst", "CHANGELOG.rst"]
+KEYWORDS = ["python", "jinja2", "moban"]
 
 CLASSIFIERS = [
     "Topic :: Software Development :: Libraries",
@@ -59,11 +50,8 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 3.4",
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
-
     "Programming Language :: Python :: 3.7",
-
     "Programming Language :: Python :: 3.8",
-
 ]
 
 INSTALL_REQUIRES = [
@@ -79,16 +67,19 @@ SETUP_COMMANDS = {}
 
 
 PACKAGES = find_packages(exclude=["ez_setup", "examples", "tests"])
-EXTRAS_REQUIRE = {
-}
+EXTRAS_REQUIRE = {}
 # You do not need to read beyond this line
-PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(sys.executable)
-GS_COMMAND = ("gs moban v0.4.4 " +
-              "Find 0.4.4 in changelog for more details")
-NO_GS_MESSAGE = ("Automatic github release is disabled. " +
-                 "Please install gease to enable it.")
+PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(
+    sys.executable
+)
+GS_COMMAND = "gs moban v0.4.4 " + "Find 0.4.4 in changelog for more details"
+NO_GS_MESSAGE = (
+    "Automatic github release is disabled. "
+    + "Please install gease to enable it."
+)
 UPLOAD_FAILED_MSG = (
-    'Upload failed. please run "%s" yourself.' % PUBLISH_COMMAND)
+    'Upload failed. please run "%s" yourself.' % PUBLISH_COMMAND
+)
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -131,9 +122,7 @@ class PublishCommand(Command):
         sys.exit()
 
 
-SETUP_COMMANDS.update({
-    "publish": PublishCommand
-})
+SETUP_COMMANDS.update({"publish": PublishCommand})
 
 
 def has_gease():
@@ -144,6 +133,7 @@ def has_gease():
     """
     try:
         import gease  # noqa
+
         return True
     except ImportError:
         return False
@@ -212,5 +202,5 @@ if __name__ == "__main__":
         zip_safe=False,
         entry_points=ENTRY_POINTS,
         classifiers=CLASSIFIERS,
-        cmdclass=SETUP_COMMANDS
+        cmdclass=SETUP_COMMANDS,
     )
