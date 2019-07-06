@@ -22,8 +22,8 @@ DESCRIPTION = (
 # -- Project information -----------------------------------------------------
 
 project = 'moban'
-copyright = '2017-2019 Onni Software Ltd. and its contributors'
-author = 'Onni Software Ltd.'
+copyright = '2017-2019 Onni Software Ltd.'
+author = 'C. W.'
 # The short X.Y version
 version = '0.4.5'
 # The full version, including alpha/beta/rc tags
