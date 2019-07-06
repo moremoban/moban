@@ -1,8 +1,5 @@
+from moban import utils, constants
 from lml.plugin import PluginInfo
-
-
-from moban import utils
-from moban import constants
 
 
 @PluginInfo(

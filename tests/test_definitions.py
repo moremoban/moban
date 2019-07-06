@@ -1,5 +1,4 @@
 from nose.tools import eq_
-
 from moban.definitions import GitRequire, TemplateTarget
 
 

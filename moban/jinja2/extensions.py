@@ -1,6 +1,5 @@
-from lml.plugin import PluginInfo
-
 from moban import constants
+from lml.plugin import PluginInfo
 
 
 class JinjaFilter(PluginInfo):

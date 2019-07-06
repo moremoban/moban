@@ -6,7 +6,6 @@ from shutil import rmtree
 from mock import patch
 from nose import SkipTest
 from nose.tools import eq_, raises
-
 from moban.utils import (
     mkdir_p,
     write_file_out,
