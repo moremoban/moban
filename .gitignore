@@ -524,3 +524,9 @@ docs/level-16-group-targets-using-template-type/test-dir/
 docs/level-16-group-targets-using-template-type/test-recursive-dir/
 docs/level-17-force-template-type-from-moban-file/test-dir/
 docs/level-17-force-template-type-from-moban-file/test-recursive-dir/
+docs/level-11-use-handlebars/b.output
+docs/level-14-custom-data-loader/b.output
+docs/level-19-moban-a-sub-group-in-targets/test-dir/
+docs/level-19-moban-a-sub-group-in-targets/test-recursive-dir/
+docs/level-6-complex-configuration/a.output
+docs/level-7-use-custom-jinja2-filter-test-n-global/filter.output
