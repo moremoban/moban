@@ -5,7 +5,7 @@ releases:
   - action: Updated
     details:
     - "`#271`: support git branch change in later run."
-  date: 06.07.2019
+  date: 07.07.2019
   version: 0.4.5
 - changes:
   - action: Updated
