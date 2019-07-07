@@ -1,8 +1,7 @@
 import json
 
-from lml.plugin import PluginInfo
-
 from moban import constants
+from lml.plugin import PluginInfo
 
 
 @PluginInfo(constants.DATA_LOADER_EXTENSION, tags=["json"])

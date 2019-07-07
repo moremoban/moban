@@ -4,9 +4,9 @@ organisation: moremoban
 author: C. W.
 contact: wangc_2011@hotmail.com
 license: MIT
-version: 0.4.4
-current_version: 0.4.4
-release: 0.4.3
+version: 0.4.5
+current_version: 0.4.5
+release: 0.4.5
 branch: master
 master: index
 command_line_interface: "moban"
@@ -27,3 +27,4 @@ dependencies:
   - giturlparse>=0.9.1
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com
+lint: sh lint.sh

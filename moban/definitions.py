@@ -4,10 +4,13 @@ from moban import constants
 
 
 class GitRequire(object):
-    def __init__(self, git_url=None, branch=None, submodule=False):
+    def __init__(
+        self, git_url=None, branch=None, submodule=False, reference=None
+    ):
         self.git_url = git_url
         self.submodule = submodule
         self.branch = branch
+        self.reference = reference
 
     def clone_params(self):
         clone_params = {
@@ -16,6 +19,8 @@ class GitRequire(object):
         }
         if self.branch is not None:
             clone_params["branch"] = self.branch
+        elif self.reference is not None:
+            clone_params["reference"] = self.reference
         return clone_params
 
     def __eq__(self, other):
@@ -23,6 +28,7 @@ class GitRequire(object):
             self.git_url == other.git_url
             and self.submodule == other.submodule
             and self.branch == other.branch
+            and self.reference == other.reference
         )
 
     def __repr__(self):

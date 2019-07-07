@@ -4,8 +4,14 @@ releases:
 - changes:
   - action: Updated
     details:
+    - "`#271`: support git branch change in later run."
+  date: 07.07.2019
+  version: 0.4.5
+- changes:
+  - action: Updated
+    details:
     - "`#265`: Use simple `read binary` to read instead of encoding"
-  date: 27.05.2019
+  date: 26.05.2019
   version: 0.4.4
 - changes:
   - action: Removed

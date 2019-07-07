@@ -1,8 +1,7 @@
 import os
 
-from nose.tools import eq_
-
 from moban.copy import ContentForwardEngine
+from nose.tools import eq_
 
 
 class TestCopyEncoding:

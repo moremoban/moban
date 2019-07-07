@@ -1,7 +1,6 @@
+from moban import constants
 from lml.loader import scan_plugins_regex
 from moban.plugins.template import MobanFactory
-from moban import constants
-
 
 BUILTIN_EXENSIONS = [
     "moban.jinja2.engine",

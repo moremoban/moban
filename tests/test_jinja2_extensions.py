@@ -1,7 +1,6 @@
 import os
 
 from nose.tools import eq_
-
 from moban.jinja2.engine import Engine
 from moban.plugins.template import MobanEngine
 from moban.jinja2.extensions import jinja_global

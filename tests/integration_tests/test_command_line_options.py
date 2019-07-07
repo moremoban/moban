@@ -4,7 +4,6 @@ from shutil import copyfile
 
 from mock import patch
 from nose.tools import eq_, raises, assert_raises
-
 from moban.definitions import TemplateTarget
 
 

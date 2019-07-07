@@ -2,7 +2,6 @@ import os
 
 from mock import patch
 from nose.tools import eq_
-
 from moban.plugins import ENGINES
 from moban.definitions import TemplateTarget
 from moban.jinja2.engine import Engine

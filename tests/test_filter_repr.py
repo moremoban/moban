@@ -1,5 +1,4 @@
 from nose.tools import eq_
-
 from moban.jinja2.filters.repr import repr as repr_function
 
 

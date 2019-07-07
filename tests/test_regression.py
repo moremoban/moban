@@ -4,9 +4,8 @@ import filecmp
 from textwrap import dedent
 
 from mock import patch
-from nose.tools import eq_
-
 from moban.main import main
+from nose.tools import eq_
 
 
 def custom_dedent(long_texts):
