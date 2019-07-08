@@ -1,6 +1,5 @@
-import moban.constants as constants
-
 import crayons
+import moban.constants as constants
 
 MESSAGE_TEMPLATING = "Templating {0} to {1}"
 MESSAGE_UP_TO_DATE = "Everything is up to date!"
