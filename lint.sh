@@ -1,1 +1,1 @@
-flake8 . --exclude=.moban.d,docs --ignore=E203,E121,E123,E126,E226,E24,E704,W503,W504
+flake8 --max-line-length=88 --exclude=.moban.d,docs --ignore=W503,W504
