@@ -47,7 +47,7 @@ def get_repo_name(repo_url):
     from giturlparse.parser import ParserError
 
     try:
-        repo = giturlparse.parse(repo_url)
+        repo = giturlparse.parse(repo_url.rstrip("/"))
         return repo.name
     except ParserError:
         reporter.report_error_message(
