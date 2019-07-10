@@ -125,14 +125,16 @@ class TestGitFunctions:
 
 def test_get_repo_name():
     repos = [
-        "https://github.com/sphinx-doc/sphinx",
+        "https://github.com/repo-abc-def/repo",
         "https://github.com/abc/repo",
         "https://github.com/abc/repo.git",
         "https://github.com/abc/repo/",
-        "git@github.com:moremoban/moban.git",
+        "git@github.com:abc/repo.git",
+        "git@bitbucket.org:abc/repo.git",
+        "git://github.com/abc/repo.git",
     ]
     actual = [get_repo_name(repo) for repo in repos]
-    expected = ["sphinx", "repo", "repo", "repo", "moban"]
+    expected = ["repo"] * len(repos)
     eq_(expected, actual)
 
 

@@ -24,7 +24,7 @@ dependencies:
   - appdirs>=1.2.0
   - crayons>= 0.1.0
   - GitPython>=2.0.0
-  - giturlparse>=0.9.1
+  - git-url-parse>=1.2.2
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com
 lint_command: make lint install_test format install update
