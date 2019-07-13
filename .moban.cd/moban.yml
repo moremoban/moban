@@ -30,6 +30,7 @@ dependencies:
   - git-url-parse>=1.2.2
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com
-lint_command: make lint install_test format install update
+lint_command: make install_test format git-diff-check lint
+moban_command: make update git-diff-check
 setup_use_markers: true
 setup_use_markers_fix: true
