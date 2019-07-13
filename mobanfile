@@ -1,8 +1,11 @@
 requires:
-   - pypi-mobans-pkg
+  - type: git
+    url: https://github.com/moremoban/pypi-mobans
+    submodule: true
+    branch: dev
 configuration:
   template_dir:
-    - "setupmobans:templates"
+    - "pypi-mobans:templates"
     - ".moban.d"
   configuration: moban.yml
 targets:
