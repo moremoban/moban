@@ -163,7 +163,7 @@ It breaks down the given string into a fixed length paragraph. Here is the synta
     {% endfor %}
 
 It is used to keep changelog formatted in
-`CHANGELOG.rst.jjs in pypi-mobans project <https://github.com/moremoban/pypi-mobans/blob/master/templates/CHANGELOG.rst.jj2#L15>`_
+`CHANGELOG.rst.jj2 in pypi-mobans project <https://github.com/moremoban/pypi-mobans/blob/master/templates/CHANGELOG.rst.jj2#L15>`_
 
 github_expand
 --------------------------------------------------------------------------------
@@ -175,7 +175,7 @@ It expands simple hashtags into github issues. Here is the syntax::
 
 It makes it easy to mention github reference in change log in all projects. Here is
 the place it is applied:
-`CHANGELOG.rst.jjs in pypi-mobans project <https://github.com/moremoban/pypi-mobans/blob/master/templates/CHANGELOG.rst.jj2#L15>`_
+`CHANGELOG.rst.jj2 in pypi-mobans project <https://github.com/moremoban/pypi-mobans/blob/master/templates/CHANGELOG.rst.jj2#L15>`_
 
 
 Here is Grammar in the changelog.yml::
