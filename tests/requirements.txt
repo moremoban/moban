@@ -2,6 +2,7 @@ nose
 codecov
 coverage
 mock
+yamllint
 flake8
 black;python_version>="3.6"
 isort;python_version>="3.6"

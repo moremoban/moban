@@ -215,8 +215,8 @@ Added
 Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. `requires` shall support configuration dirs. In other words, configuration
-   file could be stored in python package or git repository.
+#. configuration dirs may be located by `requires`, i.e. configuration files may
+   be in a python package or git repository.
 
 0.3.1 - 02-11-2018
 --------------------------------------------------------------------------------

@@ -15,6 +15,7 @@ test:
 
 lint:
 	bash lint.sh
+	yamllint -d "{extends: default, rules: {line-length: {max: 120}}}" .moban.cd/changelog.yml
 
 format:
 	isort -y $(find moban -name "*.py"|xargs echo) $(find tests -name "*.py"|xargs echo)

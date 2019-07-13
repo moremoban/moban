@@ -1,305 +1,324 @@
 name: moban
 organisation: moremoban
 releases:
-- changes:
-  - action: Updated
-    details:
-    - "`#271`: support git branch change in later run."
-  date: 07.07.2019
-  version: 0.4.5
-- changes:
-  - action: Updated
-    details:
-    - "`#265`: Use simple `read binary` to read instead of encoding"
-  date: 26.05.2019
-  version: 0.4.4
-- changes:
-  - action: Removed
-    details:
-    - "`#253`: symbolic link in regression pack causes python setup.py to do recursive include"
-  - action: Added
-    details:
-    - "`#209`: Alert moban user when `git` is not available and is used."
-  - action: Updated
-    details:
-    - "`#261`: since moban group template files per template type, this fill use first come first register to order moban group"
-  date: 16.03.2019
-  version: 0.4.3
-- changes:
-  - action: Added
-    details:
-    - "`#234`: Define template parameters on the fly inside `targets` section"
-    - "`#62`: select a group target to run"
-  - action: Updated
-    details:
-    - "`#180`: No longer two statistics will be shown in v0.4.x. legacy copy targets are injected into a normal targets. cli target is made a clear priority."
-    - "`#244`: version 0.4.2 is first version which would work perfectly on windows since 17 Nov 2018. Note that: file permissions are not used on windows. Why the date? because samefile is not avaiable on windows, causing unit tests to fail hence it lead to my conclusion that moban version between 17 Nov 2018 and March 2019 wont work well on Windows."
-  date: 08.03.2019
-  version: 0.4.2
-- changes:
-  - action: Added
-    details:
-    - "`#235`: user defined template types so that custom file extensions, template configurations can be controlled by moban user"
-    - "`#232`: the package dependencies have been fine tuning to lower versions, most of them are dated back to 2017."
-  date: 28.02.2019
-  version: 0.4.1
-- changes:
-  - action: Added
-    details:
-    - "`#165`: Copy as plugins"
-  - action: Updated
-    details:
-    - "`#219`: git clone depth set to 2"
-    - "`#186`: lowest dependecy on ruamel.yaml is 0.15.5, Jun 2017"
-  date: 20.02.2019
-  version: 0.4.0
-- changes:
-  - action: Added
-    details:
-    - "`#174`: Store git cache in XDG_CACHE_DIR"
-    - "`#107`: Add -v to show current moban version"
-    - "`#164`: support additional data formats"
-  - action: Updated
-    details:
-    - "`#178`: UnboundLocalError: local variable 'target' referenced before assignment"
-    - "`#169`: uses GitPython instead of barebone git commands"
-  date: 03.02.2019
-  version: 0.3.10
-- changes:
-  - action: Updated
-    details:
-    - "`#90`: allow adding extra jinja2 extensions. `jinja2.ext.do`, `jinja2.ext.loopcontrols` are included by default. what's more, any other template enigne are eligible for extension additions."
-    - "`#158`: Empty file base_engine.py is finally removed"
-  date: 18-1-2019
-  version: 0.3.9
-- changes:
-  - action: Updated
-    details:
-    - "`#141`: disable file permissions copy feature and not to check file permission changes on windows."
-    - "`#154`: introduce first ever positional argument for string base template."
-    - "`#157`: the exit code behavior changed. for backward compactibility please use --exit-code. Otherwise, moban will not tell if there is any changes."
-  date: 12-1-2019
-  version: 0.3.8
-- changes:
-  - action: Updated
-    details:
-    - "`#146`: added a low-setup usage mode via environment variables to moban"
-    - "`#148`: include test related files in the package for package validation when distributing via linux system, i.e. OpenSuse"
-  date: 6-1-2019
-  version: 0.3.7
-- changes:
-  - action: Updated
-    details:
-    - "`#143`: moban shall report permission error and continue the rest of the copying task."
-    - "`#122`: Since 0.3.6, moban is tested on windows and macos too, using azure build pipelines. It is already tested extensively on travis-ci on linux os."
-  date: 30-12-2018
-  version: 0.3.6
-- changes:
-  - action: Updated
-    details:
-    - "`#37`: moban will report line number where the value is empty and the name of mobanfile. Switch from pyyaml to ruamel.yaml."
-  date: 10-12-2018
-  version: 0.3.5
-- changes:
-  - action: Updated
-    details:
-    - "`#137`: missing contributors.rst file"
-  date: 28-11-2018
-  version: 0.3.4.1
-- changes:
-  - action: Added
-    details:
-    - "global variables to store the target and template file names in the jinja2 engine"
-    - "moban-handlebars is tested to work well with this version and above"
-  - action: Updated
-    details:
-    - Template engine interface has been clarified and documented
-  date: 18-11-2018
-  version: 0.3.4
-- changes:
-  - action: Added
-    details:
-    - "alternative and expanded syntax for requires, so as to accomendate github submodule recursive"
-  date: 05-11-2018
-  version: 0.3.3
-- changes:
-  - action: Added
-    details:
-    - "`requires` shall support configuration dirs. In other words, configuration file could be stored in python package or git repository."
-  date: 04-11-2018
-  version: 0.3.2
-- changes:
-  - action: Added
-    details:
-    - "`#97`: requires will clone a repo if given. Note: only github, gitlab, bitbucket for now"
-  date: 02-11-2018
-  version: 0.3.1
-- changes:
-  - action: Added
-    details:
-    - "`#89`: Install pypi-hosted mobans through requires syntax"
-  - action: Updated
-    details:
-    - "`#96`: Fix for FileNotFoundError for plugins"
-    - "various documentation updates"
-  - action: Removed
-    details:
-    - "`#88`: removed python 2.6 support"
-    - removed python 3.3 support
-  date: 27-18-2018
-  version: 0.3.0
-- changes:
-  - action: Added
-    details:
-    - "`#32`: option 1 copy a directory without its subdirectories."
-    - "`#30`: command line template option is ignore when a moban file is present"
-  date: 14-07-2018
-  version: 0.2.4
-- changes:
-  - action: Added
-    details:
-    - "`#76`: running moban as a module from python command"
-    - "`#32`: copy a directory recusively"
-    - "`#33`: template all files in a directory"
-  date: 10-07-2018
-  version: 0.2.3
-- changes:
-  - action: Added
-    details:
-    - "`#31`: create directory if missing during copying"
-  - action: Updated
-    details:
-    - "`#28`: if a template has been copied once before, it is skipped in the next moban call"
-  date: 16-06-2018
-  version: 0.2.2
-- changes:
-  - action: Updated
-    details:
-    - templates using the same template engine will be templated as a group
-    - update lml dependency to 0.0.3
-  date: 13-06-2018
-  version: 0.2.1
-- changes:
-  - action: Added
-    details:
-    - '`#18`: file exists test'
-    - "`#23`: custom jinja plugins"
-    - '`#26`: repr filter'
-    - "`#47`: allow the expansion of template engine"
-    - "`#58`: allow template type per template"
-  - action: Updated
-    details:
-    - "`#34`: fix plural message if single file is processed"
-  date: 11-06-2018
-  version: 0.2.0
-- changes:
-  - action: Updated
-    details:
-    - '`#21`: targets become optional'
-    - "`#19`: transfer symlink's target file's file permission under unix/linux systems"
-    - '`#16`: introduce copy key word in mobanfile'
-  date: 29-May-2018
-  version: 0.1.4
-- changes:
-  - action: Updated
-    details:
-    - handle unicode on python 2
-  date: 12-Mar-2018
-  version: 0.1.3
-- changes:
-  - action: Added
-    details:
-    - '`#13`: strip off new lines in the templated file'
-  date: 10-Jan-2018
-  version: 0.1.2
-- changes:
-  - action: Added
-    details:
-    - the ability to present a long text as multi-line paragraph with a custom  upper
-      limit
-    - 'speical filter expand github references: pull request and issues'
-    - '`#15`: fix templating syntax to enable python 2.6'
-  date: 08-Jan-2018
-  version: 0.1.1
-- changes:
-  - action: Added
-    details:
-    - '`#14`, provide shell  exit code'
-  date: 19-Dec-2017
-  version: 0.1.0
-- changes:
-  - action: Added
-    details:
-    - '`#11`, recognize  .moban.yaml as well as .moban.yml.'
-    - '`#9`, preserve  file permissions of the source template.'
-    - '`-m` option is added to allow you to specify a custom moban file. kinda  related
-      to issue 11.'
-  - action: Updated
-    details:
-    - 'use explicit version name: `moban_file_spec_version` so that `version` can
-      be  used by users. `#10`  Please note: moban_file_spec_version is reserved for
-      future file spec  upgrade. For now, all files are assumed to be ''1.0''. When
-      there comes  a new version i.e. 2.0, new moban file based on 2.0 will have to
-      include  ''moban_file_spec_version: 2.0'''
-  date: 24-Nov-2017
-  version: 0.0.9
-- changes:
-  - action: Added
-    details:
-    - '`#8`, verify the existence  of custom template and configuration directories.
-      default .moban.td,  .moban.cd are ignored if they do not exist.'
-  - action: Updated
-    details:
-    - Colorize error messages and processing messages. crayons become a dependency.
-  date: 18-Nov-2017
-  version: 0.0.8
-- changes:
-  - action: Added
-    details:
-    - 'Bring the visibility of environment variable into jinja2 templating process:  `#7`'
-  date: 19-Jul-2017
-  version: 0.0.7
-- changes:
-  - action: Added
-    details:
-    - added '-f' flag to force moban to template all files despite of .moban.hashes
-  - action: Updated
-    details:
-    - 'moban will not template target file in the situation where the changes  occured
-      in target file than in the source: the template file + the data  configuration
-      after moban has been applied. This new release will remove the  change during
-      mobanization process.'
-  date: 16-Jun-2017
-  version: 0.0.6
-- changes:
-  - action: Added
-    details:
-    - Create a default hash store when processing a moban file. It will save  unnecessary
-      file write to the disc if the rendered content is not changed.
-    - Added summary reports
-  date: 17-Mar-2017
-  version: 0.0.5
-- changes:
-  - action: Updated
-    details:
-    - Bug fix `#5`, should detect  duplicated targets in `.moban.yml` file.
-  date: 11-May-2016
-  version: 0.0.4
-- changes:
-  - action: Updated
-    details:
-    - Bug fix `#4`, keep trailing  new lines
-  date: 09-May-2016
-  version: 0.0.3
-- changes:
-  - action: Updated
-    details:
-    - Bug fix `#1`, failed to save  utf-8 characters
-  date: 27-Apr-2016
-  version: 0.0.2
-- changes:
-  - action: Added
-    details:
-    - Initial release
-  date: 23-Mar-2016
-  version: 0.0.1
+  - changes:
+      - action: Updated
+        details:
+          - "`#271`: support git branch change in later run."
+    date: 07.07.2019
+    version: 0.4.5
+  - changes:
+      - action: Updated
+        details:
+          - "`#265`: Use simple `read binary` to read instead of encoding"
+    date: 26.05.2019
+    version: 0.4.4
+  - changes:
+      - action: Removed
+        details:
+          - "`#253`: symbolic link in regression pack causes python setup.py to do recursive include"
+      - action: Added
+        details:
+          - "`#209`: Alert moban user when `git` is not available and is used."
+      - action: Updated
+        details:
+          - "`#261`: since moban group template files per template type,
+            this fill use first come first register to order moban group"
+    date: 16.03.2019
+    version: 0.4.3
+  - changes:
+      - action: Added
+        details:
+          - "`#234`: Define template parameters on the fly inside `targets` section"
+          - "`#62`: select a group target to run"
+      - action: Updated
+        details:
+          - "`#180`: No longer two statistics will be shown in v0.4.x. legacy
+            copy targets are injected into a normal targets. cli target is made
+            a clear priority."
+          - "`#244`: version 0.4.2 is first version which would work perfectly
+            on windows since 17 Nov 2018.
+            Note that: file permissions are not used on windows.
+            Why the date? because samefile is not avaiable on windows, causing
+            unit tests to fail hence it lead to my conclusion that moban version
+            between 17 Nov 2018 and March 2019 wont work well on Windows."
+    date: 08.03.2019
+    version: 0.4.2
+  - changes:
+      - action: Added
+        details:
+          - "`#235`: user defined template types so that custom file extensions,
+            template configurations can be controlled by moban user"
+          - "`#232`: the package dependencies have been fine tuning to lower
+            versions, most of them are dated back to 2017."
+    date: 28.02.2019
+    version: 0.4.1
+  - changes:
+      - action: Added
+        details:
+          - "`#165`: Copy as plugins"
+      - action: Updated
+        details:
+          - "`#219`: git clone depth set to 2"
+          - "`#186`: lowest dependecy on ruamel.yaml is 0.15.5, Jun 2017"
+    date: 20.02.2019
+    version: 0.4.0
+  - changes:
+      - action: Added
+        details:
+          - "`#174`: Store git cache in XDG_CACHE_DIR"
+          - "`#107`: Add -v to show current moban version"
+          - "`#164`: support additional data formats"
+      - action: Updated
+        details:
+          - "`#178`: UnboundLocalError: local variable 'target' referenced before assignment"
+          - "`#169`: uses GitPython instead of barebone git commands"
+    date: 03.02.2019
+    version: 0.3.10
+  - changes:
+      - action: Updated
+        details:
+          - "`#90`: allow adding extra jinja2 extensions. `jinja2.ext.do`,
+            `jinja2.ext.loopcontrols` are included by default. what's more,
+            any other template enigne are eligible for extension additions."
+          - "`#158`: Empty file base_engine.py is finally removed"
+    date: 18-1-2019
+    version: 0.3.9
+  - changes:
+      - action: Updated
+        details:
+          - "`#141`: disable file permissions copy feature and not to check file permission changes on windows."
+          - "`#154`: introduce first ever positional argument for string base template."
+          - "`#157`: the exit code behavior changed. for backward compactibility
+            please use --exit-code. Otherwise, moban will not tell if there is
+            any changes."
+    date: 12-1-2019
+    version: 0.3.8
+  - changes:
+      - action: Updated
+        details:
+          - "`#146`: added a low-setup usage mode via environment variables to moban"
+          - "`#148`: include test related files in the package for package
+            validation when distributing via linux system, i.e. OpenSuse"
+    date: 6-1-2019
+    version: 0.3.7
+  - changes:
+      - action: Updated
+        details:
+          - "`#143`: moban shall report permission error and continue the rest of the copying task."
+          - "`#122`: Since 0.3.6, moban is tested on windows and macos too,
+            using azure build pipelines. It is already tested extensively on
+            travis-ci on linux os."
+    date: 30-12-2018
+    version: 0.3.6
+  - changes:
+      - action: Updated
+        details:
+          - "`#37`: moban will report line number where the value is empty and
+            the name of mobanfile. Switch from pyyaml to ruamel.yaml."
+    date: 10-12-2018
+    version: 0.3.5
+  - changes:
+      - action: Updated
+        details:
+          - "`#137`: missing contributors.rst file"
+    date: 28-11-2018
+    version: 0.3.4.1
+  - changes:
+      - action: Added
+        details:
+          - "global variables to store the target and template file names in the jinja2 engine"
+          - "moban-handlebars is tested to work well with this version and above"
+      - action: Updated
+        details:
+          - Template engine interface has been clarified and documented
+    date: 18-11-2018
+    version: 0.3.4
+  - changes:
+      - action: Added
+        details:
+          - "alternative and expanded syntax for requires, so as to accomendate github submodule recursive"
+    date: 05-11-2018
+    version: 0.3.3
+  - changes:
+      - action: Added
+        details:
+          - configuration dirs may be located by `requires`, i.e.
+            configuration files may be in a python package or git repository.
+    date: 04-11-2018
+    version: 0.3.2
+  - changes:
+      - action: Added
+        details:
+          - "`#97`: requires will clone a repo if given. Note: only github, gitlab, bitbucket for now"
+    date: 02-11-2018
+    version: 0.3.1
+  - changes:
+      - action: Added
+        details:
+          - "`#89`: Install pypi-hosted mobans through requires syntax"
+      - action: Updated
+        details:
+          - "`#96`: Fix for FileNotFoundError for plugins"
+          - "various documentation updates"
+      - action: Removed
+        details:
+          - "`#88`: removed python 2.6 support"
+          - removed python 3.3 support
+    date: 27-18-2018
+    version: 0.3.0
+  - changes:
+      - action: Added
+        details:
+          - "`#32`: option 1 copy a directory without its subdirectories."
+          - "`#30`: command line template option is ignore when a moban file is present"
+    date: 14-07-2018
+    version: 0.2.4
+  - changes:
+      - action: Added
+        details:
+          - "`#76`: running moban as a module from python command"
+          - "`#32`: copy a directory recusively"
+          - "`#33`: template all files in a directory"
+    date: 10-07-2018
+    version: 0.2.3
+  - changes:
+      - action: Added
+        details:
+          - "`#31`: create directory if missing during copying"
+      - action: Updated
+        details:
+          - "`#28`: if a template has been copied once before, it is skipped in the next moban call"
+    date: 16-06-2018
+    version: 0.2.2
+  - changes:
+      - action: Updated
+        details:
+          - templates using the same template engine will be templated as a group
+          - update lml dependency to 0.0.3
+    date: 13-06-2018
+    version: 0.2.1
+  - changes:
+      - action: Added
+        details:
+          - '`#18`: file exists test'
+          - "`#23`: custom jinja plugins"
+          - '`#26`: repr filter'
+          - "`#47`: allow the expansion of template engine"
+          - "`#58`: allow template type per template"
+      - action: Updated
+        details:
+          - "`#34`: fix plural message if single file is processed"
+    date: 11-06-2018
+    version: 0.2.0
+  - changes:
+      - action: Updated
+        details:
+          - '`#21`: targets become optional'
+          - "`#19`: transfer symlink's target file's file permission under unix/linux systems"
+          - '`#16`: introduce copy key word in mobanfile'
+    date: 29-May-2018
+    version: 0.1.4
+  - changes:
+      - action: Updated
+        details:
+          - handle unicode on python 2
+    date: 12-Mar-2018
+    version: 0.1.3
+  - changes:
+      - action: Added
+        details:
+          - '`#13`: strip off new lines in the templated file'
+    date: 10-Jan-2018
+    version: 0.1.2
+  - changes:
+      - action: Added
+        details:
+          - the ability to present a long text as multi-line paragraph with a custom  upper
+            limit
+          - 'speical filter expand github references: pull request and issues'
+          - '`#15`: fix templating syntax to enable python 2.6'
+    date: 08-Jan-2018
+    version: 0.1.1
+  - changes:
+      - action: Added
+        details:
+          - '`#14`, provide shell  exit code'
+    date: 19-Dec-2017
+    version: 0.1.0
+  - changes:
+      - action: Added
+        details:
+          - '`#11`, recognize  .moban.yaml as well as .moban.yml.'
+          - '`#9`, preserve  file permissions of the source template.'
+          - '`-m` option is added to allow you to specify a custom moban file. kinda  related
+            to issue 11.'
+      - action: Updated
+        details:
+          - 'use explicit version name: `moban_file_spec_version` so that `version` can
+            be  used by users. `#10`  Please note: moban_file_spec_version is reserved for
+            future file spec  upgrade. For now, all files are assumed to be ''1.0''. When
+            there comes  a new version i.e. 2.0, new moban file based on 2.0 will have to
+            include  ''moban_file_spec_version: 2.0'''
+    date: 24-Nov-2017
+    version: 0.0.9
+  - changes:
+      - action: Added
+        details:
+          - '`#8`, verify the existence  of custom template and configuration directories.
+            default .moban.td,  .moban.cd are ignored if they do not exist.'
+      - action: Updated
+        details:
+          - Colorize error messages and processing messages. crayons become a dependency.
+    date: 18-Nov-2017
+    version: 0.0.8
+  - changes:
+      - action: Added
+        details:
+          - 'Bring the visibility of environment variable into jinja2 templating process:  `#7`'
+    date: 19-Jul-2017
+    version: 0.0.7
+  - changes:
+      - action: Added
+        details:
+          - added '-f' flag to force moban to template all files despite of .moban.hashes
+      - action: Updated
+        details:
+          - 'moban will not template target file in the situation where the changes  occured
+            in target file than in the source: the template file + the data  configuration
+            after moban has been applied. This new release will remove the  change during
+            mobanization process.'
+    date: 16-Jun-2017
+    version: 0.0.6
+  - changes:
+      - action: Added
+        details:
+          - Create a default hash store when processing a moban file. It will save  unnecessary
+            file write to the disc if the rendered content is not changed.
+          - Added summary reports
+    date: 17-Mar-2017
+    version: 0.0.5
+  - changes:
+      - action: Updated
+        details:
+          - Bug fix `#5`, should detect  duplicated targets in `.moban.yml` file.
+    date: 11-May-2016
+    version: 0.0.4
+  - changes:
+      - action: Updated
+        details:
+          - Bug fix `#4`, keep trailing new lines
+    date: 09-May-2016
+    version: 0.0.3
+  - changes:
+      - action: Updated
+        details:
+          - Bug fix `#1`, failed to save  utf-8 characters
+    date: 27-Apr-2016
+    version: 0.0.2
+  - changes:
+      - action: Added
+        details:
+          - Initial release
+    date: 23-Mar-2016
+    version: 0.0.1
