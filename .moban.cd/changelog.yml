@@ -16,7 +16,7 @@ releases:
           - "`#291`: Fixed filename typos in README"
           - "`#280`: Added CI to ensure repository is in sync with upstream"
           - "`#280`: sync setup.py from pypi-mobans"
-    date: tba
+    date: 14.07.2019
     version: 0.5.0
   - changes:
       - action: Updated
