@@ -1,5 +1,5 @@
 requires:
-   - pypi-mobans-pkg
+  - pypi-mobans-pkg
 configuration:
   template_dir:
     - "pypi-mobans-pkg:templates"

@@ -1,8 +1,8 @@
 requires:
   - type: git
-    url: https://github.com/moremoban/pypi-mobans
+    url: https://github.com/jayvdb/pypi-mobans
     submodule: true
-    branch: dev
+    branch: use-travis-template
 configuration:
   template_dir:
     - "pypi-mobans:templates"
@@ -13,7 +13,7 @@ targets:
   - moban/__init__.py: __init__.py.jj2
   - moban/_version.py: _version.py.jj2
   - docs/conf.py: custom_conf.py.jj2
-  - .travis.yml: travis.yml
+  - .travis.yml: moban_travis.yml.jj2
   - requirements.txt: requirements.txt.jj2
   - .gitignore: moban_gitignore.jj2
   - output: CHANGELOG.rst
