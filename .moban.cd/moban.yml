@@ -4,9 +4,9 @@ organisation: moremoban
 author: C. W.
 contact: wangc_2011@hotmail.com
 license: MIT
-version: 0.4.5
-current_version: 0.4.5
-release: 0.4.5
+version: 0.5.0
+current_version: 0.5.0
+release: 0.5.0
 branch: master
 master: index
 command_line_interface: "moban"
@@ -18,13 +18,19 @@ keywords:
   - jinja2
   - moban
 dependencies:
-  - ruamel.yaml>=0.15.5
+  - ruamel.yaml>=0.15.5,<=0.15.94;python_version == '3.4'
+  - ruamel.yaml>=0.15.42;python_version == '3.7'
+  - ruamel.yaml>=0.15.5;python_version != '3.4' and python_version < '3.7'
+  - ruamel.yaml>=0.15.98;python_version == '3.8'
   - jinja2>=2.7.1
   - lml>=0.0.9
   - appdirs>=1.2.0
   - crayons>= 0.1.0
   - GitPython>=2.0.0
-  - giturlparse>=0.9.1
+  - git-url-parse>=1.2.2
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com
-lint: sh lint.sh
+lint_command: make install_test format git-diff-check lint
+moban_command: make update git-diff-check
+setup_use_markers: true
+setup_use_markers_fix: true

@@ -1,5 +1,5 @@
 requires:
-   - https://github.com/moremoban/pypi-mobans
+  - https://github.com/moremoban/pypi-mobans
 configuration:
   template_dir:
     - "pypi-mobans:templates"

@@ -1,6 +1,33 @@
 Change log
 ================================================================================
 
+0.5.0 - 14.07.2019
+--------------------------------------------------------------------------------
+
+Updated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#277 <https://github.com/moremoban/moban/issues/277>`_: Restored dependency
+   git-url-parse, replacing incompatible giturlparse which was used during moban
+   0.4.x
+#. `#281 <https://github.com/moremoban/moban/issues/281>`_: Fixed unicode
+   support on Python 2.7
+#. `#274 <https://github.com/moremoban/moban/issues/274>`_: Updated ruamel.yaml
+   dependency pins to restore support for Python 3.4, and prevent installation
+   of versions that can not be installed on Python 3.7
+#. `#285 <https://github.com/moremoban/moban/issues/285>`_: Fixed CI testing of
+   minimum requirements
+#. `#271 <https://github.com/moremoban/moban/issues/271>`_: Fixed repository
+   caching bug preventing branch switching
+#. `#292 <https://github.com/moremoban/moban/issues/292>`_: Reformatted YAML
+   files according to yamllint rules
+#. `#291 <https://github.com/moremoban/moban/issues/291>`_: Fixed filename typos
+   in README
+#. `#280 <https://github.com/moremoban/moban/issues/280>`_: Added CI to ensure
+   repository is in sync with upstream
+#. `#280 <https://github.com/moremoban/moban/issues/280>`_: sync setup.py from
+   pypi-mobans
+
 0.4.5 - 07.07.2019
 --------------------------------------------------------------------------------
 
@@ -215,8 +242,8 @@ Added
 Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. `requires` shall support configuration dirs. In other words, configuration
-   file could be stored in python package or git repository.
+#. configuration dirs may be located by `requires`, i.e. configuration files may
+   be in a python package or git repository.
 
 0.3.1 - 02-11-2018
 --------------------------------------------------------------------------------

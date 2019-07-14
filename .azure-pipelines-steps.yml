@@ -1,12 +1,12 @@
 steps:
-- task: UsePythonVersion@0
-  displayName: 'Use Python 3.x'
-- script: |
-    python -m pip install --upgrade pip setuptools wheel
-    if exist rnd_requirements.txt pip install -r rnd_requirements.txt
-    pip install -r requirements.txt
-    pip install -r tests\requirements.txt
-  displayName: 'Setup dependencies'
-- script: |
-    test.bat
-  displayName: 'Run tests'
+  - task: UsePythonVersion@0
+    displayName: 'Use Python 3.x'
+  - script: |
+      python -m pip install --upgrade pip setuptools wheel
+      if exist rnd_requirements.txt pip install -r rnd_requirements.txt
+      pip install -r requirements.txt
+      pip install -r tests\requirements.txt
+    displayName: 'Setup dependencies'
+  - script: |
+      test.bat
+    displayName: 'Run tests'

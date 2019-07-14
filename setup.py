@@ -9,6 +9,15 @@ import sys
 from shutil import rmtree
 
 from setuptools import Command, find_packages, setup
+from setuptools import __version__ as setuptools_version
+from pkg_resources import parse_version
+
+import pkg_resources
+
+try:
+    import _markerlib.markers
+except ImportError:
+    _markerlib = None
 
 PY2 = sys.version_info[0] == 2
 PY26 = PY2 and sys.version_info[1] < 7
@@ -29,15 +38,25 @@ except (ValueError, UnicodeError, locale.Error):
 
 NAME = "moban"
 AUTHOR = "C. W."
-VERSION = "0.4.5"
+VERSION = "0.5.0"
 EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
-ENTRY_POINTS = {"console_scripts": ["moban = moban.main:main"]}
-DESCRIPTION = "Yet another jinja2 cli command for static text generation"
+ENTRY_POINTS = {
+    "console_scripts": [
+        "moban = moban.main:main"
+    ],
+}
+DESCRIPTION = (
+    "Yet another jinja2 cli command for static text generation"
+)
 URL = "https://github.com/moremoban/moban"
-DOWNLOAD_URL = "%s/archive/0.4.5.tar.gz" % URL
+DOWNLOAD_URL = "%s/archive/0.5.0.tar.gz" % URL
 FILES = ["README.rst", "CONTRIBUTORS.rst", "CHANGELOG.rst"]
-KEYWORDS = ["python", "jinja2", "moban"]
+KEYWORDS = [
+    "python",
+    "jinja2",
+    "moban",
+]
 
 CLASSIFIERS = [
     "Topic :: Software Development :: Libraries",
@@ -49,36 +68,39 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 3.4",
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
+
     "Programming Language :: Python :: 3.7",
+
     "Programming Language :: Python :: 3.8",
+
 ]
 
 INSTALL_REQUIRES = [
-    "ruamel.yaml>=0.15.5",
     "jinja2>=2.7.1",
     "lml>=0.0.9",
     "appdirs>=1.2.0",
     "crayons>= 0.1.0",
     "GitPython>=2.0.0",
-    "giturlparse>=0.9.1",
+    "git-url-parse>=1.2.2",
 ]
 SETUP_COMMANDS = {}
 
 
 PACKAGES = find_packages(exclude=["ez_setup", "examples", "tests"])
-EXTRAS_REQUIRE = {}
+EXTRAS_REQUIRE = {
+    ":python_version == '3.4'": ["ruamel.yaml>=0.15.5,<=0.15.94"],
+    ":python_version == '3.7'": ["ruamel.yaml>=0.15.42"],
+    ":python_version != '3.4' and python_version < '3.7'": ["ruamel.yaml>=0.15.5"],
+    ":python_version == '3.8'": ["ruamel.yaml>=0.15.98"],
+}
 # You do not need to read beyond this line
-PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(
-    sys.executable
-)
-GS_COMMAND = "gs moban v0.4.5 " + "Find 0.4.5 in changelog for more details"
-NO_GS_MESSAGE = (
-    "Automatic github release is disabled. "
-    + "Please install gease to enable it."
-)
+PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(sys.executable)
+GS_COMMAND = ("gs moban v0.5.0 " +
+              "Find 0.5.0 in changelog for more details")
+NO_GS_MESSAGE = ("Automatic github release is disabled. " +
+                 "Please install gease to enable it.")
 UPLOAD_FAILED_MSG = (
-    'Upload failed. please run "%s" yourself.' % PUBLISH_COMMAND
-)
+    'Upload failed. please run "%s" yourself.' % PUBLISH_COMMAND)
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -121,7 +143,9 @@ class PublishCommand(Command):
         sys.exit()
 
 
-SETUP_COMMANDS.update({"publish": PublishCommand})
+SETUP_COMMANDS.update({
+    "publish": PublishCommand
+})
 
 
 def has_gease():
@@ -132,7 +156,6 @@ def has_gease():
     """
     try:
         import gease  # noqa
-
         return True
     except ImportError:
         return False
@@ -180,6 +203,48 @@ def filter_out_test_code(file_handle):
                 yield line
 
 
+# _markerlib.default_environment() obtains its data from _VARS
+# and wraps it in another dict, but _markerlib_evaluate writes
+# to the dict while it is iterating the keys, causing an error
+# on Python 3 only.
+# Replace _markerlib.default_environment to return a custom dict
+# that has all the necessary markers, and ignores any writes.
+
+class Python3MarkerDict(dict):
+
+    def __setitem__(self, key, value):
+        pass
+
+    def pop(self, i=-1):
+        return self[i]
+
+
+if _markerlib and sys.version_info[0] == 3:
+    env = _markerlib.markers._VARS
+    for key in list(env.keys()):
+        new_key = key.replace(".", "_")
+        if new_key != key:
+            env[new_key] = env[key]
+
+    _markerlib.markers._VARS = Python3MarkerDict(env)
+
+    def default_environment():
+        return _markerlib.markers._VARS
+
+    _markerlib.default_environment = default_environment
+
+# Avoid the very buggy pkg_resources.parser, which does not consistently
+# recognise the markers needed by this setup.py
+# See https://github.com/pypa/packaging/issues/72 for details
+# Change this to setuptools 20.10.0 to support all markers.
+if pkg_resources:
+    if parse_version(setuptools_version) < parse_version("18.5"):
+        MarkerEvaluation = pkg_resources.MarkerEvaluation
+
+        del pkg_resources.parser
+        pkg_resources.evaluate_marker = MarkerEvaluation._markerlib_evaluate
+        MarkerEvaluation.evaluate_marker = MarkerEvaluation._markerlib_evaluate
+
 if __name__ == "__main__":
     setup(
         test_suite="tests",
@@ -201,5 +266,5 @@ if __name__ == "__main__":
         zip_safe=False,
         entry_points=ENTRY_POINTS,
         classifiers=CLASSIFIERS,
-        cmdclass=SETUP_COMMANDS,
+        cmdclass=SETUP_COMMANDS
     )
