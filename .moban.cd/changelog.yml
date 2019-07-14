@@ -4,6 +4,23 @@ releases:
   - changes:
       - action: Updated
         details:
+          - "`#277`: Restored dependency git-url-parse, replacing incompatible
+             giturlparse which was used during moban 0.4.x"
+          - "`#281`: Fixed unicode support on Python 2.7"
+          - "`#274`: Updated ruamel.yaml dependency pins to restore support for
+             Python 3.4, and prevent installation of versions that can not be
+             installed on Python 3.7"
+          - "`#285`: Fixed CI testing of minimum requirements"
+          - "`#271`: Fixed repository caching bug preventing branch switching"
+          - "`#292`: Reformatted YAML files according to yamllint rules"
+          - "`#291`: Fixed filename typos in README"
+          - "`#280`: Added CI to ensure repository is in sync with upstream"
+          - "`#280`: sync setup.py from pypi-mobans"
+    date: tba
+    version: 0.5.0
+  - changes:
+      - action: Updated
+        details:
           - "`#271`: support git branch change in later run."
     date: 07.07.2019
     version: 0.4.5
