@@ -4,6 +4,12 @@ releases:
   - changes:
       - action: Updated
         details:
+          - "`#297`: user friendly error message when wrong notation for relative directory is used."
+    date: tba
+    version: 0.5.1
+  - changes:
+      - action: Updated
+        details:
           - "`#277`: Restored dependency git-url-parse, replacing incompatible
              giturlparse which was used during moban 0.4.x"
           - "`#281`: Fixed unicode support on Python 2.7"
