@@ -30,6 +30,13 @@ def test_expand_pypi_dir():
         assert os.path.exists(directory)
 
 
+@raises(exceptions.InvalidRelativeDirNotation)
+def test_expand_invalid_pypi_dir():
+    dirs = list(expand_template_directories("testmobans:testmobans:template-tests"))
+    for directory in dirs:
+        assert os.path.exists(directory)
+
+
 @patch("moban.repo.get_moban_home", return_value=USER_HOME)
 @patch("os.path.exists", return_value=True)
 def test_expand_repo_dir(_, __):

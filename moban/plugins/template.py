@@ -11,6 +11,7 @@ from moban.plugins.strategy import Strategy
 
 log = logging.getLogger(__name__)
 PY3_ABOVE = sys.version_info[0] > 2
+VALID_RELATIVE_DIR_NOTATION = "Single colon please! For example: myrepo:mydir/mysubdir"
 
 
 class MobanFactory(PluginManager):
@@ -180,7 +181,8 @@ def expand_template_directories(dirs):
 def expand_template_directory(directory):
     log.debug("Expanding %s..." % directory)
     translated_directory = None
-    if ":" in directory and directory[1] != ":":
+    if ":" in directory and _is_windows_drive_notation(directory) is False:
+        _assert_correct_grammer(directory)
         library_or_repo_name, relative_path = directory.split(":")
         potential_repo_path = os.path.join(
             repo.get_moban_home(), library_or_repo_name
@@ -206,3 +208,14 @@ def expand_template_directory(directory):
         # local template path
         translated_directory = os.path.abspath(directory)
     return translated_directory
+
+
+def _is_windows_drive_notation(directory):
+    return directory[1] == ":"
+
+
+def _assert_correct_grammer(directory):
+    tokens = directory.split(":")
+    if len(tokens) > 2:
+        raise exceptions.InvalidRelativeDirNotation(
+            VALID_RELATIVE_DIR_NOTATION)

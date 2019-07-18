@@ -22,8 +22,9 @@ Here are the sample file::
       - mytravis.yml: travis.yml.jj2
       - test.txt: demo.txt.jj2
 
-where `requires` lead to a list of pypi packages. And when you refer to it,
-as in level-9 section, please use "pypi-mobans:"
+where `requires` lead to a list of repositories. And when you refer to it,
+as in level-9 section, please use "pypi-mobans", which is the repo name and plus
+a ':'. `templates` refers to the actual directory in "pypi-mobans".
 
 
 Alternative syntax when submodule exists

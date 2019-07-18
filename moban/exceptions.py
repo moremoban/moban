@@ -28,3 +28,7 @@ class GroupTargetNotFound(Exception):
 
 class NoGitCommand(Exception):
     pass
+
+
+class InvalidRelativeDirNotation(Exception):
+    pass
