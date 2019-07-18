@@ -11,7 +11,9 @@ from moban.plugins.strategy import Strategy
 
 log = logging.getLogger(__name__)
 PY3_ABOVE = sys.version_info[0] > 2
-VALID_RELATIVE_DIR_NOTATION = "Single colon please! For example: myrepo:mydir/mysubdir"
+VALID_RELATIVE_DIR_NOTATION = (
+    "Single colon please! For example: myrepo:mydir/mysubdir"
+)
 
 
 class MobanFactory(PluginManager):
@@ -218,4 +220,5 @@ def _assert_correct_grammer(directory):
     tokens = directory.split(":")
     if len(tokens) > 2:
         raise exceptions.InvalidRelativeDirNotation(
-            VALID_RELATIVE_DIR_NOTATION)
+            VALID_RELATIVE_DIR_NOTATION
+        )

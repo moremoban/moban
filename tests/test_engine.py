@@ -32,7 +32,9 @@ def test_expand_pypi_dir():
 
 @raises(exceptions.InvalidRelativeDirNotation)
 def test_expand_invalid_pypi_dir():
-    dirs = list(expand_template_directories("testmobans:testmobans:template-tests"))
+    dirs = list(
+        expand_template_directories("testmobans:testmobans:template-tests")
+    )
     for directory in dirs:
         assert os.path.exists(directory)
 
