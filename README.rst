@@ -204,3 +204,16 @@ Built-in Tests
 --------------------------------------------------------------------------------
 
 Test if a file exists or not
+
+
+Security
+================================================================================
+
+If you wanted to be more secure, you can install jinja2>=2.10.1. Here are
+the issues with prior versions of jinja2:
+`CVE-2019-10906 <https://nvd.nist.gov/vuln/detail/CVE-2019-10906>`_ and
+`CVE-2016-10745 <https://nvd.nist.gov/vuln/detail/CVE-2016-10745>`_
+
+
+The reason we did not mandate its version, is that we do not see it
+compulsory for command line users.
