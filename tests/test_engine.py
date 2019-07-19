@@ -13,11 +13,24 @@ from moban.jinja2.engine import (
 )
 from moban.plugins.context import Context
 from moban.plugins.template import MobanEngine, expand_template_directories
+from moban.plugins.template import _is_windows_drive_notation
 
 USER_HOME = os.path.join("user", "home", ".moban", "repos")
 
 
-@PluginInfo("library", tags=["testmobans"])
+def test_windows_drive():
+    sample_sets = [
+        ('C:/Users', True),
+        ('C:\\Users', True),
+        ('C:/Users/Trueman', True),
+        ('C:\\Users\\Lady', True),
+        ('C:Users', False),
+    ]
+    for sample, expected in sample_sets:
+        eq_(_is_windows_drive_notation(sample), expected)
+
+
+@PluginInfo("library", tags=["t"])
 class TestPypkg:
     def __init__(self):
         __package_path__ = os.path.dirname(__file__)
@@ -25,7 +38,7 @@ class TestPypkg:
 
 
 def test_expand_pypi_dir():
-    dirs = list(expand_template_directories("testmobans:template-tests"))
+    dirs = list(expand_template_directories("t:template-tests"))
     for directory in dirs:
         assert os.path.exists(directory)
 

@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 import logging
 
@@ -213,7 +214,8 @@ def expand_template_directory(directory):
 
 
 def _is_windows_drive_notation(directory):
-    return directory[1] == ":"
+    windows_drive_pattern = '.:[/\\\\].*$'
+    return re.match(windows_drive_pattern, directory) is not None
 
 
 def _assert_correct_grammer(directory):
