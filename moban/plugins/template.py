@@ -186,7 +186,7 @@ def expand_template_directory(directory):
     translated_directory = None
     if ":" in directory and _is_windows_drive_notation(directory) is False:
         _assert_correct_grammer(directory)
-        library_or_repo_name, relative_path = directory.split(":")
+        library_or_repo_name, relative_path = directory.split(":", 1)
         potential_repo_path = os.path.join(
             repo.get_moban_home(), library_or_repo_name
         )
