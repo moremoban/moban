@@ -7,7 +7,7 @@ from moban.utils import mkdir_p
 
 
 def git_clone(requires):
-    from git import Repo
+    from git import Remote, Repo
 
     if sys.platform != "win32":
         # Unfortunately for windows user, the following function
@@ -24,11 +24,20 @@ def git_clone(requires):
         if os.path.exists(local_repo_folder):
             reporter.report_git_pull(repo_name)
             repo = Repo(local_repo_folder)
-            repo.git.pull()
-            if require.reference:
-                repo.git.checkout(require.reference)
-            elif require.branch:
-                repo.git.checkout(require.branch)
+            for remote in repo.remotes:
+                if require.git_url in remote.urls:
+                    break
+            else:
+                reporter.report_info_message("checking out new remote")
+                remote = Remote.create(repo, "current", require.git_url)
+            remote.update()
+
+            ref = require.branch or require.reference
+            if ref:
+                repo.git.checkout(ref)
+            else:
+                repo.git.pull()
+
             if require.submodule:
                 reporter.report_info_message("updating submodule")
                 repo.git.submodule("update")
