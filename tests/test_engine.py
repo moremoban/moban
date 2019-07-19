@@ -12,19 +12,22 @@ from moban.jinja2.engine import (
     import_module_of_extension,
 )
 from moban.plugins.context import Context
-from moban.plugins.template import MobanEngine, expand_template_directories
-from moban.plugins.template import _is_windows_drive_notation
+from moban.plugins.template import (
+    MobanEngine,
+    _is_windows_drive_notation,
+    expand_template_directories,
+)
 
 USER_HOME = os.path.join("user", "home", ".moban", "repos")
 
 
 def test_windows_drive():
     sample_sets = [
-        ('C:/Users', True),
-        ('C:\\Users', True),
-        ('C:/Users/Trueman', True),
-        ('C:\\Users\\Lady', True),
-        ('C:Users', False),
+        ("C:/Users", True),
+        ("C:\\Users", True),
+        ("C:/Users/Trueman", True),
+        ("C:\\Users\\Lady", True),
+        ("C:Users", False),
     ]
     for sample, expected in sample_sets:
         eq_(_is_windows_drive_notation(sample), expected)

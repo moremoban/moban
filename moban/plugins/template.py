@@ -214,7 +214,7 @@ def expand_template_directory(directory):
 
 
 def _is_windows_drive_notation(directory):
-    windows_drive_pattern = '.:[/\\\\].*$'
+    windows_drive_pattern = ".:[/\\\\].*$"
     return re.match(windows_drive_pattern, directory) is not None
 
 
