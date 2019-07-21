@@ -5,6 +5,7 @@ import errno
 import logging
 
 from moban import constants, exceptions
+from fs import path as fs_path, open_fs
 
 log = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
@@ -66,8 +67,11 @@ def write_file_out(filename, content):
     dest_folder = os.path.dirname(filename)
     if dest_folder:
         mkdir_p(dest_folder)
-    with open(filename, "wb") as out:
-        out.write(content)
+
+    dir_name = fs_path.dirname(filename)
+    the_file_name = fs_path.basename(filename)
+    with open_fs(dir_name) as the_fs:
+        the_fs.writebytes(the_file_name, content)
 
 
 def mkdir_p(path):
