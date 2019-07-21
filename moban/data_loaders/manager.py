@@ -1,4 +1,4 @@
-import os
+from fs import path
 
 from moban import utils, constants
 from lml.plugin import PluginManager
@@ -9,7 +9,7 @@ class AnyDataLoader(PluginManager):
         super(AnyDataLoader, self).__init__(constants.DATA_LOADER_EXTENSION)
 
     def get_data(self, file_name):
-        file_extension = os.path.splitext(file_name)[1]
+        file_extension = path.splitext(file_name)[1]
         file_type = file_extension
         if file_extension.startswith("."):
             file_type = file_type[1:]
