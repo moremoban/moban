@@ -1,9 +1,10 @@
 import sys
-from fs import path, open_fs
 import json
 
 from moban import constants
 from lml.plugin import PluginInfo
+
+from fs import path, open_fs
 
 PY2 = sys.version_info[0] == 2
 
@@ -14,7 +15,8 @@ def open_json(file_name):
     returns json contents as string
     """
     if PY2:
-        file_name = unicode(file_name)
+        if isinstance(file_name, unicode) is False:
+            file_name = unicode(file_name)
     dir_name = path.dirname(file_name)
     the_file_name = path.basename(file_name)
     with open_fs(dir_name) as the_fs:

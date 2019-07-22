@@ -5,7 +5,9 @@ import errno
 import logging
 
 from moban import constants, exceptions
-from fs import path as fs_path, open_fs
+
+from fs import path as fs_path
+from fs import open_fs
 
 log = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
@@ -62,14 +64,16 @@ def file_permissions(afile):
 
 
 def write_file_out(filename, content):
-    if PY2 and content.__class__.__name__ == "unicode":
-        content = content.encode("utf-8")
+    if PY2:
+        if isinstance(content, unicode):
+            content = content.encode("utf-8")
     dest_folder = os.path.dirname(filename)
     if dest_folder:
         mkdir_p(dest_folder)
 
     if PY2:
-        filename = unicode(filename)
+        if isinstance(filename, unicode):
+            filename = unicode(filename)
     dir_name = fs_path.dirname(filename)
     the_file_name = fs_path.basename(filename)
     with open_fs(dir_name) as the_fs:

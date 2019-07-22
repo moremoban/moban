@@ -1,7 +1,7 @@
-from fs import path
-
 from moban import utils, constants
 from lml.plugin import PluginManager
+
+from fs import path
 
 
 class AnyDataLoader(PluginManager):
