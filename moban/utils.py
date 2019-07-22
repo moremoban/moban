@@ -72,7 +72,7 @@ def write_file_out(filename, content):
         mkdir_p(dest_folder)
 
     if PY2:
-        if isinstance(filename, unicode):
+        if isinstance(filename, unicode) is False:
             filename = unicode(filename)
     dir_name = fs_path.dirname(filename)
     the_file_name = fs_path.basename(filename)
