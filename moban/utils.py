@@ -68,6 +68,8 @@ def write_file_out(filename, content):
     if dest_folder:
         mkdir_p(dest_folder)
 
+    if PY2:
+        filename = unicode(filename)
     dir_name = fs_path.dirname(filename)
     the_file_name = fs_path.basename(filename)
     with open_fs(dir_name) as the_fs:
