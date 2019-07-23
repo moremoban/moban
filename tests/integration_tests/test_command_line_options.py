@@ -17,8 +17,9 @@ class TestCustomOptions:
         )
         self.patcher1.start()
 
+    @patch("moban.fs.abspath")
     @patch("moban.plugins.template.MobanEngine.render_to_file")
-    def test_custom_options(self, fake_template_doer):
+    def test_custom_options(self, fake_template_doer, fake_abspath):
         test_args = [
             "moban",
             "-c",

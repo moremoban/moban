@@ -38,6 +38,14 @@ def list_dir(path):
             yield file_name
 
 
+def abspath(path):
+    path = to_unicode(path)
+    dir_name = fs.path.dirname(path)
+    the_file_name = fs.path.basename(path)
+    with fs.open_fs(dir_name) as the_fs:
+        return the_fs.getsyspath(the_file_name)
+
+
 def to_unicode(path):
     if PY2:
         if isinstance(path, unicode) is False:
