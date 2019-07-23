@@ -7,6 +7,8 @@ from mock import patch
 from moban.main import main
 from nose.tools import eq_
 
+import fs.path
+
 
 def custom_dedent(long_texts):
     refined = dedent(long_texts)
@@ -25,13 +27,13 @@ class TestRegression:
         self._raw_moban(
             args,
             folder,
-            os.path.join("copy-source", "image.png"),
+            fs.path.join("copy-source", "image.png"),
             "regression-test.png",
         )
 
     def _raw_moban(self, args, folder, expected, output):
-        base_dir = os.path.join("tests", "regression_tests")
-        os.chdir(os.path.join(base_dir, folder))
+        base_dir = fs.path.join("tests", "regression_tests")
+        os.chdir(fs.path.join(base_dir, folder))
         with patch.object(sys, "argv", args):
             main()
         status = filecmp.cmp(output, expected)
