@@ -1,4 +1,5 @@
 import os
+import fs
 import sys
 import stat
 import errno
@@ -138,8 +139,8 @@ def verify_the_existence_of_directories(dirs):
 def find_file_in_template_dirs(src, template_dirs):
     log.debug(template_dirs)
     for folder in template_dirs:
-        path = os.path.join(folder, src)
-        if os.path.exists(path):
-            return path
+        with fs.open_fs(folder) as fs_system:
+            if fs_system.exists(src):
+                return fs_system.getsyspath(src)
     else:
         return None

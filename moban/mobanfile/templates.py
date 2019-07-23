@@ -1,10 +1,34 @@
 import os
+import sys
+import fs
+import fs.path
 import logging
 
 from moban import reporter
 from moban.utils import find_file_in_template_dirs
 
 log = logging.getLogger(__name__)
+PY2 = sys.version_info[0] == 2
+
+
+def is_dir(path):
+    if PY2:
+        if isinstance(path, unicode) is False:
+            path = unicode(path)
+    dir_name = fs.path.dirname(path)
+    the_file_name = fs.path.basename(path)
+    with fs.open_fs(dir_name) as the_fs:
+        return the_fs.isdir(the_file_name)
+
+
+def is_file(path):
+    if PY2:
+        if isinstance(path, unicode) is False:
+            path = unicode(path)
+    dir_name = fs.path.dirname(path)
+    the_file_name = fs.path.basename(path)
+    with fs.open_fs(dir_name) as the_fs:
+        return the_fs.isfile(the_file_name)
 
 
 def handle_template(template_file, output, template_dirs):
@@ -29,7 +53,7 @@ def handle_template(template_file, output, template_dirs):
             reporter.report_error_message(
                 "{0} cannot be found".format(template_file)
             )
-    elif os.path.isdir(template_file_on_disk):
+    elif is_dir(template_file_on_disk):
         for a_triple in _list_dir_files(
             template_file, template_file_on_disk, output
         ):
@@ -40,37 +64,48 @@ def handle_template(template_file, output, template_dirs):
 
 
 def _list_dir_files(source, actual_source_path, dest):
-    for file_name in os.listdir(actual_source_path):
-        real_src_file = os.path.join(actual_source_path, file_name)
-        if os.path.isfile(real_src_file):
-            # please note jinja2 does NOT like windows path
-            # hence the following statement looks like cross platform
-            #  src_file_under_dir = os.path.join(source, file_name)
-            # but actually it breaks windows instead.
-            src_file_under_dir = "%s/%s" % (source, file_name)
-
-            dest_file_under_dir = os.path.join(dest, file_name)
-            template_type = _get_template_type(src_file_under_dir)
-            yield (src_file_under_dir, dest_file_under_dir, template_type)
+    if PY2:
+        if isinstance(path, unicode) is False:
+            actual_source_path = unicode(actual_source_path)
+    dir_name = fs.path.dirname(actual_source_path)
+    the_file_name = fs.path.basename(actual_source_path)
+    with fs.open_fs(dir_name) as fs_system:
+        for file_name in fs_system.listdir(the_file_name):
+            if fs_system.isfile(fs.path.join(the_file_name, file_name)):
+                # please note jinja2 does NOT like windows path
+                # hence the following statement looks like cross platform
+                #  src_file_under_dir = os.path.join(source, file_name)
+                # but actually it breaks windows instead.
+                src_file_under_dir = "%s/%s" % (source, file_name)
+        
+                dest_file_under_dir = fs.path.join(dest, file_name)
+                template_type = _get_template_type(src_file_under_dir)
+                yield (src_file_under_dir, dest_file_under_dir, template_type)
 
 
 def _listing_directory_files_recusively(source, actual_source_path, dest):
-    for file_name in os.listdir(actual_source_path):
-        src_file_under_dir = os.path.join(source, file_name)
-        dest_file_under_dir = os.path.join(dest, file_name)
-        real_src_file = os.path.join(actual_source_path, file_name)
-        if os.path.isfile(real_src_file):
-            template_type = _get_template_type(src_file_under_dir)
-            yield (src_file_under_dir, dest_file_under_dir, template_type)
-        elif os.path.isdir(real_src_file):
-            for a_triple in _listing_directory_files_recusively(
-                src_file_under_dir, real_src_file, dest_file_under_dir
-            ):
-                yield a_triple
+    if PY2:
+        if isinstance(path, unicode) is False:
+            actual_source_path = unicode(actual_source_path)
+    dir_name = fs.path.dirname(actual_source_path)
+    the_file_name = fs.path.basename(actual_source_path)
+    with fs.open_fs(dir_name) as fs_system:
+        for file_name in fs_system.listdir(the_file_name):
+            src_file_under_dir = fs.path.join(source, file_name)
+            dest_file_under_dir = fs.path.join(dest, file_name)
+            real_src_file = fs.path.join(actual_source_path, file_name)
+            if fs_system.isfile(fs.path.join(the_file_name, file_name)):
+                template_type = _get_template_type(src_file_under_dir)
+                yield (src_file_under_dir, dest_file_under_dir, template_type)
+            elif fs_system.isdir(fs.path.join(the_file_name, file_name)):
+                for a_triple in _listing_directory_files_recusively(
+                    src_file_under_dir, real_src_file, dest_file_under_dir
+                ):
+                    yield a_triple
 
 
 def _get_template_type(template_file):
-    _, extension = os.path.splitext(template_file)
+    _, extension = fs.path.splitext(template_file)
     if extension:
         template_type = extension[1:]
     else:

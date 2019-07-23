@@ -1,4 +1,5 @@
 import os
+import fs.path
 
 from mock import patch
 from nose.tools import eq_
@@ -7,7 +8,7 @@ from moban.mobanfile.templates import handle_template
 
 class TestHandleTemplateFunction:
     def setUp(self):
-        self.base_dir = [os.path.join("tests", "fixtures")]
+        self.base_dir = [fs.path.join("tests", "fixtures")]
 
     def test_copy_files(self):
         results = list(
