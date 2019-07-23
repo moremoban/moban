@@ -1,11 +1,12 @@
 import os
 import sys
-import fs
-import fs.path
 import logging
 
 from moban import reporter
 from moban.utils import find_file_in_template_dirs
+
+import fs
+import fs.path
 
 log = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
@@ -77,7 +78,7 @@ def _list_dir_files(source, actual_source_path, dest):
                 #  src_file_under_dir = os.path.join(source, file_name)
                 # but actually it breaks windows instead.
                 src_file_under_dir = "%s/%s" % (source, file_name)
-        
+
                 dest_file_under_dir = fs.path.join(dest, file_name)
                 template_type = _get_template_type(src_file_under_dir)
                 yield (src_file_under_dir, dest_file_under_dir, template_type)

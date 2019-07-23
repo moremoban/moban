@@ -1,5 +1,4 @@
 import os
-import fs
 import sys
 import stat
 import errno
@@ -7,6 +6,7 @@ import logging
 
 from moban import constants, exceptions
 
+import fs
 from fs import path as fs_path
 from fs import open_fs
 
