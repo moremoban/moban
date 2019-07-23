@@ -5,6 +5,7 @@ import errno
 import logging
 
 from moban import constants, exceptions
+from moban import fs as moban_fs
 
 import fs
 from fs import path as fs_path
@@ -140,7 +141,7 @@ def find_file_in_template_dirs(src, template_dirs):
     log.debug(template_dirs)
     for folder in template_dirs:
         with fs.open_fs(folder) as fs_system:
-            if fs_system.exists(src):
+            if fs_system.exists(moban_fs.to_unicode(src)):
                 return fs_system.getsyspath(src)
     else:
         return None
