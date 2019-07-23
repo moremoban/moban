@@ -37,10 +37,10 @@ def merge(left, right):
 
 def search_file(base_dir, file_name):
     the_file = file_name
-    if not os.path.exists(the_file):
+    if not moban_fs.exists(the_file):
         if base_dir:
-            the_file = os.path.join(base_dir, file_name)
-            if not os.path.exists(the_file):
+            the_file = fs.path.join(base_dir, file_name)
+            if not moban_fs.exists(the_file):
                 raise IOError(
                     constants.ERROR_DATA_FILE_NOT_FOUND % (file_name, the_file)
                 )
@@ -104,14 +104,14 @@ def get_template_path(template_dirs, template):
     temp_dir = ""
 
     for a_dir in template_dirs:
-        template_file_exists = os.path.exists(
-            os.path.join(a_dir, template)
-        ) and os.path.isfile(os.path.join(a_dir, template))
+        template_file_exists = moban_fs.exists(
+            fs.path.join(a_dir, template)
+        ) and moban_fs.is_file(fs.path.join(a_dir, template))
 
         if template_file_exists:
             temp_dir = a_dir
-            temp_file_path = os.path.join(
-                os.getcwd(), os.path.join(temp_dir, template)
+            temp_file_path = fs.path.join(
+                os.getcwd(), fs.path.join(temp_dir, template)
             )
             return temp_file_path
     raise exceptions.FileNotFound
