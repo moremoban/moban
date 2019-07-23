@@ -160,8 +160,9 @@ class TestNoOptions:
 
             main()
 
+    @patch("moban.fs.exists", return_value=True)        
     @patch("moban.plugins.template.MobanEngine.render_to_files")
-    def test_single_command_with_a_few_options(self, fake_template_doer):
+    def test_single_command_with_a_few_options(self, fake_template_doer, _):
         test_args = ["moban", "-t", "README.rst.jj2", "-o", "xyz.output"]
         with patch.object(sys, "argv", test_args):
             from moban.main import main
@@ -261,8 +262,9 @@ class TestCustomMobanFile:
         )
         self.patcher1.start()
 
+    @patch("moban.fs.exists", return_value=True)
     @patch("moban.plugins.template.MobanEngine.render_to_files")
-    def test_single_command(self, fake_template_doer):
+    def test_single_command(self, fake_template_doer, _):
         test_args = ["moban", "-m", self.config_file]
         with patch.object(sys, "argv", test_args):
             from moban.main import main
@@ -386,10 +388,11 @@ class TestComplexOptions:
         with open(self.data_file, "w") as f:
             f.write("hello: world")
 
+    @patch("moban.fs.exists", return_value=True)
     @patch(
         "moban.utils.verify_the_existence_of_directories", return_value=True
     )
-    def test_single_command(self, _):
+    def test_single_command(self, _, __):
         test_args = ["moban"]
         with patch.object(sys, "argv", test_args):
             from moban.main import main

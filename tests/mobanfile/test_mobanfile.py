@@ -1,5 +1,3 @@
-import os
-
 from mock import patch
 from nose.tools import eq_
 from moban.definitions import GitRequire, TemplateTarget
