@@ -4,6 +4,8 @@ from mock import patch
 from nose.tools import eq_
 from moban.definitions import GitRequire, TemplateTarget
 
+import fs.path
+
 
 class TestFinder:
     def setUp(self):
@@ -118,14 +120,14 @@ def test_handle_targets(fake_renderer):
     TEMPLATE = "copier-test01.csv"
     OUTPUT = "output.csv"
     CONFIGURATION = "child.yaml"
-    TEMPLATE_DIRS = [os.path.join("tests", "fixtures")]
+    TEMPLATE_DIRS = [fs.path.join("tests", "fixtures")]
     DEFAULT_TEMPLATE_TYPE = "jinja2"
 
     options = dict(
         configuration=CONFIGURATION,
         template_type=DEFAULT_TEMPLATE_TYPE,
         template_dir=TEMPLATE_DIRS,
-        configuration_dir=os.path.join("tests", "fixtures"),
+        configuration_dir=fs.path.join("tests", "fixtures"),
     )
     short_hand_targets = [{OUTPUT: TEMPLATE}]
     handle_targets(options, short_hand_targets)
@@ -152,14 +154,14 @@ def test_handle_targets_sequence(fake_renderer):
     OUTPUT1 = "filterme.handlebars"  # in the future, this could dynamic output
     OUTPUT2 = "filtered_output.txt"
     CONFIGURATION = "child.yaml"
-    TEMPLATE_DIRS = [os.path.join("tests", "fixtures", "mobanfile")]
+    TEMPLATE_DIRS = [fs.path.join("tests", "fixtures", "mobanfile")]
     DEFAULT_TEMPLATE_TYPE = "jinja2"
 
     options = dict(
         configuration=CONFIGURATION,
         template_type=DEFAULT_TEMPLATE_TYPE,
         template_dir=TEMPLATE_DIRS,
-        configuration_dir=os.path.join("tests", "fixtures"),
+        configuration_dir=fs.path.join("tests", "fixtures"),
     )
     short_hand_targets = [{OUTPUT1: TEMPLATE1}, {OUTPUT2: OUTPUT1}]
     handle_targets(options, short_hand_targets)

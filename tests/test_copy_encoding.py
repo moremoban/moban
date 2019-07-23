@@ -1,12 +1,12 @@
-import os
-
 from moban.copy import ContentForwardEngine
 from nose.tools import eq_
+
+import fs.path
 
 
 class TestCopyEncoding:
     def setUp(self):
-        template_path = os.path.join("tests", "fixtures")
+        template_path = fs.path.join("tests", "fixtures")
         self.engine = ContentForwardEngine([template_path])
 
     def test_encoding_of_template(self):

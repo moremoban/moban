@@ -15,6 +15,8 @@ from moban.utils import (
 )
 from moban.exceptions import FileNotFound
 
+import fs.path
+
 
 def create_file(test_file, permission):
     with open(test_file, "w") as f:
@@ -96,8 +98,8 @@ def test_mkdir_p():
 @raises(FileNotFound)
 def test_get_template_path_with_error():
     temp_dirs = [
-        os.path.join("tests", "fixtures", "template-tests"),
-        os.path.join("tests", "abc"),
+        fs.path.join("tests", "fixtures", "template-tests"),
+        fs.path.join("tests", "abc"),
     ]
     template = "I-do-not-exist.jj2"
     get_template_path(temp_dirs, template)
@@ -105,15 +107,15 @@ def test_get_template_path_with_error():
 
 def test_get_template_path():
     temp_dirs = [
-        os.path.join("tests", "fixtures", "template-tests"),
-        os.path.join("tests", "abc"),
-        os.path.join("tests", "abc"),
+        fs.path.join("tests", "fixtures", "template-tests"),
+        fs.path.join("tests", "abc"),
+        fs.path.join("tests", "abc"),
     ]
     template = "a.jj2"
     template_path = get_template_path(temp_dirs, template)
-    expected = os.path.join(
+    expected = fs.path.join(
         os.getcwd(),
-        os.path.join("tests", "fixtures", "template-tests", "a.jj2"),
+        fs.path.join("tests", "fixtures", "template-tests", "a.jj2"),
     )
     eq_(template_path, expected)
 
