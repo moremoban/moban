@@ -1,9 +1,8 @@
-import os
 import sys
 import logging
 
-from moban import fs as moban_fs
 from moban import repo, utils, reporter, constants, exceptions
+from moban import file_system as moban_fs
 from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
 from moban.plugins.context import Context

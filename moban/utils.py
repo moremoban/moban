@@ -4,12 +4,12 @@ import stat
 import errno
 import logging
 
-from moban import fs as moban_fs
 from moban import constants, exceptions
+from moban import file_system as moban_fs
 
 import fs
 from fs import path as fs_path
-from fs import open_fs
+from fs import errors, open_fs
 
 log = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
@@ -140,8 +140,8 @@ def verify_the_existence_of_directories(dirs):
 def find_file_in_template_dirs(src, template_dirs):
     log.debug(template_dirs)
     for folder in template_dirs:
-        with fs.open_fs(folder) as fs_system:
-            if fs_system.exists(moban_fs.to_unicode(src)):
-                return fs_system.getsyspath(src)
+        path = fs.path.join(folder, src)
+        if moban_fs.exists(path):
+            return path
     else:
         return None

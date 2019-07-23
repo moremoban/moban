@@ -1,7 +1,7 @@
 import logging
 
-from moban import fs as moban_fs
 from moban import reporter
+from moban import file_system as moban_fs
 from moban.utils import find_file_in_template_dirs
 
 import fs

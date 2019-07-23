@@ -132,6 +132,7 @@ def handle_targets(merged_options, targets):
         jobs_for_each_engine[primary_template_type].append(target)
 
     count = 0
+
     for template_type in jobs_for_each_engine.keys():
         engine = plugins.ENGINES.get_engine(
             template_type,
