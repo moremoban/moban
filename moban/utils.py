@@ -4,8 +4,8 @@ import stat
 import errno
 import logging
 
-from moban import constants, exceptions
 from moban import fs as moban_fs
+from moban import constants, exceptions
 
 import fs
 from fs import path as fs_path

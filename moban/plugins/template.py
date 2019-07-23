@@ -1,15 +1,16 @@
 import os
-import fs.path
 import sys
 import logging
 
+from moban import fs as moban_fs
 from moban import repo, utils, reporter, constants, exceptions
 from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES
 from moban.plugins.strategy import Strategy
-from moban import fs as moban_fs
+
+import fs.path
 
 log = logging.getLogger(__name__)
 PY3_ABOVE = sys.version_info[0] > 2
