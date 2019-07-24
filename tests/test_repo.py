@@ -10,6 +10,7 @@ from moban.repo import (
 from nose.tools import eq_, raises
 from moban.exceptions import NoGitCommand
 from moban.definitions import GitRequire
+
 import fs.path
 
 

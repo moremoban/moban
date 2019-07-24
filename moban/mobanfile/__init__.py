@@ -147,7 +147,9 @@ def handle_targets(merged_options, targets):
 
 def handle_plugin_dirs(plugin_dirs):
     for plugin_dir in plugin_dirs:
-        plugin_path = os.path.dirname(os.path.abspath(plugin_dir))
+        plugin_path = os.path.normcase(
+            os.path.dirname(os.path.abspath(plugin_dir))
+        )
         if plugin_path not in sys.path:
             sys.path.append(plugin_path)
         pysearchre = re.compile(".py$", re.IGNORECASE)

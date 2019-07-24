@@ -111,8 +111,7 @@ def get_template_path(template_dirs, template):
         if template_file_exists:
             temp_dir = a_dir
             temp_file_path = fs.path.join(
-                os.path.normcase(os.getcwd()),
-                fs.path.join(temp_dir, template)
+                os.path.normcase(os.getcwd()), fs.path.join(temp_dir, template)
             )
             return temp_file_path
     raise exceptions.FileNotFound
