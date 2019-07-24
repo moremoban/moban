@@ -10,6 +10,7 @@ from moban.repo import (
 from nose.tools import eq_, raises
 from moban.exceptions import NoGitCommand
 from moban.definitions import GitRequire
+import fs.path
 
 
 @patch("appdirs.user_cache_dir", return_value="root")
@@ -30,7 +31,7 @@ class TestGitFunctions:
         self.require_with_reference = GitRequire(
             git_url=self.repo, reference="a-commit-reference"
         )
-        self.expected_local_repo_path = os.path.join(
+        self.expected_local_repo_path = fs.path.join(
             "root", "repos", self.repo_name
         )
 
@@ -152,7 +153,7 @@ def test_get_repo_name_can_handle_invalid_url(fake_reporter):
 @patch("appdirs.user_cache_dir", return_value="root")
 def test_get_moban_home(_):
     actual = get_moban_home()
-    eq_(os.path.join("root", "repos"), actual)
+    eq_(fs.path.join("root", "repos"), actual)
 
 
 @raises(NoGitCommand)
