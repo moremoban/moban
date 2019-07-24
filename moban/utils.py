@@ -107,8 +107,7 @@ def get_template_path(template_dirs, template):
         ) and moban_fs.is_file(fs.path.join(a_dir, template))
 
         if template_file_exists:
-            return os.path.normpath(os.path.join(
-                os.getcwd(), a_dir, template))
+            return os.path.normpath(os.path.join(os.getcwd(), a_dir, template))
     raise exceptions.FileNotFound
 
 
