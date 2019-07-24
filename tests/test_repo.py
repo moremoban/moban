@@ -1,5 +1,3 @@
-import os
-
 from mock import patch
 from moban.repo import (
     git_clone,
