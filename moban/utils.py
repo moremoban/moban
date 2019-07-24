@@ -4,12 +4,9 @@ import stat
 import errno
 import logging
 
-from moban import constants, exceptions
-from moban import file_system
+from moban import constants, exceptions, file_system
 
 import fs
-from fs import path as fs_path
-from fs import open_fs
 
 log = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
@@ -73,14 +70,7 @@ def write_file_out(filename, content):
     if dest_folder:
         mkdir_p(dest_folder)
 
-    if PY2:
-        if isinstance(filename, unicode) is False:
-            filename = unicode(filename)
-    dir_name = fs_path.dirname(filename)
-    the_file_name = fs_path.basename(filename)
-    with open_fs(dir_name) as the_fs:
-        the_fs.writebytes(the_file_name, content)
-    #file_system.write_bytes(filename, content)
+    file_system.write_bytes(filename, content)
 
 
 def mkdir_p(path):
