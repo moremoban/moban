@@ -113,13 +113,7 @@ def test_get_template_path():
     ]
     template = "a.jj2"
     template_path = get_template_path(temp_dirs, template)
-    expected = os.path.normcase(
-        os.path.normpath(
-            os.path.join(
-                "tests", "fixtures", "template-tests", "a.jj2"
-            )
-        )
-    )
+    expected = fs.path.join("tests", "fixtures", "template-tests", "a.jj2")
     eq_(template_path, expected)
 
 
