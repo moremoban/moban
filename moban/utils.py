@@ -101,19 +101,13 @@ def pip_install(packages):
 
 
 def get_template_path(template_dirs, template):
-    temp_dir = ""
-
     for a_dir in template_dirs:
         template_file_exists = moban_fs.exists(
             fs.path.join(a_dir, template)
         ) and moban_fs.is_file(fs.path.join(a_dir, template))
 
         if template_file_exists:
-            temp_dir = a_dir
-            temp_file_path = fs.path.join(
-                os.path.normcase(os.getcwd()), fs.path.join(temp_dir, template)
-            )
-            return temp_file_path
+            return fs.path.join(a_dir, template)
     raise exceptions.FileNotFound
 
 
