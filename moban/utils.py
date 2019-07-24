@@ -5,11 +5,11 @@ import errno
 import logging
 
 from moban import constants, exceptions
-from moban import file_system as moban_fs
+from moban import file_system
 
 import fs
 from fs import path as fs_path
-from fs import errors, open_fs
+from fs import open_fs
 
 log = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
@@ -37,10 +37,10 @@ def merge(left, right):
 
 def search_file(base_dir, file_name):
     the_file = file_name
-    if not moban_fs.exists(the_file):
+    if not file_system.exists(the_file):
         if base_dir:
             the_file = fs.path.join(base_dir, file_name)
-            if not moban_fs.exists(the_file):
+            if not file_system.exists(the_file):
                 raise IOError(
                     constants.ERROR_DATA_FILE_NOT_FOUND % (file_name, the_file)
                 )
@@ -80,6 +80,7 @@ def write_file_out(filename, content):
     the_file_name = fs_path.basename(filename)
     with open_fs(dir_name) as the_fs:
         the_fs.writebytes(the_file_name, content)
+    #file_system.write_bytes(filename, content)
 
 
 def mkdir_p(path):
@@ -102,9 +103,9 @@ def pip_install(packages):
 
 def get_template_path(template_dirs, template):
     for a_dir in template_dirs:
-        template_file_exists = moban_fs.exists(
+        template_file_exists = file_system.exists(
             fs.path.join(a_dir, template)
-        ) and moban_fs.is_file(fs.path.join(a_dir, template))
+        ) and file_system.is_file(fs.path.join(a_dir, template))
 
         if template_file_exists:
             return fs.path.join(a_dir, template)
@@ -135,7 +136,7 @@ def find_file_in_template_dirs(src, template_dirs):
     log.debug(template_dirs)
     for folder in template_dirs:
         path = fs.path.join(folder, src)
-        if moban_fs.exists(path):
+        if file_system.exists(path):
             return path
     else:
         return None

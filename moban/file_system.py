@@ -2,9 +2,33 @@ import sys
 
 import fs
 import fs.path
+from contextlib import contextmanager
+
 
 PY2 = sys.version_info[0] == 2
 
+
+@contextmanager
+def open_fs(path):
+    path = to_unicode(path)
+    dir_name = fs.path.dirname(path)
+    the_file_name = fs.path.basename(path)
+    the_fs = fs.open_fs(dir_name)
+    f = the_fs.open(the_file_name)
+    try:
+        yield f
+    finally:
+        f.close()
+        the_fs.close()
+
+
+def write_bytes(filename, bytes_content):
+    filename = to_unicode(filename)
+    dir_name = fs.path.dirname(filename)
+    the_file_name = fs.path.basename(filename)
+    with open_fs(dir_name) as the_fs:
+        the_fs.writebytes(the_file_name, bytes_content)
+    
 
 def is_dir(path):
     path = to_unicode(path)
