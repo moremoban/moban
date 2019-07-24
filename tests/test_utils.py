@@ -116,7 +116,7 @@ def test_get_template_path():
     expected = os.path.normcase(
         os.path.normpath(
             os.path.join(
-                os.getcwd(), "tests", "fixtures", "template-tests", "a.jj2"
+                "tests", "fixtures", "template-tests", "a.jj2"
             )
         )
     )
