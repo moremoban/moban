@@ -12,34 +12,35 @@ log = logging.getLogger(__name__)
 
 def handle_template(template_file, output, template_dirs):
     log.info("handling %s" % template_file)
-    template_file_on_disk = find_file_in_template_dirs(
-        template_file, template_dirs
-    )
-    if template_file_on_disk is None:
-        if template_file.endswith("**"):
-            source_dir = template_file[:-3]
-            src_path = find_file_in_template_dirs(source_dir, template_dirs)
-            if src_path:
-                for a_triple in _listing_directory_files_recusively(
-                    source_dir, src_path, output
-                ):
-                    yield a_triple
-            else:
-                reporter.report_error_message(
-                    "{0} cannot be found".format(template_file)
-                )
+    if template_file.endswith("**"):
+        source_dir = template_file[:-3]
+        src_path = find_file_in_template_dirs(source_dir, template_dirs)
+        if src_path:
+            for a_triple in _listing_directory_files_recusively(
+                source_dir, src_path, output
+            ):
+                yield a_triple
         else:
             reporter.report_error_message(
                 "{0} cannot be found".format(template_file)
             )
-    elif moban_fs.is_dir(template_file_on_disk):
-        for a_triple in _list_dir_files(
-            template_file, template_file_on_disk, output
-        ):
-            yield a_triple
     else:
-        template_type = _get_template_type(template_file)
-        yield (template_file, output, template_type)
+        template_file_on_disk = find_file_in_template_dirs(
+            template_file, template_dirs
+        )
+
+        if template_file_on_disk is None:
+            reporter.report_error_message(
+                "{0} cannot be found".format(template_file)
+            )
+        elif moban_fs.is_dir(template_file_on_disk):
+            for a_triple in _list_dir_files(
+                template_file, template_file_on_disk, output
+            ):
+                yield a_triple
+        else:
+            template_type = _get_template_type(template_file)
+            yield (template_file, output, template_type)
 
 
 def _list_dir_files(source, actual_source_path, dest):

@@ -1,9 +1,10 @@
-import os
 import sys
 import subprocess
 
-from moban import reporter, constants, exceptions
+from moban import reporter, constants, exceptions, file_system
 from moban.utils import mkdir_p
+
+import fs.path
 
 
 def git_clone(requires):
@@ -20,8 +21,8 @@ def git_clone(requires):
 
     for require in requires:
         repo_name = get_repo_name(require.git_url)
-        local_repo_folder = os.path.join(moban_home, repo_name)
-        if os.path.exists(local_repo_folder):
+        local_repo_folder = fs.path.join(moban_home, repo_name)
+        if file_system.exists(local_repo_folder):
             reporter.report_git_pull(repo_name)
             repo = Repo(local_repo_folder)
             repo.git.pull()
@@ -60,7 +61,7 @@ def get_moban_home():
     from appdirs import user_cache_dir
 
     home_dir = user_cache_dir(appname=constants.PROGRAM_NAME)
-    return os.path.join(home_dir, constants.MOBAN_REPOS_DIR_NAME)
+    return fs.path.join(home_dir, constants.MOBAN_REPOS_DIR_NAME)
 
 
 def make_sure_git_is_available():

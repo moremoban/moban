@@ -14,7 +14,7 @@ from moban.definitions import GitRequire
 
 @patch("appdirs.user_cache_dir", return_value="root")
 @patch("moban.utils.mkdir_p")
-@patch("os.path.exists")
+@patch("moban.file_system.exists")
 @patch("git.Repo", autospec=True)
 class TestGitFunctions:
     def setUp(self):
