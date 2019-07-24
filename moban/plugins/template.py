@@ -207,6 +207,5 @@ def expand_template_directory(directory):
                 translated_directory = library_path
     else:
         # local template path
-        print(directory)
         translated_directory = moban_fs.abspath(directory)
     return translated_directory
