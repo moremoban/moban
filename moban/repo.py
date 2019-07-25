@@ -19,7 +19,7 @@ def git_clone(requires):
 
     for require in requires:
         repo_name = get_repo_name(require.git_url)
-        local_repo_folder = file_system.join(moban_home, repo_name)
+        local_repo_folder = file_system.path_join(moban_home, repo_name)
         if file_system.exists(local_repo_folder):
             reporter.report_git_pull(repo_name)
             repo = Repo(local_repo_folder)
@@ -59,7 +59,7 @@ def get_moban_home():
     from appdirs import user_cache_dir
 
     home_dir = user_cache_dir(appname=constants.PROGRAM_NAME)
-    return file_system.join(home_dir, constants.MOBAN_REPOS_DIR_NAME)
+    return file_system.path_join(home_dir, constants.MOBAN_REPOS_DIR_NAME)
 
 
 def make_sure_git_is_available():

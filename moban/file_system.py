@@ -7,8 +7,8 @@ import fs.path
 PY2 = sys.version_info[0] == 2
 
 
-join = fs.path.join
-splitext = fs.path.splitext
+path_join = fs.path.join
+path_splitext = fs.path.splitext
 
 
 @contextmanager

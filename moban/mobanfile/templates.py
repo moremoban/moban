@@ -42,7 +42,7 @@ def handle_template(template_file, output, template_dirs):
 def _list_dir_files(source, actual_source_path, dest):
     for file_name in file_system.list_dir(actual_source_path):
         if file_system.is_file(
-            file_system.join(actual_source_path, file_name)
+            file_system.path_join(actual_source_path, file_name)
         ):
             # please note jinja2 does NOT like windows path
             # hence the following statement looks like cross platform
@@ -50,23 +50,23 @@ def _list_dir_files(source, actual_source_path, dest):
             # but actually it breaks windows instead.
             src_file_under_dir = "%s/%s" % (source, file_name)
 
-            dest_file_under_dir = file_system.join(dest, file_name)
+            dest_file_under_dir = file_system.path_join(dest, file_name)
             template_type = _get_template_type(src_file_under_dir)
             yield (src_file_under_dir, dest_file_under_dir, template_type)
 
 
 def _listing_directory_files_recusively(source, actual_source_path, dest):
     for file_name in file_system.list_dir(actual_source_path):
-        src_file_under_dir = file_system.join(source, file_name)
-        dest_file_under_dir = file_system.join(dest, file_name)
-        real_src_file = file_system.join(actual_source_path, file_name)
+        src_file_under_dir = file_system.path_join(source, file_name)
+        dest_file_under_dir = file_system.path_join(dest, file_name)
+        real_src_file = file_system.path_join(actual_source_path, file_name)
         if file_system.is_file(
-            file_system.join(actual_source_path, file_name)
+            file_system.path_join(actual_source_path, file_name)
         ):
             template_type = _get_template_type(src_file_under_dir)
             yield (src_file_under_dir, dest_file_under_dir, template_type)
         elif file_system.is_dir(
-            file_system.join(actual_source_path, file_name)
+            file_system.path_join(actual_source_path, file_name)
         ):
             for a_triple in _listing_directory_files_recusively(
                 src_file_under_dir, real_src_file, dest_file_under_dir
@@ -75,7 +75,7 @@ def _listing_directory_files_recusively(source, actual_source_path, dest):
 
 
 def _get_template_type(template_file):
-    _, extension = file_system.splitext(template_file)
+    _, extension = file_system.path_splitext(template_file)
     if extension:
         template_type = extension[1:]
     else:

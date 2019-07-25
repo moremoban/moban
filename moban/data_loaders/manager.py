@@ -7,7 +7,7 @@ class AnyDataLoader(PluginManager):
         super(AnyDataLoader, self).__init__(constants.DATA_LOADER_EXTENSION)
 
     def get_data(self, file_name):
-        file_extension = file_system.splitext(file_name)[1]
+        file_extension = file_system.path_splitext(file_name)[1]
         file_type = file_extension
         if file_extension.startswith("."):
             file_type = file_type[1:]
