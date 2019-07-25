@@ -1,15 +1,12 @@
 import sys
 import logging
 
-from moban import repo, utils, reporter, constants, exceptions
-from moban import file_system as moban_fs
+from moban import repo, utils, reporter, constants, exceptions, file_system
 from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES
 from moban.plugins.strategy import Strategy
-
-import fs.path
 
 log = logging.getLogger(__name__)
 PY3_ABOVE = sys.version_info[0] > 2
@@ -185,13 +182,13 @@ def expand_template_directory(directory):
     translated_directory = None
     if ":" in directory and directory[1] != ":":
         library_or_repo_name, relative_path = directory.split(":")
-        potential_repo_path = fs.path.join(
+        potential_repo_path = file_system.join(
             repo.get_moban_home(), library_or_repo_name
         )
-        if moban_fs.exists(potential_repo_path):
+        if file_system.exists(potential_repo_path):
             # expand repo template path
             if relative_path:
-                translated_directory = fs.path.join(
+                translated_directory = file_system.join(
                     potential_repo_path, relative_path
                 )
             else:
@@ -200,12 +197,12 @@ def expand_template_directory(directory):
             # expand pypi template path
             library_path = LIBRARIES.resource_path_of(library_or_repo_name)
             if relative_path:
-                translated_directory = fs.path.join(
+                translated_directory = file_system.join(
                     library_path, relative_path
                 )
             else:
                 translated_directory = library_path
     else:
         # local template path
-        translated_directory = moban_fs.abspath(directory)
+        translated_directory = file_system.abspath(directory)
     return translated_directory

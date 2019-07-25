@@ -7,6 +7,10 @@ import fs.path
 PY2 = sys.version_info[0] == 2
 
 
+join = fs.path.join
+splitext = fs.path.splitext
+
+
 @contextmanager
 def open_fs(path):
     path = to_unicode(path)

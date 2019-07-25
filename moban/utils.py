@@ -6,8 +6,6 @@ import logging
 
 from moban import constants, exceptions, file_system
 
-import fs
-
 log = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
 
@@ -36,7 +34,7 @@ def search_file(base_dir, file_name):
     the_file = file_name
     if not file_system.exists(the_file):
         if base_dir:
-            the_file = fs.path.join(base_dir, file_name)
+            the_file = file_system.join(base_dir, file_name)
             if not file_system.exists(the_file):
                 raise IOError(
                     constants.ERROR_DATA_FILE_NOT_FOUND % (file_name, the_file)
@@ -94,11 +92,11 @@ def pip_install(packages):
 def get_template_path(template_dirs, template):
     for a_dir in template_dirs:
         template_file_exists = file_system.exists(
-            fs.path.join(a_dir, template)
-        ) and file_system.is_file(fs.path.join(a_dir, template))
+            file_system.join(a_dir, template)
+        ) and file_system.is_file(file_system.join(a_dir, template))
 
         if template_file_exists:
-            return fs.path.join(a_dir, template)
+            return file_system.join(a_dir, template)
     raise exceptions.FileNotFound
 
 
@@ -125,7 +123,7 @@ def verify_the_existence_of_directories(dirs):
 def find_file_in_template_dirs(src, template_dirs):
     log.debug(template_dirs)
     for folder in template_dirs:
-        path = fs.path.join(folder, src)
+        path = file_system.join(folder, src)
         if file_system.exists(path):
             return path
     else:

@@ -82,7 +82,7 @@ INSTALL_REQUIRES = [
     "crayons>= 0.1.0",
     "GitPython>=2.0.0",
     "git-url-parse>=1.2.2",
-    "fs>=2.0.12",
+    "fs>=2.0.25",
 ]
 SETUP_COMMANDS = {}
 

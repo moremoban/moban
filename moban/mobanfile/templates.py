@@ -1,11 +1,7 @@
 import logging
 
-from moban import reporter
-from moban import file_system as moban_fs
+from moban import reporter, file_system
 from moban.utils import find_file_in_template_dirs
-
-import fs
-import fs.path
 
 log = logging.getLogger(__name__)
 
@@ -33,7 +29,7 @@ def handle_template(template_file, output, template_dirs):
             reporter.report_error_message(
                 "{0} cannot be found".format(template_file)
             )
-        elif moban_fs.is_dir(template_file_on_disk):
+        elif file_system.is_dir(template_file_on_disk):
             for a_triple in _list_dir_files(
                 template_file, template_file_on_disk, output
             ):
@@ -44,28 +40,34 @@ def handle_template(template_file, output, template_dirs):
 
 
 def _list_dir_files(source, actual_source_path, dest):
-    for file_name in moban_fs.list_dir(actual_source_path):
-        if moban_fs.is_file(fs.path.join(actual_source_path, file_name)):
+    for file_name in file_system.list_dir(actual_source_path):
+        if file_system.is_file(
+            file_system.join(actual_source_path, file_name)
+        ):
             # please note jinja2 does NOT like windows path
             # hence the following statement looks like cross platform
             #  src_file_under_dir = os.path.join(source, file_name)
             # but actually it breaks windows instead.
             src_file_under_dir = "%s/%s" % (source, file_name)
 
-            dest_file_under_dir = fs.path.join(dest, file_name)
+            dest_file_under_dir = file_system.join(dest, file_name)
             template_type = _get_template_type(src_file_under_dir)
             yield (src_file_under_dir, dest_file_under_dir, template_type)
 
 
 def _listing_directory_files_recusively(source, actual_source_path, dest):
-    for file_name in moban_fs.list_dir(actual_source_path):
-        src_file_under_dir = fs.path.join(source, file_name)
-        dest_file_under_dir = fs.path.join(dest, file_name)
-        real_src_file = fs.path.join(actual_source_path, file_name)
-        if moban_fs.is_file(fs.path.join(actual_source_path, file_name)):
+    for file_name in file_system.list_dir(actual_source_path):
+        src_file_under_dir = file_system.join(source, file_name)
+        dest_file_under_dir = file_system.join(dest, file_name)
+        real_src_file = file_system.join(actual_source_path, file_name)
+        if file_system.is_file(
+            file_system.join(actual_source_path, file_name)
+        ):
             template_type = _get_template_type(src_file_under_dir)
             yield (src_file_under_dir, dest_file_under_dir, template_type)
-        elif moban_fs.is_dir(fs.path.join(actual_source_path, file_name)):
+        elif file_system.is_dir(
+            file_system.join(actual_source_path, file_name)
+        ):
             for a_triple in _listing_directory_files_recusively(
                 src_file_under_dir, real_src_file, dest_file_under_dir
             ):
@@ -73,7 +75,7 @@ def _listing_directory_files_recusively(source, actual_source_path, dest):
 
 
 def _get_template_type(template_file):
-    _, extension = fs.path.splitext(template_file)
+    _, extension = file_system.splitext(template_file)
     if extension:
         template_type = extension[1:]
     else:
