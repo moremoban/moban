@@ -60,14 +60,10 @@ def _listing_directory_files_recusively(source, actual_source_path, dest):
         src_file_under_dir = file_system.path_join(source, file_name)
         dest_file_under_dir = file_system.path_join(dest, file_name)
         real_src_file = file_system.path_join(actual_source_path, file_name)
-        if file_system.is_file(
-            file_system.path_join(actual_source_path, file_name)
-        ):
+        if file_system.is_file(real_src_file):
             template_type = _get_template_type(src_file_under_dir)
             yield (src_file_under_dir, dest_file_under_dir, template_type)
-        elif file_system.is_dir(
-            file_system.path_join(actual_source_path, file_name)
-        ):
+        elif file_system.is_dir(real_src_file):
             for a_triple in _listing_directory_files_recusively(
                 src_file_under_dir, real_src_file, dest_file_under_dir
             ):
