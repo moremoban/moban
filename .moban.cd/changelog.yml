@@ -4,6 +4,12 @@ releases:
   - changes:
       - action: Updated
         details:
+          - "`#205`: support python file system 2"
+    date: tba
+    version: 0.6.0
+  - changes:
+      - action: Updated
+        details:
           - "`#277`: Restored dependency git-url-parse, replacing incompatible
              giturlparse which was used during moban 0.4.x"
           - "`#281`: Fixed unicode support on Python 2.7"
