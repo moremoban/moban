@@ -180,7 +180,7 @@ def expand_template_directory(directory):
     log.debug("Expanding %s..." % directory)
 
     translated_directory = None
-    if ":" in directory and directory[1] != ":":
+    if ":" in directory and "://" not in directory:
         library_or_repo_name, relative_path = directory.split(":")
         potential_repo_path = file_system.path_join(
             repo.get_moban_home(), library_or_repo_name

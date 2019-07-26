@@ -117,6 +117,11 @@ class TestTutorial:
         check_file = os.path.join("templated-folder", "my")
         self._raw_moban(["moban"], folder, expected, check_file)
 
+    def test_level_9(self):
+        expected = "pypi-mobans: moban dependency as pypi package"
+        folder = "level-9-moban-dependency-as-pypi-package"
+        self._raw_moban(["moban"], folder, expected, "test.txt")
+
     def test_level_9_deprecated(self):
         expected = "pypi-mobans: moban dependency as pypi package"
         folder = "deprecated-level-9-moban-dependency-as-pypi-package"
