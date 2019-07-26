@@ -17,7 +17,7 @@ class PypiFSOpener(Opener):
         return osfs
 
 
-class RepoOpener(Opener):
+class RepoFSOpener(Opener):
     protocols = ["repo"]
 
     def open_fs(self, fs_url, parse_result, writeable, create, cwd):

@@ -127,6 +127,11 @@ class TestTutorial:
         folder = "deprecated-level-9-moban-dependency-as-pypi-package"
         self._raw_moban(["moban"], folder, expected, "test.txt")
 
+    def test_level_10(self):
+        expected = "pypi-mobans: moban dependency as git repo"
+        folder = "level-10-moban-dependency-as-git-repo"
+        self._raw_moban(["moban"], folder, expected, "test.txt")
+
     def test_level_10_deprecated(self):
         expected = "pypi-mobans: moban dependency as git repo"
         folder = "deprecated-level-10-moban-dependency-as-git-repo"
