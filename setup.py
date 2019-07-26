@@ -38,12 +38,16 @@ except (ValueError, UnicodeError, locale.Error):
 
 NAME = "moban"
 AUTHOR = "C. W."
-VERSION = "0.5.1"
+VERSION = "0.6.0"
 EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
 ENTRY_POINTS = {
     "console_scripts": [
-        "moban = moban.main:main"
+        "moban = moban.main:main",
+    ],
+    "fs.opener": [
+        "pypi = moban.fs_openers:PypiFSOpener",
+        "repo = moban.fs_openers:RepoFSOpener",
     ],
 }
 DESCRIPTION = (
