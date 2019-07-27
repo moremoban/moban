@@ -1,4 +1,5 @@
 import re
+import logging
 from importlib import import_module
 
 from moban import constants, exceptions
@@ -6,6 +7,7 @@ from jinja2 import Template, Environment, FileSystemLoader
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
 from jinja2.exceptions import TemplateNotFound
+from jinja2_fsloader import FSLoader
 
 JINJA2_LIBRARIES = "^moban_jinja2_.+$"
 JINJA2_EXENSIONS = [
@@ -15,6 +17,7 @@ JINJA2_EXENSIONS = [
     "moban.jinja2.tests.files",
 ]
 JINJA2_THIRD_PARTY_EXTENSIONS = ["jinja2.ext.do", "jinja2.ext.loopcontrols"]
+LOG = logging.getLogger(__name__)
 
 
 class PluginMixin:
@@ -62,9 +65,10 @@ class Engine(object):
         :param list temp_dirs: a list of template directories
         :param dict options: a dictionary containing environmental parameters
         """
+        LOG.debug("Jinja template dirs: %s", template_dirs)
         load_jinja2_extensions()
         self.template_dirs = template_dirs
-        template_loader = FileSystemLoader(template_dirs)
+        template_loader = FSLoader(template_dirs)
         env_params = dict(
             loader=template_loader,
             keep_trailing_newline=True,

@@ -25,9 +25,9 @@ class TestCustomOptions:
             "-c",
             self.config_file,
             "-cd",
-            "/home/developer/configuration",
+            ".",
             "-td",
-            "/home/developer/templates",
+            ".",
             "-t",
             "a.jj2",
         ]
@@ -388,7 +388,7 @@ class TestComplexOptions:
             f.write("hello: world")
 
     @patch(
-        "moban.utils.verify_the_existence_of_directories", return_value=True
+        "moban.utils.verify_the_existence_of_directories", return_value='.'
     )
     def test_single_command(self, _):
         test_args = ["moban"]

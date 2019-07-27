@@ -1,3 +1,4 @@
+import os
 import sys
 import logging
 
@@ -28,6 +29,8 @@ class MobanFactory(PluginManager):
         self.options_registry.update(template_types)
 
     def get_engine(self, template_type, template_dirs, context_dirs):
+        template_dirs = list(expand_template_directories(template_dirs))
+        template_dirs = utils.verify_the_existence_of_directories(template_dirs)
         if template_type in self.options_registry:
             custom_engine_spec = self.options_registry[template_type]
             engine_cls = self.load_me_now(
@@ -57,8 +60,6 @@ class MobanFactory(PluginManager):
 
 class MobanEngine(object):
     def __init__(self, template_dirs, context_dirs, engine):
-        template_dirs = list(expand_template_directories(template_dirs))
-        utils.verify_the_existence_of_directories(template_dirs)
         context_dirs = expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
         self.template_dirs = template_dirs
@@ -183,9 +184,12 @@ def expand_template_directory(directory):
     translated_directory = None
     if ":" in directory and directory[1] != ":" and "://" not in directory:
         translated_directory = deprecated_moban_path_notation(directory)
+    elif "://" in directory:
+        translated_directory = directory
     else:
         # local template path
-        translated_directory = file_system.abspath(directory)
+        translated_directory = os.path.normcase(os.path.abspath(directory))
+        translated_directory = file_system.fs_url(translated_directory)
     return translated_directory
 
 

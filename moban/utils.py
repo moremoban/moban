@@ -1,4 +1,5 @@
 import os
+import fs
 import sys
 import stat
 import errno
@@ -6,7 +7,7 @@ import logging
 
 from moban import constants, exceptions, file_system
 
-log = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
 
 
@@ -34,8 +35,15 @@ def search_file(base_dir, file_name):
     the_file = file_name
     if not file_system.exists(the_file):
         if base_dir:
-            the_file = file_system.path_join(base_dir, file_name)
-            if not file_system.exists(the_file):
+            try:
+                with fs.open_fs(base_dir) as fs_handle:
+                    if fs_handle.exists(the_file):
+                        the_file = fs_handle.geturl(file_name)
+                    else:
+                        raise IOError(
+                            constants.ERROR_DATA_FILE_NOT_FOUND % (file_name, the_file)
+                        )
+            except fs.errors.CreateFailed:
                 raise IOError(
                     constants.ERROR_DATA_FILE_NOT_FOUND % (file_name, the_file)
                 )
@@ -90,21 +98,31 @@ def pip_install(packages):
 
 def get_template_path(template_dirs, template):
     for a_dir in template_dirs:
-        template_file_exists = file_system.exists(
-            file_system.path_join(a_dir, template)
-        ) and file_system.is_file(file_system.path_join(a_dir, template))
+        try:
+            with fs.open_fs(a_dir) as fs_handle:
+                template_file_exists = (
+                    fs_handle.exists(template)
+                    and fs_handle.isfile(template))
 
-        if template_file_exists:
-            return file_system.path_join(a_dir, template)
+                if template_file_exists:
+                    if 'zip://' in a_dir:
+                        return '%s/%s' % (a_dir, template)
+                    return fs_handle.geturl(template)
+        except fs.errors.CreateFailed:
+            continue
     raise exceptions.FileNotFound
 
 
 def verify_the_existence_of_directories(dirs):
+    LOG.debug("Verifying the existence: %s", dirs)
     if not isinstance(dirs, list):
         dirs = [dirs]
 
+    results = []
+
     for directory in dirs:
-        if os.path.exists(directory):
+        if file_system.exists(directory):
+            results.append(directory)
             continue
         should_I_ignore = (
             constants.DEFAULT_CONFIGURATION_DIRNAME in directory
@@ -115,15 +133,19 @@ def verify_the_existence_of_directories(dirs):
             pass
         else:
             raise exceptions.DirectoryNotFound(
-                constants.MESSAGE_DIR_NOT_EXIST % os.path.abspath(directory)
+                constants.MESSAGE_DIR_NOT_EXIST % directory
             )
+    return results
 
 
 def find_file_in_template_dirs(src, template_dirs):
-    log.debug(template_dirs)
+    LOG.debug(template_dirs)
     for folder in template_dirs:
-        path = file_system.path_join(folder, src)
-        if file_system.exists(path):
-            return path
+        with fs.open_fs(folder) as fs_handle:
+            if fs_handle.exists(src):
+                if 'zip://' in folder:
+                    return "%s/%s" % (folder, src)
+                else:
+                    return fs_handle.geturl(src)
     else:
         return None

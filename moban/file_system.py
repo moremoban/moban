@@ -27,6 +27,7 @@ def log_fs_failure(function_in_this_module):
     return wrapper
 
 
+@log_fs_failure
 @contextmanager
 def open_fs(path):
     path = to_unicode(path)
@@ -41,6 +42,7 @@ def open_fs(path):
         the_fs.close()
 
 
+@log_fs_failure
 def read_unicode(path):
     path = to_unicode(path)
     dir_name = fs.path.dirname(path)
@@ -50,6 +52,16 @@ def read_unicode(path):
             return file_handle.read()
 
 
+@log_fs_failure
+def read_binary(path):
+    path = to_unicode(path)
+    dir_name = fs.path.dirname(path)
+    the_file_name = fs.path.basename(path)
+    with fs.open_fs(dir_name) as fs_system:
+        return fs_system.readbytes(the_file_name)
+
+
+@log_fs_failure
 def write_bytes(filename, bytes_content):
     filename = to_unicode(filename)
     dir_name = fs.path.dirname(filename)
@@ -58,7 +70,13 @@ def write_bytes(filename, bytes_content):
         the_fs.writebytes(the_file_name, bytes_content)
 
 
+@log_fs_failure
 def is_dir(path):
+    if 'zip://' in path:
+        zip_file, folder = path.split('.zip/')
+        with fs.open_fs(zip_file+'.zip') as the_fs:
+            return the_fs.isdir(folder)
+
     path = to_unicode(path)
     dir_name = fs.path.dirname(path)
     the_file_name = fs.path.basename(path)
@@ -66,6 +84,7 @@ def is_dir(path):
         return the_fs.isdir(the_file_name)
 
 
+@log_fs_failure
 def is_file(path):
     path = to_unicode(path)
     dir_name = fs.path.dirname(path)
@@ -74,10 +93,18 @@ def is_file(path):
         return the_fs.isfile(the_file_name)
 
 
+@log_fs_failure
 def exists(path):
     path = to_unicode(path)
+    if 'zip://' in path:
+        try:
+            with fs.open_fs(path) as the_fs:
+                return True
+        except fs.errors.CreateFailed:
+            return False
     dir_name = fs.path.dirname(path)
     the_file_name = fs.path.basename(path)
+
     try:
         with fs.open_fs(dir_name) as the_fs:
             return the_fs.exists(the_file_name)
@@ -85,6 +112,7 @@ def exists(path):
         return False
 
 
+@log_fs_failure
 def list_dir(path):
     path = to_unicode(path)
     dir_name = fs.path.dirname(path)
@@ -102,6 +130,16 @@ def abspath(path):
 
     with fs.open_fs(dir_name) as the_fs:
         return the_fs.getsyspath(the_file_name)
+
+
+@log_fs_failure
+def fs_url(path):
+    path = to_unicode(path)
+    dir_name = fs.path.dirname(path)
+    the_file_name = fs.path.basename(path)
+
+    with fs.open_fs(dir_name) as the_fs:
+        return the_fs.geturl(the_file_name)
 
 
 def to_unicode(path):

@@ -10,12 +10,15 @@
 """
 import sys
 import argparse
+import logging
 
 from moban import plugins, reporter, constants, mobanfile, exceptions
 from moban.utils import merge
 from moban._version import __version__
 from moban.hashstore import HASH_STORE
 from moban.data_loaders.manager import load_data
+
+LOG = logging.getLogger()
 
 
 def main():
@@ -38,6 +41,7 @@ def main():
             exceptions.NoThirdPartyEngine,
             exceptions.MobanfileGrammarException,
         ) as e:
+            LOG.exception(e)
             reporter.report_error_message(str(e))
             moban_exit(options[constants.LABEL_EXIT_CODE], constants.ERROR)
     else:

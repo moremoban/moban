@@ -1,4 +1,4 @@
-from moban import utils, constants
+from moban import utils, constants, file_system
 from lml.plugin import PluginInfo
 
 
@@ -26,8 +26,7 @@ class ContentForwardEngine(object):
         real_file_name = utils.find_file_in_template_dirs(
             template_file, self.template_dirs
         )
-        with open(real_file_name, "rb") as file_handle:
-            return file_handle.read()
+        return file_system.read_binary(real_file_name)
 
     def get_template_from_string(self, string):
         return string

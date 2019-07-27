@@ -100,6 +100,23 @@ class TestTutorial:
         folder = "level-6-complex-configuration"
         self._raw_moban(["moban"], folder, expected, "a.output2")
 
+    def test_level_20(self):
+        expected = custom_dedent(
+            """
+        ========header============
+
+        world2
+
+        shijie
+
+        this demonstrates jinja2's include statement
+
+        ========footer============
+        """
+        )
+        folder = "level-20-templates-configs-in-zip-or-tar"
+        self._raw_moban(["moban"], folder, expected, "a.output2")
+
     def test_level_7(self):
         expected = custom_dedent(
             """
