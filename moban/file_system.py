@@ -2,8 +2,6 @@ import sys
 import logging
 from contextlib import contextmanager
 
-from moban import reporter
-
 import fs
 import fs.path
 
@@ -19,6 +17,7 @@ def log_fs_failure(function_in_this_module):
         try:
             return function_in_this_module(*args, **kwds)
         except fs.errors.CreateFailed:
+            from moban import reporter
             message = "Failed to open %s" % args[0]
             LOG.debug(message)
             reporter.report_error_message(message)
