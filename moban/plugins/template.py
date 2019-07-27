@@ -4,6 +4,7 @@ import logging
 from moban import repo, utils, reporter, constants, exceptions, file_system
 from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
+from moban.deprecated import deprecated
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES
 from moban.plugins.strategy import Strategy
@@ -181,28 +182,35 @@ def expand_template_directory(directory):
 
     translated_directory = None
     if ":" in directory and directory[1] != ":" and "://" not in directory:
-        library_or_repo_name, relative_path = directory.split(":")
-        potential_repo_path = file_system.path_join(
-            repo.get_moban_home(), library_or_repo_name
-        )
-        if file_system.exists(potential_repo_path):
-            # expand repo template path
-            if relative_path:
-                translated_directory = file_system.path_join(
-                    potential_repo_path, relative_path
-                )
-            else:
-                translated_directory = potential_repo_path
-        else:
-            # expand pypi template path
-            library_path = LIBRARIES.resource_path_of(library_or_repo_name)
-            if relative_path:
-                translated_directory = file_system.path_join(
-                    library_path, relative_path
-                )
-            else:
-                translated_directory = library_path
+        translated_directory = deprecated_moban_path_notation(directory)
     else:
         # local template path
         translated_directory = file_system.abspath(directory)
+    return translated_directory
+
+
+@deprecated(constants.MESSAGE_DEPRECATE_MOBAN_NOTATION_SINCE_0_6_0)
+def deprecated_moban_path_notation(directory):
+    translated_directory = None
+    library_or_repo_name, relative_path = directory.split(":")
+    potential_repo_path = file_system.path_join(
+        repo.get_moban_home(), library_or_repo_name
+    )
+    if file_system.exists(potential_repo_path):
+        # expand repo template path
+        if relative_path:
+            translated_directory = file_system.path_join(
+                potential_repo_path, relative_path
+            )
+        else:
+            translated_directory = potential_repo_path
+    else:
+        # expand pypi template path
+        library_path = LIBRARIES.resource_path_of(library_or_repo_name)
+        if relative_path:
+            translated_directory = file_system.path_join(
+                library_path, relative_path
+            )
+        else:
+            translated_directory = library_path
     return translated_directory

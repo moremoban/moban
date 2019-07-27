@@ -25,6 +25,15 @@ def open_fs(path):
         the_fs.close()
 
 
+def read_unicode(path):
+    path = to_unicode(path)
+    dir_name = fs.path.dirname(path)
+    the_file_name = fs.path.basename(path)
+    with fs.open_fs(dir_name) as fs_system:
+        with fs_system.open(the_file_name) as file_handle:
+            return file_handle.read()
+
+
 def write_bytes(filename, bytes_content):
     filename = to_unicode(filename)
     dir_name = fs.path.dirname(filename)

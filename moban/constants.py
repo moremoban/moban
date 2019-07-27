@@ -128,3 +128,7 @@ MOBAN_ALL = "%s|%s" % (MOBAN_EXTENSIONS, MOBAN_TEMPLATES)
 MESSAGE_DEPRECATE_COPY_SINCE_0_4_0 = (
     "'%s:' is deprecated since 0.4.0! " + "Please use 'targets:' instead"
 ) % TEMPLATE_COPY
+MESSAGE_DEPRECATE_MOBAN_NOTATION_SINCE_0_6_0 = (
+    "File path notation is deprecated since 0.6.0! "
+    + "Please use pypi:// or repo:// notation instead"
+)
