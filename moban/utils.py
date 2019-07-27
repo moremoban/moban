@@ -61,9 +61,8 @@ def file_permissions(afile):
 
 
 def write_file_out(filename, content):
-    if PY2:
-        if isinstance(content, unicode):
-            content = content.encode("utf-8")
+    if PY2 and content.__class__.__name__ == "unicode":
+        content = content.encode("utf-8")
     dest_folder = os.path.dirname(filename)
     if dest_folder:
         mkdir_p(dest_folder)

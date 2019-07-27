@@ -65,9 +65,8 @@ def get_file_hash(afile):
 
 def get_hash(content):
     md5 = hashlib.md5()
-    if PY2:
-        if isinstance(content, unicode):
-            content = content.encode("utf-8")
+    if PY2 and content.__class__.__name__ == "unicode":
+        content = content.encode("utf-8")
     md5.update(content)
     return md5.digest().decode("latin1")
 
