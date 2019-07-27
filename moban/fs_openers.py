@@ -4,8 +4,10 @@ from moban.plugins.library import LIBRARIES
 import fs.path
 from fs.osfs import OSFS
 from fs.opener import Opener
+from fs.opener.registry import registry
 
 
+@registry.install
 class PypiFSOpener(Opener):
     protocols = ["pypi"]
 
@@ -17,6 +19,7 @@ class PypiFSOpener(Opener):
         return osfs
 
 
+@registry.install
 class RepoFSOpener(Opener):
     protocols = ["repo"]
 

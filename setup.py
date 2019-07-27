@@ -45,10 +45,6 @@ ENTRY_POINTS = {
     "console_scripts": [
         "moban = moban.main:main",
     ],
-    "fs.opener": [
-        "pypi = moban.fs_openers:PypiFSOpener",
-        "repo = moban.fs_openers:RepoFSOpener",
-    ],
 }
 DESCRIPTION = (
     "Yet another jinja2 cli command for static text generation"

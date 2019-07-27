@@ -12,9 +12,6 @@ master: index
 entry_points:
   console_scripts:
     - "moban = moban.main:main"
-  fs.opener:
-    - "pypi = moban.fs_openers:PypiFSOpener"
-    - "repo = moban.fs_openers:RepoFSOpener"
 company: Onni Software Ltd.
 copyright_year: 2017-2019
 copyright: 2017-2019 Onni Software Ltd. and its contributors

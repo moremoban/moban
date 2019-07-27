@@ -17,6 +17,7 @@ from moban.utils import merge
 from moban._version import __version__
 from moban.hashstore import HASH_STORE
 from moban.data_loaders.manager import load_data
+import moban.fs_openers  # noqa: F401
 
 LOG = logging.getLogger()
 

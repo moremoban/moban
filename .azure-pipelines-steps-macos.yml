@@ -6,7 +6,6 @@ steps:
       test ! -f rnd_requirements.txt || pip install -r rnd_requirements.txt
       pip install -r requirements.txt
       pip install -r tests/requirements.txt
-      python setup.py develop
     displayName: 'Setup dependencies'
   - script: |
       make
