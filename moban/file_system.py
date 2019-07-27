@@ -18,6 +18,7 @@ def log_fs_failure(function_in_this_module):
             return function_in_this_module(*args, **kwds)
         except fs.errors.CreateFailed:
             from moban import reporter
+
             message = "Failed to open %s" % args[0]
             LOG.debug(message)
             reporter.report_error_message(message)
