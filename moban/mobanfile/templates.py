@@ -1,8 +1,9 @@
-import fs
 import logging
 
 from moban import reporter, file_system
 from moban.utils import find_file_in_template_dirs
+
+import fs
 
 log = logging.getLogger(__name__)
 
@@ -42,10 +43,8 @@ def handle_template(template_file, output, template_dirs):
 
 def _list_dir_files(source, actual_source_path, dest):
     with fs.open_fs(actual_source_path) as fs_handle:
-        for file_name in fs_handle.listdir('.'):
-            if fs_handle.isfile(
-                    file_name
-            ):
+        for file_name in fs_handle.listdir("."):
+            if fs_handle.isfile(file_name):
                 # please note jinja2 does NOT like windows path
                 # hence the following statement looks like cross platform
                 #  src_file_under_dir = os.path.join(source, file_name)
@@ -59,7 +58,7 @@ def _list_dir_files(source, actual_source_path, dest):
 
 def _listing_directory_files_recusively(source, actual_source_path, dest):
     with fs.open_fs(actual_source_path) as fs_handle:
-        for file_name in fs_handle.listdir('.'):
+        for file_name in fs_handle.listdir("."):
             src_file_under_dir = file_system.path_join(source, file_name)
             dest_file_under_dir = file_system.path_join(dest, file_name)
             real_src_file = "%s/%s" % (actual_source_path, file_name)

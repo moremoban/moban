@@ -387,9 +387,7 @@ class TestComplexOptions:
         with open(self.data_file, "w") as f:
             f.write("hello: world")
 
-    @patch(
-        "moban.utils.verify_the_existence_of_directories", return_value='.'
-    )
+    @patch("moban.utils.verify_the_existence_of_directories", return_value=".")
     def test_single_command(self, _):
         test_args = ["moban"]
         with patch.object(sys, "argv", test_args):

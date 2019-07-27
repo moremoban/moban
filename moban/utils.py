@@ -1,11 +1,12 @@
 import os
-import fs
 import sys
 import stat
 import errno
 import logging
 
 from moban import constants, exceptions, file_system
+
+import fs
 
 LOG = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
@@ -41,7 +42,8 @@ def search_file(base_dir, file_name):
                         the_file = fs_handle.geturl(file_name)
                     else:
                         raise IOError(
-                            constants.ERROR_DATA_FILE_NOT_FOUND % (file_name, the_file)
+                            constants.ERROR_DATA_FILE_NOT_FOUND
+                            % (file_name, the_file)
                         )
             except fs.errors.CreateFailed:
                 raise IOError(
@@ -100,13 +102,13 @@ def get_template_path(template_dirs, template):
     for a_dir in template_dirs:
         try:
             with fs.open_fs(a_dir) as fs_handle:
-                template_file_exists = (
-                    fs_handle.exists(template)
-                    and fs_handle.isfile(template))
+                template_file_exists = fs_handle.exists(
+                    template
+                ) and fs_handle.isfile(template)
 
                 if template_file_exists:
-                    if 'zip://' in a_dir:
-                        return '%s/%s' % (a_dir, template)
+                    if "zip://" in a_dir:
+                        return "%s/%s" % (a_dir, template)
                     return fs_handle.geturl(template)
         except fs.errors.CreateFailed:
             continue
@@ -143,7 +145,7 @@ def find_file_in_template_dirs(src, template_dirs):
     for folder in template_dirs:
         with fs.open_fs(folder) as fs_handle:
             if fs_handle.exists(src):
-                if 'zip://' in folder:
+                if "zip://" in folder:
                     return "%s/%s" % (folder, src)
                 else:
                     return fs_handle.geturl(src)

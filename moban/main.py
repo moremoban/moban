@@ -9,8 +9,8 @@
 
 """
 import sys
-import argparse
 import logging
+import argparse
 
 from moban import plugins, reporter, constants, mobanfile, exceptions
 from moban.utils import merge

@@ -72,9 +72,9 @@ def write_bytes(filename, bytes_content):
 
 @log_fs_failure
 def is_dir(path):
-    if 'zip://' in path:
-        zip_file, folder = path.split('.zip/')
-        with fs.open_fs(zip_file+'.zip') as the_fs:
+    if "zip://" in path:
+        zip_file, folder = path.split(".zip/")
+        with fs.open_fs(zip_file + ".zip") as the_fs:
             return the_fs.isdir(folder)
 
     path = to_unicode(path)
@@ -96,7 +96,7 @@ def is_file(path):
 @log_fs_failure
 def exists(path):
     path = to_unicode(path)
-    if 'zip://' in path:
+    if "zip://" in path:
         try:
             with fs.open_fs(path) as the_fs:
                 return True

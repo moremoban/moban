@@ -66,7 +66,7 @@ def test_unknown_template_type():
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_tmpl_directries():
-    ENGINES.get_engine("jj2", 'idontexist', "")
+    ENGINES.get_engine("jj2", "idontexist", "")
 
 
 @raises(exceptions.DirectoryNotFound)
