@@ -4,7 +4,7 @@ releases:
   - changes:
       - action: Updated
         details:
-          - "`#205`: support python file system 2"
+          - "`#205`: support `pyFilesystem2 <https://pyfilesystem2.readthedocs.io/>`_"
     date: tba
     version: 0.6.0
   - changes:
