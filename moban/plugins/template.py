@@ -185,7 +185,7 @@ def expand_template_directory(directory):
         translated_directory = deprecated_moban_path_notation(directory)
     else:
         # local template path
-        translated_directory = directory
+        translated_directory = file_system.abspath(directory)
     return translated_directory
 
 
