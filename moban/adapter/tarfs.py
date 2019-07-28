@@ -1,5 +1,6 @@
-import six
 import os
+
+import six
 from fs.tarfs import TarFS, ReadTarFS, WriteTarFS
 
 
@@ -32,7 +33,10 @@ class EnhancedTarFS(TarFS):
 
         if write:
             return WriteTarFS(
-                file, compression=compression, encoding=encoding, temp_fs=temp_fs
+                file,
+                compression=compression,
+                encoding=encoding,
+                temp_fs=temp_fs,
             )
         else:
             return EnhancedReadTarFS(file, encoding=encoding)

@@ -1,7 +1,7 @@
 from moban import repo
 from moban.adapter.osfs import EnhancedOSFS
-from moban.adapter.zipfs import EnhancedZipFS
 from moban.adapter.tarfs import EnhancedTarFS
+from moban.adapter.zipfs import EnhancedZipFS
 from moban.plugins.library import LIBRARIES
 
 import fs
@@ -57,16 +57,11 @@ class TarOpener(Opener):
 
     protocols = ["tar"]
 
-    def open_fs(
-        self,
-        fs_url,
-        parse_result,
-        writeable,
-        create,
-        cwd,
-    ):
+    def open_fs(self, fs_url, parse_result, writeable, create, cwd):
         if not create and writeable:
-            raise fs.errors.NotWriteable("Unable to open existing TAR file for writing")
+            raise fs.errors.NotWriteable(
+                "Unable to open existing TAR file for writing"
+            )
         tar_fs = EnhancedTarFS(parse_result.resource, write=create)
         return tar_fs
 
