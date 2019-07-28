@@ -1,10 +1,9 @@
-from moban import repo
-from moban.plugins.library import LIBRARIES
-
 import fs.path
+from moban import repo
 from fs.osfs import OSFS
 from fs.opener import Opener
 from fs.opener.registry import registry
+from moban.plugins.library import LIBRARIES
 
 
 @registry.install

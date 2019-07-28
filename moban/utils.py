@@ -4,9 +4,8 @@ import stat
 import errno
 import logging
 
-from moban import constants, exceptions, file_system
-
 import fs
+from moban import constants, exceptions, file_system
 
 LOG = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
@@ -38,7 +37,7 @@ def search_file(base_dir, file_name):
         if base_dir:
             try:
                 with file_system.open_fs(base_dir) as fs_handle:
-                    if fs_handle.exists(the_file):
+                    if fs_handle.exists(file_system.to_unicode(the_file)):
                         the_file = fs_handle.geturl(file_name)
                     else:
                         raise IOError(
@@ -142,7 +141,7 @@ def find_file_in_template_dirs(src, template_dirs):
     LOG.debug(template_dirs)
     for folder in template_dirs:
         with file_system.open_fs(folder) as fs_handle:
-            if fs_handle.exists(src):
+            if fs_handle.exists(file_system.to_unicode(src)):
                 return fs_handle.geturl(src)
     else:
         return None

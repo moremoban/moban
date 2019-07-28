@@ -3,6 +3,7 @@ import sys
 import stat
 from shutil import rmtree
 
+import fs.path
 from mock import patch
 from nose import SkipTest
 from nose.tools import eq_, raises
@@ -14,8 +15,6 @@ from moban.utils import (
     file_permissions_copy,
 )
 from moban.exceptions import FileNotFound
-
-import fs.path
 
 
 def create_file(test_file, permission):

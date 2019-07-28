@@ -1,8 +1,7 @@
+import fs.path
 from mock import patch
 from nose.tools import eq_
 from moban.definitions import GitRequire, TemplateTarget
-
-import fs.path
 
 
 class TestFinder:

@@ -1,3 +1,4 @@
+import fs.path
 from mock import patch
 from moban.repo import (
     git_clone,
@@ -8,8 +9,6 @@ from moban.repo import (
 from nose.tools import eq_, raises
 from moban.exceptions import NoGitCommand
 from moban.definitions import GitRequire
-
-import fs.path
 
 
 @patch("appdirs.user_cache_dir", return_value="root")

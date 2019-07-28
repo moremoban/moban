@@ -1,6 +1,7 @@
 import os
 import sys
 
+import fs.path
 import moban.exceptions as exceptions
 from mock import patch
 from lml.plugin import PluginInfo
@@ -13,8 +14,6 @@ from moban.jinja2.engine import (
 )
 from moban.plugins.context import Context
 from moban.plugins.template import MobanEngine, expand_template_directories
-
-import fs.path
 
 USER_HOME = fs.path.join("user", "home", ".moban", "repos")
 
