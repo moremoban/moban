@@ -88,6 +88,11 @@ def is_dir(path):
         with fs.open_fs(zip_file + ".zip") as the_fs:
             return the_fs.isdir(folder)
 
+    if "tar://" in path:
+        zip_file, folder = path.split(".tar/")
+        with fs.open_fs(zip_file + ".tar") as the_fs:
+            return the_fs.isdir(folder)
+
     path = to_unicode(path)
     dir_name = fs.path.dirname(path)
     the_file_name = fs.path.basename(path)
@@ -108,6 +113,12 @@ def is_file(path):
 def exists(path):
     path = to_unicode(path)
     if "zip://" in path:
+        try:
+            with fs.open_fs(path) as the_fs:
+                return True
+        except fs.errors.CreateFailed:
+            return False
+    if "tar://" in path:
         try:
             with fs.open_fs(path) as the_fs:
                 return True

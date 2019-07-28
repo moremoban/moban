@@ -1,5 +1,5 @@
 configuration:
-  configuration_dir: 'custom-config'
+  configuration_dir: 'tar://custom-config.tar'
   template_dir:
     - zip://templates.zip
     - cool-templates
