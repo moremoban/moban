@@ -11,10 +11,10 @@ In the following example::
         - cool-templates
         - '.'
     targets:
-      - output: a.output
+      - output: 'tar://a.tar/a.output'
         configuration: data.yml
         template: template.in.zip.jj2
-      - output: a.output2
+      - output: 'zip://a.zip/a.output2'
         configuration: data2.yml
         template: subfolder/template.in.zip.jj2
 
@@ -32,7 +32,7 @@ Here is the command to launch it:
 
     moban
 
-'a.output' is the generated file::
+'a.output' is the generated file in a.tar::
 
     ========header============
     
@@ -44,7 +44,7 @@ Here is the command to launch it:
     
     ========footer============
 
-`a.output2` is::
+`a.output2` is in a.zip::
 
     ========header============
     

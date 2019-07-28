@@ -4,6 +4,7 @@ from textwrap import dedent
 
 from mock import patch
 from moban.main import main
+from moban import file_system
 from nose.tools import eq_
 
 
@@ -115,7 +116,7 @@ class TestTutorial:
         """
         )
         folder = "level-20-templates-configs-in-zip-or-tar"
-        self._raw_moban(["moban"], folder, expected, "a.output2")
+        self._raw_moban_with_fs(["moban"], folder, expected, "zip://a.zip/a.output2")
 
     def test_level_7(self):
         expected = custom_dedent(
@@ -306,6 +307,13 @@ class TestTutorial:
             _verify_content(output, expected)
         os.unlink(output)
 
+    def _raw_moban_with_fs(self, args, folder, expected, output):
+        os.chdir(os.path.join("docs", folder))
+        with patch.object(sys, "argv", args):
+            main()
+            _verify_content_with_fs(output, expected)
+        os.unlink(output.split('/')[2])  # fixme later
+
     def tearDown(self):
         if os.path.exists(".moban.hashes"):
             os.unlink(".moban.hashes")
@@ -316,3 +324,8 @@ def _verify_content(file_name, expected):
     with open(file_name, "r") as f:
         content = f.read()
         eq_(content, expected)
+
+
+def _verify_content_with_fs(file_name, expected):
+    content = file_system.read_unicode(file_name)
+    eq_(content, expected)

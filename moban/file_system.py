@@ -55,12 +55,23 @@ def open_fs(path):
 
 @log_fs_failure
 def read_unicode(path):
-    path = to_unicode(path)
-    dir_name = fs.path.dirname(path)
-    the_file_name = fs.path.basename(path)
-    with fs.open_fs(dir_name) as fs_system:
-        with fs_system.open(the_file_name) as file_handle:
-            return file_handle.read()
+    if "zip://" in path:
+        zip_file, folder = path.split(".zip/")
+        with fs.open_fs(zip_file + ".zip") as the_fs:
+            with the_fs.open(folder) as file_handle:
+                return file_handle.read()
+    elif "tar://" in path:
+        tar_file, folder = path.split(".tar/")
+        with fs.open_fs(tar_file + ".tar") as the_fs:
+            with the_fs.open(folder) as file_handle:
+                return file_handle.read()
+    else:
+        path = to_unicode(path)
+        dir_name = fs.path.dirname(path)
+        the_file_name = fs.path.basename(path)
+        with fs.open_fs(dir_name) as fs_system:
+            with fs_system.open(the_file_name) as file_handle:
+                return file_handle.read()
 
 
 @log_fs_failure
@@ -74,11 +85,21 @@ def read_binary(path):
 
 @log_fs_failure
 def write_bytes(filename, bytes_content):
-    filename = to_unicode(filename)
-    dir_name = fs.path.dirname(filename)
-    the_file_name = fs.path.basename(filename)
-    with fs.open_fs(dir_name) as the_fs:
-        the_fs.writebytes(the_file_name, bytes_content)
+    if "zip://" in filename:
+        zip_file, folder = filename.split(".zip/")
+        with fs.open_fs(zip_file + ".zip", create=True) as the_fs:
+            the_fs.writebytes(folder, bytes_content)
+
+    elif "tar://" in filename:
+        tar_file, folder = filename.split(".tar/")
+        with fs.open_fs(tar_file + ".tar", create=True) as the_fs:
+            the_fs.writebytes(folder, bytes_content)
+    else:
+        filename = to_unicode(filename)
+        dir_name = fs.path.dirname(filename)
+        the_file_name = fs.path.basename(filename)
+        with fs.open_fs(dir_name) as the_fs:
+            the_fs.writebytes(the_file_name, bytes_content)
 
 
 @log_fs_failure
