@@ -4,8 +4,9 @@ import stat
 import errno
 import logging
 
-import fs
 from moban import constants, exceptions, file_system
+
+import fs
 
 LOG = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2

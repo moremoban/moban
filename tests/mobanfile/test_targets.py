@@ -1,10 +1,11 @@
 import uuid
 
-import fs.path
 from nose.tools import eq_, raises
 from moban.mobanfile import targets
 from moban.exceptions import GroupTargetNotFound
 from moban.definitions import TemplateTarget
+
+import fs.path
 
 TEMPLATE = "a.jj2"
 OUTPUT = "a.output"

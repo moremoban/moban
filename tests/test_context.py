@@ -1,8 +1,9 @@
 import os
 
-import fs.path
 from nose.tools import eq_
 from moban.plugins.context import Context
+
+import fs.path
 
 
 def test_context():

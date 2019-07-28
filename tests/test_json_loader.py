@@ -1,6 +1,7 @@
-import fs.path
 from nose.tools import eq_
 from moban.data_loaders.json_loader import open_json
+
+import fs.path
 
 
 def test_open_json():

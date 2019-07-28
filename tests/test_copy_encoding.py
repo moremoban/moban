@@ -1,6 +1,7 @@
-import fs.path
 from moban.copy import ContentForwardEngine
 from nose.tools import eq_
+
+import fs.path
 
 
 class TestCopyEncoding:

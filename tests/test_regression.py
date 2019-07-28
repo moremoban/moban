@@ -3,10 +3,11 @@ import sys
 import filecmp
 from textwrap import dedent
 
-import fs.path
 from mock import patch
 from moban.main import main
 from nose.tools import eq_
+
+import fs.path
 
 
 def custom_dedent(long_texts):

@@ -1,12 +1,13 @@
 import os
 
-import fs.path
 from mock import patch
 from nose.tools import eq_
 from moban.plugins import ENGINES
 from moban.definitions import TemplateTarget
 from moban.jinja2.engine import Engine
 from moban.data_loaders.yaml import open_yaml
+
+import fs.path
 
 MODULE = "moban.plugins.template"
 
