@@ -29,7 +29,7 @@ def log_fs_failure(function_in_this_module):
 
 @log_fs_failure
 @contextmanager
-def open_fs(path):
+def open_file(path):
     path = to_unicode(path)
     dir_name = fs.path.dirname(path)
     the_file_name = fs.path.basename(path)
@@ -39,6 +39,17 @@ def open_fs(path):
         yield f
     finally:
         f.close()
+        the_fs.close()
+
+
+@log_fs_failure
+@contextmanager
+def open_fs(path):
+    path = to_unicode(path)
+    the_fs = fs.open_fs(path)
+    try:
+        yield the_fs
+    finally:
         the_fs.close()
 
 
