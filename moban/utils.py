@@ -76,7 +76,7 @@ def write_file_out(filename, content):
     if PY2 and content.__class__.__name__ == "unicode":
         content = content.encode("utf-8")
 
-    if "zip://" not in filename or "tar://" not in filename:
+    if "zip://" not in filename and "tar://" not in filename:
         # fix me
         dest_folder = os.path.dirname(filename)
         if dest_folder:
