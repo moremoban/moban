@@ -1,6 +1,6 @@
-https://github.com/moremoban/moban-handlebars/archive/dev.zip
-https://github.com/moremoban/jinja2-fsloader/archive/master.zip
 https://github.com/moremoban/pyfilesystem2/archive/master.zip
+https://github.com/moremoban/jinja2-fsloader/archive/master.zip
+https://github.com/moremoban/moban-handlebars/archive/dev.zip
 
 
 
