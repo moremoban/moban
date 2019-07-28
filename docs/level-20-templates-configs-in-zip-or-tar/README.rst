@@ -5,7 +5,7 @@ On top of level 6, you could have files in a zip or tar.
 In the following example::
 
     configuration:
-      configuration_dir: 'custom-config'
+      configuration_dir: 'tar://custom-config.tar'
       template_dir:
         - zip://templates.zip
         - cool-templates
