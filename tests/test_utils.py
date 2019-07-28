@@ -117,7 +117,7 @@ def test_get_template_path():
             os.path.join("tests", "fixtures", "template-tests", "a.jj2")
         )
     )
-    eq_(template_path, expected)
+    eq_(template_path.lower(), expected.replace('\\', '/').lower())
 
 
 @patch("subprocess.check_call")

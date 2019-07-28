@@ -83,7 +83,7 @@ class MobanEngine(object):
     def render_to_file(self, template_file, data_file, output_file):
         self.file_count = 1
         data = self.context.get_data(data_file)
-        template = self.engine.get_template(template_file)
+        template = self.engine.get_template(file_system.to_unicode(template_file))
         template_abs_path = utils.get_template_path(
             self.template_dirs, template_file
         )

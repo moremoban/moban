@@ -101,6 +101,7 @@ def get_template_path(template_dirs, template):
     for a_dir in template_dirs:
         try:
             with file_system.open_fs(a_dir) as fs_handle:
+                template = file_system.to_unicode(template)
                 template_file_exists = fs_handle.exists(
                     template
                 ) and fs_handle.isfile(template)
