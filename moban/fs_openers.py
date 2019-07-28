@@ -8,8 +8,6 @@ import fs.path
 from fs.opener import Opener
 from fs.opener.registry import registry
 
-# FS_VERSION = _version_count(fs.__version__)
-
 
 @registry.install
 class PypiFSOpener(Opener):
@@ -42,14 +40,7 @@ class ZipOpener(Opener):
 
     protocols = ["zip"]
 
-    def open_fs(
-        self,
-        fs_url,  # type: Text
-        parse_result,  # type: ParseResult
-        writeable,  # type: bool
-        create,  # type: bool
-        cwd,  # type: Text
-    ):
+    def open_fs(self, fs_url, parse_result, writeable, create, cwd):
         if not create and writeable:
             raise fs.errors.NotWriteable(
                 "Unable to open existing ZIP file for writing"
@@ -65,26 +56,10 @@ class OSFSOpener(Opener):
 
     protocols = ["file", "osfs"]
 
-    def open_fs(
-        self,
-        fs_url,  # type: Text
-        parse_result,  # type: ParseResult
-        writeable,  # type: bool
-        create,  # type: bool
-        cwd,  # type: Text
-    ):
-        # type: (...) -> OSFS
+    def open_fs(self, fs_url, parse_result, writeable, create, cwd):
         from os.path import abspath, expanduser, normpath, join
 
         _path = abspath(join(cwd, expanduser(parse_result.resource)))
         path = normpath(_path)
         osfs = EnhancedOSFS(path, create=create)
         return osfs
-
-
-def _version_count(version):
-    tokens = version.split(".")
-    sum = 0
-    for index, token in enumerate(reversed(tokens)):
-        sum = sum + int(token) * (10 ** index)
-    return sum
