@@ -1,6 +1,8 @@
 import os
+import sys
 
 from moban import constants
+PY2 = sys.version_info[0] == 2
 
 
 class GitRequire(object):
@@ -43,9 +45,9 @@ class TemplateTarget(object):
         output,
         template_type=constants.DEFAULT_TEMPLATE_TYPE,
     ):
-        self.template_file = template_file
-        self.data_file = data_file
-        self.original_output = output
+        self.template_file = to_unicode(template_file)
+        self.data_file = to_unicode(data_file)
+        self.original_output = to_unicode(output)
         self.template_type = template_type
         self.output = self.original_output
 
@@ -53,7 +55,7 @@ class TemplateTarget(object):
 
     def set_template_type(self, new_template_type):
         self.template_type = new_template_type
-        if self.original_output.endswith(self.template_type):
+        if self.original_output.endswith(to_unicode(self.template_type)):
             self.output, _ = os.path.splitext(self.original_output)
         else:
             self.output = self.original_output
@@ -73,3 +75,9 @@ class TemplateTarget(object):
             self.output,
             self.template_type,
         )
+
+
+def to_unicode(path):
+    if PY2 and path.__class__.__name__ != "unicode":
+        return u"".__class__(path)
+    return path
