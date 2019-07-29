@@ -252,6 +252,27 @@ class TestTutorial:
             ),
         )
 
+    def test_level_21_copy_templates_into_zips(self):
+        expected = "test file\n"
+
+        folder = "level-21-copy-templates-into-an-alien-file-system"
+        criterias = [
+            ["zip://my.zip/simple.file", expected],
+            [
+                "zip://my.zip/target_without_template_type",
+                "file extension will trigger copy engine\n",
+            ],
+            [
+                "zip://my.zip/target_in_short_form",
+                (
+                    "it is OK to have a short form, "
+                    + "but the file to be 'copied' shall have 'copy' extension, "
+                    + "so as to trigger ContentForwardEngine, 'copy' engine.\n"
+                ),
+            ],
+        ]
+        self._raw_moban_with_fs2(["moban"], folder, criterias)
+
     def test_level_16_group_targets_using_template_type(self):
         expected = "test file\n"
 
@@ -314,6 +335,15 @@ class TestTutorial:
         with patch.object(sys, "argv", args):
             main()
             _verify_content_with_fs(output, expected)
+        os.unlink(output.split("/")[2])  # fixme later
+
+    def _raw_moban_with_fs2(self, args, folder, criterias):
+        os.chdir(os.path.join("docs", folder))
+        with patch.object(sys, "argv", args):
+            main()
+
+            for output, expected in criterias:
+                _verify_content_with_fs(output, expected)
         os.unlink(output.split("/")[2])  # fixme later
 
     def tearDown(self):

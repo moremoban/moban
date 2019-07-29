@@ -6,6 +6,7 @@ from moban import repo, utils, reporter, constants, exceptions, file_system
 from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
 from moban.deprecated import deprecated
+from moban.buffered_writer import BufferedWriter
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES
 from moban.plugins.strategy import Strategy
@@ -68,6 +69,7 @@ class MobanEngine(object):
         self.engine = engine
         self.templated_count = 0
         self.file_count = 0
+        self.buffered_writer = BufferedWriter()
 
     def report(self):
         if self.templated_count == 0:
@@ -96,6 +98,7 @@ class MobanEngine(object):
         if flag:
             reporter.report_templating(template_file, output_file)
             self.templated_count += 1
+        self.buffered_writer.close()
 
     def render_string_to_file(
         self, template_in_string, data_file, output_file
@@ -110,6 +113,7 @@ class MobanEngine(object):
         if flag:
             reporter.report_templating(template_abs_path, output_file)
             self.templated_count += 1
+        self.buffered_writer.close()
 
     def apply_template(self, template_abs_path, template, data, output_file):
         rendered_content = self.engine.apply_template(
@@ -124,21 +128,26 @@ class MobanEngine(object):
                 output_file, rendered_content, template_abs_path
             )
             if flag:
-                utils.write_file_out(output_file, rendered_content)
-                utils.file_permissions_copy(template_abs_path, output_file)
+                self.buffered_writer.write_file_out(
+                    output_file, rendered_content
+                )
+                if "zip://" not in output_file and "tar://" not in output_file:
+                    utils.file_permissions_copy(template_abs_path, output_file)
             return flag
         except exceptions.FileNotFound:
-            utils.write_file_out(output_file, rendered_content)
+            self.buffered_writer.write_file_out(output_file, rendered_content)
             return True
 
     def render_to_files(self, array_of_template_targets):
         sta = Strategy(array_of_template_targets)
+
         sta.process()
         choice = sta.what_to_do()
         if choice == Strategy.DATA_FIRST:
             self._render_with_finding_data_first(sta.data_file_index)
         else:
             self._render_with_finding_template_first(sta.template_file_index)
+        self.buffered_writer.close()
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():

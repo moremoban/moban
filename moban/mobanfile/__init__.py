@@ -109,6 +109,7 @@ def _iterate_list_of_dicts(list_of_dict):
 
 def handle_targets(merged_options, targets):
     list_of_templating_parameters = parse_targets(merged_options, targets)
+
     jobs_for_each_engine = OrderedDict()
 
     for target in list_of_templating_parameters:

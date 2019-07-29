@@ -77,10 +77,19 @@ def read_unicode(path):
 @log_fs_failure
 def read_binary(path):
     path = to_unicode(path)
-    dir_name = fs.path.dirname(path)
-    the_file_name = fs.path.basename(path)
-    with fs.open_fs(dir_name) as fs_system:
-        return fs_system.readbytes(the_file_name)
+    if "zip://" in path:
+        zip_file, folder = path.split(".zip/")
+        with fs.open_fs(zip_file + ".zip") as the_fs:
+            return the_fs.readbytes(folder)
+    elif "tar://" in path:
+        tar_file, folder = path.split(".tar/")
+        with fs.open_fs(tar_file + ".tar") as the_fs:
+            return the_fs.readbytes(folder)
+    else:
+        dir_name = fs.path.dirname(path)
+        the_file_name = fs.path.basename(path)
+        with fs.open_fs(dir_name) as fs_system:
+            return fs_system.readbytes(the_file_name)
 
 
 @log_fs_failure
@@ -133,18 +142,39 @@ def is_file(path):
 @log_fs_failure
 def exists(path):
     path = to_unicode(path)
+
     if "zip://" in path:
-        try:
-            with fs.open_fs(path) as the_fs:
-                return True
-        except fs.errors.CreateFailed:
-            return False
+        if path.endswith(".zip"):
+            zip_file, folder = path, "/"
+            try:
+                with fs.open_fs(zip_file) as the_fs:
+                    return True
+            except fs.errors.CreateFailed:
+                return False
+        else:
+            zip_file, folder = path.split(".zip/")
+            try:
+                with fs.open_fs(zip_file + ".zip") as the_fs:
+                    return the_fs.exists(folder)
+            except fs.errors.CreateFailed:
+                return False
+
     if "tar://" in path:
-        try:
-            with fs.open_fs(path) as the_fs:
-                return True
-        except fs.errors.CreateFailed:
-            return False
+        if path.endswith(".tar"):
+            zip_file, folder = path, "/"
+            try:
+                with fs.open_fs(zip_file) as the_fs:
+                    return True
+            except fs.errors.CreateFailed:
+                return False
+        else:
+            zip_file, folder = path.split(".tar/")
+            try:
+                with fs.open_fs(zip_file + ".tar") as the_fs:
+                    return the_fs.exists(folder)
+            except fs.errors.CreateFailed:
+                return False
+
     dir_name = fs.path.dirname(path)
     the_file_name = fs.path.basename(path)
 

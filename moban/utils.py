@@ -127,6 +127,7 @@ def verify_the_existence_of_directories(dirs):
     results = []
 
     for directory in dirs:
+
         if file_system.exists(directory):
             results.append(directory)
             continue
@@ -147,8 +148,7 @@ def verify_the_existence_of_directories(dirs):
 def find_file_in_template_dirs(src, template_dirs):
     LOG.debug(template_dirs)
     for folder in template_dirs:
-        with file_system.open_fs(folder) as fs_handle:
-            if fs_handle.exists(file_system.to_unicode(src)):
-                return fs_handle.geturl(src)
+        if file_system.exists(folder + "/" + src):
+            return folder + "/" + src
     else:
         return None

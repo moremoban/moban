@@ -34,7 +34,8 @@ examples folder.
    level-17-force-template-type-from-moban-file/README.rst
    level-18-user-defined-template-types/README.rst
    level-19-moban-a-sub-group-in-targets/README.rst
-
+   level-20-templates-configs-in-zip-or-tar/README.rst
+   level-21-copy-templates-into-an-alien-file-system/README.rst
 
 For more complex use case, please look at `its usage in pyexcel project <http://pyexcel.readthedocs.io/en/latest/guide.html>`_
 
