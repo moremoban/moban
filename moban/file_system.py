@@ -116,12 +116,12 @@ def is_dir(path):
     if "zip://" in path:
         zip_file, folder = path.split(".zip/")
         with fs.open_fs(zip_file + ".zip") as the_fs:
-            return the_fs.isdir(folder)
+            return the_fs.isdir(to_unicode(folder))
 
     if "tar://" in path:
         zip_file, folder = path.split(".tar/")
         with fs.open_fs(zip_file + ".tar") as the_fs:
-            return the_fs.isdir(folder)
+            return the_fs.isdir(to_unicode(folder))
 
     path = to_unicode(path)
     dir_name = fs.path.dirname(path)
