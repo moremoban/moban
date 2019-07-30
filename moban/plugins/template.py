@@ -119,9 +119,8 @@ class MobanEngine(object):
         rendered_content = self.engine.apply_template(
             template, data, output_file
         )
-        if PY3_ABOVE:
-            if not isinstance(rendered_content, bytes):
-                rendered_content = rendered_content.encode("utf-8")
+        if not isinstance(rendered_content, bytes):
+            rendered_content = rendered_content.encode("utf-8")
 
         try:
             flag = HASH_STORE.is_file_changed(
