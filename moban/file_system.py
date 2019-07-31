@@ -31,10 +31,19 @@ def log_fs_failure(function_in_this_module):
 @contextmanager
 def open_file(path):
     path = to_unicode(path)
-    dir_name = fs.path.dirname(path)
-    the_file_name = fs.path.basename(path)
-    the_fs = fs.open_fs(dir_name)
-    f = the_fs.open(the_file_name)
+    if "zip://" in path:
+        zip_file, folder = path.split(".zip/")
+        the_fs = fs.open_fs(zip_file + ".zip")
+        f = the_fs.open(folder)
+    elif "tar://" in path:
+        tar_file, folder = path.split(".tar/")
+        the_fs = fs.open_fs(tar_file + ".tar")
+        f = the_fs.open(folder)
+    else:
+        dir_name = fs.path.dirname(path)
+        the_file_name = fs.path.basename(path)
+        the_fs = fs.open_fs(dir_name)
+        f = the_fs.open(the_file_name)
     try:
         yield f
     finally:
@@ -46,7 +55,14 @@ def open_file(path):
 @contextmanager
 def open_fs(path):
     path = to_unicode(path)
-    the_fs = fs.open_fs(path)
+    if "zip://" in path:
+        zip_file, folder = path.split(".zip")
+        the_fs = fs.open_fs(zip_file + ".zip")
+    elif "tar://" in path:
+        tar_file, folder = path.split(".tar")
+        the_fs = fs.open_fs(tar_file + ".tar")
+    else:
+        the_fs = fs.open_fs(path)
     try:
         yield the_fs
     finally:
@@ -69,13 +85,14 @@ def read_unicode(path):
     else:
         dir_name = fs.path.dirname(path)
         the_file_name = fs.path.basename(path)
+
         with fs.open_fs(dir_name) as fs_system:
             with fs_system.open(the_file_name) as file_handle:
                 return file_handle.read()
 
 
 @log_fs_failure
-def read_binary(path):
+def read_bytes(path):
     path = to_unicode(path)
     if "zip://" in path:
         zip_file, folder = path.split(".zip/")
@@ -90,6 +107,9 @@ def read_binary(path):
         the_file_name = fs.path.basename(path)
         with fs.open_fs(dir_name) as fs_system:
             return fs_system.readbytes(the_file_name)
+
+
+read_binary = read_bytes
 
 
 @log_fs_failure
