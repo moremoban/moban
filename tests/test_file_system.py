@@ -116,3 +116,41 @@ def test_exists():
     for url, expected in TEST_URL_EXITENCE_SPEC:
         status = file_system.exists(url)
         eq_(status, expected)
+
+
+TEST_LIST_DIR_SPEC = [
+    [LOCAL_FOLDER+'/file_system', ['template-sources.zip', 'template-sources.tar']],
+    [ZIP_FILE + "/dir-for-copying", ['afile.txt', 'sub_directory_is_not_copied']],
+    [TAR_FILE + "/dir-for-copying", ['afile.txt', 'sub_directory_is_not_copied']],
+]
+
+
+def test_list_dir():
+    for url, expected in TEST_LIST_DIR_SPEC:
+        file_list = list(file_system.list_dir(url))
+        eq_(file_list, expected)
+
+
+TEST_FILE_PATH = [
+    [LOCAL_FOLDER+'/file_system',
+     os.path.normpath(os.path.join(os.getcwd(), 'tests/fixtures/file_system'))]
+]
+
+
+def test_abspath():
+    for path, expected in TEST_FILE_PATH:
+        url = file_system.abspath(path)
+        eq_(url, expected)
+
+
+TEST_FILE_URL = [
+    [LOCAL_FOLDER+'/file_system',
+     'file://' + os.path.normpath(os.path.join(os.getcwd(),
+                                               'tests/fixtures/file_system'))]
+]
+
+
+def test_fs_url():
+    for path, expected in TEST_FILE_URL:
+        url = file_system.fs_url(path)
+        eq_(url, expected)
