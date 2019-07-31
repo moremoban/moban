@@ -29,7 +29,7 @@ dependencies:
   - crayons>= 0.1.0
   - GitPython>=2.0.0
   - git-url-parse>=1.2.2
-  - fs>=2.2.0
+  - fs>=2.4.6
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com
 lint_command: make install_test format git-diff-check lint
