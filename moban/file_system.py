@@ -114,6 +114,7 @@ read_binary = read_bytes
 
 @log_fs_failure
 def write_bytes(filename, bytes_content):
+    filename = to_unicode(filename)
     if "zip://" in filename:
         zip_file, folder = filename.split(".zip/")
         with fs.open_fs(zip_file + ".zip", create=True) as the_fs:
@@ -124,7 +125,6 @@ def write_bytes(filename, bytes_content):
         with fs.open_fs(tar_file + ".tar", create=True) as the_fs:
             the_fs.writebytes(folder, bytes_content)
     else:
-        filename = to_unicode(filename)
         dir_name = fs.path.dirname(filename)
         the_file_name = fs.path.basename(filename)
         with fs.open_fs(dir_name) as the_fs:
