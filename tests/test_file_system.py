@@ -1,29 +1,22 @@
 import os
+
 from moban import file_system
 from nose.tools import eq_
 
-LOCAL_FOLDER = 'tests/fixtures'
-LOCAL_FILE = LOCAL_FOLDER + '/a.jj2'
-ZIP_FILE = 'zip://tests/fixtures/file_system/template-sources.zip'
-TAR_FILE = 'tar://tests/fixtures/file_system/template-sources.tar'
+LOCAL_FOLDER = "tests/fixtures"
+LOCAL_FILE = LOCAL_FOLDER + "/a.jj2"
+ZIP_FILE = "zip://tests/fixtures/file_system/template-sources.zip"
+TAR_FILE = "tar://tests/fixtures/file_system/template-sources.tar"
 
-FILE = 'file-in-template-sources-folder.txt'
+FILE = "file-in-template-sources-folder.txt"
 
-ZIP_URL = ZIP_FILE + '/' + FILE
-TAR_URL = TAR_FILE + '/' + FILE
+ZIP_URL = ZIP_FILE + "/" + FILE
+TAR_URL = TAR_FILE + "/" + FILE
 
-TEST_SPECS = [
-    LOCAL_FILE,
-    ZIP_URL,
-    TAR_URL
-]
+TEST_SPECS = [LOCAL_FILE, ZIP_URL, TAR_URL]
 
 
-TEST_FS_SPECS = [
-    LOCAL_FOLDER,
-    ZIP_FILE,
-    TAR_FILE
-]
+TEST_FS_SPECS = [LOCAL_FOLDER, ZIP_FILE, TAR_FILE]
 
 
 def test_open_file():
@@ -39,9 +32,9 @@ def test_open_fs():
 
 
 TEST_FILE_CONTENT_SPECS = [
-    [LOCAL_FILE, '{{key}} {{pass}}'],
-    [ZIP_URL, 'test file\n'],
-    [TAR_URL, 'test file\n']
+    [LOCAL_FILE, "{{key}} {{pass}}"],
+    [ZIP_URL, "test file\n"],
+    [TAR_URL, "test file\n"],
 ]
 
 
@@ -52,9 +45,9 @@ def test_read_unicode():
 
 
 TEST_FILE_CONTENT_SPECS_BINARY = [
-    [LOCAL_FILE, b'{{key}} {{pass}}'],
-    [ZIP_URL, b'test file\n'],
-    [TAR_URL, b'test file\n']
+    [LOCAL_FILE, b"{{key}} {{pass}}"],
+    [ZIP_URL, b"test file\n"],
+    [TAR_URL, b"test file\n"],
 ]
 
 
@@ -65,9 +58,9 @@ def test_read_binary():
 
 
 TEST_WRITE_BYTES_SPEC = [
-    ['/tmp/test.binary', b'abc'],
-    ['zip:///tmp/test.zip/test.binary', b'abc'],
-    ['tar:///tmp/test.tar/test.binary', b'abc']
+    ["/tmp/test.binary", b"abc"],
+    ["zip:///tmp/test.zip/test.binary", b"abc"],
+    ["tar:///tmp/test.tar/test.binary", b"abc"],
 ]
 
 
@@ -79,17 +72,17 @@ def test_write_bytes():
         content = file_system.read_bytes(url)
         eq_(content, expected)
 
-    for file_name in ['/tmp/test.binary', '/tmp/test.zip', '/tmp/test.tar']:
+    for file_name in ["/tmp/test.binary", "/tmp/test.zip", "/tmp/test.tar"]:
         os.unlink(file_name)
 
 
 TEST_DIR_SPEC = [
     [LOCAL_FOLDER, True],
-    [ZIP_FILE + '/dir-for-copying', True],
-    [TAR_FILE + '/dir-for-copying', True],
+    [ZIP_FILE + "/dir-for-copying", True],
+    [TAR_FILE + "/dir-for-copying", True],
     [ZIP_URL, False],
     [TAR_URL, False],
-    [LOCAL_FILE, False]
+    [LOCAL_FILE, False],
 ]
 
 
@@ -108,14 +101,14 @@ def test_is_file():
 
 TEST_URL_EXITENCE_SPEC = [
     [LOCAL_FOLDER, True],
-    [ZIP_FILE + '/dir-for-copying', True],
-    [TAR_FILE + '/dir-for-copying', True],
+    [ZIP_FILE + "/dir-for-copying", True],
+    [TAR_FILE + "/dir-for-copying", True],
     [ZIP_URL, True],
     [TAR_URL, True],
     [LOCAL_FILE, True],
-    #['zip://abc.zip', False],
-    #['tar://abc.tar', False], bug with fs.zipfs. raise it later
-    ['abcx', False]
+    # ['zip://abc.zip', False],
+    # ['tar://abc.tar', False], bug with fs.zipfs. raise it later
+    ["abcx", False],
 ]
 
 
