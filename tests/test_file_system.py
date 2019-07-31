@@ -104,3 +104,22 @@ def test_is_file():
         status = file_system.is_file(url)
         expected = not is_dir
         eq_(status, expected)
+
+
+TEST_URL_EXITENCE_SPEC = [
+    [LOCAL_FOLDER, True],
+    [ZIP_FILE + '/dir-for-copying', True],
+    [TAR_FILE + '/dir-for-copying', True],
+    [ZIP_URL, True],
+    [TAR_URL, True],
+    [LOCAL_FILE, True],
+    #['zip://abc.zip', False],
+    #['tar://abc.tar', False], bug with fs.zipfs. raise it later
+    ['abcx', False]
+]
+
+
+def test_exists():
+    for url, expected in TEST_URL_EXITENCE_SPEC:
+        status = file_system.exists(url)
+        eq_(status, expected)
