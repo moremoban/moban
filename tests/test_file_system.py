@@ -119,21 +119,34 @@ def test_exists():
 
 
 TEST_LIST_DIR_SPEC = [
-    [LOCAL_FOLDER+'/file_system', ['template-sources.zip', 'template-sources.tar']],
-    [ZIP_FILE + "/dir-for-copying", ['afile.txt', 'sub_directory_is_not_copied']],
-    [TAR_FILE + "/dir-for-copying", ['afile.txt', 'sub_directory_is_not_copied']],
+    [
+        LOCAL_FOLDER + "/file_system",
+        ["template-sources.zip", "template-sources.tar"],
+    ],
+    [
+        ZIP_FILE + "/dir-for-copying",
+        ["afile.txt", "sub_directory_is_not_copied"],
+    ],
+    [
+        TAR_FILE + "/dir-for-copying",
+        ["afile.txt", "sub_directory_is_not_copied"],
+    ],
 ]
 
 
 def test_list_dir():
     for url, expected in TEST_LIST_DIR_SPEC:
-        file_list = list(file_system.list_dir(url))
-        eq_(file_list, expected)
+        file_list = sorted(list(file_system.list_dir(url)))
+        eq_(file_list, sorted(expected))
 
 
 TEST_FILE_PATH = [
-    [LOCAL_FOLDER+'/file_system',
-     os.path.normpath(os.path.join(os.getcwd(), 'tests/fixtures/file_system'))]
+    [
+        LOCAL_FOLDER + "/file_system",
+        os.path.normpath(
+            os.path.join(os.getcwd(), "tests/fixtures/file_system")
+        ),
+    ]
 ]
 
 
@@ -144,9 +157,13 @@ def test_abspath():
 
 
 TEST_FILE_URL = [
-    [LOCAL_FOLDER+'/file_system',
-     'file://' + os.path.normpath(os.path.join(os.getcwd(),
-                                               'tests/fixtures/file_system'))]
+    [
+        LOCAL_FOLDER + "/file_system",
+        "file://"
+        + os.path.normpath(
+            os.path.join(os.getcwd(), "tests/fixtures/file_system")
+        ),
+    ]
 ]
 
 
