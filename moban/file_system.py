@@ -50,6 +50,29 @@ def url_split(url):
     return url_to_file, path
 
 
+def _path_split(url_or_path):
+    url_or_path = to_unicode(url_or_path)
+    if is_zip_alike_url(url_or_path):
+        return url_split(url_or_path)
+    else:
+        return fs.path.dirname(url_or_path), fs.path.basename(url_or_path)
+
+
+@log_fs_failure
+@contextmanager
+def open_fs(path):
+    path = to_unicode(path)
+    if is_zip_alike_url(path):
+        zip_file, folder = url_split(path)
+        the_fs = fs.open_fs(zip_file)
+    else:
+        the_fs = fs.open_fs(path)
+    try:
+        yield the_fs
+    finally:
+        the_fs.close()
+
+
 @log_fs_failure
 @contextmanager
 def open_file(path):
@@ -72,48 +95,34 @@ def open_file(path):
 
 @log_fs_failure
 @contextmanager
-def open_fs(path):
+def open_binary_file(path):
     path = to_unicode(path)
     if is_zip_alike_url(path):
         zip_file, folder = url_split(path)
         the_fs = fs.open_fs(zip_file)
+        f = the_fs.openbin(folder)
     else:
-        the_fs = fs.open_fs(path)
+        dir_name = fs.path.dirname(path)
+        the_file_name = fs.path.basename(path)
+        the_fs = fs.open_fs(dir_name)
+        f = the_fs.openbin(the_file_name)
     try:
-        yield the_fs
+        yield f
     finally:
+        f.close()
         the_fs.close()
 
 
 @log_fs_failure
 def read_unicode(path):
-    path = to_unicode(path)
-    if is_zip_alike_url(path):
-        zip_file, folder = url_split(path)
-        with fs.open_fs(zip_file) as the_fs:
-            with the_fs.open(folder) as file_handle:
-                return file_handle.read()
-    else:
-        dir_name = fs.path.dirname(path)
-        the_file_name = fs.path.basename(path)
-
-        with fs.open_fs(dir_name) as fs_system:
-            with fs_system.open(the_file_name) as file_handle:
-                return file_handle.read()
+    with open_file(path) as file_handle:
+        return file_handle.read()
 
 
 @log_fs_failure
 def read_bytes(path):
-    path = to_unicode(path)
-    if is_zip_alike_url(path):
-        zip_file, folder = url_split(path)
-        with fs.open_fs(zip_file) as the_fs:
-            return the_fs.readbytes(folder)
-    else:
-        dir_name = fs.path.dirname(path)
-        the_file_name = fs.path.basename(path)
-        with fs.open_fs(dir_name) as fs_system:
-            return fs_system.readbytes(the_file_name)
+    with open_binary_file(path) as file_handle:
+        return file_handle.read()
 
 
 read_binary = read_bytes
@@ -135,16 +144,9 @@ def write_bytes(filename, bytes_content):
 
 @log_fs_failure
 def is_dir(path):
-    if is_zip_alike_url(path):
-        zip_file, folder = url_split(path)
-        with fs.open_fs(zip_file) as the_fs:
-            return the_fs.isdir(to_unicode(folder))
-
-    path = to_unicode(path)
-    dir_name = fs.path.dirname(path)
-    the_file_name = fs.path.basename(path)
-    with fs.open_fs(dir_name) as the_fs:
-        return the_fs.isdir(the_file_name)
+    folder_or_file, path = _path_split(path)
+    with fs.open_fs(folder_or_file) as the_fs:
+        return the_fs.isdir(path)
 
 
 @log_fs_failure
