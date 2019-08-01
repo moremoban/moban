@@ -1,6 +1,7 @@
 import sys
 import logging
 from contextlib import contextmanager
+from urllib.parse import urlparse
 
 import fs
 import fs.path
@@ -27,17 +28,35 @@ def log_fs_failure(function_in_this_module):
     return wrapper
 
 
+def is_zip_alike_url(url):
+    specs = ["zip://", "tar://"]
+    for prefix in specs:
+        if url.startswith(prefix):
+            return True
+    else:
+        return False
+
+
+def url_split(url):
+    result = urlparse(url)
+
+    if url.endswith(result.scheme):
+        url_to_file = url
+        path = None
+    else:
+        url_to_file, path = url.split(result.scheme + "/")
+        url_to_file = url_to_file + result.scheme
+
+    return url_to_file, path
+
+
 @log_fs_failure
 @contextmanager
 def open_file(path):
     path = to_unicode(path)
-    if "zip://" in path:
-        zip_file, folder = path.split(".zip/")
-        the_fs = fs.open_fs(zip_file + ".zip")
-        f = the_fs.open(folder)
-    elif "tar://" in path:
-        tar_file, folder = path.split(".tar/")
-        the_fs = fs.open_fs(tar_file + ".tar")
+    if is_zip_alike_url(path):
+        zip_file, folder = url_split(path)
+        the_fs = fs.open_fs(zip_file)
         f = the_fs.open(folder)
     else:
         dir_name = fs.path.dirname(path)
@@ -55,12 +74,9 @@ def open_file(path):
 @contextmanager
 def open_fs(path):
     path = to_unicode(path)
-    if "zip://" in path:
-        zip_file, folder = path.split(".zip")
-        the_fs = fs.open_fs(zip_file + ".zip")
-    elif "tar://" in path:
-        tar_file, folder = path.split(".tar")
-        the_fs = fs.open_fs(tar_file + ".tar")
+    if is_zip_alike_url(path):
+        zip_file, folder = url_split(path)
+        the_fs = fs.open_fs(zip_file)
     else:
         the_fs = fs.open_fs(path)
     try:
@@ -72,14 +88,9 @@ def open_fs(path):
 @log_fs_failure
 def read_unicode(path):
     path = to_unicode(path)
-    if "zip://" in path:
-        zip_file, folder = path.split(".zip/")
-        with fs.open_fs(zip_file + ".zip") as the_fs:
-            with the_fs.open(folder) as file_handle:
-                return file_handle.read()
-    elif "tar://" in path:
-        tar_file, folder = path.split(".tar/")
-        with fs.open_fs(tar_file + ".tar") as the_fs:
+    if is_zip_alike_url(path):
+        zip_file, folder = url_split(path)
+        with fs.open_fs(zip_file) as the_fs:
             with the_fs.open(folder) as file_handle:
                 return file_handle.read()
     else:
@@ -94,13 +105,9 @@ def read_unicode(path):
 @log_fs_failure
 def read_bytes(path):
     path = to_unicode(path)
-    if "zip://" in path:
-        zip_file, folder = path.split(".zip/")
-        with fs.open_fs(zip_file + ".zip") as the_fs:
-            return the_fs.readbytes(folder)
-    elif "tar://" in path:
-        tar_file, folder = path.split(".tar/")
-        with fs.open_fs(tar_file + ".tar") as the_fs:
+    if is_zip_alike_url(path):
+        zip_file, folder = url_split(path)
+        with fs.open_fs(zip_file) as the_fs:
             return the_fs.readbytes(folder)
     else:
         dir_name = fs.path.dirname(path)
@@ -115,14 +122,9 @@ read_binary = read_bytes
 @log_fs_failure
 def write_bytes(filename, bytes_content):
     filename = to_unicode(filename)
-    if "zip://" in filename:
-        zip_file, folder = filename.split(".zip/")
-        with fs.open_fs(zip_file + ".zip", create=True) as the_fs:
-            the_fs.writebytes(folder, bytes_content)
-
-    elif "tar://" in filename:
-        tar_file, folder = filename.split(".tar/")
-        with fs.open_fs(tar_file + ".tar", create=True) as the_fs:
+    if "://" in filename:
+        zip_file, folder = url_split(filename)
+        with fs.open_fs(zip_file, create=True) as the_fs:
             the_fs.writebytes(folder, bytes_content)
     else:
         dir_name = fs.path.dirname(filename)
@@ -133,14 +135,9 @@ def write_bytes(filename, bytes_content):
 
 @log_fs_failure
 def is_dir(path):
-    if "zip://" in path:
-        zip_file, folder = path.split(".zip/")
-        with fs.open_fs(zip_file + ".zip") as the_fs:
-            return the_fs.isdir(to_unicode(folder))
-
-    if "tar://" in path:
-        zip_file, folder = path.split(".tar/")
-        with fs.open_fs(zip_file + ".tar") as the_fs:
+    if is_zip_alike_url(path):
+        zip_file, folder = url_split(path)
+        with fs.open_fs(zip_file) as the_fs:
             return the_fs.isdir(to_unicode(folder))
 
     path = to_unicode(path)
@@ -163,38 +160,15 @@ def is_file(path):
 def exists(path):
     path = to_unicode(path)
 
-    if "zip://" in path:
-        if path.endswith(".zip"):
-            zip_file, folder = path, "/"
-            try:
-                with fs.open_fs(zip_file) as the_fs:
-                    return True
-            except fs.errors.CreateFailed:
-                return False
-        else:
-            zip_file, folder = path.split(".zip/")
-            try:
-                with fs.open_fs(zip_file + ".zip") as the_fs:
+    if is_zip_alike_url(path):
+        zip_file, folder = url_split(path)
+        try:
+            with fs.open_fs(zip_file) as the_fs:
+                if folder:
                     return the_fs.exists(folder)
-            except fs.errors.CreateFailed:
-                return False
-
-    if "tar://" in path:
-        if path.endswith(".tar"):
-            zip_file, folder = path, "/"
-            try:
-                with fs.open_fs(zip_file) as the_fs:
-                    return True
-            except fs.errors.CreateFailed:
-                return False
-        else:
-            zip_file, folder = path.split(".tar/")
-            try:
-                with fs.open_fs(zip_file + ".tar") as the_fs:
-                    return the_fs.exists(folder)
-            except fs.errors.CreateFailed:
-                return False
-
+                return True
+        except fs.errors.CreateFailed:
+            return False
     dir_name = fs.path.dirname(path)
     the_file_name = fs.path.basename(path)
 

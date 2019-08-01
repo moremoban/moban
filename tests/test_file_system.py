@@ -170,4 +170,4 @@ TEST_FILE_URL = [
 def test_fs_url():
     for path, expected in TEST_FILE_URL:
         url = file_system.fs_url(path)
-        eq_(url, expected.replace('\\', '/'))
+        eq_(url, expected.replace("\\", "/"))
