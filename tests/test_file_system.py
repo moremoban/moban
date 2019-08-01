@@ -58,9 +58,9 @@ def test_read_binary():
 
 
 TEST_WRITE_BYTES_SPEC = [
-    ["/tmp/test.binary", b"abc"],
-    ["zip:///tmp/test.zip/test.binary", b"abc"],
-    ["tar:///tmp/test.tar/test.binary", b"abc"],
+    ["test.binary", b"abc"],
+    ["zip://test.zip/test.binary", b"abc"],
+    ["tar://test.tar/test.binary", b"abc"],
 ]
 
 
@@ -72,7 +72,7 @@ def test_write_bytes():
         content = file_system.read_bytes(url)
         eq_(content, expected)
 
-    for file_name in ["/tmp/test.binary", "/tmp/test.zip", "/tmp/test.tar"]:
+    for file_name in ["test.binary", "test.zip", "test.tar"]:
         os.unlink(file_name)
 
 
@@ -170,4 +170,4 @@ TEST_FILE_URL = [
 def test_fs_url():
     for path, expected in TEST_FILE_URL:
         url = file_system.fs_url(path)
-        eq_(url, expected)
+        eq_(url, expected.replace('\\', '/'))
