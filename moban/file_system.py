@@ -1,13 +1,15 @@
 import sys
 import logging
 from contextlib import contextmanager
+
+import fs
+import fs.path
+
 try:
     from urllib.parse import urlparse
 except ImportError:
     from urlparse import urlparse
 
-import fs
-import fs.path
 
 PY2 = sys.version_info[0] == 2
 LOG = logging.getLogger(__name__)
@@ -29,36 +31,6 @@ def log_fs_failure(function_in_this_module):
             raise
 
     return wrapper
-
-
-def is_zip_alike_url(url):
-    specs = ["zip://", "tar://"]
-    for prefix in specs:
-        if url.startswith(prefix):
-            return True
-    else:
-        return False
-
-
-def url_split(url):
-    result = urlparse(url)
-
-    if url.endswith(result.scheme):
-        url_to_file = url
-        path = None
-    else:
-        url_to_file, path = url.split(result.scheme + "/")
-        url_to_file = url_to_file + result.scheme
-
-    return url_to_file, path
-
-
-def _path_split(url_or_path):
-    url_or_path = to_unicode(url_or_path)
-    if is_zip_alike_url(url_or_path):
-        return url_split(url_or_path)
-    else:
-        return fs.path.dirname(url_or_path), fs.path.basename(url_or_path)
 
 
 @log_fs_failure
@@ -154,11 +126,9 @@ def is_dir(path):
 
 @log_fs_failure
 def is_file(path):
-    path = to_unicode(path)
-    dir_name = fs.path.dirname(path)
-    the_file_name = fs.path.basename(path)
-    with fs.open_fs(dir_name) as the_fs:
-        return the_fs.isfile(the_file_name)
+    folder_or_file, path = _path_split(path)
+    with fs.open_fs(folder_or_file) as the_fs:
+        return the_fs.isfile(path)
 
 
 @log_fs_failure
@@ -187,34 +157,59 @@ def exists(path):
 @log_fs_failure
 def list_dir(path):
     path = to_unicode(path)
-    dir_name = fs.path.dirname(path)
-    the_file_name = fs.path.basename(path)
-    with fs.open_fs(dir_name) as fs_system:
-        for file_name in fs_system.listdir(the_file_name):
+    folder_or_file, path = _path_split(path)
+    with fs.open_fs(folder_or_file) as the_fs:
+        for file_name in the_fs.listdir(path):
             yield file_name
 
 
 @log_fs_failure
 def abspath(path):
     path = to_unicode(path)
-    dir_name = fs.path.dirname(path)
-    the_file_name = fs.path.basename(path)
-
-    with fs.open_fs(dir_name) as the_fs:
-        return the_fs.getsyspath(the_file_name)
+    folder_or_file, path = _path_split(path)
+    with fs.open_fs(folder_or_file) as the_fs:
+        return the_fs.getsyspath(path)
 
 
 @log_fs_failure
 def fs_url(path):
     path = to_unicode(path)
-    dir_name = fs.path.dirname(path)
-    the_file_name = fs.path.basename(path)
-
-    with fs.open_fs(dir_name) as the_fs:
-        return the_fs.geturl(the_file_name)
+    folder_or_file, path = _path_split(path)
+    with fs.open_fs(folder_or_file) as the_fs:
+        return the_fs.geturl(path)
 
 
 def to_unicode(path):
     if PY2 and path.__class__.__name__ != "unicode":
         return u"".__class__(path)
     return path
+
+
+def is_zip_alike_url(url):
+    specs = ["zip://", "tar://"]
+    for prefix in specs:
+        if url.startswith(prefix):
+            return True
+    else:
+        return False
+
+
+def url_split(url):
+    result = urlparse(url)
+
+    if url.endswith(result.scheme):
+        url_to_file = url
+        path = None
+    else:
+        url_to_file, path = url.split(result.scheme + "/")
+        url_to_file = url_to_file + result.scheme
+
+    return url_to_file, path
+
+
+def _path_split(url_or_path):
+    url_or_path = to_unicode(url_or_path)
+    if is_zip_alike_url(url_or_path):
+        return url_split(url_or_path)
+    else:
+        return fs.path.dirname(url_or_path), fs.path.basename(url_or_path)
