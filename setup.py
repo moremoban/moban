@@ -83,6 +83,7 @@ INSTALL_REQUIRES = [
     "GitPython>=2.0.0",
     "git-url-parse>=1.2.2",
     "fs>=2.4.6",
+    "jinja2-fsloader>=0.1.3",
 ]
 SETUP_COMMANDS = {}
 
