@@ -15,8 +15,7 @@ class BufferedWriter(object):
             utils.write_file_out(filename, content)
 
     def write_file_out_to_zip(self, filename, content):
-        zip_file, file_name = filename.split(".zip/")
-        zip_file = zip_file + ".zip"
+        zip_file, file_name = file_system.url_split(filename)
         if zip_file not in self.fs_list:
             self.fs_list[zip_file] = fs.open_fs(
                 file_system.to_unicode(zip_file), create=True

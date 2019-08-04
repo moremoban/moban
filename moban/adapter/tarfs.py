@@ -6,7 +6,7 @@ from fs.tarfs import TarFS, ReadTarFS, WriteTarFS
 
 class EnhancedReadTarFS(ReadTarFS):
     def geturl(self, path, purpose="download"):
-        return "tar://%s/%s" % (self._file, path)
+        return "tar://%s!/%s" % (self._file, path)
 
 
 class EnhancedTarFS(TarFS):

@@ -5,7 +5,7 @@ from fs.zipfs import ZipFS, ReadZipFS, WriteZipFS
 
 class EnhancedReadZipFS(ReadZipFS):
     def geturl(self, path, purpose="download"):
-        return "zip://%s/%s" % (self._file, path)
+        return "zip://%s!/%s" % (self._file, path)
 
 
 class EnhancedZipFS(ZipFS):

@@ -201,8 +201,7 @@ def url_split(url):
         url_to_file = url
         path = None
     else:
-        url_to_file, path = url.split(result.scheme + "/")
-        url_to_file = url_to_file + result.scheme
+        url_to_file, path = url.split("!/")
 
     return url_to_file, path
 

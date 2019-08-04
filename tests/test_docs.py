@@ -1,6 +1,7 @@
 import os
 import sys
 from textwrap import dedent
+from fs.opener.parse import parse_fs_url
 
 from mock import patch
 from moban import file_system
@@ -117,7 +118,7 @@ class TestTutorial:
         )
         folder = "level-20-templates-configs-in-zip-or-tar"
         self._raw_moban_with_fs(
-            ["moban"], folder, expected, "zip://a.zip/a.output2"
+            ["moban"], folder, expected, "zip://a.zip!/a.output2"
         )
 
     def test_level_7(self):
@@ -257,13 +258,13 @@ class TestTutorial:
 
         folder = "level-21-copy-templates-into-an-alien-file-system"
         criterias = [
-            ["zip://my.zip/simple.file", expected],
+            ["zip://my.zip!/simple.file", expected],
             [
-                "zip://my.zip/target_without_template_type",
+                "zip://my.zip!/target_without_template_type",
                 "file extension will trigger copy engine\n",
             ],
             [
-                "zip://my.zip/target_in_short_form",
+                "zip://my.zip!/target_in_short_form",
                 (
                     "it is OK to have a short form, "
                     + "but the file to be 'copied' shall have 'copy' extension, "
@@ -335,7 +336,8 @@ class TestTutorial:
         with patch.object(sys, "argv", args):
             main()
             _verify_content_with_fs(output, expected)
-        os.unlink(output.split("/")[2])  # fixme later
+        result = parse_fs_url(output)
+        os.unlink(result.resource)  # delete the zip file
 
     def _raw_moban_with_fs2(self, args, folder, criterias):
         os.chdir(os.path.join("docs", folder))
@@ -344,7 +346,8 @@ class TestTutorial:
 
             for output, expected in criterias:
                 _verify_content_with_fs(output, expected)
-        os.unlink(output.split("/")[2])  # fixme later
+        result = parse_fs_url(output)
+        os.unlink(result.resource)  # delete the zip file
 
     def tearDown(self):
         if os.path.exists(".moban.hashes"):

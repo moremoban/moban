@@ -68,8 +68,8 @@ def _list_dir_files(source, actual_source_path, dest):
 
 
 def _list_zip_dir_files(source, actual_source_path, dest):
-    zip_file, folder = actual_source_path.split(".zip/")
-    with file_system.open_fs(zip_file + ".zip") as fs_handle:
+    zip_file, folder = file_system.url_split(actual_source_path)
+    with file_system.open_fs(zip_file) as fs_handle:
         for file_name in fs_handle.listdir(file_system.to_unicode(folder)):
             if fs_handle.isfile(
                 file_system.to_unicode(folder + "/" + file_name)
@@ -102,10 +102,10 @@ def _listing_directory_files_recusively(source, actual_source_path, dest):
 
 
 def _listing_zip_directory_files_recusively(source, actual_source_path, dest):
-    zip_file, folder = actual_source_path.split(".zip/")
+    zip_file, folder = file_system.url_split(actual_source_path)
     print(actual_source_path)
 
-    with file_system.open_fs(zip_file + ".zip") as fs_handle:
+    with file_system.open_fs(zip_file) as fs_handle:
         for file_name in fs_handle.listdir(file_system.to_unicode(folder)):
             src_file_under_dir = source + "/" + file_name
             dest_file_under_dir = dest + "/" + file_name

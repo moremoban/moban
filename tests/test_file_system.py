@@ -10,8 +10,8 @@ TAR_FILE = "tar://tests/fixtures/file_system/template-sources.tar"
 
 FILE = "file-in-template-sources-folder.txt"
 
-ZIP_URL = ZIP_FILE + "/" + FILE
-TAR_URL = TAR_FILE + "/" + FILE
+ZIP_URL = ZIP_FILE + "!/" + FILE
+TAR_URL = TAR_FILE + "!/" + FILE
 
 TEST_SPECS = [LOCAL_FILE, ZIP_URL, TAR_URL]
 
@@ -59,8 +59,8 @@ def test_read_binary():
 
 TEST_WRITE_BYTES_SPEC = [
     ["test.binary", b"abc"],
-    ["zip://test.zip/test.binary", b"abc"],
-    ["tar://test.tar/test.binary", b"abc"],
+    ["zip://test.zip!/test.binary", b"abc"],
+    ["tar://test.tar!/test.binary", b"abc"],
 ]
 
 
@@ -78,8 +78,8 @@ def test_write_bytes():
 
 TEST_DIR_SPEC = [
     [LOCAL_FOLDER, True],
-    [ZIP_FILE + "/dir-for-copying", True],
-    [TAR_FILE + "/dir-for-copying", True],
+    [ZIP_FILE + "!/dir-for-copying", True],
+    [TAR_FILE + "!/dir-for-copying", True],
     [ZIP_URL, False],
     [TAR_URL, False],
     [LOCAL_FILE, False],
@@ -101,8 +101,8 @@ def test_is_file():
 
 TEST_URL_EXITENCE_SPEC = [
     [LOCAL_FOLDER, True],
-    [ZIP_FILE + "/dir-for-copying", True],
-    [TAR_FILE + "/dir-for-copying", True],
+    [ZIP_FILE + "!/dir-for-copying", True],
+    [TAR_FILE + "!/dir-for-copying", True],
     [ZIP_URL, True],
     [TAR_URL, True],
     [LOCAL_FILE, True],
@@ -124,11 +124,11 @@ TEST_LIST_DIR_SPEC = [
         ["template-sources.zip", "template-sources.tar"],
     ],
     [
-        ZIP_FILE + "/dir-for-copying",
+        ZIP_FILE + "!/dir-for-copying",
         ["afile.txt", "sub_directory_is_not_copied"],
     ],
     [
-        TAR_FILE + "/dir-for-copying",
+        TAR_FILE + "!/dir-for-copying",
         ["afile.txt", "sub_directory_is_not_copied"],
     ],
 ]
