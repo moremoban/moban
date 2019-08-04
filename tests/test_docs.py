@@ -1,12 +1,13 @@
 import os
 import sys
 from textwrap import dedent
-from fs.opener.parse import parse_fs_url
 
 from mock import patch
 from moban import file_system
 from moban.main import main
 from nose.tools import eq_
+
+from fs.opener.parse import parse_fs_url
 
 
 def custom_dedent(long_texts):
