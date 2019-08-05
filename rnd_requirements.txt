@@ -1,1 +1,3 @@
 https://github.com/moremoban/moban-handlebars/archive/dev.zip
+https://github.com/moremoban/pypifs/archive/master.zip
+

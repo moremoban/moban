@@ -2,24 +2,11 @@ from moban import repo
 from moban.adapter.osfs import EnhancedOSFS
 from moban.adapter.tarfs import EnhancedTarFS
 from moban.adapter.zipfs import EnhancedZipFS
-from moban.plugins.library import LIBRARIES
 
 import fs
 import fs.path
 from fs.opener import Opener
 from fs.opener.registry import registry
-
-
-@registry.install
-class PypiFSOpener(Opener):
-    protocols = ["pypi"]
-
-    def open_fs(self, fs_url, parse_result, writeable, create, cwd):
-        pypi_package_name, _, dir_path = parse_result.resource.partition("/")
-        library_path = LIBRARIES.resource_path_of(pypi_package_name)
-        root_path = fs.path.join(library_path, dir_path)
-        osfs = EnhancedOSFS(root_path=root_path)
-        return osfs
 
 
 @registry.install
