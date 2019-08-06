@@ -12,7 +12,7 @@ into a pypi package and distribute it to the world of moban.
 Here are the sample file::
 
     requires:
-       - pypi-mobans-pkg
+      - pypi-mobans-pkg
     configuration:
       template_dir:
         - "pypi://pypi-mobans-pkg/templates"

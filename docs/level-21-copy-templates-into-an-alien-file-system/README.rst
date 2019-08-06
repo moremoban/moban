@@ -8,22 +8,22 @@ all templates are copied to.
 Explicit syntax::
 
     targets:
-       - output: "zip://your.zip/explicit"
-         template: template_file
-         template_type: copy
+      - output: "zip://your.zip/explicit"
+        template: template_file
+        template_type: copy
 
 
 Implicit syntax::
 
     targets:
-       - output: "zip://your.zip/implicit"
-         template: template_file.copy
+      - output: "zip://your.zip/implicit"
+        template: template_file.copy
 
 
 Shorthand syntax::
 
     targets:
-       - "zip://your.zip/shorthand": template_file.copy
+      - "zip://your.zip/shorthand": template_file.copy
 
 
 No implicit nor short hand syntax for the following directory copying unless

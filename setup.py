@@ -43,7 +43,7 @@ EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
 ENTRY_POINTS = {
     "console_scripts": [
-        "moban = moban.main:main",
+        "moban = moban.main:main"
     ],
 }
 DESCRIPTION = (
