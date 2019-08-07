@@ -4,9 +4,8 @@ import stat
 import errno
 import logging
 
-from moban import constants, exceptions, file_system
-
 import fs
+from moban import constants, exceptions, file_system
 
 LOG = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
@@ -39,7 +38,7 @@ def search_file(base_dir, file_name):
             try:
                 with file_system.open_fs(base_dir) as fs_handle:
                     if fs_handle.exists(file_system.to_unicode(the_file)):
-                        the_file = fs_handle.geturl(file_name, purpose='fs')
+                        the_file = fs_handle.geturl(file_name, purpose="fs")
                     else:
                         raise IOError(
                             constants.ERROR_DATA_FILE_NOT_FOUND
@@ -113,7 +112,7 @@ def get_template_path(template_dirs, template):
                 ) and fs_handle.isfile(template)
 
                 if template_file_exists:
-                    return fs_handle.geturl(template, purpose='fs')
+                    return fs_handle.geturl(template, purpose="fs")
         except fs.errors.CreateFailed:
             continue
     raise exceptions.FileNotFound

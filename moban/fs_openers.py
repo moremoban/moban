@@ -1,10 +1,9 @@
-from moban import repo
-
 import fs
 import fs.path
+from moban import repo
+from fs.osfs import OSFS
 from fs.opener import Opener
 from fs.opener.registry import registry
-from fs.osfs import OSFS
 
 
 @registry.install

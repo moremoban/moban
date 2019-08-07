@@ -1,7 +1,6 @@
-from moban import utils, file_system
-
 import fs
 import fs.path
+from moban import utils, file_system
 
 
 class BufferedWriter(object):
