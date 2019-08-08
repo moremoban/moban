@@ -24,7 +24,7 @@ def url_join(path, path2):
 
 def zip_alike_url_join(path, path2):
     result = urlparse(path)
-    if path.endswith(result.scheme):
+    if result.scheme and path.endswith(result.scheme):
         return path + to_unicode("!/") + path2
     else:
         return path + to_unicode("/") + path2

@@ -13,16 +13,10 @@ def handle_template(template_file, output, template_dirs):
         source_dir = template_file[:-3]
         src_path = find_file_in_template_dirs(source_dir, template_dirs)
         if src_path:
-            if "zip://" in src_path:
-                for a_triple in _listing_zip_directory_files_recusively(
-                    source_dir, src_path, output
-                ):
-                    yield a_triple
-            else:
-                for a_triple in _listing_directory_files_recusively(
-                    source_dir, src_path, output
-                ):
-                    yield a_triple
+            for a_triple in _listing_directory_files_recusively(
+                source_dir, src_path, output
+            ):
+                yield a_triple
         else:
             reporter.report_error_message(
                 "{0} cannot be found".format(template_file)
@@ -63,42 +57,18 @@ def _list_dir_files(source, actual_source_path, dest):
 
 
 def _listing_directory_files_recusively(source, actual_source_path, dest):
-    with file_system.open_fs(actual_source_path) as fs_handle:
-        for file_name in fs_handle.listdir(u"."):
-            src_file_under_dir = file_system.path_join(source, file_name)
-            dest_file_under_dir = file_system.path_join(dest, file_name)
-            real_src_file = "%s/%s" % (actual_source_path, file_name)
-            if fs_handle.isfile(file_system.to_unicode(file_name)):
-                template_type = _get_template_type(src_file_under_dir)
-                yield (src_file_under_dir, dest_file_under_dir, template_type)
-            elif fs_handle.isdir(file_system.to_unicode(file_name)):
-                for a_triple in _listing_directory_files_recusively(
-                    src_file_under_dir, real_src_file, dest_file_under_dir
-                ):
-                    yield a_triple
-
-
-def _listing_zip_directory_files_recusively(source, actual_source_path, dest):
-    zip_file, folder = file_system.url_split(actual_source_path)
-    print(actual_source_path)
-
-    with file_system.open_fs(zip_file) as fs_handle:
-        for file_name in fs_handle.listdir(file_system.to_unicode(folder)):
-            src_file_under_dir = source + "/" + file_name
-            dest_file_under_dir = dest + "/" + file_name
-            real_src_file = "%s/%s" % (actual_source_path, file_name)
-            if fs_handle.isfile(
-                file_system.to_unicode(folder + "/" + file_name)
+    for file_name in file_system.list_dir(actual_source_path):
+        src_file_under_dir = source + "/" + file_name
+        dest_file_under_dir = dest + "/" + file_name
+        real_src_file = file_system.url_join(actual_source_path, file_name)
+        if file_system.is_file(real_src_file):
+            template_type = _get_template_type(src_file_under_dir)
+            yield (src_file_under_dir, dest_file_under_dir, template_type)
+        elif file_system.is_dir(real_src_file):
+            for a_triple in _listing_directory_files_recusively(
+                src_file_under_dir, real_src_file, dest_file_under_dir
             ):
-                template_type = _get_template_type(src_file_under_dir)
-                yield (src_file_under_dir, dest_file_under_dir, template_type)
-            elif fs_handle.isdir(
-                file_system.to_unicode(folder + "/" + file_name)
-            ):
-                for a_triple in _listing_zip_directory_files_recusively(
-                    src_file_under_dir, real_src_file, dest_file_under_dir
-                ):
-                    yield a_triple
+                yield a_triple
 
 
 def _get_template_type(template_file):
