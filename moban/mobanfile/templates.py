@@ -48,7 +48,9 @@ def handle_template(template_file, output, template_dirs):
 
 def _list_dir_files(source, actual_source_path, dest):
     for file_name in file_system.list_dir(actual_source_path):
-        if file_system.is_file(file_system.url_join(actual_source_path, file_name)):
+        if file_system.is_file(
+            file_system.url_join(actual_source_path, file_name)
+        ):
             # please note jinja2 does NOT like windows path
             # hence the following statement looks like cross platform
             #  src_file_under_dir = os.path.join(source, file_name)
