@@ -35,16 +35,10 @@ def search_file(base_dir, file_name):
     the_file = file_name
     if not file_system.exists(the_file):
         if base_dir:
-            try:
-                with file_system.open_fs(base_dir) as fs_handle:
-                    if fs_handle.exists(file_system.to_unicode(the_file)):
-                        the_file = fs_handle.geturl(file_name, purpose="fs")
-                    else:
-                        raise IOError(
-                            constants.ERROR_DATA_FILE_NOT_FOUND
-                            % (file_name, the_file)
-                        )
-            except fs.errors.CreateFailed:
+            file_under_base_dir = file_system.url_join(base_dir, the_file)
+            if file_system.exists(file_under_base_dir):
+                the_file = file_system.fs_url(file_under_base_dir)
+            else:
                 raise IOError(
                     constants.ERROR_DATA_FILE_NOT_FOUND % (file_name, the_file)
                 )
