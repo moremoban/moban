@@ -159,7 +159,7 @@ def test_abspath():
 TEST_FILE_URL = [
     [
         LOCAL_FOLDER + "/file_system",
-        "file://"
+        "osfs://"
         + os.path.normpath(
             os.path.join(os.getcwd(), "tests/fixtures/file_system")
         ),

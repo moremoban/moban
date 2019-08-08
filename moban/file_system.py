@@ -188,7 +188,7 @@ def fs_url(path):
     path = to_unicode(path)
     folder_or_file, path = _path_split(path)
     with fs.open_fs(folder_or_file) as the_fs:
-        return the_fs.geturl(path)
+        return the_fs.geturl(path, purpose="fs")
 
 
 def to_unicode(path):
