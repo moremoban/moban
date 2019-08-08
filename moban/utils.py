@@ -147,9 +147,7 @@ def verify_the_existence_of_directories(dirs):
 def find_file_in_template_dirs(src, template_dirs):
     LOG.debug(template_dirs)
     for folder in template_dirs:
-        path = folder + "/" + src
-        if "zip://" in folder or "tar://" in folder:
-            path = folder + "!/" + src
+        path = file_system.url_join(folder, src)
         if file_system.exists(path):
             return path
     else:
