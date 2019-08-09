@@ -8,7 +8,7 @@ class BufferedWriter(object):
         self.fs_list = {}
 
     def write_file_out(self, filename, content):
-        if "zip://" in filename:
+        if file_system.is_zip_alike_url(filename):
             self.write_file_out_to_zip(filename, content)
         else:
             utils.write_file_out(filename, content)

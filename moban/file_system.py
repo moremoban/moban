@@ -115,6 +115,7 @@ def read_bytes(path):
 
 
 read_binary = read_bytes
+read_text = read_unicode
 
 
 @log_fs_failure
