@@ -7,7 +7,9 @@ from moban.hashstore import HashStore
 
 class TestHashStore:
     def setUp(self):
-        self.source_template = os.path.join("tests", "fixtures", "a.jj2")
+        self.source_template = os.path.normcase(
+            os.path.join("tests", "fixtures", "a.jj2")
+        )
         self.fixture = (
             "test.out",
             "test content".encode("utf-8"),
