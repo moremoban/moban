@@ -69,7 +69,7 @@ def write_file_out(filename, content):
     if PY2 and content.__class__.__name__ == "unicode":
         content = content.encode("utf-8")
 
-    if file_system.is_zip_alike_url(filename):
+    if not file_system.is_zip_alike_url(filename):
         # fix me
         dest_folder = os.path.dirname(filename)
         if dest_folder:
@@ -99,14 +99,13 @@ def pip_install(packages):
 def get_template_path(template_dirs, template):
     for a_dir in template_dirs:
         try:
-            with file_system.open_fs(a_dir) as fs_handle:
-                template = file_system.to_unicode(template)
-                template_file_exists = fs_handle.exists(
-                    template
-                ) and fs_handle.isfile(template)
+            template_under_dir = file_system.url_join(a_dir, template)
+            template_file_exists = file_system.exists(
+                template_under_dir
+            ) and file_system.is_file(template_under_dir)
 
-                if template_file_exists:
-                    return fs_handle.geturl(template, purpose="fs")
+            if template_file_exists:
+                return file_system.fs_url(template_under_dir)
         except fs.errors.CreateFailed:
             continue
     raise exceptions.FileNotFound
