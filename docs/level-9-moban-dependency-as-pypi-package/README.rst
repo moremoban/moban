@@ -45,6 +45,6 @@ Alternative syntax
 The alternative syntax is::
   
     requires:
-       - type: pypi
-         name: pypi-mobans
+      - type: pypi
+        name: pypi-mobans
     ...

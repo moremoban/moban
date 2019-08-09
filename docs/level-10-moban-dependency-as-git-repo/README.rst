@@ -12,7 +12,7 @@ is welcome to add or improve this feature.
 Here are the sample file::
 
     requires:
-       - https://github.com/moremoban/pypi-mobans
+      - https://github.com/moremoban/pypi-mobans
     configuration:
       template_dir:
         - "repo://pypi-mobans/templates"

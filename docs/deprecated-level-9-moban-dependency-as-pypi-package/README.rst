@@ -12,7 +12,7 @@ into a pypi package and distribute it to the world of moban.
 Here are the sample file::
 
     requires:
-       - pypi-mobans
+      - pypi-mobans
     configuration:
       template_dir:
         - "pypi-mobans:templates"
@@ -44,6 +44,6 @@ Alternative syntax
 The alternative syntax is::
   
     requires:
-       - type: pypi
-         name: pypi-mobans
+      - type: pypi
+        name: pypi-mobans
     ...
