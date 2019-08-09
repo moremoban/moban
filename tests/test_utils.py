@@ -29,7 +29,7 @@ def test_file_permission_copy():
         raise SkipTest("No actual chmod on windows")
     test_source = "test_file_permission_copy1"
     test_dest = "test_file_permission_copy2"
-    create_file(test_source, 0o046)
+    create_file(test_source, 0o755)
     create_file(test_dest, 0o646)
     file_permissions_copy(test_source, test_dest)
     eq_(

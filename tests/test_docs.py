@@ -350,8 +350,7 @@ class TestTutorial:
         os.unlink(result.resource)  # delete the zip file
 
     def tearDown(self):
-        if os.path.exists(".moban.hashes"):
-            os.unlink(".moban.hashes")
+        os.unlink(".moban.hashes")
         os.chdir(self.current)
 
 

@@ -3,8 +3,7 @@ import sys
 import json
 import hashlib
 
-import moban.utils as utils
-import moban.constants as constants
+from moban import utils, constants, file_system
 
 PY2 = sys.version_info[0] == 2
 
@@ -57,8 +56,7 @@ HASH_STORE = HashStore()
 
 
 def get_file_hash(afile):
-    with open(afile, "rb") as handle:
-        content = handle.read()
+    content = file_system.read_bytes(afile)
     content = _mix(content, oct(utils.file_permissions(afile)))
     return get_hash(content)
 

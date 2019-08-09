@@ -133,7 +133,8 @@ class MobanEngine(object):
                 if "zip://" not in output_file and "tar://" not in output_file:
                     utils.file_permissions_copy(template_abs_path, output_file)
             return flag
-        except exceptions.FileNotFound:
+        except exceptions.FileNotFound as e:
+            log.exception(e)
             self.buffered_writer.write_file_out(output_file, rendered_content)
             return True
 

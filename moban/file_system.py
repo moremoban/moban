@@ -1,4 +1,6 @@
+import os
 import sys
+import stat
 import logging
 from contextlib import contextmanager
 
@@ -191,6 +193,14 @@ def fs_url(path):
         return the_fs.geturl(path, purpose="fs")
 
 
+@log_fs_failure
+def system_path(path):
+    path = to_unicode(path)
+    folder_or_file, path = _path_split(path)
+    with fs.open_fs(folder_or_file) as the_fs:
+        return the_fs.getsyspath(path)
+
+
 def to_unicode(path):
     if PY2 and path.__class__.__name__ != "unicode":
         return u"".__class__(path)
@@ -204,6 +214,16 @@ def is_zip_alike_url(url):
             return True
     else:
         return False
+
+
+def file_permissions(url):
+    if sys.platform == "win32":
+        return 0
+    elif is_zip_alike_url(url):
+        return 755
+    else:
+        unix_path = system_path(url)
+        return stat.S_IMODE(os.stat(unix_path).st_mode)
 
 
 def url_split(url):

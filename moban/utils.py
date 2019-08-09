@@ -56,13 +56,9 @@ def file_permissions_copy(source, dest):
 
 
 def file_permissions(afile):
-    if "zip://" in afile or "tar://" in afile:
-        return 755
-    if not os.path.exists(afile):
+    if not file_system.exists(afile):
         raise exceptions.FileNotFound(afile)
-    if sys.platform == "win32":
-        return 0
-    return stat.S_IMODE(os.stat(afile).st_mode)
+    return file_system.file_permissions(afile)
 
 
 def write_file_out(filename, content):
