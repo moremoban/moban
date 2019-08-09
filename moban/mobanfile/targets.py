@@ -40,7 +40,6 @@ def parse_targets(options, targets):
 
 
 def _handle_explicit_target(options, target):
-
     common_data_file = options[constants.LABEL_CONFIG]
     default_template_type = options[constants.LABEL_TEMPLATE_TYPE]
     template_file = target.get(

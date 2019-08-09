@@ -22,14 +22,12 @@ USER_HOME = fs.path.join("user", "home", ".moban", "repos")
 class TestPypkg:
     def __init__(self):
         __package_path__ = os.path.normcase(os.path.dirname(__file__))
-        print(__package_path__)
         self.resources_path = os.path.join(__package_path__, "fixtures")
 
 
 def test_expand_pypi_dir():
     dirs = list(expand_template_directories("testmobans:template-tests"))
     for directory in dirs:
-        print(directory)
         assert os.path.exists(directory)
 
 

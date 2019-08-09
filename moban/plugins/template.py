@@ -192,7 +192,6 @@ def expand_template_directories(dirs):
 
 def expand_template_directory(directory):
     log.debug("Expanding %s..." % directory)
-
     translated_directory = None
     if ":" in directory and directory[1] != ":" and "://" not in directory:
         translated_directory = deprecated_moban_path_notation(directory)

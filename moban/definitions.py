@@ -1,9 +1,6 @@
 import os
-import sys
 
 from moban import constants
-
-PY2 = sys.version_info[0] == 2
 
 
 class GitRequire(object):
