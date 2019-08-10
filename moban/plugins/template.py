@@ -34,6 +34,7 @@ class MobanFactory(PluginManager):
         template_dirs = utils.verify_the_existence_of_directories(
             template_dirs
         )
+        context_dirs = expand_template_directory(context_dirs)
         if template_type in self.options_registry:
             custom_engine_spec = self.options_registry[template_type]
             engine_cls = self.load_me_now(
@@ -63,7 +64,6 @@ class MobanFactory(PluginManager):
 
 class MobanEngine(object):
     def __init__(self, template_dirs, context_dirs, engine):
-        context_dirs = expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
         self.template_dirs = template_dirs
         self.engine = engine
@@ -130,7 +130,7 @@ class MobanEngine(object):
                 self.buffered_writer.write_file_out(
                     output_file, rendered_content
                 )
-                if "zip://" not in output_file and "tar://" not in output_file:
+                if not file_system.is_zip_alike_url(output_file):
                     utils.file_permissions_copy(template_abs_path, output_file)
             return flag
         except exceptions.FileNotFound as e:
