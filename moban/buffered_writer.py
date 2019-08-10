@@ -1,6 +1,9 @@
+import sys
+import os
 import fs
 import fs.path
 from moban import utils, file_system
+PY2 = sys.version_info[0] == 2
 
 
 class BufferedWriter(object):
@@ -11,7 +14,7 @@ class BufferedWriter(object):
         if file_system.is_zip_alike_url(filename):
             self.write_file_out_to_zip(filename, content)
         else:
-            utils.write_file_out(filename, content)
+            write_file_out(filename, content)
 
     def write_file_out_to_zip(self, filename, content):
         zip_file, file_name = file_system.url_split(filename)
@@ -29,3 +32,16 @@ class BufferedWriter(object):
     def close(self):
         for fsx in self.fs_list.values():
             fsx.close()
+
+
+def write_file_out(filename, content):
+    if PY2 and content.__class__.__name__ == "unicode":
+        content = content.encode("utf-8")
+
+    if not file_system.is_zip_alike_url(filename):
+        # fix me
+        dest_folder = os.path.dirname(filename)
+        if dest_folder:
+            utils.mkdir_p(dest_folder)
+
+    file_system.write_bytes(filename, content)

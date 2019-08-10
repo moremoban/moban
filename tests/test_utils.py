@@ -8,7 +8,6 @@ from nose import SkipTest
 from nose.tools import eq_, raises
 from moban.utils import (
     mkdir_p,
-    write_file_out,
     file_permissions,
     file_permissions_copy,
 )
@@ -68,21 +67,6 @@ def test_file_permission_copy_symlink():
     os.unlink(test_source)
     os.unlink(test_dest)
     os.unlink(test_symlink)
-
-
-def test_write_file_out():
-    content = b"""
-    helloworld
-
-
-
-
-    """
-    test_file = "testout"
-    write_file_out(test_file, content)
-    with open(test_file, "r") as f:
-        content = f.read()
-        eq_(content, "\n    helloworld\n\n\n\n\n    ")
 
 
 def test_mkdir_p():

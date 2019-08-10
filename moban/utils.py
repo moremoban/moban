@@ -43,19 +43,6 @@ def file_permissions(afile):
     return file_system.file_permissions(afile)
 
 
-def write_file_out(filename, content):
-    if PY2 and content.__class__.__name__ == "unicode":
-        content = content.encode("utf-8")
-
-    if not file_system.is_zip_alike_url(filename):
-        # fix me
-        dest_folder = os.path.dirname(filename)
-        if dest_folder:
-            mkdir_p(dest_folder)
-
-    file_system.write_bytes(filename, content)
-
-
 def mkdir_p(path):
     try:
         os.makedirs(path)
