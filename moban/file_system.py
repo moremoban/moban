@@ -6,6 +6,7 @@ from contextlib import contextmanager
 
 import fs
 import fs.path
+from moban import exceptions
 from fs.multifs import MultiFS
 
 try:
@@ -214,7 +215,17 @@ def is_zip_alike_url(url):
         return False
 
 
+def file_permissions_copy(source, dest):
+    source_permissions = file_permissions(source)
+    dest_permissions = file_permissions(dest)
+
+    if source_permissions != dest_permissions:
+        os.chmod(dest, source_permissions)
+
+
 def file_permissions(url):
+    if not exists(url):
+        raise exceptions.FileNotFound(url)
     if sys.platform == "win32":
         return 0
     elif is_zip_alike_url(url):

@@ -1,7 +1,11 @@
 import os
+import sys
+import stat
 
 from moban import file_system
-from nose.tools import eq_
+from nose import SkipTest
+from nose.tools import eq_, raises
+from moban.exceptions import FileNotFound
 
 LOCAL_FOLDER = "tests/fixtures"
 LOCAL_FILE = LOCAL_FOLDER + "/a.jj2"
@@ -184,3 +188,58 @@ def test_url_join():
     for parent, child, expected_path in URL_JOIN_TEST_FIXTURES:
         actual = file_system.url_join(parent, child)
         eq_(actual, expected_path)
+
+
+def create_file(test_file, permission):
+    with open(test_file, "w") as f:
+        f.write("test")
+
+    os.chmod(test_file, permission)
+
+
+def test_file_permission_copy():
+    if sys.platform == "win32":
+        raise SkipTest("No actual chmod on windows")
+    test_source = "test_file_permission_copy1"
+    test_dest = "test_file_permission_copy2"
+    create_file(test_source, 0o755)
+    create_file(test_dest, 0o646)
+    file_system.file_permissions_copy(test_source, test_dest)
+    eq_(
+        stat.S_IMODE(os.lstat(test_source).st_mode),
+        stat.S_IMODE(os.lstat(test_dest).st_mode),
+    )
+    os.unlink(test_source)
+    os.unlink(test_dest)
+
+
+def file_permissions_disabled_on_windows():
+    if sys.platform == "win32":
+        permissions = file_system.file_permissions("abc")
+        eq_("no-permission-support", permissions)
+    else:
+        raise SkipTest("No test required")
+
+
+@raises(FileNotFound)
+def test_file_permissions_file_not_found():
+    file_system.file_permissions("I does not exist")
+
+
+def test_file_permission_copy_symlink():
+    if sys.platform == "win32":
+        raise SkipTest("No symlink on windows")
+    test_source = "test_file_permission_copy1"
+    test_dest = "test_file_permission_copy2"
+    test_symlink = "test_file_permission_symlink"
+    create_file(test_source, 0o046)
+    os.symlink(test_source, test_symlink)
+    create_file(test_dest, 0o646)
+    file_system.file_permissions_copy(test_source, test_dest)
+    eq_(
+        stat.S_IMODE(os.lstat(test_source).st_mode),
+        stat.S_IMODE(os.lstat(test_dest).st_mode),
+    )
+    os.unlink(test_source)
+    os.unlink(test_dest)
+    os.unlink(test_symlink)

@@ -29,20 +29,6 @@ def merge(left, right):
     return left
 
 
-def file_permissions_copy(source, dest):
-    source_permissions = file_permissions(source)
-    dest_permissions = file_permissions(dest)
-
-    if source_permissions != dest_permissions:
-        os.chmod(dest, source_permissions)
-
-
-def file_permissions(afile):
-    if not file_system.exists(afile):
-        raise exceptions.FileNotFound(afile)
-    return file_system.file_permissions(afile)
-
-
 def mkdir_p(path):
     try:
         os.makedirs(path)

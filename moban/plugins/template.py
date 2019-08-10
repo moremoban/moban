@@ -131,7 +131,9 @@ class MobanEngine(object):
                     output_file, rendered_content
                 )
                 if not file_system.is_zip_alike_url(output_file):
-                    utils.file_permissions_copy(template_abs_path, output_file)
+                    file_system.file_permissions_copy(
+                        template_abs_path, output_file
+                    )
             return flag
         except exceptions.FileNotFound as e:
             log.exception(e)
