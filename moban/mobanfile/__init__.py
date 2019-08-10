@@ -63,8 +63,14 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     # call expand template directory always after handle require please
     # the penalty is: newly clone repos are not visible
     # one more note: verify_the_existence_of_directories will remove non-exist dirs
-    merged_options[constants.LABEL_TMPL_DIRS] = verify_the_existence_of_directories(
-        list(expand_template_directories(merged_options[constants.LABEL_TMPL_DIRS]))
+    merged_options[
+        constants.LABEL_TMPL_DIRS
+    ] = verify_the_existence_of_directories(
+        list(
+            expand_template_directories(
+                merged_options[constants.LABEL_TMPL_DIRS]
+            )
+        )
     )
     extensions = moban_file_configurations.get(constants.LABEL_EXTENSIONS)
     if extensions:
