@@ -2,8 +2,8 @@ import os
 import sys
 import stat
 
-from moban import file_system
 from nose import SkipTest
+from moban import file_system
 from nose.tools import eq_, raises
 from moban.exceptions import FileNotFound
 
