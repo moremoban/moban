@@ -25,7 +25,7 @@ LOADER = AnyDataLoader()
 
 
 def load_data(base_dir, file_name):
-    abs_file_path = utils.search_file(base_dir, file_name)
+    abs_file_path = search_file(base_dir, file_name)
     data = LOADER.get_data(abs_file_path)
     if data is not None:
         parent_data = None
@@ -39,3 +39,19 @@ def load_data(base_dir, file_name):
             return data
     else:
         return None
+
+
+def search_file(base_dir, file_name):
+    the_file = file_name
+    if not file_system.exists(the_file):
+        if base_dir:
+            file_under_base_dir = file_system.url_join(base_dir, the_file)
+            if file_system.exists(file_under_base_dir):
+                the_file = file_system.fs_url(file_under_base_dir)
+            else:
+                raise IOError(
+                    constants.ERROR_DATA_FILE_NOT_FOUND % (file_name, the_file)
+                )
+        else:
+            raise IOError(constants.ERROR_DATA_FILE_ABSENT % the_file)
+    return the_file
