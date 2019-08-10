@@ -11,6 +11,7 @@ from moban.deprecated import deprecated
 from moban.definitions import GitRequire
 from moban.plugins.template import expand_template_directories
 from moban.mobanfile.targets import parse_targets, extract_group_targets
+from moban import file_system
 
 try:
     from urllib.parse import urlparse
@@ -23,7 +24,7 @@ KNOWN_DOMAIN_FOR_GIT = ["github.com", "gitlab.com", "bitbucket.com"]
 
 def find_default_moban_file():
     for moban_file in constants.DEFAULT_MOBAN_FILES:
-        if os.path.exists(moban_file):
+        if file_system.exists(moban_file):
             break
     else:
         moban_file = None

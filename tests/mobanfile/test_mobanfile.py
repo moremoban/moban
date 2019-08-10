@@ -6,7 +6,7 @@ from moban.definitions import GitRequire, TemplateTarget
 
 class TestFinder:
     def setUp(self):
-        self.patcher = patch("os.path.exists")
+        self.patcher = patch("moban.file_system.exists")
         self.fake_file_existence = self.patcher.start()
         self.fake_file_existence.__name__ = "fake"
         self.fake_file_existence.__module__ = "fake"
