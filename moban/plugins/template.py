@@ -65,6 +65,7 @@ class MobanEngine(object):
     def __init__(self, template_dirs, context_dirs, engine):
         context_dirs = expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
+        self.template_fs = file_system.get_multi_fs(template_dirs)
         self.template_dirs = template_dirs
         self.engine = engine
         self.templated_count = 0
@@ -88,8 +89,8 @@ class MobanEngine(object):
         template = self.engine.get_template(
             file_system.to_unicode(template_file)
         )
-        template_abs_path = utils.get_template_path(
-            self.template_dirs, template_file
+        template_abs_path = self.template_fs.geturl(
+            template_file, purpose="fs"
         )
 
         flag = self.apply_template(
@@ -152,8 +153,8 @@ class MobanEngine(object):
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
             template = self.engine.get_template(template_file)
-            template_abs_path = utils.get_template_path(
-                self.template_dirs, template_file
+            template_abs_path = self.template_fs.geturl(
+                template_file, purpose="fs"
             )
             for (data_file, output) in data_output_pairs:
                 data = self.context.get_data(data_file)
@@ -170,8 +171,8 @@ class MobanEngine(object):
             data = self.context.get_data(data_file)
             for (template_file, output) in template_output_pairs:
                 template = self.engine.get_template(template_file)
-                template_abs_path = utils.get_template_path(
-                    self.template_dirs, template_file
+                template_abs_path = self.template_fs.geturl(
+                    template_file, purpose="fs"
                 )
                 flag = self.apply_template(
                     template_abs_path, template, data, output
