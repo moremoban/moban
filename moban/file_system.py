@@ -6,6 +6,7 @@ from contextlib import contextmanager
 
 import fs
 import fs.path
+from fs.multifs import MultiFS
 
 try:
     from urllib.parse import urlparse
@@ -241,3 +242,10 @@ def _path_split(url_or_path):
         return url_split(url_or_path)
     else:
         return fs.path.dirname(url_or_path), fs.path.basename(url_or_path)
+
+
+def get_multi_fs(directories):
+    filesystem = MultiFS()
+    for directory in directories:
+        filesystem.add_fs(directory, fs.open_fs(directory))
+    return filesystem

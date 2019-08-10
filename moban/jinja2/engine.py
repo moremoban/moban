@@ -2,10 +2,8 @@ import re
 import logging
 from importlib import import_module
 
-import fs
-from moban import constants, exceptions
+from moban import constants, exceptions, file_system
 from jinja2 import Template, Environment
-from fs.multifs import MultiFS
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
 from jinja2.exceptions import TemplateNotFound
@@ -71,10 +69,7 @@ class Engine(object):
         LOG.debug("Jinja template dirs: %s", template_dirs)
         load_jinja2_extensions()
         self.template_dirs = template_dirs
-        filesystem = MultiFS()
-        for template_dir in template_dirs:
-            filesystem.add_fs(template_dir, fs.open_fs(template_dir))
-
+        filesystem = file_system.get_multi_fs(template_dirs)
         template_loader = FSLoader(filesystem)
         env_params = dict(
             loader=template_loader,
