@@ -91,21 +91,6 @@ def pip_install(packages):
     )
 
 
-def get_template_path(template_dirs, template):
-    for a_dir in template_dirs:
-        try:
-            template_under_dir = file_system.url_join(a_dir, template)
-            template_file_exists = file_system.exists(
-                template_under_dir
-            ) and file_system.is_file(template_under_dir)
-
-            if template_file_exists:
-                return file_system.fs_url(template_under_dir)
-        except fs.errors.CreateFailed:
-            continue
-    raise exceptions.FileNotFound
-
-
 def verify_the_existence_of_directories(dirs):
     LOG.debug("Verifying the existence: %s", dirs)
     if not isinstance(dirs, list):

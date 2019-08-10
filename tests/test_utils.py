@@ -11,7 +11,6 @@ from moban.utils import (
     mkdir_p,
     write_file_out,
     file_permissions,
-    get_template_path,
     file_permissions_copy,
 )
 from moban.exceptions import FileNotFound
@@ -92,32 +91,6 @@ def test_mkdir_p():
     mkdir_p(test_path)
     assert os.path.exists(test_path)
     rmtree(test_path)
-
-
-@raises(FileNotFound)
-def test_get_template_path_with_error():
-    temp_dirs = [
-        fs.path.join("tests", "fixtures", "template-tests"),
-        fs.path.join("tests", "abc"),
-    ]
-    template = "I-do-not-exist.jj2"
-    get_template_path(temp_dirs, template)
-
-
-def test_get_template_path():
-    temp_dirs = [
-        fs.path.join("tests", "fixtures", "template-tests"),
-        fs.path.join("tests", "abc"),
-        fs.path.join("tests", "abc"),
-    ]
-    template = "a.jj2"
-    template_path = get_template_path(temp_dirs, template)
-    expected = "osfs://" + os.path.normcase(
-        os.path.abspath(
-            os.path.join("tests", "fixtures", "template-tests", "a.jj2")
-        )
-    )
-    eq_(template_path.lower(), expected.replace("\\", "/").lower())
 
 
 @patch("subprocess.check_call")
