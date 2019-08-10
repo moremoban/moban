@@ -12,9 +12,7 @@ def handle_template(template_file, output, template_dirs):
     if template_file.endswith("**"):
         source_dir = template_file[:-3]
         if multi_fs.exists(source_dir):
-            src_path = multi_fs.geturl(
-                source_dir, purpose="fs"
-            )
+            src_path = multi_fs.geturl(source_dir, purpose="fs")
             for a_triple in _listing_directory_files_recusively(
                 source_dir, src_path, output
             ):
