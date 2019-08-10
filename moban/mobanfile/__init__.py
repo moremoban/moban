@@ -3,7 +3,7 @@ import re
 import sys
 from collections import OrderedDict
 
-from moban import plugins, reporter, constants
+from moban import plugins, reporter, constants, file_system
 from lml.utils import do_import
 from moban.repo import git_clone
 from moban.utils import merge, pip_install
@@ -11,7 +11,6 @@ from moban.deprecated import deprecated
 from moban.definitions import GitRequire
 from moban.plugins.template import expand_template_directories
 from moban.mobanfile.targets import parse_targets, extract_group_targets
-from moban import file_system
 
 try:
     from urllib.parse import urlparse
@@ -189,16 +188,14 @@ def handle_requires(requires):
         if isinstance(require, dict):
             require_type = require.get(constants.REQUIRE_TYPE, "")
             if require_type.upper() == constants.GIT_REQUIRE:
-                git_repos.append(
-                    GitRequire(
-                        git_url=require.get(constants.GIT_URL),
-                        branch=require.get(constants.GIT_BRANCH),
-                        reference=require.get(constants.GIT_REFERENCE),
-                        submodule=require.get(
-                            constants.GIT_HAS_SUBMODULE, False
-                        ),
-                    )
+                git_require = GitRequire(
+                    git_url=require.get(constants.GIT_URL),
+                    branch=require.get(constants.GIT_BRANCH),
+                    reference=require.get(constants.GIT_REFERENCE),
+                    submodule=require.get(constants.GIT_HAS_SUBMODULE, False),
                 )
+
+                git_repos.append(git_require)
             elif require_type.upper() == constants.PYPI_REQUIRE:
                 pypi_pkgs.append(require.get(constants.PYPI_PACKAGE_NAME))
         else:
