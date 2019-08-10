@@ -176,7 +176,7 @@ def test_fs_url():
 URL_JOIN_TEST_FIXTURES = [
     ["parent", "child", "parent/child"],
     ["zip://test.zip", "file", "zip://test.zip!/file"],
-    ["/root", "path", "/root/path"]
+    ["/root", "path", "/root/path"],
 ]
 
 

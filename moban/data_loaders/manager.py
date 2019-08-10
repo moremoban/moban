@@ -1,7 +1,7 @@
-from moban import utils, constants, file_system
-from lml.plugin import PluginManager
 import moban.data_loaders.yaml  # noqa: F401
 import moban.data_loaders.json_loader  # noqa: F401
+from moban import utils, constants, file_system
+from lml.plugin import PluginManager
 
 
 class AnyDataLoader(PluginManager):
