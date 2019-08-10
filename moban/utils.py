@@ -3,7 +3,6 @@ import sys
 import errno
 import logging
 
-import fs
 from moban import constants, exceptions, file_system
 
 LOG = logging.getLogger(__name__)

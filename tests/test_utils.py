@@ -3,7 +3,6 @@ import sys
 import stat
 from shutil import rmtree
 
-import fs.path
 from mock import patch
 from nose import SkipTest
 from nose.tools import eq_, raises
