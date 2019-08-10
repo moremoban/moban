@@ -21,10 +21,6 @@ path_splitext = fs.path.splitext
 
 
 def url_join(path, path2):
-    return zip_alike_url_join(path, path2)
-
-
-def zip_alike_url_join(path, path2):
     result = urlparse(path)
     if result.scheme and path.endswith(result.scheme):
         return path + to_unicode("!/") + path2

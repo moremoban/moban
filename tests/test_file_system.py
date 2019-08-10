@@ -171,3 +171,16 @@ def test_fs_url():
     for path, expected in TEST_FILE_URL:
         url = file_system.fs_url(path)
         eq_(url, expected.replace("\\", "/"))
+
+
+URL_JOIN_TEST_FIXTURES = [
+    ["parent", "child", "parent/child"],
+    ["zip://test.zip", "file", "zip://test.zip!/file"],
+    ["/root", "path", "/root/path"]
+]
+
+
+def test_url_join():
+    for parent, child, expected_path in URL_JOIN_TEST_FIXTURES:
+        actual = file_system.url_join(parent, child)
+        eq_(actual, expected_path)
