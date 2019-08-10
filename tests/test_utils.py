@@ -6,11 +6,7 @@ from shutil import rmtree
 from mock import patch
 from nose import SkipTest
 from nose.tools import eq_, raises
-from moban.utils import (
-    mkdir_p,
-    file_permissions,
-    file_permissions_copy,
-)
+from moban.utils import mkdir_p, file_permissions, file_permissions_copy
 from moban.exceptions import FileNotFound
 
 

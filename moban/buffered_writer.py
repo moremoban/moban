@@ -1,8 +1,10 @@
-import sys
 import os
+import sys
+
 import fs
 import fs.path
 from moban import utils, file_system
+
 PY2 = sys.version_info[0] == 2
 
 
