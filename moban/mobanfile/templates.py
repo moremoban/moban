@@ -1,18 +1,19 @@
 import logging
 
 from moban import reporter, file_system
-from moban.utils import find_file_in_template_dirs
 
 log = logging.getLogger(__name__)
 
 
 def handle_template(template_file, output, template_dirs):
     log.info("handling %s" % template_file)
-
+    multi_fs = file_system.get_multi_fs(template_dirs)
     if template_file.endswith("**"):
         source_dir = template_file[:-3]
-        src_path = find_file_in_template_dirs(source_dir, template_dirs)
-        if src_path:
+        if multi_fs.exists(source_dir):
+            src_path = multi_fs.geturl(
+                file_system.to_unicode(source_dir), purpose="fs"
+            )
             for a_triple in _listing_directory_files_recusively(
                 source_dir, src_path, output
             ):
@@ -22,15 +23,15 @@ def handle_template(template_file, output, template_dirs):
                 "{0} cannot be found".format(template_file)
             )
     else:
-        template_file_on_disk = find_file_in_template_dirs(
-            template_file, template_dirs
-        )
-
-        if template_file_on_disk is None:
+        template_file = file_system.to_unicode(template_file)
+        if not multi_fs.exists(template_file):
             reporter.report_error_message(
                 "{0} cannot be found".format(template_file)
             )
-        elif file_system.is_dir(template_file_on_disk):
+        elif multi_fs.isdir(template_file):
+            template_file_on_disk = multi_fs.geturl(
+                file_system.to_unicode(template_file), purpose="fs"
+            )
             for a_triple in _list_dir_files(
                 template_file, template_file_on_disk, output
             ):

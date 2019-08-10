@@ -85,13 +85,3 @@ def verify_the_existence_of_directories(dirs):
                 constants.MESSAGE_DIR_NOT_EXIST % directory
             )
     return results
-
-
-def find_file_in_template_dirs(src, template_dirs):
-    LOG.debug(template_dirs)
-    for folder in template_dirs:
-        path = file_system.url_join(folder, src)
-        if file_system.exists(path):
-            return path
-    else:
-        return None

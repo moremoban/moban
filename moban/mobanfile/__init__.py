@@ -6,7 +6,7 @@ from collections import OrderedDict
 from moban import plugins, reporter, constants, file_system
 from lml.utils import do_import
 from moban.repo import git_clone
-from moban.utils import merge, pip_install
+from moban.utils import merge, pip_install, verify_the_existence_of_directories
 from moban.deprecated import deprecated
 from moban.definitions import GitRequire
 from moban.plugins.template import expand_template_directories
@@ -62,8 +62,9 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
     # call expand template directory always after handle require please
     # the penalty is: newly clone repos are not visible
-    merged_options[constants.LABEL_TMPL_DIRS] = list(
-        expand_template_directories(merged_options[constants.LABEL_TMPL_DIRS])
+    # one more note: verify_the_existence_of_directories will remove non-exist dirs
+    merged_options[constants.LABEL_TMPL_DIRS] = verify_the_existence_of_directories(
+        list(expand_template_directories(merged_options[constants.LABEL_TMPL_DIRS]))
     )
     extensions = moban_file_configurations.get(constants.LABEL_EXTENSIONS)
     if extensions:
