@@ -61,9 +61,10 @@ class Engine(object):
         """
         Contruct a jinja2 template engine
 
-        A list template directories will be given to your engine class
+        an instance of fs.multifs.MultiFS will be given and straightaway it is given
+        to jinja2.FSLoader.
 
-        :param list temp_dirs: a list of template directories
+        :param fs.multifs.MultiFS template_fs: a MultiFS instance or a FS instance
         :param dict options: a dictionary containing environmental parameters
         """
         LOG.debug("Jinja template engine started")
