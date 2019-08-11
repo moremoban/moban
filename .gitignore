@@ -506,6 +506,8 @@ cscope.in.out
 cscope.po.out
 
 
+docs/deprecated-level-9-moban-dependency-as-pypi-package/mytravis.yml
+docs/deprecated-level-10-moban-dependency-as-git-repo/mytravis.yml
 docs/level-1-jinja2-cli/testout
 docs/level-10-moban-dependency-as-git-repo/mytravis.yml
 docs/level-18-user-defined-template-types/b.output

@@ -1,5 +1,3 @@
-import os
-
 from moban import constants
 
 
@@ -54,7 +52,9 @@ class TemplateTarget(object):
     def set_template_type(self, new_template_type):
         self.template_type = new_template_type
         if self.original_output.endswith(self.template_type):
-            self.output, _ = os.path.splitext(self.original_output)
+            self.output = self.original_output.replace(
+                "." + self.template_type, ""
+            )
         else:
             self.output = self.original_output
 

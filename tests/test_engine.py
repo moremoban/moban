@@ -1,6 +1,7 @@
 import os
 import sys
 
+import fs.path
 import moban.exceptions as exceptions
 from mock import patch
 from lml.plugin import PluginInfo
@@ -14,13 +15,13 @@ from moban.jinja2.engine import (
 from moban.plugins.context import Context
 from moban.plugins.template import MobanEngine, expand_template_directories
 
-USER_HOME = os.path.join("user", "home", ".moban", "repos")
+USER_HOME = fs.path.join("user", "home", ".moban", "repos")
 
 
 @PluginInfo("library", tags=["testmobans"])
 class TestPypkg:
     def __init__(self):
-        __package_path__ = os.path.dirname(__file__)
+        __package_path__ = os.path.normcase(os.path.dirname(__file__))
         self.resources_path = os.path.join(__package_path__, "fixtures")
 
 
@@ -31,11 +32,11 @@ def test_expand_pypi_dir():
 
 
 @patch("moban.repo.get_moban_home", return_value=USER_HOME)
-@patch("os.path.exists", return_value=True)
+@patch("moban.file_system.exists", return_value=True)
 def test_expand_repo_dir(_, __):
     dirs = list(expand_template_directories("git_repo:template"))
 
-    expected = [os.path.join(USER_HOME, "git_repo", "template")]
+    expected = [fs.path.join(USER_HOME, "git_repo", "template")]
     eq_(expected, dirs)
 
 
@@ -62,7 +63,7 @@ def test_unknown_template_type():
 
 @raises(exceptions.DirectoryNotFound)
 def test_non_existent_tmpl_directries():
-    MobanEngine("abc", "tests", Engine)
+    ENGINES.get_engine("jj2", "idontexist", "")
 
 
 @raises(exceptions.DirectoryNotFound)
@@ -77,7 +78,7 @@ def test_non_existent_ctx_directries():
 
 def test_file_tests():
     output = "test.txt"
-    path = os.path.join("tests", "fixtures", "jinja_tests")
+    path = fs.path.join("tests", "fixtures", "jinja_tests")
     engine = ENGINES.get_engine("jinja2", [path], path)
     engine.render_to_file("file_tests.template", "file_tests.yml", output)
     with open(output, "r") as output_file:
@@ -88,7 +89,7 @@ def test_file_tests():
 
 def test_global_template_variables():
     output = "test.txt"
-    path = os.path.join("tests", "fixtures", "globals")
+    path = fs.path.join("tests", "fixtures", "globals")
     engine = ENGINES.get_engine("jinja2", [path], path)
     engine.render_to_file("variables.template", "variables.yml", output)
     with open(output, "r") as output_file:
@@ -99,7 +100,7 @@ def test_global_template_variables():
 
 def test_nested_global_template_variables():
     output = "test.txt"
-    path = os.path.join("tests", "fixtures", "globals")
+    path = fs.path.join("tests", "fixtures", "globals")
     engine = ENGINES.get_engine("jinja2", [path], path)
     engine.render_to_file("nested.template", "variables.yml", output)
     with open(output, "r") as output_file:
@@ -113,7 +114,7 @@ def test_environ_variables_as_data():
     test_value = "foo"
     os.environ[test_var] = test_value
     output = "test.txt"
-    path = os.path.join("tests", "fixtures", "environ_vars_as_data")
+    path = fs.path.join("tests", "fixtures", "environ_vars_as_data")
     engine = ENGINES.get_engine("jinja2", [path], path)
     engine.render_to_file("test.template", "this_does_not_exist.yml", output)
     with open(output, "r") as output_file:
@@ -124,7 +125,7 @@ def test_environ_variables_as_data():
 
 def test_string_template():
     output = "test.txt"
-    path = os.path.join("tests", "fixtures")
+    path = fs.path.join("tests", "fixtures")
     engine = ENGINES.get_engine("jinja2", [path], path)
     engine.render_string_to_file("{{simple}}", "simple.yaml", output)
     with open(output, "r") as output_file:

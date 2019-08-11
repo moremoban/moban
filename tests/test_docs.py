@@ -3,8 +3,10 @@ import sys
 from textwrap import dedent
 
 from mock import patch
+from moban import file_system
 from moban.main import main
 from nose.tools import eq_
+from fs.opener.parse import parse_fs_url
 
 
 def custom_dedent(long_texts):
@@ -100,6 +102,25 @@ class TestTutorial:
         folder = "level-6-complex-configuration"
         self._raw_moban(["moban"], folder, expected, "a.output2")
 
+    def test_level_20(self):
+        expected = custom_dedent(
+            """
+        ========header============
+
+        world2
+
+        shijie
+
+        this demonstrates jinja2's include statement
+
+        ========footer============
+        """
+        )
+        folder = "level-20-templates-configs-in-zip-or-tar"
+        self._raw_moban_with_fs(
+            ["moban"], folder, expected, "zip://a.zip!/a.output2"
+        )
+
     def test_level_7(self):
         expected = custom_dedent(
             """
@@ -122,9 +143,19 @@ class TestTutorial:
         folder = "level-9-moban-dependency-as-pypi-package"
         self._raw_moban(["moban"], folder, expected, "test.txt")
 
+    def test_level_9_deprecated(self):
+        expected = "pypi-mobans: moban dependency as pypi package"
+        folder = "deprecated-level-9-moban-dependency-as-pypi-package"
+        self._raw_moban(["moban"], folder, expected, "test.txt")
+
     def test_level_10(self):
         expected = "pypi-mobans: moban dependency as git repo"
         folder = "level-10-moban-dependency-as-git-repo"
+        self._raw_moban(["moban"], folder, expected, "test.txt")
+
+    def test_level_10_deprecated(self):
+        expected = "pypi-mobans: moban dependency as git repo"
+        folder = "deprecated-level-10-moban-dependency-as-git-repo"
         self._raw_moban(["moban"], folder, expected, "test.txt")
 
     def test_level_11(self):
@@ -222,6 +253,27 @@ class TestTutorial:
             ),
         )
 
+    def test_level_21_copy_templates_into_zips(self):
+        expected = "test file\n"
+
+        folder = "level-21-copy-templates-into-an-alien-file-system"
+        criterias = [
+            ["zip://my.zip!/simple.file", expected],
+            [
+                "zip://my.zip!/target_without_template_type",
+                "file extension will trigger copy engine\n",
+            ],
+            [
+                "zip://my.zip!/target_in_short_form",
+                (
+                    "it is OK to have a short form, "
+                    + "but the file to be 'copied' shall have 'copy' extension, "
+                    + "so as to trigger ContentForwardEngine, 'copy' engine.\n"
+                ),
+            ],
+        ]
+        self._raw_moban_with_fs2(["moban"], folder, criterias)
+
     def test_level_16_group_targets_using_template_type(self):
         expected = "test file\n"
 
@@ -279,9 +331,26 @@ class TestTutorial:
             _verify_content(output, expected)
         os.unlink(output)
 
+    def _raw_moban_with_fs(self, args, folder, expected, output):
+        os.chdir(os.path.join("docs", folder))
+        with patch.object(sys, "argv", args):
+            main()
+            _verify_content_with_fs(output, expected)
+        result = parse_fs_url(output)
+        os.unlink(result.resource)  # delete the zip file
+
+    def _raw_moban_with_fs2(self, args, folder, criterias):
+        os.chdir(os.path.join("docs", folder))
+        with patch.object(sys, "argv", args):
+            main()
+
+            for output, expected in criterias:
+                _verify_content_with_fs(output, expected)
+        result = parse_fs_url(output)
+        os.unlink(result.resource)  # delete the zip file
+
     def tearDown(self):
-        if os.path.exists(".moban.hashes"):
-            os.unlink(".moban.hashes")
+        os.unlink(".moban.hashes")
         os.chdir(self.current)
 
 
@@ -289,3 +358,8 @@ def _verify_content(file_name, expected):
     with open(file_name, "r") as f:
         content = f.read()
         eq_(content, expected)
+
+
+def _verify_content_with_fs(file_name, expected):
+    content = file_system.read_unicode(file_name)
+    eq_(content, expected)

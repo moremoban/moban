@@ -38,7 +38,7 @@ except (ValueError, UnicodeError, locale.Error):
 
 NAME = "moban"
 AUTHOR = "C. W."
-VERSION = "0.5.0"
+VERSION = "0.6.0"
 EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
 ENTRY_POINTS = {
@@ -78,10 +78,12 @@ CLASSIFIERS = [
 INSTALL_REQUIRES = [
     "jinja2>=2.7.1",
     "lml>=0.0.9",
-    "appdirs>=1.2.0",
+    "appdirs>=1.4.3",
     "crayons>= 0.1.0",
     "GitPython>=2.0.0",
     "git-url-parse>=1.2.2",
+    "fs>=2.4.6",
+    "jinja2-fsloader>=0.2.0",
 ]
 SETUP_COMMANDS = {}
 

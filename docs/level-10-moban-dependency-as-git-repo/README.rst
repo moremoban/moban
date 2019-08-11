@@ -12,12 +12,13 @@ is welcome to add or improve this feature.
 Here are the sample file::
 
     requires:
-       - https://github.com/moremoban/pypi-mobans
+      - https://github.com/moremoban/pypi-mobans
     configuration:
       template_dir:
-        - "pypi-mobans:templates"
+        - "repo://pypi-mobans/templates"
         - local
       configuration: config.yml
+      configuration_dir: "repo://pypi-mobans/config"
     targets:
       - mytravis.yml: travis.yml.jj2
       - test.txt: demo.txt.jj2

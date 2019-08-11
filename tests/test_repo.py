@@ -1,5 +1,4 @@
-import os
-
+import fs.path
 from mock import patch
 from moban.repo import (
     git_clone,
@@ -14,7 +13,7 @@ from moban.definitions import GitRequire
 
 @patch("appdirs.user_cache_dir", return_value="root")
 @patch("moban.utils.mkdir_p")
-@patch("os.path.exists")
+@patch("moban.file_system.exists")
 @patch("git.Repo", autospec=True)
 class TestGitFunctions:
     def setUp(self):
@@ -30,7 +29,7 @@ class TestGitFunctions:
         self.require_with_reference = GitRequire(
             git_url=self.repo, reference="a-commit-reference"
         )
-        self.expected_local_repo_path = os.path.join(
+        self.expected_local_repo_path = fs.path.join(
             "root", "repos", self.repo_name
         )
 
@@ -152,7 +151,7 @@ def test_get_repo_name_can_handle_invalid_url(fake_reporter):
 @patch("appdirs.user_cache_dir", return_value="root")
 def test_get_moban_home(_):
     actual = get_moban_home()
-    eq_(os.path.join("root", "repos"), actual)
+    eq_(fs.path.join("root", "repos"), actual)
 
 
 @raises(NoGitCommand)

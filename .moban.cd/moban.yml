@@ -4,8 +4,8 @@ organisation: moremoban
 author: C. W.
 contact: wangc_2011@hotmail.com
 license: MIT
-version: 0.5.0
-current_version: 0.5.0
+version: 0.6.0
+current_version: 0.6.0
 release: 0.5.0
 branch: master
 master: index
@@ -24,10 +24,12 @@ dependencies:
   - ruamel.yaml>=0.15.98;python_version == '3.8'
   - jinja2>=2.7.1
   - lml>=0.0.9
-  - appdirs>=1.2.0
+  - appdirs>=1.4.3
   - crayons>= 0.1.0
   - GitPython>=2.0.0
   - git-url-parse>=1.2.2
+  - fs>=2.4.6
+  - jinja2-fsloader>=0.2.0
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com
 lint_command: make install_test format git-diff-check lint

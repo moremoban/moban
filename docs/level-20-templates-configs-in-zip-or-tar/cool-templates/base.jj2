@@ -1,0 +1,11 @@
+{%block header %}
+{%endblock%}
+
+{{hello}}
+
+{{nihao}}
+
+{%include 'cool.template.jj2'%}
+
+{%block footer %}
+{%endblock%}

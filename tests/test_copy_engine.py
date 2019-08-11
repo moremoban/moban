@@ -1,5 +1,6 @@
 import os
 
+from moban import file_system
 from moban.copy import ContentForwardEngine
 from nose.tools import eq_
 
@@ -7,7 +8,8 @@ from nose.tools import eq_
 class TestContentForwardEngine:
     def setUp(self):
         template_path = os.path.join("tests", "fixtures")
-        self.engine = ContentForwardEngine([template_path])
+        fs = file_system.get_multi_fs([template_path])
+        self.engine = ContentForwardEngine(fs)
 
     def test_get_template(self):
         template_content = self.engine.get_template("copier-test01.csv")

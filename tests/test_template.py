@@ -1,5 +1,6 @@
 import os
 
+import fs.path
 from mock import patch
 from nose.tools import eq_
 from moban.plugins import ENGINES
@@ -57,12 +58,12 @@ def test_do_templates_2(_do_templates_with_more_shared_templates):
 
 
 def test_do_templates_with_more_shared_templates():
-    base_dir = os.path.join("tests", "fixtures")
+    base_dir = fs.path.join("tests", "fixtures")
     engine = ENGINES.get_engine(
-        "jinja2", base_dir, os.path.join(base_dir, "config")
+        "jinja2", base_dir, fs.path.join(base_dir, "config")
     )
     engine._render_with_finding_template_first(
-        {"a.jj2": [(os.path.join(base_dir, "child.yaml"), "test")]}
+        {"a.jj2": [(fs.path.join(base_dir, "child.yaml"), "test")]}
     )
     with open("test", "r") as f:
         content = f.read()
@@ -71,12 +72,12 @@ def test_do_templates_with_more_shared_templates():
 
 
 def test_do_templates_with_more_shared_data():
-    base_dir = os.path.join("tests", "fixtures")
+    base_dir = fs.path.join("tests", "fixtures")
     engine = ENGINES.get_engine(
-        "jinja2", base_dir, os.path.join(base_dir, "config")
+        "jinja2", base_dir, fs.path.join(base_dir, "config")
     )
     engine._render_with_finding_data_first(
-        {os.path.join(base_dir, "child.yaml"): [("a.jj2", "test")]}
+        {fs.path.join(base_dir, "child.yaml"): [("a.jj2", "test")]}
     )
     with open("test", "r") as f:
         content = f.read()
@@ -85,7 +86,7 @@ def test_do_templates_with_more_shared_data():
 
 
 def test_get_user_defined_engine():
-    test_fixture = os.path.join(
+    test_fixture = fs.path.join(
         "tests", "fixtures", "mobanengine", "sample_template_type.yml"
     )
     template_types = open_yaml(test_fixture)
@@ -95,7 +96,7 @@ def test_get_user_defined_engine():
 
 
 def test_custom_file_extension_is_assocated_with_user_defined_engine():
-    test_fixture = os.path.join(
+    test_fixture = fs.path.join(
         "tests", "fixtures", "mobanengine", "sample_template_type.yml"
     )
     template_types = open_yaml(test_fixture)
@@ -105,7 +106,7 @@ def test_custom_file_extension_is_assocated_with_user_defined_engine():
 
 
 def test_built_in_jinja2_file_extension_still_works():
-    test_fixture = os.path.join(
+    test_fixture = fs.path.join(
         "tests", "fixtures", "mobanengine", "sample_template_type.yml"
     )
     template_types = open_yaml(test_fixture)

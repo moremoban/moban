@@ -1,10 +1,8 @@
-import os
 import sys
 import json
 import hashlib
 
-import moban.utils as utils
-import moban.constants as constants
+from moban import constants, file_system
 
 PY2 = sys.version_info[0] == 2
 
@@ -13,9 +11,14 @@ class HashStore:
     IGNORE_CACHE_FILE = False
 
     def __init__(self):
-        self.cache_file = constants.DEFAULT_MOBAN_CACHE_FILE
-        if os.path.exists(self.cache_file) and self.IGNORE_CACHE_FILE is False:
-            with open(self.cache_file, "r") as f:
+        self.cache_file = file_system.to_unicode(
+            constants.DEFAULT_MOBAN_CACHE_FILE
+        )
+        if (
+            file_system.exists(self.cache_file)
+            and self.IGNORE_CACHE_FILE is False
+        ):
+            with file_system.open_file(self.cache_file) as f:
                 self.hashes = json.load(f)
         else:
             self.hashes = {}
@@ -34,10 +37,10 @@ class HashStore:
     def _is_source_updated(self, file_name, file_content, source_template):
         changed = True
         content = _mix(
-            file_content, oct(utils.file_permissions(source_template))
+            file_content, oct(file_system.file_permissions(source_template))
         )
         content_hash = get_hash(content)
-        if os.path.exists(file_name):
+        if file_system.exists(file_name):
             if file_name in self.hashes:
                 if content_hash == self.hashes[file_name]:
                     changed = False
@@ -57,9 +60,8 @@ HASH_STORE = HashStore()
 
 
 def get_file_hash(afile):
-    with open(afile, "rb") as handle:
-        content = handle.read()
-    content = _mix(content, oct(utils.file_permissions(afile)))
+    content = file_system.read_bytes(afile)
+    content = _mix(content, oct(file_system.file_permissions(afile)))
     return get_hash(content)
 
 

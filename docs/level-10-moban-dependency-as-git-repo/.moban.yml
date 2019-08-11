@@ -2,10 +2,10 @@ requires:
   - https://github.com/moremoban/pypi-mobans
 configuration:
   template_dir:
-    - "pypi-mobans:templates"
+    - "repo://pypi-mobans/templates"
     - local
   configuration: config.yml
-  configuration_dir: "pypi-mobans:config"
+  configuration_dir: "repo://pypi-mobans/config"
 targets:
   - mytravis.yml: travis.yml.jj2
   - test.txt: demo.txt.jj2

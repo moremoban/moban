@@ -2,12 +2,15 @@ import os
 import sys
 
 from nose import SkipTest
+from moban import file_system
 from moban.hashstore import HashStore
 
 
 class TestHashStore:
     def setUp(self):
-        self.source_template = os.path.join("tests", "fixtures", "a.jj2")
+        self.source_template = file_system.path_join(
+            "tests", "fixtures", "a.jj2"
+        )
         self.fixture = (
             "test.out",
             "test content".encode("utf-8"),

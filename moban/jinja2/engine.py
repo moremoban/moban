@@ -1,11 +1,14 @@
 import re
+import logging
 from importlib import import_module
 
 from moban import constants, exceptions
-from jinja2 import Template, Environment, FileSystemLoader
+from jinja2 import Template, Environment
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
 from jinja2.exceptions import TemplateNotFound
+
+from jinja2_fsloader import FSLoader
 
 JINJA2_LIBRARIES = "^moban_jinja2_.+$"
 JINJA2_EXENSIONS = [
@@ -15,6 +18,7 @@ JINJA2_EXENSIONS = [
     "moban.jinja2.tests.files",
 ]
 JINJA2_THIRD_PARTY_EXTENSIONS = ["jinja2.ext.do", "jinja2.ext.loopcontrols"]
+LOG = logging.getLogger(__name__)
 
 
 class PluginMixin:
@@ -53,18 +57,19 @@ GLOBALS = JinjaGlobalsManager()
     constants.TEMPLATE_ENGINE_EXTENSION, tags=["jinja2", "jinja", "jj2", "j2"]
 )
 class Engine(object):
-    def __init__(self, template_dirs, options=None):
+    def __init__(self, template_fs, options=None):
         """
         Contruct a jinja2 template engine
 
-        A list template directories will be given to your engine class
+        an instance of fs.multifs.MultiFS will be given and straightaway it is given
+        to jinja2.FSLoader.
 
-        :param list temp_dirs: a list of template directories
+        :param fs.multifs.MultiFS template_fs: a MultiFS instance or a FS instance
         :param dict options: a dictionary containing environmental parameters
         """
+        LOG.debug("Jinja template engine started")
         load_jinja2_extensions()
-        self.template_dirs = template_dirs
-        template_loader = FileSystemLoader(template_dirs)
+        template_loader = FSLoader(template_fs)
         env_params = dict(
             loader=template_loader,
             keep_trailing_newline=True,

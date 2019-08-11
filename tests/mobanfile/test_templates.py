@@ -1,5 +1,4 @@
-import os
-
+import fs.path
 from mock import patch
 from nose.tools import eq_
 from moban.mobanfile.templates import handle_template
@@ -7,7 +6,7 @@ from moban.mobanfile.templates import handle_template
 
 class TestHandleTemplateFunction:
     def setUp(self):
-        self.base_dir = [os.path.join("tests", "fixtures")]
+        self.base_dir = [fs.path.join("tests", "fixtures")]
 
     def test_copy_files(self):
         results = list(
@@ -35,7 +34,7 @@ class TestHandleTemplateFunction:
         expected = [
             (
                 "copier-directory/level1-file1",
-                os.path.join("/tmp/copy-a-directory", "level1-file1"),
+                fs.path.join("/tmp/copy-a-directory", "level1-file1"),
                 None,
             )
         ]
@@ -48,21 +47,21 @@ class TestHandleTemplateFunction:
         )
         expected = [
             (
-                os.path.join("copier-directory", "copier-sample-dir", "file1"),
-                os.path.join(
+                fs.path.join("copier-directory", "copier-sample-dir", "file1"),
+                fs.path.join(
                     "/tmp/copy-a-directory", "copier-sample-dir", "file1"
                 ),
                 None,
             ),
             (
-                os.path.join("copier-directory", "level1-file1"),
-                os.path.join("/tmp/copy-a-directory", "level1-file1"),
+                fs.path.join("copier-directory", "level1-file1"),
+                fs.path.join("/tmp/copy-a-directory", "level1-file1"),
                 None,
             ),
         ]
         eq_(
-            sorted(expected, key=lambda x: x[0]),
             sorted(results, key=lambda x: x[0]),
+            sorted(expected, key=lambda x: x[0]),
         )
 
     @patch("moban.reporter.report_error_message")

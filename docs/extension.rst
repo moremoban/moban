@@ -48,7 +48,7 @@ is an example starting point for any template engine.
        constants.TEMPLATE_ENGINE_EXTENSION, tags=["file", "extensions", "for", "your", "template"]
    )
    class Engine(object):
-       def __init__(self, template_dirs):
+       def __init__(self, template_fs, options=None):
            """
            A list template directories will be given to your engine class
            """

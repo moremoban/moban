@@ -2,9 +2,11 @@ import os
 import sys
 import logging
 
-from moban import repo, utils, reporter, constants, exceptions
+from moban import repo, utils, reporter, constants, exceptions, file_system
 from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
+from moban.deprecated import deprecated
+from moban.buffered_writer import BufferedWriter
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES
 from moban.plugins.strategy import Strategy
@@ -28,6 +30,10 @@ class MobanFactory(PluginManager):
         self.options_registry.update(template_types)
 
     def get_engine(self, template_type, template_dirs, context_dirs):
+        template_dirs = list(expand_template_directories(template_dirs))
+        template_dirs = utils.verify_the_existence_of_directories(
+            template_dirs
+        )
         if template_type in self.options_registry:
             custom_engine_spec = self.options_registry[template_type]
             engine_cls = self.load_me_now(
@@ -38,8 +44,9 @@ class MobanFactory(PluginManager):
             engine_cls = self.load_me_now(template_type)
             engine_extensions = self.extensions.get(template_type)
             options = dict(extensions=engine_extensions)
-        engine = engine_cls(template_dirs, options)
-        return MobanEngine(template_dirs, context_dirs, engine)
+        template_fs = file_system.get_multi_fs(template_dirs)
+        engine = engine_cls(template_fs, options)
+        return MobanEngine(template_fs, context_dirs, engine)
 
     def get_primary_key(self, template_type):
         for key, item in self.options_registry.items():
@@ -56,15 +63,14 @@ class MobanFactory(PluginManager):
 
 
 class MobanEngine(object):
-    def __init__(self, template_dirs, context_dirs, engine):
-        template_dirs = list(expand_template_directories(template_dirs))
-        utils.verify_the_existence_of_directories(template_dirs)
+    def __init__(self, template_fs, context_dirs, engine):
         context_dirs = expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
-        self.template_dirs = template_dirs
+        self.template_fs = template_fs
         self.engine = engine
         self.templated_count = 0
         self.file_count = 0
+        self.buffered_writer = BufferedWriter()
 
     def report(self):
         if self.templated_count == 0:
@@ -79,10 +85,11 @@ class MobanEngine(object):
 
     def render_to_file(self, template_file, data_file, output_file):
         self.file_count = 1
+        template_file = file_system.to_unicode(template_file)
         data = self.context.get_data(data_file)
         template = self.engine.get_template(template_file)
-        template_abs_path = utils.get_template_path(
-            self.template_dirs, template_file
+        template_abs_path = self.template_fs.geturl(
+            template_file, purpose="fs"
         )
 
         flag = self.apply_template(
@@ -91,6 +98,7 @@ class MobanEngine(object):
         if flag:
             reporter.report_templating(template_file, output_file)
             self.templated_count += 1
+        self.buffered_writer.close()
 
     def render_string_to_file(
         self, template_in_string, data_file, output_file
@@ -105,41 +113,49 @@ class MobanEngine(object):
         if flag:
             reporter.report_templating(template_abs_path, output_file)
             self.templated_count += 1
+        self.buffered_writer.close()
 
     def apply_template(self, template_abs_path, template, data, output_file):
         rendered_content = self.engine.apply_template(
             template, data, output_file
         )
-        if PY3_ABOVE:
-            if not isinstance(rendered_content, bytes):
-                rendered_content = rendered_content.encode("utf-8")
+        if not isinstance(rendered_content, bytes):
+            rendered_content = rendered_content.encode("utf-8")
 
         try:
             flag = HASH_STORE.is_file_changed(
                 output_file, rendered_content, template_abs_path
             )
             if flag:
-                utils.write_file_out(output_file, rendered_content)
-                utils.file_permissions_copy(template_abs_path, output_file)
+                self.buffered_writer.write_file_out(
+                    output_file, rendered_content
+                )
+                if not file_system.is_zip_alike_url(output_file):
+                    file_system.file_permissions_copy(
+                        template_abs_path, output_file
+                    )
             return flag
-        except exceptions.FileNotFound:
-            utils.write_file_out(output_file, rendered_content)
+        except exceptions.FileNotFound as e:
+            log.exception(e)
+            self.buffered_writer.write_file_out(output_file, rendered_content)
             return True
 
     def render_to_files(self, array_of_template_targets):
         sta = Strategy(array_of_template_targets)
+
         sta.process()
         choice = sta.what_to_do()
         if choice == Strategy.DATA_FIRST:
             self._render_with_finding_data_first(sta.data_file_index)
         else:
             self._render_with_finding_template_first(sta.template_file_index)
+        self.buffered_writer.close()
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
             template = self.engine.get_template(template_file)
-            template_abs_path = utils.get_template_path(
-                self.template_dirs, template_file
+            template_abs_path = self.template_fs.geturl(
+                file_system.to_unicode(template_file), purpose="fs"
             )
             for (data_file, output) in data_output_pairs:
                 data = self.context.get_data(data_file)
@@ -156,8 +172,8 @@ class MobanEngine(object):
             data = self.context.get_data(data_file)
             for (template_file, output) in template_output_pairs:
                 template = self.engine.get_template(template_file)
-                template_abs_path = utils.get_template_path(
-                    self.template_dirs, template_file
+                template_abs_path = self.template_fs.geturl(
+                    file_system.to_unicode(template_file), purpose="fs"
                 )
                 flag = self.apply_template(
                     template_abs_path, template, data, output
@@ -180,29 +196,39 @@ def expand_template_directories(dirs):
 def expand_template_directory(directory):
     log.debug("Expanding %s..." % directory)
     translated_directory = None
-    if ":" in directory and directory[1] != ":":
-        library_or_repo_name, relative_path = directory.split(":")
-        potential_repo_path = os.path.join(
-            repo.get_moban_home(), library_or_repo_name
-        )
-        if os.path.exists(potential_repo_path):
-            # expand repo template path
-            if relative_path:
-                translated_directory = os.path.join(
-                    potential_repo_path, relative_path
-                )
-            else:
-                translated_directory = potential_repo_path
-        else:
-            # expand pypi template path
-            library_path = LIBRARIES.resource_path_of(library_or_repo_name)
-            if relative_path:
-                translated_directory = os.path.join(
-                    library_path, relative_path
-                )
-            else:
-                translated_directory = library_path
+    if ":" in directory and directory[1] != ":" and "://" not in directory:
+        translated_directory = deprecated_moban_path_notation(directory)
+    elif "://" in directory:
+        translated_directory = directory
     else:
         # local template path
-        translated_directory = os.path.abspath(directory)
+        translated_directory = os.path.normcase(os.path.abspath(directory))
+        translated_directory = file_system.fs_url(translated_directory)
+    return translated_directory
+
+
+@deprecated(constants.MESSAGE_DEPRECATE_MOBAN_NOTATION_SINCE_0_6_0)
+def deprecated_moban_path_notation(directory):
+    translated_directory = None
+    library_or_repo_name, relative_path = directory.split(":")
+    potential_repo_path = file_system.path_join(
+        repo.get_moban_home(), library_or_repo_name
+    )
+    if file_system.exists(potential_repo_path):
+        # expand repo template path
+        if relative_path:
+            translated_directory = file_system.path_join(
+                potential_repo_path, relative_path
+            )
+        else:
+            translated_directory = potential_repo_path
+    else:
+        # expand pypi template path
+        library_path = LIBRARIES.resource_path_of(library_or_repo_name)
+        if relative_path:
+            translated_directory = file_system.path_join(
+                library_path, relative_path
+            )
+        else:
+            translated_directory = library_path
     return translated_directory

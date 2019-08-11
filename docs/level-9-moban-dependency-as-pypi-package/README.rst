@@ -12,11 +12,12 @@ into a pypi package and distribute it to the world of moban.
 Here are the sample file::
 
     requires:
-       - pypi-mobans
+      - pypi-mobans-pkg
     configuration:
       template_dir:
-        - "pypi-mobans:templates"
+        - "pypi://pypi-mobans-pkg/templates"
       configuration: config.yml
+      configuration_dir: "pypi://pypi-mobans-pkg/config"
     targets: 
       - mytravis.yml: travis.yml.jj2
       - test.txt: demo.txt.jj2
@@ -44,6 +45,6 @@ Alternative syntax
 The alternative syntax is::
   
     requires:
-       - type: pypi
-         name: pypi-mobans
+      - type: pypi
+        name: pypi-mobans
     ...

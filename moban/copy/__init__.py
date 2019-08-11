@@ -1,4 +1,4 @@
-from moban import utils, constants
+from moban import constants, file_system
 from lml.plugin import PluginInfo
 
 
@@ -19,15 +19,13 @@ class ContentForwardEngine(object):
     templating mechanism.
     """
 
-    def __init__(self, template_dirs, extensions=None):
-        self.template_dirs = template_dirs
+    def __init__(self, template_fs, extensions=None):
+        self.template_fs = template_fs
 
     def get_template(self, template_file):
-        real_file_name = utils.find_file_in_template_dirs(
-            template_file, self.template_dirs
+        return self.template_fs.readbytes(
+            file_system.to_unicode(template_file)
         )
-        with open(real_file_name, "rb") as file_handle:
-            return file_handle.read()
 
     def get_template_from_string(self, string):
         return string

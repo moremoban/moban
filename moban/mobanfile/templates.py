@@ -1,68 +1,69 @@
-import os
 import logging
 
-from moban import reporter
-from moban.utils import find_file_in_template_dirs
+from moban import reporter, file_system
 
 log = logging.getLogger(__name__)
 
 
 def handle_template(template_file, output, template_dirs):
     log.info("handling %s" % template_file)
-    template_file_on_disk = find_file_in_template_dirs(
-        template_file, template_dirs
-    )
-    if template_file_on_disk is None:
-        if template_file.endswith("**"):
-            source_dir = template_file[:-3]
-            src_path = find_file_in_template_dirs(source_dir, template_dirs)
-            if src_path:
-                for a_triple in _listing_directory_files_recusively(
-                    source_dir, src_path, output
-                ):
-                    yield a_triple
-            else:
-                reporter.report_error_message(
-                    "{0} cannot be found".format(template_file)
-                )
+    template_file = file_system.to_unicode(template_file)
+    multi_fs = file_system.get_multi_fs(template_dirs)
+    if template_file.endswith("**"):
+        source_dir = template_file[:-3]
+        if multi_fs.exists(source_dir):
+            src_path = multi_fs.geturl(source_dir, purpose="fs")
+            for a_triple in _listing_directory_files_recusively(
+                source_dir, src_path, output
+            ):
+                yield a_triple
         else:
             reporter.report_error_message(
                 "{0} cannot be found".format(template_file)
             )
-    elif os.path.isdir(template_file_on_disk):
-        for a_triple in _list_dir_files(
-            template_file, template_file_on_disk, output
-        ):
-            yield a_triple
     else:
-        template_type = _get_template_type(template_file)
-        yield (template_file, output, template_type)
+        if not multi_fs.exists(template_file):
+            reporter.report_error_message(
+                "{0} cannot be found".format(template_file)
+            )
+        elif multi_fs.isdir(template_file):
+            template_file_on_disk = multi_fs.geturl(
+                template_file, purpose="fs"
+            )
+            for a_triple in _list_dir_files(
+                template_file, template_file_on_disk, output
+            ):
+                yield a_triple
+        else:
+            template_type = _get_template_type(template_file)
+            yield (template_file, output, template_type)
 
 
 def _list_dir_files(source, actual_source_path, dest):
-    for file_name in os.listdir(actual_source_path):
-        real_src_file = os.path.join(actual_source_path, file_name)
-        if os.path.isfile(real_src_file):
+    for file_name in file_system.list_dir(actual_source_path):
+        if file_system.is_file(
+            file_system.url_join(actual_source_path, file_name)
+        ):
             # please note jinja2 does NOT like windows path
             # hence the following statement looks like cross platform
             #  src_file_under_dir = os.path.join(source, file_name)
             # but actually it breaks windows instead.
             src_file_under_dir = "%s/%s" % (source, file_name)
 
-            dest_file_under_dir = os.path.join(dest, file_name)
+            dest_file_under_dir = dest + "/" + file_name
             template_type = _get_template_type(src_file_under_dir)
             yield (src_file_under_dir, dest_file_under_dir, template_type)
 
 
 def _listing_directory_files_recusively(source, actual_source_path, dest):
-    for file_name in os.listdir(actual_source_path):
-        src_file_under_dir = os.path.join(source, file_name)
-        dest_file_under_dir = os.path.join(dest, file_name)
-        real_src_file = os.path.join(actual_source_path, file_name)
-        if os.path.isfile(real_src_file):
+    for file_name in file_system.list_dir(actual_source_path):
+        src_file_under_dir = source + "/" + file_name
+        dest_file_under_dir = dest + "/" + file_name
+        real_src_file = file_system.url_join(actual_source_path, file_name)
+        if file_system.is_file(real_src_file):
             template_type = _get_template_type(src_file_under_dir)
             yield (src_file_under_dir, dest_file_under_dir, template_type)
-        elif os.path.isdir(real_src_file):
+        elif file_system.is_dir(real_src_file):
             for a_triple in _listing_directory_files_recusively(
                 src_file_under_dir, real_src_file, dest_file_under_dir
             ):
@@ -70,7 +71,7 @@ def _listing_directory_files_recusively(source, actual_source_path, dest):
 
 
 def _get_template_type(template_file):
-    _, extension = os.path.splitext(template_file)
+    _, extension = file_system.path_splitext(template_file)
     if extension:
         template_type = extension[1:]
     else:
