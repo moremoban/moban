@@ -2,7 +2,7 @@ import re
 import logging
 from importlib import import_module
 
-from moban import constants, exceptions, file_system
+from moban import constants, exceptions
 from jinja2 import Template, Environment
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
