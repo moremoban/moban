@@ -1,4 +1,5 @@
 import fs.path
+from moban import file_system
 from moban.copy import ContentForwardEngine
 from nose.tools import eq_
 
@@ -6,7 +7,8 @@ from nose.tools import eq_
 class TestCopyEncoding:
     def setUp(self):
         template_path = fs.path.join("tests", "fixtures")
-        self.engine = ContentForwardEngine([template_path])
+        template_fs = file_system.get_multi_fs([template_path])
+        self.engine = ContentForwardEngine(template_fs)
 
     def test_encoding_of_template(self):
         template_content = self.engine.get_template("coala_color.svg")

@@ -19,11 +19,11 @@ class ContentForwardEngine(object):
     templating mechanism.
     """
 
-    def __init__(self, template_dirs, extensions=None):
-        self.template_dirs = template_dirs
+    def __init__(self, template_fs, extensions=None):
+        self.template_fs = template_fs
 
     def get_template(self, template_file):
-        multi_fs = file_system.get_multi_fs(self.template_dirs)
+        multi_fs = self.template_fs
         return multi_fs.readbytes(file_system.to_unicode(template_file))
 
     def get_template_from_string(self, string):

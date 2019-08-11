@@ -44,8 +44,9 @@ class MobanFactory(PluginManager):
             engine_cls = self.load_me_now(template_type)
             engine_extensions = self.extensions.get(template_type)
             options = dict(extensions=engine_extensions)
-        engine = engine_cls(template_dirs, options)
-        return MobanEngine(template_dirs, context_dirs, engine)
+        template_fs = file_system.get_multi_fs(template_dirs)
+        engine = engine_cls(template_fs, options)
+        return MobanEngine(template_fs, context_dirs, engine)
 
     def get_primary_key(self, template_type):
         for key, item in self.options_registry.items():
@@ -62,11 +63,10 @@ class MobanFactory(PluginManager):
 
 
 class MobanEngine(object):
-    def __init__(self, template_dirs, context_dirs, engine):
+    def __init__(self, template_fs, context_dirs, engine):
         context_dirs = expand_template_directory(context_dirs)
         self.context = Context(context_dirs)
-        self.template_fs = file_system.get_multi_fs(template_dirs)
-        self.template_dirs = template_dirs
+        self.template_fs = template_fs
         self.engine = engine
         self.templated_count = 0
         self.file_count = 0

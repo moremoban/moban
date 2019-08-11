@@ -57,7 +57,7 @@ GLOBALS = JinjaGlobalsManager()
     constants.TEMPLATE_ENGINE_EXTENSION, tags=["jinja2", "jinja", "jj2", "j2"]
 )
 class Engine(object):
-    def __init__(self, template_dirs, options=None):
+    def __init__(self, template_fs, options=None):
         """
         Contruct a jinja2 template engine
 
@@ -66,11 +66,9 @@ class Engine(object):
         :param list temp_dirs: a list of template directories
         :param dict options: a dictionary containing environmental parameters
         """
-        LOG.debug("Jinja template dirs: %s", template_dirs)
+        LOG.debug("Jinja template engine started")
         load_jinja2_extensions()
-        self.template_dirs = template_dirs
-        filesystem = file_system.get_multi_fs(template_dirs)
-        template_loader = FSLoader(filesystem)
+        template_loader = FSLoader(template_fs)
         env_params = dict(
             loader=template_loader,
             keep_trailing_newline=True,
