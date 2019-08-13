@@ -16,7 +16,7 @@ Here are the sample file::
         - "git://github.com/moremoban/pypi-mobans.git!/templates"
         - local
       configuration: config.yml
-      configuration_dir: "repo://pypi-mobans/config"
+      configuration_dir: "git://github.com/moremoban/pypi-mobans.git!/config"
     targets:
       - mytravis.yml: travis.yml.jj2
       - test.txt: demo.txt.jj2

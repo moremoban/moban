@@ -1,8 +1,8 @@
 import fs.path
 from mock import patch
 from nose.tools import eq_, raises
-from moban.exceptions import NoGitCommand
 from moban.deprecated import GitRequire
+from moban.exceptions import NoGitCommand
 from moban.deprecated.repo import (
     git_clone,
     get_repo_name,
