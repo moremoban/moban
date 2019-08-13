@@ -1,8 +1,6 @@
-requires:
-  - https://github.com/moremoban/pypi-mobans
 configuration:
   template_dir:
-    - "repo://pypi-mobans/templates"
+    - "git://github.com/moremoban/pypi-mobans.git!/templates"
     - local
   configuration: config.yml
   configuration_dir: "repo://pypi-mobans/config"

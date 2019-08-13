@@ -11,11 +11,9 @@ is welcome to add or improve this feature.
 
 Here are the sample file::
 
-    requires:
-      - https://github.com/moremoban/pypi-mobans
     configuration:
       template_dir:
-        - "repo://pypi-mobans/templates"
+        - "git://github.com/moremoban/pypi-mobans.git!/templates"
         - local
       configuration: config.yml
       configuration_dir: "repo://pypi-mobans/config"
@@ -27,16 +25,21 @@ where `requires` lead to a list of pypi packages. And when you refer to it,
 as in level-9 section, please use "pypi-mobans:"
 
 
-Alternative syntax when submodule exists
+The syntax when submodule exists
 --------------------------------------------------------------------------------
 
-The alternative syntax is::
+The sumodule syntax is::
   
-    requires:
-       - type: git
-         url: https://github.com/your-git-url
-         submodule: true
-         branch: your_choice_or_default_branch_if_not_specified
-         reference: your_alternative_reference_but_not_used_together_with_branch
-    ...
+    configuration:
+      template_dir:
+        - "git://github.com/moremoban/pypi-mobans.git?submodule=true&branch=your_choice_or_default_branch_if_not_specified!/templates"
+        - local
+
+
+If you have reference instead of branch::
+  
+    configuration:
+      template_dir:
+        - "git://github.com/moremoban/pypi-mobans.git?submodule=true&reference=your_alternative_reference_but_not_used_together_with_branch!/templates"
+        - local
 
