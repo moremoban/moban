@@ -6,8 +6,7 @@ from collections import OrderedDict
 from moban import plugins, reporter, constants, file_system
 from lml.utils import do_import
 from moban.utils import merge, pip_install, verify_the_existence_of_directories
-from moban.deprecated import deprecated
-from moban.definitions import GitRequire
+from moban.deprecated import deprecated, GitRequire
 from moban.deprecated.repo import git_clone
 from moban.plugins.template import expand_template_directories
 from moban.mobanfile.targets import parse_targets, extract_group_targets
@@ -188,6 +187,7 @@ def extract_target(options):
     return result
 
 
+@deprecated(constants.MESSAGE_DEPRECATE_REQUIRES_SINCE_0_6_0)
 def handle_requires(requires):
     pypi_pkgs = []
     git_repos = []

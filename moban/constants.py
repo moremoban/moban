@@ -130,5 +130,9 @@ MESSAGE_DEPRECATE_COPY_SINCE_0_4_0 = (
 ) % TEMPLATE_COPY
 MESSAGE_DEPRECATE_MOBAN_NOTATION_SINCE_0_6_0 = (
     "File path notation is deprecated since 0.6.0! "
-    + "Please use pypi:// or repo:// notation instead"
+    + "Please use pypi:// or git:// notation instead"
+)
+MESSAGE_DEPRECATE_REQUIRES_SINCE_0_6_0 = (
+    "'requires' is deprecated since 0.6.0! "
+    + "Please use pypi:// or git:// notation instead"
 )

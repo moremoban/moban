@@ -1,38 +1,6 @@
 from moban import constants
 
 
-class GitRequire(object):
-    def __init__(
-        self, git_url=None, branch=None, submodule=False, reference=None
-    ):
-        self.git_url = git_url
-        self.submodule = submodule
-        self.branch = branch
-        self.reference = reference
-
-    def clone_params(self):
-        clone_params = {
-            "single_branch": True,
-            "depth": constants.DEFAULT_CLONE_DEPTH,
-        }
-        if self.branch is not None:
-            clone_params["branch"] = self.branch
-        elif self.reference is not None:
-            clone_params["reference"] = self.reference
-        return clone_params
-
-    def __eq__(self, other):
-        return (
-            self.git_url == other.git_url
-            and self.submodule == other.submodule
-            and self.branch == other.branch
-            and self.reference == other.reference
-        )
-
-    def __repr__(self):
-        return "%s,%s,%s" % (self.git_url, self.branch, self.submodule)
-
-
 class TemplateTarget(object):
     def __init__(
         self,
