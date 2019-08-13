@@ -5,7 +5,7 @@ from collections import OrderedDict
 
 from moban import plugins, reporter, constants, file_system
 from lml.utils import do_import
-from moban.repo import git_clone
+from moban.deprecated.repo import git_clone
 from moban.utils import merge, pip_install, verify_the_existence_of_directories
 from moban.deprecated import deprecated
 from moban.definitions import GitRequire

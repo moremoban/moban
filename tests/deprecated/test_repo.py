@@ -1,6 +1,6 @@
 import fs.path
 from mock import patch
-from moban.repo import (
+from moban.deprecated.repo import (
     git_clone,
     get_repo_name,
     get_moban_home,

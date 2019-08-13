@@ -2,10 +2,10 @@ import os
 import sys
 import logging
 
-from moban import repo, utils, reporter, constants, exceptions, file_system
+from moban import utils, reporter, constants, exceptions, file_system
 from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
-from moban.deprecated import deprecated
+from moban.deprecated import deprecated, repo
 from moban.buffered_writer import BufferedWriter
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES

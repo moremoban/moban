@@ -12,7 +12,6 @@ import sys
 import logging
 import argparse
 
-import moban.fs_openers  # noqa: F401
 from moban import plugins, reporter, constants, mobanfile, exceptions
 from moban.utils import merge
 from moban._version import __version__
