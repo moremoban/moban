@@ -1,5 +1,3 @@
-requires:
-  - pypi-mobans-pkg
 configuration:
   template_dir:
     - "pypi://pypi-mobans-pkg/resources/templates"

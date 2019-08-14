@@ -11,8 +11,6 @@ into a pypi package and distribute it to the world of moban.
 
 Here are the sample file::
 
-    requires:
-      - pypi-mobans-pkg
     configuration:
       template_dir:
         - "pypi://pypi-mobans-pkg/templates"
@@ -38,13 +36,3 @@ Note: when you do not have relative directory, please keep semi-colon::
     configuration:
       template_dir:
         - "python-package-name:"
-
-Alternative syntax
---------------------------------------------------------------------------------
-
-The alternative syntax is::
-  
-    requires:
-      - type: pypi
-        name: pypi-mobans
-    ...
