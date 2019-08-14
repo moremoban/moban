@@ -31,3 +31,6 @@ format:
 uml:
 	plantuml -tsvg -o ./images/ docs/*.uml
 
+
+doc: uml
+	sphinx-build -b html docs build
