@@ -1,4 +1,4 @@
-Level 21: template copying from a zip to a zip
+Level 21-b: template copying from a tar to a tar
 ================================================================================
 
 In level 15, with `.moban.yml`, you can copy templates to your destination. Now
@@ -8,7 +8,7 @@ all templates are copied to.
 Explicit syntax::
 
     targets:
-      - output: "zip://your.zip/explicit"
+      - output: "tar://your.zip/explicit"
         template: template_file
         template_type: copy
 
@@ -16,14 +16,14 @@ Explicit syntax::
 Implicit syntax::
 
     targets:
-      - output: "zip://your.zip/implicit"
+      - output: "tar://your.zip/implicit"
         template: template_file.copy
 
 
 Shorthand syntax::
 
     targets:
-      - "zip://your.zip/shorthand": template_file.copy
+      - "tar://your.zip/shorthand": template_file.copy
 
 
 No implicit nor short hand syntax for the following directory copying unless
@@ -36,7 +36,7 @@ Directory copying syntax::
 
  
     targets:
-      - output: "zip://your.zip/dest-dir"
+      - output: "tar://your.zip/dest-dir"
         template: source-dir
         template_type: copy
    
@@ -45,7 +45,7 @@ Recursive directory copying syntax::
 
 
     targets:
-      - output: "zip://your.zip/dest-dir"
+      - output: "tar://your.zip/dest-dir"
         template: source-dir/**
         template_type: copy
 
@@ -57,21 +57,21 @@ Here is example moban file for copying::
   
     configuration:
       template_dir:
-        - "zip://template-sources.zip"
+        - "tar://template-sources.tar"
     targets:
-      - output: "zip://my.zip/simple.file.copy"
+      - output: "tar://my.tar/simple.file.copy"
         template: file-in-template-sources-folder.txt
         template_type: copy
-      - output: "zip://my.zip/target_without_template_type"
+      - output: "tar://my.tar/target_without_template_type"
         template: file_extension_will_trigger.copy
-      - "zip://my.zip/target_in_short_form": as_long_as_this_one_has.copy
-      - output: "zip://my.zip/misc-1-copying/can-create-folder/if-not-exists.txt"
+      - "tar://my.tar/target_in_short_form": as_long_as_this_one_has.copy
+      - output: "tar://my.tar/misc-1-copying/can-create-folder/if-not-exists.txt"
         template: file-in-template-sources-folder.txt
         template_type: copy
-      - output: "zip://my.zip/test-dir"
+      - output: "tar://my.tar/test-dir"
         template: dir-for-copying
         template_type: copy
-      - output: "zip://my.zip/test-recursive-dir"
+      - output: "tar://my.tar/test-recursive-dir"
         template: dir-for-recusive-copying/**
         template_type: copy
 
