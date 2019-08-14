@@ -39,14 +39,6 @@ def mkdir_p(path):
             raise
 
 
-def pip_install(packages):
-    import subprocess
-
-    subprocess.check_call(
-        [sys.executable, "-m", "pip", "install", " ".join(packages)]
-    )
-
-
 def verify_the_existence_of_directories(dirs):
     LOG.debug("Verifying the existence: %s", dirs)
     if not isinstance(dirs, list):

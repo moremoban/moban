@@ -1,3 +1,4 @@
+import sys
 from functools import wraps
 
 from moban import reporter, constants
@@ -45,3 +46,11 @@ class GitRequire(object):
 
     def __repr__(self):
         return "%s,%s,%s" % (self.git_url, self.branch, self.submodule)
+
+
+def pip_install(packages):
+    import subprocess
+
+    subprocess.check_call(
+        [sys.executable, "-m", "pip", "install", " ".join(packages)]
+    )
