@@ -37,6 +37,27 @@ class TestRegression:
 
         folder = "level-21-b-copy-templates-into-a-tar"
         criterias = [
+            ["tar://my.tar!/simple.file", expected],
+            [
+                "tar://my.tar!/target_without_template_type",
+                "file extension will trigger copy engine\n",
+            ],
+            [
+                "tar://my.tar!/target_in_short_form",
+                (
+                    "it is OK to have a short form, "
+                    + "but the file to be 'copied' shall have 'copy' extension, "
+                    + "so as to trigger ContentForwardEngine, 'copy' engine.\n"
+                ),
+            ],
+        ]
+        self._raw_moban_with_fs2(["moban"], folder, criterias)
+
+    def test_level_21_copy_templates_from_tars(self):
+        expected = "test file\n"
+
+        folder = "level-21-c-copy-templates-from-a-tar"
+        criterias = [
             ["zip://my.zip!/simple.file", expected],
             [
                 "zip://my.zip!/target_without_template_type",
