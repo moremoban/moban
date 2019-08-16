@@ -35,6 +35,7 @@ any location: zip, git, pypi package, s3, etc. Please
 look at our issues. We have many more template engines and data format on the
 road map.
 
+
 Installation
 ================================================================================
 You can install it via pip:
@@ -124,11 +125,6 @@ Where the configuration sits in a s3 bucket, the output is a file in a zip. The 
 
     hello: world
 
-
-`the tutorial`_ has more use cases.
-
-.. _the tutorial: http://moban.readthedocs.org/en/latest/#tutorial
-
 	
 Usage
 ================================================================================
@@ -181,3 +177,9 @@ With `--exit-code`:
 - 0 : no changes
 - 1 : has changes
 - 2 : error occured
+
+Documentation
+=================================================================================
+
+More use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
+
