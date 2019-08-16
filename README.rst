@@ -93,6 +93,20 @@ moban.output will contain::
 
     world
 
+Or in a complex way
+
+.. code-block:: bash
+
+    $ moban -c s3://${client_id}:${client_secrect}@moremoban/s3data.yml -o 'zip://my.zip!/moban.output' {{hello}}
+    $ unzip my.zip
+    $ cat moban.output
+    world$
+
+Where the configuration sits in a s3 bucket, the output is a file in a zip. The content of s3data.yaml is::
+
+    hello: world
+
+
 Please note that data.yml will take precedence over environment variables.
 
 `the tutorial`_ has more use cases.
