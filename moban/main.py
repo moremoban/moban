@@ -11,6 +11,7 @@
 import sys
 import logging
 import argparse
+import logging.config
 
 from moban import plugins, reporter, constants, mobanfile, exceptions
 from moban.utils import merge
@@ -28,6 +29,12 @@ def main():
     parser = create_parser()
     options = vars(parser.parse_args())
     HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
+    if options[constants.LABEL_DEBUG]:
+        logging.basicConfig(
+            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+            level=logging.DEBUG,
+        )
+
     moban_file = options[constants.LABEL_MOBANFILE]
     load_engine_factory_and_engines()  # Error: jinja2 if removed
     if moban_file is None:
@@ -125,6 +132,13 @@ def create_parser():
         "--%s" % constants.LABEL_VERSION,
         action="version",
         version="%(prog)s {v}".format(v=__version__),
+    )
+    parser.add_argument(
+        "-d",
+        action="store_true",
+        dest=constants.LABEL_DEBUG,
+        default=False,
+        help="to show debug trace",
     )
     return parser
 
