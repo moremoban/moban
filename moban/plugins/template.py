@@ -135,8 +135,9 @@ class MobanEngine(object):
                         template_abs_path, output_file
                     )
             return flag
-        except exceptions.FileNotFound as e:
-            log.exception(e)
+        except exceptions.FileNotFound:
+            # the template is a string from command line
+            log.info('{} is not a file'.format(template_abs_path))
             self.buffered_writer.write_file_out(output_file, rendered_content)
             return True
 
