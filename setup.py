@@ -80,8 +80,6 @@ INSTALL_REQUIRES = [
     "lml>=0.0.9",
     "appdirs>=1.4.3",
     "crayons>= 0.1.0",
-    "GitPython>=2.0.0",
-    "git-url-parse>=1.2.2",
     "fs>=2.4.6",
     "jinja2-fsloader>=0.2.0",
 ]

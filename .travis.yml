@@ -15,9 +15,9 @@ env:
   - MINREQ=0
 
 stages:
-  - test
   - lint
   - moban
+  - test
 
 .disable_global: &disable_global
   addons: false
