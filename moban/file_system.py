@@ -40,7 +40,7 @@ def log_fs_failure(function_in_this_module):
             message = "Failed to open %s" % args[0]
             LOG.debug(message)
             reporter.report_error_message(message)
-            raise
+            raise exceptions.FileNotFound(args[0])
 
     return wrapper
 

@@ -10,6 +10,7 @@ from moban.buffered_writer import BufferedWriter
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES
 from moban.plugins.strategy import Strategy
+from fs.errors import ResourceNotFound
 
 log = logging.getLogger(__name__)
 PY3_ABOVE = sys.version_info[0] > 2
@@ -88,9 +89,12 @@ class MobanEngine(object):
         template_file = file_system.to_unicode(template_file)
         data = self.context.get_data(data_file)
         template = self.engine.get_template(template_file)
-        template_abs_path = self.template_fs.geturl(
-            template_file, purpose="fs"
-        )
+        try:
+            template_abs_path = self.template_fs.geturl(
+                template_file, purpose="fs"
+            )
+        except ResourceNotFound:
+            template_abs_path = template_file
 
         flag = self.apply_template(
             template_abs_path, template, data, output_file
