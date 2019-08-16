@@ -37,7 +37,7 @@ Template engine extension for Moban
 moban version 0.2 started using `lml`_ to employ loose couple plugins. Other
 template engines, such as marko, haml can be plugged into moban seamless.
 
-.. image:: engine.png
+.. image:: images/engine.svg
 
 In order plugin other template engines, it is to write a lml plugin. The following
 is an example starting point for any template engine.

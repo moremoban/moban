@@ -31,7 +31,7 @@ def test_expand_pypi_dir():
         assert os.path.exists(directory)
 
 
-@patch("moban.repo.get_moban_home", return_value=USER_HOME)
+@patch("moban.deprecated.repo.get_moban_home", return_value=USER_HOME)
 @patch("moban.file_system.exists", return_value=True)
 def test_expand_repo_dir(_, __):
     dirs = list(expand_template_directories("git_repo:template"))

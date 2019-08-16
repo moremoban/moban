@@ -1,14 +1,14 @@
 import fs.path
 from mock import patch
-from moban.repo import (
+from nose.tools import eq_, raises
+from moban.deprecated import GitRequire
+from moban.exceptions import NoGitCommand
+from moban.deprecated.repo import (
     git_clone,
     get_repo_name,
     get_moban_home,
     make_sure_git_is_available,
 )
-from nose.tools import eq_, raises
-from moban.exceptions import NoGitCommand
-from moban.definitions import GitRequire
 
 
 @patch("appdirs.user_cache_dir", return_value="root")
