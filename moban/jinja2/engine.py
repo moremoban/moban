@@ -2,9 +2,8 @@ import re
 import logging
 from importlib import import_module
 
-from moban import constants, exceptions, file_system
+from moban import constants, file_system
 from jinja2 import Template, Environment
-from fs.errors import ResourceNotFound
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
 from jinja2.exceptions import TemplateNotFound
