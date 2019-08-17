@@ -5,6 +5,7 @@ releases:
       - action: Updated
         details:
           - "`#205`: support `pyFilesystem2 <https://pyfilesystem2.readthedocs.io/>`_"
+          - "`#185`: -d will enable moban application logging for development"
     date: tba
     version: 0.6.0
   - changes:

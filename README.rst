@@ -96,12 +96,16 @@ moban.output will contain::
 
 Please note that data.yml will take precedence over environment variables.
 
-Work with git repo
+Work with files in a git repo
 ================================================================================
 
-Please install::
+Please install gitfs2::
 
     $ pip install gitfs2
+
+
+And then you can do the following::
+
     $ moban -t 'git://github.com/moremoban/pypi-mobans.git!/templates/_version.py.jj2' -c 'git://github.com/moremoban/pypi-mobans.git!/config/data.yml' -o _version.py
     Info: Found repo in /Users/jaska/Library/Caches/gitfs2/repos/pypi-mobans
     Templating git://github.com/moremoban/pypi-mobans.git!/templates/_version.py.jj2 to _version.py
@@ -110,9 +114,34 @@ Please install::
     __version__ = "0.1.1rc3"
     __author__ = "C.W."
 
- 
+
+Work with files in a python package
+================================================================================
+
+Please install pypifs::
+
+    $ pip install pypifs
+
+
+And then you can do the following::
+
+    $ moban -t 'pypi://pypi-mobans-pkg/resources/templates/_version.py.jj2' -c 'pypi://pypi-mobans-pkg/config/data.yml' -o _version.py
+    Collecting pypi-mobans-pkg
+    ....
+    Installing collected packages: pypi-mobans-pkg
+    Successfully installed pypi-mobans-pkg-0.0.7
+    Templating pypi://pypi-mobans-pkg/resources/templates/_version.py.jj2 to _version.py
+    Templated 1 file.
+    $ cat _version.py
+    __version__ = "0.1.1rc3"
+    __author__ = "C.W."
+
 Work with S3 and other cloud based file systems
 ================================================================================
+
+Please install fs-s3fs::
+
+    $ pip install fs-s3fs
 
 .. code-block:: bash
 
@@ -182,4 +211,3 @@ Documentation
 =================================================================================
 
 More use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
-
