@@ -3,6 +3,7 @@ import sys
 import logging
 
 from moban import utils, reporter, constants, exceptions, file_system
+from fs.errors import ResourceNotFound
 from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
 from moban.deprecated import repo, deprecated
@@ -10,7 +11,6 @@ from moban.buffered_writer import BufferedWriter
 from moban.plugins.context import Context
 from moban.plugins.library import LIBRARIES
 from moban.plugins.strategy import Strategy
-from fs.errors import ResourceNotFound
 
 log = logging.getLogger(__name__)
 PY3_ABOVE = sys.version_info[0] > 2
@@ -141,7 +141,7 @@ class MobanEngine(object):
             return flag
         except exceptions.FileNotFound:
             # the template is a string from command line
-            log.info('{} is not a file'.format(template_abs_path))
+            log.info("{} is not a file".format(template_abs_path))
             self.buffered_writer.write_file_out(output_file, rendered_content)
             return True
 
