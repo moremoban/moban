@@ -1,4 +1,5 @@
 import os
+import tempfile
 
 from moban import file_system
 from nose.tools import eq_
@@ -21,18 +22,19 @@ class TestBufferedWriter:
     def test_write_text(self):
         test_file = "testout"
         self.writer.write_file_out(test_file, CONTENT)
+        self.writer.close()
         content = file_system.read_text(test_file)
         eq_(content, EXPECTED)
         os.unlink(test_file)
-        self.writer.close()
 
     def test_write_a_zip(self):
-        test_file = "zip://testout.zip!/testout"
+        tmp_dir = os.path.normcase(tempfile.gettempdir())
+        test_file = "zip://" + tmp_dir + "/testout.zip!/testout"
         self.writer.write_file_out(test_file, CONTENT)
+        self.writer.close()
         content = file_system.read_text(test_file)
         eq_(content, EXPECTED)
-        os.unlink("testout.zip")
-        self.writer.close()
+        os.unlink(os.path.join(tmp_dir, "testout.zip"))
 
 
 def test_write_file_out():
