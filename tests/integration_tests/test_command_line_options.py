@@ -459,7 +459,8 @@ def test_debug_option(fake_config):
             )
 
 
-def test_git_repo_example():
+@patch("moban.utils.verify_the_existence_of_directories", return_value=[])
+def test_git_repo_example(_):
     test_args = [
         "moban",
         "-t",
@@ -479,7 +480,8 @@ def test_git_repo_example():
         os.unlink("test_git_repo_example.py")
 
 
-def test_pypi_pkg_example():
+@patch("moban.utils.verify_the_existence_of_directories", return_value=[])
+def test_pypi_pkg_example(_):
     test_args = [
         "moban",
         "-t",
