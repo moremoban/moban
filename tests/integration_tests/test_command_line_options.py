@@ -441,3 +441,59 @@ def test_version_option():
         from moban.main import main
 
         main()
+
+
+@patch("logging.basicConfig")
+def test_debug_option(fake_config):
+    fake_config.side_effect = [IOError("stop test")]
+    test_args = ["moban", "-d"]
+    with patch.object(sys, "argv", test_args):
+        from moban.main import main
+
+        try:
+            main()
+        except IOError:
+            fake_config.assert_called_with(
+                format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+                level=10,
+            )
+
+
+def test_git_repo_example():
+    test_args = [
+        "moban",
+        "-t",
+        "git://github.com/moremoban/pypi-mobans.git!/templates/_version.py.jj2",
+        "-c",
+        "git://github.com/moremoban/pypi-mobans.git!/config/data.yml",
+        "-o",
+        "test_git_repo_example.py",
+    ]
+    with patch.object(sys, "argv", test_args):
+        from moban.main import main
+
+        main()
+        with open("test_git_repo_example.py") as f:
+            content = f.read()
+            eq_(content, '__version__ = "0.1.1rc3"\n__author__ = "C.W."')
+        os.unlink("test_git_repo_example.py")
+
+
+def test_pypi_pkg_example():
+    test_args = [
+        "moban",
+        "-t",
+        "pypi://pypi-mobans-pkg/resources/templates/_version.py.jj2",
+        "-c",
+        "pypi://pypi-mobans-pkg/resources/config/data.yml",
+        "-o",
+        "test_pypi_pkg_example.py"
+    ]
+    with patch.object(sys, "argv", test_args):
+        from moban.main import main
+
+        main()
+        with open("test_pypi_pkg_example.py") as f:
+            content = f.read()
+            eq_(content, '__version__ = "0.1.1rc3"\n__author__ = "C.W."')
+        os.unlink("test_pypi_pkg_example.py")

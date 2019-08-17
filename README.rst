@@ -104,9 +104,13 @@ Please install gitfs2::
     $ pip install gitfs2
 
 
-And then you can do the following::
+And then you can do the following:
 
-    $ moban -t 'git://github.com/moremoban/pypi-mobans.git!/templates/_version.py.jj2' -c 'git://github.com/moremoban/pypi-mobans.git!/config/data.yml' -o _version.py
+.. code-block:: bash
+
+    $ moban -t 'git://github.com/moremoban/pypi-mobans.git!/templates/_version.py.jj2' \
+            -c 'git://github.com/moremoban/pypi-mobans.git!/config/data.yml' \
+            -o _version.py
     Info: Found repo in /Users/jaska/Library/Caches/gitfs2/repos/pypi-mobans
     Templating git://github.com/moremoban/pypi-mobans.git!/templates/_version.py.jj2 to _version.py
     Templated 1 file.
@@ -123,9 +127,13 @@ Please install pypifs::
     $ pip install pypifs
 
 
-And then you can do the following::
+And then you can do the following:
 
-    $ moban -t 'pypi://pypi-mobans-pkg/resources/templates/_version.py.jj2' -c 'pypi://pypi-mobans-pkg/config/data.yml' -o _version.py
+.. code-block:: bash
+
+    $ moban -t 'pypi://pypi-mobans-pkg/resources/templates/_version.py.jj2' \
+            -c 'pypi://pypi-mobans-pkg/resources/config/data.yml' \
+            -o _version.py
     Collecting pypi-mobans-pkg
     ....
     Installing collected packages: pypi-mobans-pkg
