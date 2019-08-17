@@ -35,6 +35,10 @@ any location: zip, git, pypi package, s3, etc. Please
 look at our issues. We have many more template engines and data format on the
 road map.
 
+Documentation
+=================================================================================
+
+All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
 
 Installation
 ================================================================================
@@ -96,10 +100,11 @@ moban.output will contain::
 
 Please note that data.yml will take precedence over environment variables.
 
+
 Work with files in a git repo
 ================================================================================
 
-Please install gitfs2::
+Please install `gitfs2 <https://github.com/moremoban/gitfs2>`_::
 
     $ pip install gitfs2
 
@@ -122,7 +127,7 @@ And then you can do the following:
 Work with files in a python package
 ================================================================================
 
-Please install pypifs::
+Please install `pypifs <https://github.com/moremoban/pypifs>`_::
 
     $ pip install pypifs
 
@@ -147,13 +152,14 @@ And then you can do the following:
 Work with S3 and other cloud based file systems
 ================================================================================
 
-Please install fs-s3fs::
+Please install `fs-s3fs <https://github.com/PyFilesystem/s3fs>`_::
 
     $ pip install fs-s3fs
 
 .. code-block:: bash
 
-    $ moban -c s3://${client_id}:${client_secrect}@moremoban/s3data.yml -o 'zip://my.zip!/moban.output' {{hello}}
+    $ moban -c s3://${client_id}:${client_secrect}@moremoban/s3data.yml \
+            -o 'zip://my.zip!/moban.output' {{hello}}
     $ unzip my.zip
     $ cat moban.output
     world
@@ -214,8 +220,3 @@ With `--exit-code`:
 - 0 : no changes
 - 1 : has changes
 - 2 : error occured
-
-Documentation
-=================================================================================
-
-More use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
