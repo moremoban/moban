@@ -487,7 +487,7 @@ def test_pypi_pkg_example():
         "-c",
         "pypi://pypi-mobans-pkg/resources/config/data.yml",
         "-o",
-        "test_pypi_pkg_example.py"
+        "test_pypi_pkg_example.py",
     ]
     with patch.object(sys, "argv", test_args):
         from moban.main import main
