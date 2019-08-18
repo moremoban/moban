@@ -1,9 +1,9 @@
 import fs.path
 from mock import patch
 from nose.tools import eq_, raises
+from moban.mobanfile import handle_moban_file_v1
 from moban.deprecated import GitRequire
 from moban.definitions import TemplateTarget
-from moban.mobanfile import handle_moban_file_v1
 
 
 class TestFinder:
