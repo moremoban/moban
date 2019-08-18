@@ -35,7 +35,8 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     targets = moban_file_configurations.get(constants.LABEL_TARGETS, [])
     if constants.LABEL_COPY in moban_file_configurations:
         raise NotImplementedError(
-            "copy targets has been removed. please refer to level 15 in docs")
+            "copy targets has been removed. please refer to level 15 in docs"
+        )
 
     cli_target = extract_target(command_line_options)
     group_target = command_line_options.get(constants.LABEL_GROUP)
