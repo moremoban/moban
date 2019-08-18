@@ -7,6 +7,9 @@ releases:
           - "`#205`: support `pyFilesystem2 <https://pyfilesystem2.readthedocs.io/>`_"
           - "`#185`: -d will enable moban application logging for development"
           - "`#275`: fix moban 0.4.5 test failures on openSUSE Tumbleweed"
+      - action: Removed
+        details:
+          - "`copy` target is removed"
     date: tba
     version: 0.6.0
   - changes:

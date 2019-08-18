@@ -14,6 +14,11 @@ Updated
 #. `#275 <https://github.com/moremoban/moban/issues/275>`_: fix moban 0.4.5 test
    failures on openSUSE Tumbleweed
 
+Removed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `copy` target is removed
+
 0.5.0 - 14.07.2019
 --------------------------------------------------------------------------------
 
