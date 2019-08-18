@@ -2,7 +2,7 @@ import re
 import logging
 from importlib import import_module
 
-from moban import constants, exceptions
+from moban import constants, file_system
 from jinja2 import Template, Environment
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
@@ -79,6 +79,7 @@ class Engine(object):
                 extension for extension in JINJA2_THIRD_PARTY_EXTENSIONS
             ],  # get a copy of this global variable
         )
+        self.template_loader = template_loader
         if options:
             if "extensions" in options:
                 extensions = options.pop("extensions")
@@ -117,7 +118,8 @@ class Engine(object):
         try:
             template = self.jj2_environment.get_template(template_file)
         except TemplateNotFound:
-            raise exceptions.FileNotFound("%s does not exist" % template_file)
+            content = file_system.read_unicode(template_file)
+            return Template(content)
         return template
 
     def get_template_from_string(self, string):

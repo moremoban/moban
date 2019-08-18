@@ -3,6 +3,7 @@ import sys
 import logging
 
 from moban import utils, reporter, constants, exceptions, file_system
+from fs.errors import ResourceNotFound
 from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
 from moban.deprecated import repo, deprecated
@@ -88,9 +89,12 @@ class MobanEngine(object):
         template_file = file_system.to_unicode(template_file)
         data = self.context.get_data(data_file)
         template = self.engine.get_template(template_file)
-        template_abs_path = self.template_fs.geturl(
-            template_file, purpose="fs"
-        )
+        try:
+            template_abs_path = self.template_fs.geturl(
+                template_file, purpose="fs"
+            )
+        except ResourceNotFound:
+            template_abs_path = template_file
 
         flag = self.apply_template(
             template_abs_path, template, data, output_file
@@ -135,8 +139,9 @@ class MobanEngine(object):
                         template_abs_path, output_file
                     )
             return flag
-        except exceptions.FileNotFound as e:
-            log.exception(e)
+        except exceptions.FileNotFound:
+            # the template is a string from command line
+            log.info("{} is not a file".format(template_abs_path))
             self.buffered_writer.write_file_out(output_file, rendered_content)
             return True
 

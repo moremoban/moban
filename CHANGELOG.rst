@@ -9,6 +9,10 @@ Updated
 
 #. `#205 <https://github.com/moremoban/moban/issues/205>`_: support
    `pyFilesystem2 <https://pyfilesystem2.readthedocs.io/>`_
+#. `#185 <https://github.com/moremoban/moban/issues/185>`_: -d will enable moban
+   application logging for development
+#. `#275 <https://github.com/moremoban/moban/issues/275>`_: fix moban 0.4.5 test
+   failures on openSUSE Tumbleweed
 
 0.5.0 - 14.07.2019
 --------------------------------------------------------------------------------

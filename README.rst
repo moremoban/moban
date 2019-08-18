@@ -35,6 +35,11 @@ any location: zip, git, pypi package, s3, etc. Please
 look at our issues. We have many more template engines and data format on the
 road map.
 
+Documentation
+=================================================================================
+
+All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
+
 Installation
 ================================================================================
 You can install it via pip:
@@ -95,9 +100,73 @@ moban.output will contain::
 
 Please note that data.yml will take precedence over environment variables.
 
-`the tutorial`_ has more use cases.
 
-.. _the tutorial: http://moban.readthedocs.org/en/latest/#tutorial
+Work with files in a git repo
+================================================================================
+
+Please install `gitfs2 <https://github.com/moremoban/gitfs2>`_::
+
+    $ pip install gitfs2
+
+
+And then you can do the following:
+
+.. code-block:: bash
+
+    $ moban -t 'git://github.com/moremoban/pypi-mobans.git!/templates/_version.py.jj2' \
+            -c 'git://github.com/moremoban/pypi-mobans.git!/config/data.yml' \
+            -o _version.py
+    Info: Found repo in /Users/jaska/Library/Caches/gitfs2/repos/pypi-mobans
+    Templating git://github.com/moremoban/pypi-mobans.git!/templates/_version.py.jj2 to _version.py
+    Templated 1 file.
+    $ cat _version.py
+    __version__ = "0.1.1rc3"
+    __author__ = "C.W."
+
+
+Work with files in a python package
+================================================================================
+
+Please install `pypifs <https://github.com/moremoban/pypifs>`_::
+
+    $ pip install pypifs
+
+
+And then you can do the following:
+
+.. code-block:: bash
+
+    $ moban -t 'pypi://pypi-mobans-pkg/resources/templates/_version.py.jj2' \
+            -c 'pypi://pypi-mobans-pkg/resources/config/data.yml' \
+            -o _version.py
+    Collecting pypi-mobans-pkg
+    ....
+    Installing collected packages: pypi-mobans-pkg
+    Successfully installed pypi-mobans-pkg-0.0.7
+    Templating pypi://pypi-mobans-pkg/resources/templates/_version.py.jj2 to _version.py
+    Templated 1 file.
+    $ cat _version.py
+    __version__ = "0.1.1rc3"
+    __author__ = "C.W."
+
+Work with S3 and other cloud based file systems
+================================================================================
+
+Please install `fs-s3fs <https://github.com/PyFilesystem/s3fs>`_::
+
+    $ pip install fs-s3fs
+
+.. code-block:: bash
+
+    $ moban -c s3://${client_id}:${client_secrect}@moremoban/s3data.yml \
+            -o 'zip://my.zip!/moban.output' {{hello}}
+    $ unzip my.zip
+    $ cat moban.output
+    world
+
+Where the configuration sits in a s3 bucket, the output is a file in a zip. The content of s3data.yaml is::
+
+    hello: world
 
 	
 Usage
@@ -151,58 +220,3 @@ With `--exit-code`:
 - 0 : no changes
 - 1 : has changes
 - 2 : error occured
-
-Built-in Filters
-================================================================================
-
-split_length
---------------------------------------------------------------------------------
-
-It breaks down the given string into a fixed length paragraph. Here is the syntax::
-
-    {% for line in your_string | split_length(your_line_with) %}
-    {{line}}
-    {% endfor %}
-
-It is used to keep changelog formatted in
-`CHANGELOG.rst.jj2 in pypi-mobans project <https://github.com/moremoban/pypi-mobans/blob/master/templates/CHANGELOG.rst.jj2#L15>`_
-
-github_expand
---------------------------------------------------------------------------------
-
-It expands simple hashtags into github issues. Here is the syntax::
-
-    {{ your_github_string | github_expand }}
-
-
-It makes it easy to mention github reference in change log in all projects. Here is
-the place it is applied:
-`CHANGELOG.rst.jj2 in pypi-mobans project <https://github.com/moremoban/pypi-mobans/blob/master/templates/CHANGELOG.rst.jj2#L15>`_
-
-
-Here is Grammar in the changelog.yml::
-
-    =============== ==============================
-    Syntax          Meaning
-    =============== ==============================
-    `#1`            moban issues 1
-    `PR#1`          moban pull request 1
-    `pyexcel#1`     other project issues 1
-    `pyexcel#PR#1`  other project pulll request 1
-    =============== ==============================
-
-More details can be found in `moban's changelog.yml <https://github.com/moremoban/moban/blob/master/.moban.cd/changelog.yml#L10>`_
-
-`repr`
---------------------------------------------------------------------------------
-
-Returns a single quoted string in the templated file
-
-
-Built-in Tests
-================================================================================
-
-`exists`
---------------------------------------------------------------------------------
-
-Test if a file exists or not

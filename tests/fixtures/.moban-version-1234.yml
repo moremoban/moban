@@ -1,8 +1,7 @@
 moban_file_spec_version: 1234
 configuration:
-  configuration_dir: "commons/config"
+  configuration_dir: "."
   template_dir:
-    - "commons/templates"
     - ".moban.d"
   configuration: data.yaml
 targets:

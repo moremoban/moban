@@ -16,11 +16,63 @@ Jinja2 Filter
 
 .. literalinclude:: ../moban/filters/repr.py
 
+split_length
+--------------------------------------------------------------------------------
+
+It breaks down the given string into a fixed length paragraph. Here is the syntax::
+
+    {% for line in your_string | split_length(your_line_with) %}
+    {{line}}
+    {% endfor %}
+
+It is used to keep changelog formatted in
+`CHANGELOG.rst.jj2 in pypi-mobans project <https://github.com/moremoban/pypi-mobans/blob/master/templates/CHANGELOG.rst.jj2#L15>`_
+
+github_expand
+--------------------------------------------------------------------------------
+
+It expands simple hashtags into github issues. Here is the syntax::
+
+    {{ your_github_string | github_expand }}
+
+
+It makes it easy to mention github reference in change log in all projects. Here is
+the place it is applied:
+`CHANGELOG.rst.jj2 in pypi-mobans project <https://github.com/moremoban/pypi-mobans/blob/master/templates/CHANGELOG.rst.jj2#L15>`_
+
+
+Here is Grammar in the changelog.yml::
+
+    =============== ==============================
+    Syntax          Meaning
+    =============== ==============================
+    `#1`            moban issues 1
+    `PR#1`          moban pull request 1
+    `pyexcel#1`     other project issues 1
+    `pyexcel#PR#1`  other project pulll request 1
+    =============== ==============================
+
+More details can be found in `moban's changelog.yml <https://github.com/moremoban/moban/blob/master/.moban.cd/changelog.yml#L10>`_
+
+`repr`
+--------------------------------------------------------------------------------
+
+Returns a single quoted string in the templated file
+
+
+Built-in Tests
+================================================================================
 
 Jinja2 Test
 *******************
 
 .. literalinclude:: ../moban/tests/files.py
+
+
+`exists`
+--------------------------------------------------------------------------------
+
+Test if a file exists or not
 
 Jinja2 Globals
 *******************
