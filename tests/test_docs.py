@@ -314,12 +314,6 @@ class TestTutorial:
         # make sure only copy target is executed
         eq_(False, os.path.exists("a.output"))
 
-    def test_misc_1(self):
-        expected = "test file\n"
-
-        folder = "misc-1-copying-templates"
-        self._raw_moban(["moban"], folder, expected, "simple.file")
-
     def _moban(self, folder, expected):
         args = ["moban", "-c", "data.yml", "-t", "a.template"]
         self._raw_moban(args, folder, expected, "moban.output")

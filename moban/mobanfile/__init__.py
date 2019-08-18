@@ -34,10 +34,8 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
     targets = moban_file_configurations.get(constants.LABEL_TARGETS, [])
     if constants.LABEL_COPY in moban_file_configurations:
-        legacy_copy_targets = handle_copy(
-            merged_options, moban_file_configurations[constants.LABEL_COPY]
-        )
-        targets += legacy_copy_targets
+        raise NotImplementedError(
+            "copy targets has been removed. please refer to level 15 in docs")
 
     cli_target = extract_target(command_line_options)
     group_target = command_line_options.get(constants.LABEL_GROUP)
@@ -91,26 +89,6 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     exit_code = reporter.convert_to_shell_exit_code(number_of_templated_files)
     reporter.report_up_to_date()
     return exit_code
-
-
-@deprecated(constants.MESSAGE_DEPRECATE_COPY_SINCE_0_4_0)
-def handle_copy(merged_options, copy_config):
-    copy_targets = []
-    for (dest, src) in _iterate_list_of_dicts(copy_config):
-        copy_targets.append(
-            {
-                constants.LABEL_TEMPLATE: src,
-                constants.LABEL_OUTPUT: dest,
-                constants.LABEL_TEMPLATE_TYPE: constants.TEMPLATE_COPY,
-            }
-        )
-    return copy_targets
-
-
-def _iterate_list_of_dicts(list_of_dict):
-    for adict in list_of_dict:
-        for key, value in adict.items():
-            yield (key, value)
 
 
 def handle_targets(merged_options, targets):
