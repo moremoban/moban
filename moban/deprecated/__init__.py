@@ -2,8 +2,8 @@ import sys
 from functools import wraps
 
 from moban import reporter, constants, file_system
-from moban.deprecated.library import LIBRARIES
 from moban.deprecated import repo
+from moban.deprecated.library import LIBRARIES
 
 
 def deprecated(message):
@@ -56,8 +56,6 @@ def pip_install(packages):
     subprocess.check_call(
         [sys.executable, "-m", "pip", "install", " ".join(packages)]
     )
-
-
 
 
 @deprecated(constants.MESSAGE_DEPRECATE_MOBAN_NOTATION_SINCE_0_6_0)
