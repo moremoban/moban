@@ -1,7 +1,7 @@
 import os
 
 from moban import utils, reporter, exceptions
-from moban.data_loaders.manager import load_data
+from moban.data_loaders.manager import merge, load_data
 
 
 class Context(object):
@@ -15,7 +15,7 @@ class Context(object):
     def get_data(self, file_name):
         try:
             data = load_data(self.context_dirs, file_name)
-            utils.merge(data, self.__cached_environ_variables)
+            merge(data, self.__cached_environ_variables)
             return data
         except (IOError, exceptions.IncorrectDataInput) as exception:
             # If data file doesn't exist:

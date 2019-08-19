@@ -2,8 +2,8 @@ import os
 
 import fs.path
 from mock import patch
-from nose.tools import eq_
 from moban.core import ENGINES
+from nose.tools import eq_
 from moban.definitions import TemplateTarget
 from moban.jinja2.engine import Engine
 from moban.data_loaders.yaml import open_yaml

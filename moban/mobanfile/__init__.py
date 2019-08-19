@@ -3,13 +3,14 @@ import re
 import sys
 from collections import OrderedDict
 
-from moban import plugins, core, reporter, constants, file_system
+from moban import core, plugins, reporter, constants, file_system
 from lml.utils import do_import
-from moban.utils import merge, verify_the_existence_of_directories
+from moban.utils import verify_the_existence_of_directories
 from moban.deprecated import GitRequire, deprecated, pip_install
-from moban.deprecated.repo import git_clone
 from moban.core.template import expand_template_directories
+from moban.deprecated.repo import git_clone
 from moban.mobanfile.targets import parse_targets, extract_group_targets
+from moban.data_loaders.manager import merge
 
 try:
     from urllib.parse import urlparse

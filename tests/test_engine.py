@@ -5,15 +5,15 @@ import fs.path
 import moban.exceptions as exceptions
 from mock import patch
 from lml.plugin import PluginInfo
-from nose.tools import eq_, raises
 from moban.core import ENGINES
+from nose.tools import eq_, raises
+from moban.core.context import Context
+from moban.core.template import MobanEngine, expand_template_directories
 from moban.jinja2.engine import (
     Engine,
     is_extension_list_valid,
     import_module_of_extension,
 )
-from moban.core.context import Context
-from moban.core.template import MobanEngine, expand_template_directories
 
 USER_HOME = fs.path.join("user", "home", ".moban", "repos")
 

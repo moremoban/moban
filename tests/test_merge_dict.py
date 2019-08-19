@@ -1,4 +1,4 @@
-from moban.utils import merge
+from moban.data_loaders.manager import merge
 
 
 def test_simple_union():

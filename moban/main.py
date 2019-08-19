@@ -13,11 +13,10 @@ import logging
 import argparse
 import logging.config
 
-from moban import plugins, core, reporter, constants, mobanfile, exceptions
-from moban.utils import merge
+from moban import core, plugins, reporter, constants, mobanfile, exceptions
 from moban._version import __version__
 from moban.hashstore import HASH_STORE
-from moban.data_loaders.manager import load_data
+from moban.data_loaders.manager import merge, load_data
 
 LOG = logging.getLogger()
 
