@@ -8,12 +8,12 @@ from lml.plugin import PluginInfo
 from moban.core import ENGINES
 from nose.tools import eq_, raises
 from moban.core.context import Context
-from moban.core.moban_factory import MobanEngine, expand_template_directories
 from moban.jinja2.engine import (
     Engine,
     is_extension_list_valid,
     import_module_of_extension,
 )
+from moban.core.moban_factory import MobanEngine, expand_template_directories
 
 USER_HOME = fs.path.join("user", "home", ".moban", "repos")
 
