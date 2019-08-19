@@ -6,9 +6,8 @@ from moban import utils, reporter, constants, exceptions, file_system
 from fs.errors import ResourceNotFound
 from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
-from moban.deprecated import repo, deprecated
+from moban.deprecated import deprecated_moban_path_notation
 from moban.core.context import Context
-from moban.core.library import LIBRARIES
 from moban.core.strategy import Strategy
 from moban.buffered_writer import BufferedWriter
 
@@ -209,31 +208,4 @@ def expand_template_directory(directory):
         # local template path
         translated_directory = os.path.normcase(os.path.abspath(directory))
         translated_directory = file_system.fs_url(translated_directory)
-    return translated_directory
-
-
-@deprecated(constants.MESSAGE_DEPRECATE_MOBAN_NOTATION_SINCE_0_6_0)
-def deprecated_moban_path_notation(directory):
-    translated_directory = None
-    library_or_repo_name, relative_path = directory.split(":")
-    potential_repo_path = file_system.path_join(
-        repo.get_moban_home(), library_or_repo_name
-    )
-    if file_system.exists(potential_repo_path):
-        # expand repo template path
-        if relative_path:
-            translated_directory = file_system.path_join(
-                potential_repo_path, relative_path
-            )
-        else:
-            translated_directory = potential_repo_path
-    else:
-        # expand pypi template path
-        library_path = LIBRARIES.resource_path_of(library_or_repo_name)
-        if relative_path:
-            translated_directory = file_system.path_join(
-                library_path, relative_path
-            )
-        else:
-            translated_directory = library_path
     return translated_directory

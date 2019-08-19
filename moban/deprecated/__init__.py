@@ -1,7 +1,9 @@
 import sys
 from functools import wraps
 
-from moban import reporter, constants
+from moban import reporter, constants, file_system
+from moban.deprecated.library import LIBRARIES
+from moban.deprecated import repo
 
 
 def deprecated(message):
@@ -54,3 +56,32 @@ def pip_install(packages):
     subprocess.check_call(
         [sys.executable, "-m", "pip", "install", " ".join(packages)]
     )
+
+
+
+
+@deprecated(constants.MESSAGE_DEPRECATE_MOBAN_NOTATION_SINCE_0_6_0)
+def deprecated_moban_path_notation(directory):
+    translated_directory = None
+    library_or_repo_name, relative_path = directory.split(":")
+    potential_repo_path = file_system.path_join(
+        repo.get_moban_home(), library_or_repo_name
+    )
+    if file_system.exists(potential_repo_path):
+        # expand repo template path
+        if relative_path:
+            translated_directory = file_system.path_join(
+                potential_repo_path, relative_path
+            )
+        else:
+            translated_directory = potential_repo_path
+    else:
+        # expand pypi template path
+        library_path = LIBRARIES.resource_path_of(library_or_repo_name)
+        if relative_path:
+            translated_directory = file_system.path_join(
+                library_path, relative_path
+            )
+        else:
+            translated_directory = library_path
+    return translated_directory
