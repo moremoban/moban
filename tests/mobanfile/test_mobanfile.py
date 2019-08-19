@@ -111,7 +111,7 @@ def test_is_repo():
     eq_(expected, actual)
 
 
-@patch("moban.core.template.MobanEngine.render_to_files")
+@patch("moban.core.moban_factory.MobanEngine.render_to_files")
 def test_handle_targets(fake_renderer):
     from moban.mobanfile import handle_targets
 
@@ -144,7 +144,7 @@ def test_handle_targets(fake_renderer):
     )
 
 
-@patch("moban.core.template.MobanEngine.render_to_files")
+@patch("moban.core.moban_factory.MobanEngine.render_to_files")
 def test_handle_targets_sequence(fake_renderer):
     from moban.mobanfile import handle_targets
 

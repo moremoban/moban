@@ -2,7 +2,7 @@ import os
 
 from moban import file_system
 from nose.tools import eq_
-from moban.core.template import MobanEngine
+from moban.core.moban_factory import MobanEngine
 from moban.jinja2.engine import Engine
 from moban.jinja2.extensions import jinja_global
 

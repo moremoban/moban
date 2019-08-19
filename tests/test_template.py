@@ -8,7 +8,7 @@ from moban.definitions import TemplateTarget
 from moban.jinja2.engine import Engine
 from moban.data_loaders.yaml import open_yaml
 
-MODULE = "moban.core.template"
+MODULE = "moban.core.moban_factory"
 
 
 @patch(MODULE + ".MobanEngine._render_with_finding_data_first")

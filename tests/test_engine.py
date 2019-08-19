@@ -8,7 +8,7 @@ from lml.plugin import PluginInfo
 from moban.core import ENGINES
 from nose.tools import eq_, raises
 from moban.core.context import Context
-from moban.core.template import MobanEngine, expand_template_directories
+from moban.core.moban_factory import MobanEngine, expand_template_directories
 from moban.jinja2.engine import (
     Engine,
     is_extension_list_valid,

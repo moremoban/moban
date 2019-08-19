@@ -1,3 +1,3 @@
-from moban.core.template import MobanFactory
+from moban.core.moban_factory import MobanFactory
 
 ENGINES = MobanFactory()
