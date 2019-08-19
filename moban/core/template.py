@@ -8,9 +8,9 @@ from lml.plugin import PluginManager
 from moban.hashstore import HASH_STORE
 from moban.deprecated import repo, deprecated
 from moban.buffered_writer import BufferedWriter
-from moban.plugins.context import Context
-from moban.plugins.library import LIBRARIES
-from moban.plugins.strategy import Strategy
+from moban.core.context import Context
+from moban.core.library import LIBRARIES
+from moban.core.strategy import Strategy
 
 log = logging.getLogger(__name__)
 PY3_ABOVE = sys.version_info[0] > 2

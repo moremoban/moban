@@ -3,12 +3,12 @@ import re
 import sys
 from collections import OrderedDict
 
-from moban import plugins, reporter, constants, file_system
+from moban import plugins, core, reporter, constants, file_system
 from lml.utils import do_import
 from moban.utils import merge, verify_the_existence_of_directories
 from moban.deprecated import GitRequire, deprecated, pip_install
 from moban.deprecated.repo import git_clone
-from moban.plugins.template import expand_template_directories
+from moban.core.template import expand_template_directories
 from moban.mobanfile.targets import parse_targets, extract_group_targets
 
 try:
@@ -73,11 +73,11 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     )
     extensions = moban_file_configurations.get(constants.LABEL_EXTENSIONS)
     if extensions:
-        plugins.ENGINES.register_extensions(extensions)
+        core.ENGINES.register_extensions(extensions)
 
     template_types = merged_options.get(constants.LABEL_TEMPLATE_TYPES)
     if template_types:
-        plugins.ENGINES.register_options(template_types)
+        core.ENGINES.register_options(template_types)
 
     if cli_target:
         number_of_templated_files = handle_targets(
@@ -125,7 +125,7 @@ def handle_targets(merged_options, targets):
             target.set_template_type(forced_template_type)
 
         template_type = target.template_type
-        primary_template_type = plugins.ENGINES.get_primary_key(template_type)
+        primary_template_type = core.ENGINES.get_primary_key(template_type)
         if primary_template_type is None:
             primary_template_type = merged_options[
                 constants.LABEL_TEMPLATE_TYPE
@@ -139,7 +139,7 @@ def handle_targets(merged_options, targets):
 
     count = 0
     for template_type in jobs_for_each_engine.keys():
-        engine = plugins.ENGINES.get_engine(
+        engine = core.ENGINES.get_engine(
             template_type,
             merged_options[constants.LABEL_TMPL_DIRS],
             merged_options[constants.LABEL_CONFIG_DIR],
