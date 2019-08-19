@@ -3,22 +3,13 @@ import re
 import sys
 from collections import OrderedDict
 
-from moban import core, plugins, reporter, constants, file_system
+from moban import core, reporter, constants, file_system
 from lml.utils import do_import
 from moban.utils import verify_the_existence_of_directories
-from moban.deprecated import GitRequire, deprecated, pip_install
-from moban.deprecated.repo import git_clone
+from moban.deprecated import handle_copy, handle_requires
 from moban.mobanfile.targets import parse_targets, extract_group_targets
 from moban.core.moban_factory import expand_template_directories
 from moban.data_loaders.manager import merge
-
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
-
-
-KNOWN_DOMAIN_FOR_GIT = ["github.com", "gitlab.com", "bitbucket.com"]
 
 
 def find_default_moban_file():
@@ -94,26 +85,6 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     return exit_code
 
 
-@deprecated(constants.MESSAGE_DEPRECATE_COPY_SINCE_0_4_0)
-def handle_copy(merged_options, copy_config):
-    copy_targets = []
-    for (dest, src) in _iterate_list_of_dicts(copy_config):
-        copy_targets.append(
-            {
-                constants.LABEL_TEMPLATE: src,
-                constants.LABEL_OUTPUT: dest,
-                constants.LABEL_TEMPLATE_TYPE: constants.TEMPLATE_COPY,
-            }
-        )
-    return copy_targets
-
-
-def _iterate_list_of_dicts(list_of_dict):
-    for adict in list_of_dict:
-        for key, value in adict.items():
-            yield (key, value)
-
-
 def handle_targets(merged_options, targets):
     list_of_templating_parameters = parse_targets(merged_options, targets)
     jobs_for_each_engine = OrderedDict()
@@ -186,38 +157,3 @@ def extract_target(options):
         else:
             result = {output: template}
     return result
-
-
-@deprecated(constants.MESSAGE_DEPRECATE_REQUIRES_SINCE_0_6_0)
-def handle_requires(requires):
-    pypi_pkgs = []
-    git_repos = []
-    for require in requires:
-        if isinstance(require, dict):
-            require_type = require.get(constants.REQUIRE_TYPE, "")
-            if require_type.upper() == constants.GIT_REQUIRE:
-                git_require = GitRequire(
-                    git_url=require.get(constants.GIT_URL),
-                    branch=require.get(constants.GIT_BRANCH),
-                    reference=require.get(constants.GIT_REFERENCE),
-                    submodule=require.get(constants.GIT_HAS_SUBMODULE, False),
-                )
-
-                git_repos.append(git_require)
-            elif require_type.upper() == constants.PYPI_REQUIRE:
-                pypi_pkgs.append(require.get(constants.PYPI_PACKAGE_NAME))
-        else:
-            if is_repo(require):
-                git_repos.append(GitRequire(require))
-            else:
-                pypi_pkgs.append(require)
-    if pypi_pkgs:
-        pip_install(pypi_pkgs)
-        plugins.make_sure_all_pkg_are_loaded()
-    if git_repos:
-        git_clone(git_repos)
-
-
-def is_repo(require):
-    result = urlparse(require)
-    return result.scheme != "" and result.netloc in KNOWN_DOMAIN_FOR_GIT
