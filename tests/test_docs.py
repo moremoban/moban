@@ -1,12 +1,9 @@
 import os
-import sys
 from textwrap import dedent
 
-from mock import patch
-from moban import file_system
-from moban.main import main
 from nose.tools import eq_
-from fs.opener.parse import parse_fs_url
+
+from . import utils
 
 
 def custom_dedent(long_texts):
@@ -16,10 +13,7 @@ def custom_dedent(long_texts):
     return refined
 
 
-class TestTutorial:
-    def setUp(self):
-        self.current = os.getcwd()
-
+class TestTutorial(utils.Docs):
     def test_level_1(self):
         expected = "world"
         folder = "level-1-jinja2-cli"
@@ -240,11 +234,11 @@ class TestTutorial:
         folder = "level-15-copy-templates-as-target"
         self._raw_moban(["moban"], folder, expected, "simple.file")
 
-        _verify_content(
+        utils.verify_content(
             "target_without_template_type",
             "file extension will trigger copy engine\n",
         )
-        _verify_content(
+        utils.verify_content(
             "target_in_short_form",
             (
                 "it is OK to have a short form, "
@@ -294,14 +288,16 @@ class TestTutorial:
         folder = "level-18-user-defined-template-types"
         self._raw_moban(["moban"], folder, expected, "a.output")
 
-        _verify_content("b.output", "shijie\n")
+        utils.verify_content("b.output", "shijie\n")
 
     def test_level_19_without_group_target(self):
         expected = "test file\n"
 
         folder = "level-19-moban-a-sub-group-in-targets"
         self._raw_moban(["moban"], folder, expected, "simple.file")
-        _verify_content("a.output", "I will not be selected in level 19\n")
+        utils.verify_content(
+            "a.output", "I will not be selected in level 19\n"
+        )
         os.unlink("a.output")
 
     def test_level_19_with_group_target(self):
@@ -326,40 +322,12 @@ class TestTutorial:
 
     def _raw_moban(self, args, folder, expected, output):
         os.chdir(os.path.join("docs", folder))
-        with patch.object(sys, "argv", args):
-            main()
-            _verify_content(output, expected)
-        os.unlink(output)
+        utils.run_moban(args, folder, expected, output)
 
     def _raw_moban_with_fs(self, args, folder, expected, output):
         os.chdir(os.path.join("docs", folder))
-        with patch.object(sys, "argv", args):
-            main()
-            _verify_content_with_fs(output, expected)
-        result = parse_fs_url(output)
-        os.unlink(result.resource)  # delete the zip file
+        utils.run_moban_with_fs(args, folder, [(output, expected)])
 
     def _raw_moban_with_fs2(self, args, folder, criterias):
         os.chdir(os.path.join("docs", folder))
-        with patch.object(sys, "argv", args):
-            main()
-
-            for output, expected in criterias:
-                _verify_content_with_fs(output, expected)
-        result = parse_fs_url(output)
-        os.unlink(result.resource)  # delete the zip file
-
-    def tearDown(self):
-        os.unlink(".moban.hashes")
-        os.chdir(self.current)
-
-
-def _verify_content(file_name, expected):
-    with open(file_name, "r") as f:
-        content = f.read()
-        eq_(content, expected)
-
-
-def _verify_content_with_fs(file_name, expected):
-    content = file_system.read_unicode(file_name)
-    eq_(content, expected)
+        utils.run_moban_with_fs(args, folder, criterias)
