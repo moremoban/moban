@@ -1,6 +1,6 @@
 import moban.data_loaders.yaml  # noqa: F401
 import moban.data_loaders.json_loader  # noqa: F401
-from moban import utils, constants, file_system
+from moban import constants, file_system
 from lml.plugin import PluginManager
 
 
@@ -34,11 +34,31 @@ def load_data(base_dir, file_name):
                 base_dir, data.pop(constants.LABEL_OVERRIDES)
             )
         if parent_data:
-            return utils.merge(data, parent_data)
+            return merge(data, parent_data)
         else:
             return data
     else:
         return None
+
+
+def merge(left, right):
+    """
+    deep merge dictionary on the left with the one
+    on the right.
+
+    Fill in left dictionary with right one where
+    the value of the key from the right one in
+    the left one is missing or None.
+    """
+    if isinstance(left, dict) and isinstance(right, dict):
+        for key, value in right.items():
+            if key not in left:
+                left[key] = value
+            elif left[key] is None:
+                left[key] = value
+            else:
+                left[key] = merge(left[key], value)
+    return left
 
 
 def search_file(base_dir, file_name):

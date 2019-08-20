@@ -9,26 +9,6 @@ LOG = logging.getLogger(__name__)
 PY2 = sys.version_info[0] == 2
 
 
-def merge(left, right):
-    """
-    deep merge dictionary on the left with the one
-    on the right.
-
-    Fill in left dictionary with right one where
-    the value of the key from the right one in
-    the left one is missing or None.
-    """
-    if isinstance(left, dict) and isinstance(right, dict):
-        for key, value in right.items():
-            if key not in left:
-                left[key] = value
-            elif left[key] is None:
-                left[key] = value
-            else:
-                left[key] = merge(left[key], value)
-    return left
-
-
 def mkdir_p(path):
     try:
         os.makedirs(path)

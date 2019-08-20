@@ -1,6 +1,6 @@
 import uuid
 
-from moban import plugins, reporter, constants, exceptions
+from moban import core, reporter, constants, exceptions
 from moban.definitions import TemplateTarget
 from moban.mobanfile.templates import handle_template
 
@@ -65,7 +65,7 @@ def _handle_explicit_target(options, target):
                     constants.TEMPLATE_TYPES_OPTIONS: template_types_options,
                 }
             }
-            plugins.ENGINES.register_options(the_adhoc_type)
+            core.ENGINES.register_options(the_adhoc_type)
             template_type = file_extension
     for src, dest, t_type in handle_template(
         template_file, output, options[constants.LABEL_TMPL_DIRS]

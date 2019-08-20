@@ -13,11 +13,10 @@ import logging
 import argparse
 import logging.config
 
-from moban import plugins, reporter, constants, mobanfile, exceptions
-from moban.utils import merge
+from moban import core, plugins, reporter, constants, mobanfile, exceptions
 from moban._version import __version__
 from moban.hashstore import HASH_STORE
-from moban.data_loaders.manager import load_data
+from moban.data_loaders.manager import merge, load_data
 
 LOG = logging.getLogger()
 
@@ -199,7 +198,7 @@ def handle_command_line(options):
     act upon command options
     """
     options = merge(options, constants.DEFAULT_OPTIONS)
-    engine = plugins.ENGINES.get_engine(
+    engine = core.ENGINES.get_engine(
         options[constants.LABEL_TEMPLATE_TYPE],
         options[constants.LABEL_TMPL_DIRS],
         options[constants.LABEL_CONFIG_DIR],

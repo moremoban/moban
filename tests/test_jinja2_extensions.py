@@ -3,8 +3,8 @@ import os
 from moban import file_system
 from nose.tools import eq_
 from moban.jinja2.engine import Engine
-from moban.plugins.template import MobanEngine
 from moban.jinja2.extensions import jinja_global
+from moban.core.moban_factory import MobanEngine
 
 
 def test_globals():
