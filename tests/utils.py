@@ -19,11 +19,12 @@ def verify_content_with_fs(file_name, expected):
     eq_(content, expected)
 
 
-def run_moban(args, folder, expected, output):
+def run_moban(args, folder, criterias):
     with patch.object(sys, "argv", args):
         main()
-        verify_content(output, expected)
-    os.unlink(output)
+        for output, expected in criterias:
+            verify_content(output, expected)
+            os.unlink(output)
 
 
 def run_moban_with_fs(args, folder, criterias):

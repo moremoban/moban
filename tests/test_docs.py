@@ -20,21 +20,19 @@ class TestTutorial(utils.Docs):
         self._moban(folder, expected)
 
     def test_level_2(self):
-        expected = custom_dedent(
-            """
+        expected = """
         ========header============
 
         world
 
         ========footer============
         """
-        )
+        expected = custom_dedent(expected)
         folder = "level-2-template-inheritance"
         self._moban(folder, expected)
 
     def test_level_3(self):
-        expected = custom_dedent(
-            """
+        expected = """
         ========header============
 
         world
@@ -43,13 +41,12 @@ class TestTutorial(utils.Docs):
 
         ========footer============
         """
-        )
+        expected = custom_dedent(expected)
         folder = "level-3-data-override"
         self._moban(folder, expected)
 
     def test_level_4(self):
-        expected = custom_dedent(
-            """
+        expected = """
         ========header============
 
         world
@@ -58,13 +55,12 @@ class TestTutorial(utils.Docs):
 
         ========footer============
         """
-        )
+        expected = custom_dedent(expected)
         folder = "level-4-single-command"
         self._raw_moban(["moban"], folder, expected, "a.output")
 
     def test_level_5(self):
-        expected = custom_dedent(
-            """
+        expected = """
         ========header============
 
         world
@@ -75,13 +71,12 @@ class TestTutorial(utils.Docs):
 
         ========footer============
         """
-        )
+        expected = custom_dedent(expected)
         folder = "level-5-custom-configuration"
         self._raw_moban(["moban"], folder, expected, "a.output")
 
     def test_level_6(self):
-        expected = custom_dedent(
-            """
+        expected = """
         ========header============
 
         world2
@@ -92,13 +87,12 @@ class TestTutorial(utils.Docs):
 
         ========footer============
         """
-        )
+        expected = custom_dedent(expected)
         folder = "level-6-complex-configuration"
         self._raw_moban(["moban"], folder, expected, "a.output2")
 
     def test_level_20(self):
-        expected = custom_dedent(
-            """
+        expected = """
         ========header============
 
         world2
@@ -109,20 +103,20 @@ class TestTutorial(utils.Docs):
 
         ========footer============
         """
-        )
+        expected = custom_dedent(expected)
         folder = "level-20-templates-configs-in-zip-or-tar"
         self._raw_moban_with_fs(
             ["moban"], folder, expected, "zip://a.zip!/a.output2"
         )
 
     def test_level_7(self):
-        expected = custom_dedent(
-            """
+        expected = """
         Hello, you are in level 7 example
 
         Hello, you are not in level 7
         """
-        )
+        expected = custom_dedent(expected)
+
         folder = "level-7-use-custom-jinja2-filter-test-n-global"
         self._raw_moban(["moban"], folder, expected, "test.output")
 
@@ -157,32 +151,30 @@ class TestTutorial(utils.Docs):
         folder = "level-11-use-handlebars"
         self._raw_moban(["moban"], folder, expected, "a.output")
 
-    def test_level_12_a(self):
-        expected_a = custom_dedent(
-            """
+    def test_level_12(self):
+        expected_a = """
         world
         world
         world
         world
         """
-        )
-        folder = "level-12-use-template-engine-extensions"
-        self._raw_moban(["moban"], folder, expected_a, "a.output")
-
-    def test_level_12_b(self):
-        expected_b = custom_dedent(
-            """
+        expected_b = """
         142
         42
         142
         """
-        )
+        expected_a = custom_dedent(expected_a)
+        expected_b = custom_dedent(expected_b)
         folder = "level-12-use-template-engine-extensions"
-        self._raw_moban(["moban"], folder, expected_b, "b.output")
+        os.chdir(os.path.join("docs", folder))
+        utils.run_moban(
+            ["moban"],
+            folder,
+            [("a.output", expected_a), ("b.output", expected_b)],
+        )
 
     def test_level_13_json(self):
-        expected = custom_dedent(
-            """
+        expected = """
         ========header============
 
         world from child.json
@@ -191,14 +183,13 @@ class TestTutorial(utils.Docs):
 
         ========footer============
         """
-        )
+        expected = custom_dedent(expected)
         folder = "level-13-any-data-override-any-data"
         commands = ["moban", "-c", "child.json", "-t", "a.template"]
         self._raw_moban(commands, folder, expected, "moban.output")
 
     def test_level_13_yaml(self):
-        expected = custom_dedent(
-            """
+        expected = """
         ========header============
 
         world from child.yaml
@@ -207,14 +198,13 @@ class TestTutorial(utils.Docs):
 
         ========footer============
         """
-        )
+        expected = custom_dedent(expected)
         folder = "level-13-any-data-override-any-data"
         commands = ["moban", "-c", "child.yaml", "-t", "a.template"]
         self._raw_moban(commands, folder, expected, "moban.output")
 
     def test_level_14_custom(self):
-        expected = custom_dedent(
-            """
+        expected = """
         ========header============
 
         world from child.cusom
@@ -223,7 +213,7 @@ class TestTutorial(utils.Docs):
 
         ========footer============
         """
-        )
+        expected = custom_dedent(expected)
         folder = "level-14-custom-data-loader"
         commands = ["moban"]
         self._raw_moban(commands, folder, expected, "a.output")
@@ -322,7 +312,7 @@ class TestTutorial(utils.Docs):
 
     def _raw_moban(self, args, folder, expected, output):
         os.chdir(os.path.join("docs", folder))
-        utils.run_moban(args, folder, expected, output)
+        utils.run_moban(args, folder, [(output, expected)])
 
     def _raw_moban_with_fs(self, args, folder, expected, output):
         os.chdir(os.path.join("docs", folder))
