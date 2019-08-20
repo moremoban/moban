@@ -40,8 +40,17 @@ def run_moban_with_fs(args, folder, criterias):
 class Docs:
     def setUp(self):
         self.current = os.getcwd()
+        self.base_folder = "docs"
 
     def tearDown(self):
         if os.path.exists(".moban.hashes"):
             os.unlink(".moban.hashes")
         os.chdir(self.current)
+
+    def run_moban(self, moban_cli, working_directory, assertions):
+        os.chdir(os.path.join(self.base_folder, working_directory))
+        run_moban(moban_cli, None, assertions)
+
+    def run_moban_with_fs(self, moban_cli, working_directory, assertions):
+        os.chdir(os.path.join(self.base_folder, working_directory))
+        run_moban_with_fs(moban_cli, None, assertions)
