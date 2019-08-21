@@ -1,15 +1,18 @@
 import os
 import re
 import sys
+import logging
 from collections import OrderedDict
 
 from moban import core, reporter, constants, file_system
 from lml.utils import do_import
 from moban.utils import verify_the_existence_of_directories
 from moban.deprecated import handle_copy, handle_requires
-from moban.mobanfile.targets import parse_targets, extract_group_targets
+from moban.mobanfile.targets import parse_targets, extract_group_targets, extract_target
 from moban.core.moban_factory import expand_template_directories
 from moban.data_loaders.manager import merge
+
+LOG = logging.getLogger(__name__)
 
 
 def find_default_moban_file():
@@ -22,6 +25,7 @@ def find_default_moban_file():
 
 
 def handle_moban_file_v1(moban_file_configurations, command_line_options):
+    LOG.info("handling moban file")
     merged_options = None
 
     targets = moban_file_configurations.get(constants.LABEL_TARGETS, [])
@@ -86,6 +90,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
 
 def handle_targets(merged_options, targets):
+    LOG.info("handling targets")
     list_of_templating_parameters = parse_targets(merged_options, targets)
     jobs_for_each_engine = OrderedDict()
 
@@ -123,6 +128,7 @@ def handle_targets(merged_options, targets):
 
 
 def handle_plugin_dirs(plugin_dirs):
+    LOG.info("handling plugin dirs {}".format(','.join(plugin_dirs)))
     for plugin_dir in plugin_dirs:
         plugin_path = os.path.normcase(
             os.path.dirname(os.path.abspath(plugin_dir))
@@ -135,25 +141,3 @@ def handle_plugin_dirs(plugin_dirs):
         for plugin in plugins:
             plugin_module = os.path.basename(plugin_dir) + "." + plugin
             do_import(plugin_module)
-
-
-def extract_target(options):
-    template = options.get(constants.LABEL_TEMPLATE)
-    config = options.get(constants.LABEL_CONFIG)
-    output = options.get(constants.LABEL_OUTPUT)
-    result = []
-    if template:
-        if output is None:
-            raise Exception(
-                "Please specify a output file name for %s." % template
-            )
-        if config:
-            result = {
-                constants.LABEL_TEMPLATE: template,
-                constants.LABEL_CONFIG: config,
-                constants.LABEL_OUTPUT: output,
-            }
-
-        else:
-            result = {output: template}
-    return result
