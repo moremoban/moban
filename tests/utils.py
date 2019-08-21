@@ -37,7 +37,7 @@ def run_moban_with_fs(args, folder, criterias):
     os.unlink(result.resource)  # delete the zip file
 
 
-class Docs:
+class Docs(object):
     def setUp(self):
         self.current = os.getcwd()
         self.base_folder = "docs"

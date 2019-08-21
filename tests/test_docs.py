@@ -57,7 +57,7 @@ class TestTutorial(utils.Docs):
         """
         expected = custom_dedent(expected)
         folder = "level-4-single-command"
-        self._raw_moban(["moban"], folder, expected, "a.output")
+        self.run_moban(["moban"], folder, [("a.output", expected)])
 
     def test_level_5(self):
         expected = """
@@ -73,7 +73,7 @@ class TestTutorial(utils.Docs):
         """
         expected = custom_dedent(expected)
         folder = "level-5-custom-configuration"
-        self._raw_moban(["moban"], folder, expected, "a.output")
+        self.run_moban(["moban"], folder, [("a.output", expected)])
 
     def test_level_6(self):
         expected = """
@@ -89,7 +89,7 @@ class TestTutorial(utils.Docs):
         """
         expected = custom_dedent(expected)
         folder = "level-6-complex-configuration"
-        self._raw_moban(["moban"], folder, expected, "a.output2")
+        self.run_moban(["moban"], folder, [("a.output2", expected)])
 
     def test_level_20(self):
         expected = """
@@ -105,8 +105,8 @@ class TestTutorial(utils.Docs):
         """
         expected = custom_dedent(expected)
         folder = "level-20-templates-configs-in-zip-or-tar"
-        self._raw_moban_with_fs(
-            ["moban"], folder, expected, "zip://a.zip!/a.output2"
+        self.run_moban_with_fs(
+            ["moban"], folder, [("zip://a.zip!/a.output2", expected)]
         )
 
     def test_level_7(self):
@@ -118,38 +118,38 @@ class TestTutorial(utils.Docs):
         expected = custom_dedent(expected)
 
         folder = "level-7-use-custom-jinja2-filter-test-n-global"
-        self._raw_moban(["moban"], folder, expected, "test.output")
+        self.run_moban(["moban"], folder, [("test.output", expected)])
 
     def test_level_8(self):
         expected = "it is a test\n"
         folder = "level-8-pass-a-folder-full-of-templates"
         check_file = os.path.join("templated-folder", "my")
-        self._raw_moban(["moban"], folder, expected, check_file)
+        self.run_moban(["moban"], folder, [(check_file, expected)])
 
     def test_level_9(self):
         expected = "pypi-mobans: moban dependency as pypi package"
         folder = "level-9-moban-dependency-as-pypi-package"
-        self._raw_moban(["moban"], folder, expected, "test.txt")
+        self.run_moban(["moban"], folder, [("test.txt", expected)])
 
     def test_level_9_deprecated(self):
         expected = "pypi-mobans: moban dependency as pypi package"
         folder = "deprecated-level-9-moban-dependency-as-pypi-package"
-        self._raw_moban(["moban"], folder, expected, "test.txt")
+        self.run_moban(["moban"], folder, [("test.txt", expected)])
 
     def test_level_10(self):
         expected = "pypi-mobans: moban dependency as git repo"
         folder = "level-10-moban-dependency-as-git-repo"
-        self._raw_moban(["moban"], folder, expected, "test.txt")
+        self.run_moban(["moban"], folder, [("test.txt", expected)])
 
     def test_level_10_deprecated(self):
         expected = "pypi-mobans: moban dependency as git repo"
         folder = "deprecated-level-10-moban-dependency-as-git-repo"
-        self._raw_moban(["moban"], folder, expected, "test.txt")
+        self.run_moban(["moban"], folder, [("test.txt", expected)])
 
     def test_level_11(self):
         expected = "handlebars does not support inheritance\n"
         folder = "level-11-use-handlebars"
-        self._raw_moban(["moban"], folder, expected, "a.output")
+        self.run_moban(["moban"], folder, [("a.output", expected)])
 
     def test_level_12(self):
         expected_a = """
@@ -297,8 +297,8 @@ class TestTutorial(utils.Docs):
         expected = "test file\n"
 
         folder = "level-19-moban-a-sub-group-in-targets"
-        self._raw_moban(
-            ["moban", "-g", "copy"], folder, expected, "simple.file"
+        self.run_moban(
+            ["moban", "-g", "copy"], folder, [("simple.file", expected)]
         )
         # make sure only copy target is executed
         eq_(False, os.path.exists("a.output"))
@@ -307,20 +307,8 @@ class TestTutorial(utils.Docs):
         expected = "test file\n"
 
         folder = "misc-1-copying-templates"
-        self._raw_moban(["moban"], folder, expected, "simple.file")
+        self.run_moban(["moban"], folder, [("simple.file", expected)])
 
     def _moban(self, folder, expected):
         args = ["moban", "-c", "data.yml", "-t", "a.template"]
-        self._raw_moban(args, folder, expected, "moban.output")
-
-    def _raw_moban(self, args, folder, expected, output):
-        os.chdir(os.path.join("docs", folder))
-        utils.run_moban(args, folder, [(output, expected)])
-
-    def _raw_moban_with_fs(self, args, folder, expected, output):
-        os.chdir(os.path.join("docs", folder))
-        utils.run_moban_with_fs(args, folder, [(output, expected)])
-
-    def _raw_moban_with_fs2(self, args, folder, criterias):
-        os.chdir(os.path.join("docs", folder))
-        utils.run_moban_with_fs(args, folder, criterias)
+        self.run_moban(args, folder, [("moban.output", expected)])

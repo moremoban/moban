@@ -18,6 +18,10 @@ def custom_dedent(long_texts):
 
 
 class TestRegression(utils.Docs):
+    def setUp(self):
+        super(TestRegression, self).setUp()
+        self.base_folder = fs.path.join("tests", "regression_tests")
+
     def test_coping_binary_file(self):
         folder = "regr-01-copy-binary-file"
         args = ["moban"]
@@ -47,7 +51,7 @@ class TestRegression(utils.Docs):
                 ),
             ],
         ]
-        self._raw_moban_with_fs2(["moban"], folder, criterias)
+        self.run_moban_with_fs(["moban"], folder, criterias)
 
     def test_level_21_copy_templates_from_tars(self):
         expected = "test file\n"
@@ -68,7 +72,7 @@ class TestRegression(utils.Docs):
                 ),
             ],
         ]
-        self._raw_moban_with_fs2(["moban"], folder, criterias)
+        self.run_moban_with_fs(["moban"], folder, criterias)
 
     def _raw_moban(self, args, folder, expected, output):
         base_dir = fs.path.join("tests", "regression_tests")
@@ -78,13 +82,3 @@ class TestRegression(utils.Docs):
         status = filecmp.cmp(output, expected)
         os.unlink(output)
         assert status
-
-    def _raw_moban_with_fs(self, args, folder, expected, output):
-        base_dir = fs.path.join("tests", "regression_tests")
-        os.chdir(fs.path.join(base_dir, folder))
-        utils.run_moban_with_fs(args, folder, [(output, expected)])
-
-    def _raw_moban_with_fs2(self, args, folder, criterias):
-        base_dir = fs.path.join("tests", "regression_tests")
-        os.chdir(fs.path.join(base_dir, folder))
-        utils.run_moban_with_fs(args, folder, criterias)
