@@ -243,8 +243,8 @@ class TestTutorial(utils.Docs):
 
         folder = "level-21-copy-templates-into-an-alien-file-system"
         long_url = (
-            "zip://my.zip!/test-recursive-dir/sub_directory_is_copied" +
-            "/because_star_star_is_specified.txt"
+            "zip://my.zip!/test-recursive-dir/sub_directory_is_copied"
+            + "/because_star_star_is_specified.txt"
         )
         criterias = [
             ["zip://my.zip!/simple.file", expected],
@@ -260,14 +260,8 @@ class TestTutorial(utils.Docs):
                     + "so as to trigger ContentForwardEngine, 'copy' engine.\n"
                 ),
             ],
-            [
-                "zip://my.zip!/test-dir/afile.txt",
-                "dir for copying\n"
-            ],
-            [
-                long_url,
-                "dest_directory: source_directory/**\n"
-            ]
+            ["zip://my.zip!/test-dir/afile.txt", "dir for copying\n"],
+            [long_url, "dest_directory: source_directory/**\n"],
         ]
         self.run_moban_with_fs(["moban"], folder, criterias)
 
