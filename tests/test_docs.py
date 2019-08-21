@@ -1,19 +1,11 @@
 import os
-from textwrap import dedent
 
 from nose.tools import eq_
 
-from . import utils
+from .utils import Docs, custom_dedent
 
 
-def custom_dedent(long_texts):
-    refined = dedent(long_texts)
-    if refined.startswith("\n"):
-        refined = refined[1:]
-    return refined
-
-
-class TestTutorial(utils.Docs):
+class TestTutorial(Docs):
     def test_level_1(self):
         expected = "world"
         folder = "level-1-jinja2-cli"

@@ -1,23 +1,15 @@
 import os
 import sys
 import filecmp
-from textwrap import dedent
 
 import fs.path
 from mock import patch
 from moban.main import main
 
-from . import utils
+from .utils import Docs
 
 
-def custom_dedent(long_texts):
-    refined = dedent(long_texts)
-    if refined.startswith("\n"):
-        refined = refined[1:]
-    return refined
-
-
-class TestRegression(utils.Docs):
+class TestRegression(Docs):
     def setUp(self):
         super(TestRegression, self).setUp()
         self.base_folder = fs.path.join("tests", "regression_tests")
