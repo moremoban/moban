@@ -1,12 +1,10 @@
 import os
-import sys
 import errno
 import logging
 
 from moban import constants, exceptions, file_system
 
 LOG = logging.getLogger(__name__)
-PY2 = sys.version_info[0] == 2
 
 
 def mkdir_p(path):
