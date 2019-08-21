@@ -36,6 +36,10 @@ class TestRegression(utils.Docs):
         expected = "test file\n"
 
         folder = "level-21-b-copy-templates-into-a-tar"
+        long_url = (
+            "tar://my.tar!/test-recursive-dir/sub_directory_is_copied" +
+            "/because_star_star_is_specified.txt"
+        )
         criterias = [
             ["tar://my.tar!/simple.file", expected],
             [
@@ -50,6 +54,14 @@ class TestRegression(utils.Docs):
                     + "so as to trigger ContentForwardEngine, 'copy' engine.\n"
                 ),
             ],
+            [
+                "tar://my.tar!/test-dir/afile.txt",
+                "dir for copying\n"
+            ],
+            [
+                long_url,
+                "dest_directory: source_directory/**\n"
+            ]
         ]
         self.run_moban_with_fs(["moban"], folder, criterias)
 
@@ -57,6 +69,10 @@ class TestRegression(utils.Docs):
         expected = "test file\n"
 
         folder = "level-21-c-copy-templates-from-a-tar"
+        long_url = (
+            "zip://my.zip!/test-recursive-dir/sub_directory_is_copied" +
+            "/because_star_star_is_specified.txt"
+        )
         criterias = [
             ["zip://my.zip!/simple.file", expected],
             [
@@ -71,6 +87,14 @@ class TestRegression(utils.Docs):
                     + "so as to trigger ContentForwardEngine, 'copy' engine.\n"
                 ),
             ],
+            [
+                "zip://my.zip!/test-dir/afile.txt",
+                "dir for copying\n"
+            ],
+            [
+                long_url,
+                "dest_directory: source_directory/**\n"
+            ]
         ]
         self.run_moban_with_fs(["moban"], folder, criterias)
 
