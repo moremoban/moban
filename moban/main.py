@@ -13,7 +13,15 @@ import logging
 import argparse
 import logging.config
 
-from moban import core, plugins, reporter, constants, mobanfile, exceptions
+from moban import (
+    core,
+    plugins,
+    reporter,
+    constants,
+    mobanfile,
+    exceptions,
+    file_system,
+)
 from moban._version import __version__
 from moban.hashstore import HASH_STORE
 from moban.data_loaders.manager import merge, load_data
@@ -37,7 +45,7 @@ def main():
     moban_file = options[constants.LABEL_MOBANFILE]
     load_engine_factory_and_engines()  # Error: jinja2 if removed
     if moban_file is None:
-        moban_file = mobanfile.find_default_moban_file()
+        moban_file = find_default_moban_file()
     if moban_file:
         try:
             count = handle_moban_file(moban_file, options)
@@ -224,6 +232,15 @@ def handle_command_line(options):
         engine.number_of_templated_files()
     )
     return exit_code
+
+
+def find_default_moban_file():
+    for moban_file in constants.DEFAULT_MOBAN_FILES:
+        if file_system.exists(moban_file):
+            break
+    else:
+        moban_file = None
+    return moban_file
 
 
 def load_engine_factory_and_engines():

@@ -4,24 +4,19 @@ import sys
 import logging
 from collections import OrderedDict
 
-from moban import core, reporter, constants, file_system
+from moban import core, reporter, constants
 from lml.utils import do_import
 from moban.utils import verify_the_existence_of_directories
 from moban.deprecated import handle_copy, handle_requires
-from moban.mobanfile.targets import parse_targets, extract_group_targets, extract_target
+from moban.mobanfile.targets import (
+    parse_targets,
+    extract_target,
+    extract_group_targets,
+)
 from moban.core.moban_factory import expand_template_directories
 from moban.data_loaders.manager import merge
 
 LOG = logging.getLogger(__name__)
-
-
-def find_default_moban_file():
-    for moban_file in constants.DEFAULT_MOBAN_FILES:
-        if file_system.exists(moban_file):
-            break
-    else:
-        moban_file = None
-    return moban_file
 
 
 def handle_moban_file_v1(moban_file_configurations, command_line_options):
@@ -51,6 +46,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     if plugins_dirs:
         handle_plugin_dirs(plugins_dirs)
 
+    # deprecated
     requires = moban_file_configurations.get(constants.LABEL_REQUIRES)
     if requires:
         handle_requires(requires)
@@ -128,7 +124,7 @@ def handle_targets(merged_options, targets):
 
 
 def handle_plugin_dirs(plugin_dirs):
-    LOG.info("handling plugin dirs {}".format(','.join(plugin_dirs)))
+    LOG.info("handling plugin dirs {}".format(",".join(plugin_dirs)))
     for plugin_dir in plugin_dirs:
         plugin_path = os.path.normcase(
             os.path.dirname(os.path.abspath(plugin_dir))

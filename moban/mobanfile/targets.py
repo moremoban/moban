@@ -12,7 +12,7 @@ def extract_target(options):
     template, config, output = (
         options.get(constants.LABEL_TEMPLATE),
         options.get(constants.LABEL_CONFIG),
-        options.get(constants.LABEL_OUTPUT)
+        options.get(constants.LABEL_OUTPUT),
     )
     result = []
     if template:

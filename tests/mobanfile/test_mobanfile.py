@@ -4,38 +4,6 @@ from nose.tools import eq_
 from moban.definitions import TemplateTarget
 
 
-class TestFinder:
-    def setUp(self):
-        self.patcher = patch("moban.file_system.exists")
-        self.fake_file_existence = self.patcher.start()
-        self.fake_file_existence.__name__ = "fake"
-        self.fake_file_existence.__module__ = "fake"
-
-    def tearDown(self):
-        self.patcher.stop()
-
-    def test_moban_yml(self):
-        self.fake_file_existence.return_value = True
-        from moban.mobanfile import find_default_moban_file
-
-        actual = find_default_moban_file()
-        eq_(".moban.yml", actual)
-
-    def test_moban_yaml(self):
-        self.fake_file_existence.side_effect = [False, True]
-        from moban.mobanfile import find_default_moban_file
-
-        actual = find_default_moban_file()
-        eq_(".moban.yaml", actual)
-
-    def test_no_moban_file(self):
-        self.fake_file_existence.side_effect = [False, False]
-        from moban.mobanfile import find_default_moban_file
-
-        actual = find_default_moban_file()
-        assert actual is None
-
-
 @patch("moban.core.moban_factory.MobanEngine.render_to_files")
 def test_handle_targets(fake_renderer):
     from moban.mobanfile import handle_targets
