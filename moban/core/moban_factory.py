@@ -84,7 +84,6 @@ class MobanEngine(object):
         return self.templated_count
 
     def render_to_file(self, template_file, data_file, output_file):
-        self.file_count = 1
         template_file = file_system.to_unicode(template_file)
         data = self.context.get_data(data_file)
         template = self.engine.get_template(template_file)
@@ -106,7 +105,6 @@ class MobanEngine(object):
     def render_string_to_file(
         self, template_in_string, data_file, output_file
     ):
-        self.file_count = 1
         template = self.engine.get_template_from_string(template_in_string)
         template_abs_path = template_in_string[:10] + "..."
         data = self.context.get_data(data_file)
