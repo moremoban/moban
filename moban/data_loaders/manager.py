@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 import moban.data_loaders.yaml  # noqa: F401
 import moban.data_loaders.json_loader  # noqa: F401
 from moban import constants, file_system
@@ -28,7 +30,7 @@ def load_data(base_dir, file_name):
     abs_file_path = search_file(base_dir, file_name)
     data = LOADER.get_data(abs_file_path)
     if data is not None:
-        parent_data = {}
+        parent_data = OrderedDict()
         if base_dir and constants.LABEL_OVERRIDES in data:
             overrides = data.pop(constants.LABEL_OVERRIDES)
             if not isinstance(overrides, list):
@@ -40,7 +42,7 @@ def load_data(base_dir, file_name):
                 child_data = load_data(base_dir, file_name)
                 if data:
                     if key:
-                        child_data = {key: data["key"]}
+                        child_data = OrderedDict(key=data["key"])
                     parent_data = merge(parent_data, child_data)
         if parent_data:
             return merge(data, parent_data)
