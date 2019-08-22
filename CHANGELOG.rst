@@ -4,13 +4,19 @@ Change log
 0.6.0 - tba
 --------------------------------------------------------------------------------
 
-Updated
+Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. `#205 <https://github.com/moremoban/moban/issues/205>`_: support
    `pyFilesystem2 <https://pyfilesystem2.readthedocs.io/>`_
 #. `#185 <https://github.com/moremoban/moban/issues/185>`_: -d will enable moban
    application logging for development
+#. `#126 <https://github.com/moremoban/moban/issues/126>`_: Allow mobanfile to
+   include data from arbitrary config files
+
+Updated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 #. `#275 <https://github.com/moremoban/moban/issues/275>`_: fix moban 0.4.5 test
    failures on openSUSE Tumbleweed
 

@@ -28,11 +28,20 @@ def load_data(base_dir, file_name):
     abs_file_path = search_file(base_dir, file_name)
     data = LOADER.get_data(abs_file_path)
     if data is not None:
-        parent_data = None
+        parent_data = {}
         if base_dir and constants.LABEL_OVERRIDES in data:
-            parent_data = load_data(
-                base_dir, data.pop(constants.LABEL_OVERRIDES)
-            )
+            overrides = data.pop(constants.LABEL_OVERRIDES)
+            if not isinstance(overrides, list):
+                overrides = [overrides]
+            for parent_file in overrides:
+                file_name, key = parent_file, None
+                if ":" in parent_file:
+                    file_name, key = parent_file.split(":")
+                child_data = load_data(base_dir, file_name)
+                if data:
+                    if key:
+                        child_data = {key: data["key"]}
+                    parent_data = merge(parent_data, child_data)
         if parent_data:
             return merge(data, parent_data)
         else:

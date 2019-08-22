@@ -2,10 +2,13 @@ name: moban
 organisation: moremoban
 releases:
   - changes:
-      - action: Updated
+      - action: Added
         details:
           - "`#205`: support `pyFilesystem2 <https://pyfilesystem2.readthedocs.io/>`_"
           - "`#185`: -d will enable moban application logging for development"
+          - "`#126`: Allow mobanfile to include data from arbitrary config files"
+      - action: Updated
+        details:
           - "`#275`: fix moban 0.4.5 test failures on openSUSE Tumbleweed"
     date: tba
     version: 0.6.0
