@@ -1,7 +1,8 @@
 Level 3: data override
 ================================================================================
 
-What `moban` brings on the table is data inheritance by introducing `overrides` key word in the yaml file::
+What `moban` brings on the table is data inheritance by introducing `overrides`
+key word in the yaml file::
 
     overrides: data.base.yaml
     ....
@@ -30,3 +31,27 @@ command to launch it:
     shijie
     
     ========footer============
+
+
+New development
+================================================================================
+
+Since verison 0.6.0, `overrides` syntax support two more use cases:
+
+1 override more than one configuration file
+---------------------------------------------
+
+For example::
+
+    overrides:
+      - config-file-a.yaml
+      - config-file-b.yaml
+
+2 override more than one configuration file
+---------------------------------------------
+
+For example::
+
+    overrides:
+      - config-file-a.yaml: keya
+      - config-file-b.yaml: keyb
