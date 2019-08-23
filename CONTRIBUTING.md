@@ -48,3 +48,7 @@ When you enable travis-ci on your own account, you shall see travis-ci running a
 6. Commit with a suitable message `git commit -m " Changes made "`
 7. Push `git push origin branch_name`
 8. Go to the Github Repository and create a pull request to the dev branch
+
+## Commit messages
+
+We use git emojis for commit messages. Please read [the guide](https://github.com/slashsBin/styleguide-git-commit-message).
