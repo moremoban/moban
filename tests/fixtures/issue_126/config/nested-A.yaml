@@ -1,6 +1,6 @@
 raspberry:
-  version: 4
-  memory: 4GB
   core: quad
+  memory: 4GB
+  version: 4
 tessel:
   version: 2

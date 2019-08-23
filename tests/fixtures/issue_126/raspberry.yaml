@@ -2,4 +2,4 @@ overrides:
   - nested-A.yaml
   - nested-B.yaml
 raspberry:
-  other: OpenGL 3.0
+  other: 'OpenGL 3.0'
