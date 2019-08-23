@@ -42,7 +42,7 @@ def load_data(base_dir, file_name):
                 child_data = load_data(base_dir, file_name)
                 if data:
                     if key:
-                        child_data = OrderedDict(key=data["key"])
+                        child_data = OrderedDict({key: child_data[key]})
                     parent_data = merge(parent_data, child_data)
         if parent_data:
             return merge(data, parent_data)

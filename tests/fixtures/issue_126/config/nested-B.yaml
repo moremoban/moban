@@ -1,0 +1,7 @@
+raspberry:
+  wifi: 2.5 & 5.0 GHz
+  USB: 3.0
+  Bluetooth: 5.0
+tessel:
+  USB: micro
+  wifi: 802.11gn
