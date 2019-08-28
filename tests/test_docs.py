@@ -11,6 +11,12 @@ class TestTutorial(Docs):
         folder = "level-1-jinja2-cli"
         self._moban(folder, expected)
 
+    def test_level_1_custom_define(self):
+        expected = "maailman"
+        folder = "level-1-jinja2-cli"
+        args = ["moban", "-D", "hello=maailman", "-t", "a.template"]
+        self.run_moban(args, folder, [("moban.output", expected)])
+
     def test_level_2(self):
         expected = """
         ========header============
