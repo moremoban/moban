@@ -156,7 +156,7 @@ def create_parser():
         "-D",
         "--%s" % constants.LABEL_DEFINE,
         nargs="+",
-        help="to define a variable",
+        help="to take a list of VAR=VALUEs",
     )
     return parser
 

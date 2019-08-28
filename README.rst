@@ -210,7 +210,7 @@ Usage
       -v, --version         show program's version number and exit
       -d                    to show trace log
       -D DEFINE [DEFINE ...], --define DEFINE [DEFINE ...]
-                            to define a variable
+                            to take in a list of VAR=VALUEs
        
 
 Exit codes

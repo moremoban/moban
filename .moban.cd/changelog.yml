@@ -7,7 +7,7 @@ releases:
           - "`#205`: support `pyFilesystem2 <https://pyfilesystem2.readthedocs.io/>`_"
           - "`#185`: -d will enable moban application logging for development"
           - "`#126`: Allow mobanfile to include data from arbitrary config files"
-          - "`#256`: jinja2-cli parity: '-D' to define custom variable on cli"
+          - "`#256`: jinja2-cli parity: '-D hello=world' to define custom variable on cli"
       - action: Updated
         details:
           - "`#275`: fix moban 0.4.5 test failures on openSUSE Tumbleweed"
