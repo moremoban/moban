@@ -24,6 +24,7 @@ from moban import (
 )
 from moban._version import __version__
 from moban.hashstore import HASH_STORE
+from moban.program_options import OPTIONS
 from moban.data_loaders.manager import merge, load_data
 
 LOG = logging.getLogger()
@@ -36,6 +37,10 @@ def main():
     parser = create_parser()
     options = vars(parser.parse_args())
     HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
+    options[constants.CLI_DICT] = handle_custom_variables(
+        options.pop(constants.LABEL_DEFINE)
+    )
+    OPTIONS.update(options)
     if options[constants.LABEL_DEBUG]:
         logging.basicConfig(
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -145,7 +150,13 @@ def create_parser():
         action="store_true",
         dest=constants.LABEL_DEBUG,
         default=False,
-        help="to show debug trace",
+        help="to show trace log",
+    )
+    parser.add_argument(
+        "-D",
+        "--%s" % constants.LABEL_DEFINE,
+        nargs="+",
+        help="to take a list of VAR=VALUEs",
     )
     return parser
 
@@ -245,3 +256,13 @@ def find_default_moban_file():
 
 def load_engine_factory_and_engines():
     plugins.make_sure_all_pkg_are_loaded()
+
+
+def handle_custom_variables(list_of_definitions):
+    custom_data = {}
+    if list_of_definitions:
+        for definition in list_of_definitions:
+            key, value = definition.split("=")
+            custom_data[key] = value
+
+    return custom_data
