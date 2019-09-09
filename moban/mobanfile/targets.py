@@ -132,6 +132,10 @@ def _handle_implicit_target(options, template_file, output):
         template_file, output, options[constants.LABEL_TMPL_DIRS]
     ):
         if t_type:
+            # now if t_type is the same as dest file's extension
+            # it should be 'copy'
+            if dest.endswith('.' + t_type):
+                t_type = constants.TEMPLATE_COPY
             yield TemplateTarget(src, common_data_file, dest, t_type)
         else:
             yield TemplateTarget(
