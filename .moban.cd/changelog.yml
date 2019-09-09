@@ -12,7 +12,7 @@ releases:
       - action: Updated
         details:
           - "`#275`: fix moban 0.4.5 test failures on openSUSE Tumbleweed"
-    date: tba
+    date: 10.09.2019
     version: 0.6.0
   - changes:
       - action: Updated
