@@ -80,7 +80,7 @@ INSTALL_REQUIRES = [
     "lml>=0.0.9",
     "appdirs>=1.4.3",
     "crayons>= 0.1.0",
-    "fs>=2.4.6",
+    "fs>=2.4.11",
     "jinja2-fsloader>=0.2.0",
 ]
 SETUP_COMMANDS = {}
