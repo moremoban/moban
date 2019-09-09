@@ -209,7 +209,7 @@ Usage
                             a subset of targets
       -V, --version         show program's version number and exit
       -v                    show verbose
-      -D DEFINE [DEFINE ...], --define DEFINE [DEFINE ...]
+      -d DEFINE [DEFINE ...], --define DEFINE [DEFINE ...]
                             to take a list of VAR=VALUEs
     
 

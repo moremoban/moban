@@ -150,7 +150,7 @@ def create_parser():
         help="show verbose",
     )
     parser.add_argument(
-        "-D",
+        "-d",
         "--%s" % constants.LABEL_DEFINE,
         nargs="+",
         help="to take a list of VAR=VALUEs",
