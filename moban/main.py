@@ -28,6 +28,7 @@ from moban.program_options import OPTIONS
 from moban.data_loaders.manager import merge, load_data
 
 LOG = logging.getLogger()
+LOG_LEVEL = [logging.WARNING, logging.INFO, logging.DEBUG]
 
 
 def main():
@@ -41,11 +42,7 @@ def main():
         options.pop(constants.LABEL_DEFINE)
     )
     OPTIONS.update(options)
-    if options[constants.LABEL_DEBUG]:
-        logging.basicConfig(
-            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-            level=logging.DEBUG,
-        )
+    handle_verbose(options[constants.LABEL_VERBOSE])
 
     moban_file = options[constants.LABEL_MOBANFILE]
     load_engine_factory_and_engines()  # Error: jinja2 if removed
@@ -140,20 +137,20 @@ def create_parser():
         help="string templates",
     )
     parser.add_argument(
-        "-v",
+        "-V",
         "--%s" % constants.LABEL_VERSION,
         action="version",
         version="%(prog)s {v}".format(v=__version__),
     )
     parser.add_argument(
-        "-d",
-        action="store_true",
-        dest=constants.LABEL_DEBUG,
-        default=False,
-        help="to show trace log",
+        "-v",
+        action="count",
+        dest=constants.LABEL_VERBOSE,
+        default=0,
+        help="show verbose",
     )
     parser.add_argument(
-        "-D",
+        "-d",
         "--%s" % constants.LABEL_DEFINE,
         nargs="+",
         help="to take a list of VAR=VALUEs",
@@ -266,3 +263,13 @@ def handle_custom_variables(list_of_definitions):
             custom_data[key] = value
 
     return custom_data
+
+
+def handle_verbose(verbose_level):
+    if verbose_level > len(LOG_LEVEL):
+        verbose_level = 3
+    level = LOG_LEVEL[verbose_level]
+    logging.basicConfig(
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        level=level,
+    )

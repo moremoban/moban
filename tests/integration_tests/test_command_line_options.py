@@ -436,7 +436,7 @@ class TestTemplateTypeOption:
 
 @raises(SystemExit)
 def test_version_option():
-    test_args = ["moban", "-v"]
+    test_args = ["moban", "-V"]
     with patch.object(sys, "argv", test_args):
         from moban.main import main
 
@@ -446,7 +446,7 @@ def test_version_option():
 @patch("logging.basicConfig")
 def test_debug_option(fake_config):
     fake_config.side_effect = [IOError("stop test")]
-    test_args = ["moban", "-d"]
+    test_args = ["moban", "-vv"]
     with patch.object(sys, "argv", test_args):
         from moban.main import main
 

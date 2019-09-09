@@ -178,7 +178,7 @@ Usage
     usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
                  [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-t TEMPLATE] [-o OUTPUT]
                  [--template_type TEMPLATE_TYPE] [-f] [--exit-code] [-m MOBANFILE]
-                 [-g GROUP] [-v] [-d] [-D DEFINE [DEFINE ...]]
+                 [-g GROUP] [-V] [-v] [-D DEFINE [DEFINE ...]]
                  [template]
     
     Yet another jinja2 cli command for static text generation
@@ -207,11 +207,11 @@ Usage
                             custom moban file
       -g GROUP, --group GROUP
                             a subset of targets
-      -v, --version         show program's version number and exit
-      -d                    to show trace log
-      -D DEFINE [DEFINE ...], --define DEFINE [DEFINE ...]
-                            to take in a list of VAR=VALUEs
-       
+      -V, --version         show program's version number and exit
+      -v                    show verbose
+      -d DEFINE [DEFINE ...], --define DEFINE [DEFINE ...]
+                            to take a list of VAR=VALUEs
+    
 
 Exit codes
 --------------------------------------------------------------------------------

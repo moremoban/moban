@@ -9,8 +9,9 @@ Added
 
 #. `#205 <https://github.com/moremoban/moban/issues/205>`_: support
    `pyFilesystem2 <https://pyfilesystem2.readthedocs.io/>`_
-#. `#185 <https://github.com/moremoban/moban/issues/185>`_: -d will enable moban
-   application logging for development
+#. `#185 <https://github.com/moremoban/moban/issues/185>`_: -v will enable moban
+   application logging for development. And -V is for version.
+#. `#325 <https://github.com/moremoban/moban/issues/325>`_: -vv show debug trace
 #. `#126 <https://github.com/moremoban/moban/issues/126>`_: Allow mobanfile to
    include data from arbitrary config files
 #. `#256 <https://github.com/moremoban/moban/issues/256>`_: jinja2-cli parity:
