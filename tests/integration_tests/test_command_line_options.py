@@ -436,7 +436,7 @@ class TestTemplateTypeOption:
 
 @raises(SystemExit)
 def test_version_option():
-    test_args = ["moban", "-v"]
+    test_args = ["moban", "-V"]
     with patch.object(sys, "argv", test_args):
         from moban.main import main
 

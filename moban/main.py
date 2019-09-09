@@ -140,7 +140,7 @@ def create_parser():
         help="string templates",
     )
     parser.add_argument(
-        "-v",
+        "-V",
         "--%s" % constants.LABEL_VERSION,
         action="version",
         version="%(prog)s {v}".format(v=__version__),
