@@ -72,7 +72,7 @@ LABEL_SOURCE = "source"
 LABEL_DEST = "destination"
 LABEL_FORCE_TEMPLATE_TYPE = "force_template_type"
 LABEL_TEMPLATE_TYPES = "template_types"
-LABEL_DEBUG = "debug"
+LABEL_VERBOSE = "verbose"
 
 # error messages
 ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"
