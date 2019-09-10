@@ -22,7 +22,9 @@ This section covers the use cases for moban. Please check them out individually.
 #. `Force template type from moban file`_
 #. `User defined template types`_
 #. `Select a group target to run`_
-
+#. `Template files in a zip or tar`_
+#. `Template copying from a zip to a zip`_
+   
 .. _Jinja2 command line: level-1-jinja2-cli
 .. _Template inheritance: level-2-template-inheritance
 .. _Data override: level-3-data-override
@@ -42,3 +44,5 @@ This section covers the use cases for moban. Please check them out individually.
 .. _Force template type from moban file: level-17-force-template-type-from-moban-file
 .. _User defined template types: level-18-user-defined-template-types
 .. _Select a group target to run: level-19-moban-a-sub-group-in-targets
+.. _Template files in a zip or tar: level-20-templates-configs-in-zip-or-tar
+.. _Template copying from a zip to a zip: level-21-copy-templates-into-an-alien-file-system

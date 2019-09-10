@@ -1,0 +1,5 @@
+alpha: 'from config'
+cat: 'from config'
+overrides:
+  - multi-key-A.yaml:alpha
+  - multi-key-B.yaml:beta

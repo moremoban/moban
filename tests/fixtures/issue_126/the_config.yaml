@@ -1,0 +1,4 @@
+key: value
+overrides:
+  - A.yaml
+  - B.yaml

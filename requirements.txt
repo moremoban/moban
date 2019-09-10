@@ -4,7 +4,7 @@ ruamel.yaml>=0.15.5;python_version != '3.4' and python_version < '3.7'
 ruamel.yaml>=0.15.98;python_version == '3.8'
 jinja2>=2.7.1
 lml>=0.0.9
-appdirs>=1.2.0
+appdirs>=1.4.3
 crayons>= 0.1.0
-GitPython>=2.0.0
-git-url-parse>=1.2.2
+fs>=2.4.11
+jinja2-fsloader>=0.2.0

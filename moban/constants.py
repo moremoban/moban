@@ -1,4 +1,4 @@
-import os
+from moban import file_system
 
 # Template type
 TEMPLATE_JINJA2 = "jinja2"
@@ -36,14 +36,21 @@ LABEL_MOBANFILE = "mobanfile"
 LABEL_FORCE = "force"
 LABEL_VERSION = "version"
 LABEL_GROUP = "group"
+LABEL_DEFINE = "define"
+CLI_DICT = "user_dict"
 
 DEFAULT_CONFIGURATION_DIRNAME = ".%s.cd" % PROGRAM_NAME
 DEFAULT_TEMPLATE_DIRNAME = ".%s.td" % PROGRAM_NAME
 DEFAULT_OPTIONS = {
     # .moban.cd, default configuration dir
-    LABEL_CONFIG_DIR: os.path.join(".", DEFAULT_CONFIGURATION_DIRNAME),
+    LABEL_CONFIG_DIR: file_system.path_join(
+        ".", DEFAULT_CONFIGURATION_DIRNAME
+    ),
     # .moban.td, default template dirs
-    LABEL_TMPL_DIRS: [".", os.path.join(".", DEFAULT_TEMPLATE_DIRNAME)],
+    LABEL_TMPL_DIRS: [
+        ".",
+        file_system.path_join(".", DEFAULT_TEMPLATE_DIRNAME),
+    ],
     # moban.output, default output file name
     LABEL_OUTPUT: "%s.output" % PROGRAM_NAME,
     # data.yml, default data input file
@@ -65,6 +72,7 @@ LABEL_SOURCE = "source"
 LABEL_DEST = "destination"
 LABEL_FORCE_TEMPLATE_TYPE = "force_template_type"
 LABEL_TEMPLATE_TYPES = "template_types"
+LABEL_VERBOSE = "verbose"
 
 # error messages
 ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"
@@ -123,3 +131,11 @@ MOBAN_ALL = "%s|%s" % (MOBAN_EXTENSIONS, MOBAN_TEMPLATES)
 MESSAGE_DEPRECATE_COPY_SINCE_0_4_0 = (
     "'%s:' is deprecated since 0.4.0! " + "Please use 'targets:' instead"
 ) % TEMPLATE_COPY
+MESSAGE_DEPRECATE_MOBAN_NOTATION_SINCE_0_6_0 = (
+    "File path notation is deprecated since 0.6.0! "
+    + "Please use pypi:// or git:// notation instead"
+)
+MESSAGE_DEPRECATE_REQUIRES_SINCE_0_6_0 = (
+    "'requires' is deprecated since 0.6.0! "
+    + "Please use pypi:// or git:// notation instead"
+)

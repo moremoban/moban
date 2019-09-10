@@ -40,3 +40,11 @@ Then go to `docs/level-1-jinja2-cli`. here are different commands to evaluate it
         moban -t a.template
     
     because moban looks for `data.yml` by default
+
+As well, you can define your own variable:
+
+.. code-block:: bash
+
+   moban -D hello=maailman -t a.template
+
+And when you check 'moban.output', you will find you have overwritten data.yaml.

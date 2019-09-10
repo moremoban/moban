@@ -9,13 +9,26 @@
 
 """
 import sys
+import logging
 import argparse
+import logging.config
 
-from moban import plugins, reporter, constants, mobanfile, exceptions
-from moban.utils import merge
+from moban import (
+    core,
+    plugins,
+    reporter,
+    constants,
+    mobanfile,
+    exceptions,
+    file_system,
+)
 from moban._version import __version__
 from moban.hashstore import HASH_STORE
-from moban.data_loaders.manager import load_data
+from moban.program_options import OPTIONS
+from moban.data_loaders.manager import merge, load_data
+
+LOG = logging.getLogger()
+LOG_LEVEL = [logging.WARNING, logging.INFO, logging.DEBUG]
 
 
 def main():
@@ -25,10 +38,16 @@ def main():
     parser = create_parser()
     options = vars(parser.parse_args())
     HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
+    options[constants.CLI_DICT] = handle_custom_variables(
+        options.pop(constants.LABEL_DEFINE)
+    )
+    OPTIONS.update(options)
+    handle_verbose(options[constants.LABEL_VERBOSE])
+
     moban_file = options[constants.LABEL_MOBANFILE]
     load_engine_factory_and_engines()  # Error: jinja2 if removed
     if moban_file is None:
-        moban_file = mobanfile.find_default_moban_file()
+        moban_file = find_default_moban_file()
     if moban_file:
         try:
             count = handle_moban_file(moban_file, options)
@@ -38,6 +57,7 @@ def main():
             exceptions.NoThirdPartyEngine,
             exceptions.MobanfileGrammarException,
         ) as e:
+            LOG.exception(e)
             reporter.report_error_message(str(e))
             moban_exit(options[constants.LABEL_EXIT_CODE], constants.ERROR)
     else:
@@ -117,10 +137,23 @@ def create_parser():
         help="string templates",
     )
     parser.add_argument(
-        "-v",
+        "-V",
         "--%s" % constants.LABEL_VERSION,
         action="version",
         version="%(prog)s {v}".format(v=__version__),
+    )
+    parser.add_argument(
+        "-v",
+        action="count",
+        dest=constants.LABEL_VERBOSE,
+        default=0,
+        help="show verbose",
+    )
+    parser.add_argument(
+        "-d",
+        "--%s" % constants.LABEL_DEFINE,
+        nargs="+",
+        help="to take a list of VAR=VALUEs",
     )
     return parser
 
@@ -181,7 +214,7 @@ def handle_command_line(options):
     act upon command options
     """
     options = merge(options, constants.DEFAULT_OPTIONS)
-    engine = plugins.ENGINES.get_engine(
+    engine = core.ENGINES.get_engine(
         options[constants.LABEL_TEMPLATE_TYPE],
         options[constants.LABEL_TMPL_DIRS],
         options[constants.LABEL_CONFIG_DIR],
@@ -209,5 +242,34 @@ def handle_command_line(options):
     return exit_code
 
 
+def find_default_moban_file():
+    for moban_file in constants.DEFAULT_MOBAN_FILES:
+        if file_system.exists(moban_file):
+            break
+    else:
+        moban_file = None
+    return moban_file
+
+
 def load_engine_factory_and_engines():
     plugins.make_sure_all_pkg_are_loaded()
+
+
+def handle_custom_variables(list_of_definitions):
+    custom_data = {}
+    if list_of_definitions:
+        for definition in list_of_definitions:
+            key, value = definition.split("=")
+            custom_data[key] = value
+
+    return custom_data
+
+
+def handle_verbose(verbose_level):
+    if verbose_level > len(LOG_LEVEL):
+        verbose_level = 3
+    level = LOG_LEVEL[verbose_level]
+    logging.basicConfig(
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        level=level,
+    )

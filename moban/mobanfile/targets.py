@@ -1,8 +1,35 @@
 import uuid
+import logging
 
-from moban import plugins, reporter, constants, exceptions
+from moban import core, reporter, constants, exceptions
 from moban.definitions import TemplateTarget
 from moban.mobanfile.templates import handle_template
+
+LOG = logging.getLogger(__name__)
+
+
+def extract_target(options):
+    template, config, output = (
+        options.get(constants.LABEL_TEMPLATE),
+        options.get(constants.LABEL_CONFIG),
+        options.get(constants.LABEL_OUTPUT),
+    )
+    result = []
+    if template:
+        if output is None:
+            raise Exception(
+                "Please specify a output file name for %s." % template
+            )
+        if config:
+            result = {
+                constants.LABEL_TEMPLATE: template,
+                constants.LABEL_CONFIG: config,
+                constants.LABEL_OUTPUT: output,
+            }
+
+        else:
+            result = {output: template}
+    return result
 
 
 def extract_group_targets(group, targets):
@@ -18,6 +45,7 @@ def extract_group_targets(group, targets):
 
 
 def parse_targets(options, targets):
+    LOG.info("paring targets..")
     for target in targets:
         if constants.LABEL_OUTPUT in target:
             for template_target in _handle_explicit_target(options, target):
@@ -65,7 +93,7 @@ def _handle_explicit_target(options, target):
                     constants.TEMPLATE_TYPES_OPTIONS: template_types_options,
                 }
             }
-            plugins.ENGINES.register_options(the_adhoc_type)
+            core.ENGINES.register_options(the_adhoc_type)
             template_type = file_extension
     for src, dest, t_type in handle_template(
         template_file, output, options[constants.LABEL_TMPL_DIRS]

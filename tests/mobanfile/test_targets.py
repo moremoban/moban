@@ -1,6 +1,6 @@
-import os
 import uuid
 
+import fs.path
 from nose.tools import eq_, raises
 from moban.mobanfile import targets
 from moban.exceptions import GroupTargetNotFound
@@ -9,7 +9,7 @@ from moban.definitions import TemplateTarget
 TEMPLATE = "a.jj2"
 OUTPUT = "a.output"
 CONFIGURATION = "data.config"
-TEMPLATE_DIRS = [os.path.join("tests", "fixtures")]
+TEMPLATE_DIRS = [fs.path.join("tests", "fixtures")]
 DEFAULT_TEMPLATE_TYPE = "default-template-type"
 
 

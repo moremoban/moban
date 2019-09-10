@@ -12,3 +12,5 @@ pypi-mobans-pkg
 arrow<0.14.0;python_version=="3.4"
 arrow;python_version!="3.4"
 jinja2_time
+pypifs
+gitfs2

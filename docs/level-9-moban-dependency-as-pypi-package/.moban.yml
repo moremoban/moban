@@ -1,11 +1,9 @@
-requires:
-  - pypi-mobans-pkg
 configuration:
   template_dir:
-    - "pypi-mobans-pkg:templates"
+    - "pypi://pypi-mobans-pkg/resources/templates"
     - local
   configuration: config.yml
-  configuration_dir: "pypi-mobans-pkg:config"
+  configuration_dir: "pypi://pypi-mobans-pkg/resources/config"
 targets:
   - mytravis.yml: travis.yml.jj2
   - test.txt: demo.txt.jj2

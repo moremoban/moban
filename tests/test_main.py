@@ -4,7 +4,7 @@ from shutil import copyfile
 
 import moban.exceptions as exceptions
 from mock import patch
-from nose.tools import raises, assert_raises
+from nose.tools import eq_, raises, assert_raises
 
 
 class TestException:
@@ -123,7 +123,7 @@ class TestException:
 class TestExitCodes:
     @raises(SystemExit)
     @patch("moban.main.handle_moban_file")
-    @patch("moban.mobanfile.find_default_moban_file")
+    @patch("moban.main.find_default_moban_file")
     def test_has_many_files_with_exit_code(
         self, fake_find_file, fake_moban_file
     ):
@@ -136,7 +136,7 @@ class TestExitCodes:
 
     @raises(SystemExit)
     @patch("moban.main.handle_command_line")
-    @patch("moban.mobanfile.find_default_moban_file")
+    @patch("moban.main.find_default_moban_file")
     def test_handle_single_change_with_exit_code(
         self, fake_find_file, fake_command_line
     ):
@@ -148,7 +148,7 @@ class TestExitCodes:
             main()
 
     @patch("moban.main.handle_moban_file")
-    @patch("moban.mobanfile.find_default_moban_file")
+    @patch("moban.main.find_default_moban_file")
     def test_has_many_files(self, fake_find_file, fake_moban_file):
         fake_find_file.return_value = "abc"
         fake_moban_file.return_value = 1
@@ -158,7 +158,7 @@ class TestExitCodes:
             main()
 
     @patch("moban.main.handle_command_line")
-    @patch("moban.mobanfile.find_default_moban_file")
+    @patch("moban.main.find_default_moban_file")
     def test_handle_single_change(self, fake_find_file, fake_command_line):
         fake_find_file.return_value = None
         fake_command_line.return_value = 1
@@ -166,3 +166,35 @@ class TestExitCodes:
 
         with patch.object(sys, "argv", ["moban"]):
             main()
+
+
+class TestFinder:
+    def setUp(self):
+        self.patcher = patch("moban.file_system.exists")
+        self.fake_file_existence = self.patcher.start()
+        self.fake_file_existence.__name__ = "fake"
+        self.fake_file_existence.__module__ = "fake"
+
+    def tearDown(self):
+        self.patcher.stop()
+
+    def test_moban_yml(self):
+        self.fake_file_existence.return_value = True
+        from moban.main import find_default_moban_file
+
+        actual = find_default_moban_file()
+        eq_(".moban.yml", actual)
+
+    def test_moban_yaml(self):
+        self.fake_file_existence.side_effect = [False, True]
+        from moban.main import find_default_moban_file
+
+        actual = find_default_moban_file()
+        eq_(".moban.yaml", actual)
+
+    def test_no_moban_file(self):
+        self.fake_file_existence.side_effect = [False, False]
+        from moban.main import find_default_moban_file
+
+        actual = find_default_moban_file()
+        assert actual is None

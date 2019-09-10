@@ -1,0 +1,13 @@
+configuration:
+  configuration_dir: 'tar://custom-config.tar'
+  template_dir:
+    - zip://templates.zip
+    - cool-templates
+    - '.'
+targets:
+  - output: 'tar://a.tar!/a.output'
+    configuration: data.yml
+    template: template.in.zip.jj2
+  - output: 'zip://a.zip!/a.output2'
+    configuration: data2.yml
+    template: subfolder/template.in.zip.jj2

@@ -17,16 +17,17 @@ class TestCustomOptions:
         )
         self.patcher1.start()
 
-    @patch("moban.plugins.template.MobanEngine.render_to_file")
-    def test_custom_options(self, fake_template_doer):
+    @patch("moban.file_system.abspath")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_file")
+    def test_custom_options(self, fake_template_doer, fake_abspath):
         test_args = [
             "moban",
             "-c",
             self.config_file,
             "-cd",
-            "/home/developer/configuration",
+            ".",
             "-td",
-            "/home/developer/templates",
+            ".",
             "-t",
             "a.jj2",
         ]
@@ -38,7 +39,7 @@ class TestCustomOptions:
                 "a.jj2", "config.yaml", "moban.output"
             )
 
-    @patch("moban.plugins.template.MobanEngine.render_to_file")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_file")
     def test_minimal_options(self, fake_template_doer):
         test_args = ["moban", "-c", self.config_file, "-t", "a.jj2"]
         with patch.object(sys, "argv", test_args):
@@ -72,7 +73,7 @@ class TestOptions:
         )
         self.patcher1.start()
 
-    @patch("moban.plugins.template.MobanEngine.render_to_file")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_file")
     def test_default_options(self, fake_template_doer):
         test_args = ["moban", "-t", "a.jj2"]
         with patch.object(sys, "argv", test_args):
@@ -83,7 +84,7 @@ class TestOptions:
                 "a.jj2", "data.yml", "moban.output"
             )
 
-    @patch("moban.plugins.template.MobanEngine.render_string_to_file")
+    @patch("moban.core.moban_factory.MobanEngine.render_string_to_file")
     def test_string_template(self, fake_template_doer):
         string_template = "{{HELLO}}"
         test_args = ["moban", string_template]
@@ -132,7 +133,7 @@ class TestNoOptions:
         )
         self.patcher1.start()
 
-    @patch("moban.plugins.template.MobanEngine.render_to_files")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban"]
         with patch.object(sys, "argv", test_args):
@@ -151,7 +152,7 @@ class TestNoOptions:
             )
 
     @raises(Exception)
-    @patch("moban.plugins.template.MobanEngine.render_to_files")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_single_command_with_missing_output(self, fake_template_doer):
         test_args = ["moban", "-t", "README.rst.jj2"]
         with patch.object(sys, "argv", test_args):
@@ -159,20 +160,21 @@ class TestNoOptions:
 
             main()
 
-    @patch("moban.plugins.template.MobanEngine.render_to_files")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_single_command_with_a_few_options(self, fake_template_doer):
         test_args = ["moban", "-t", "README.rst.jj2", "-o", "xyz.output"]
         with patch.object(sys, "argv", test_args):
             from moban.main import main
 
             main()
+
             call_args = list(fake_template_doer.call_args[0][0])
             eq_(
                 call_args,
                 [TemplateTarget("README.rst.jj2", "data.yaml", "xyz.output")],
             )
 
-    @patch("moban.plugins.template.MobanEngine.render_to_files")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_single_command_with_options(self, fake_template_doer):
         test_args = [
             "moban",
@@ -222,7 +224,7 @@ class TestNoOptions2:
         )
         self.patcher1.start()
 
-    @patch("moban.plugins.template.MobanEngine.render_to_files")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban"]
         with patch.object(sys, "argv", test_args):
@@ -260,7 +262,7 @@ class TestCustomMobanFile:
         )
         self.patcher1.start()
 
-    @patch("moban.plugins.template.MobanEngine.render_to_files")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_single_command(self, fake_template_doer):
         test_args = ["moban", "-m", self.config_file]
         with patch.object(sys, "argv", test_args):
@@ -295,7 +297,7 @@ class TestTemplateOption:
         )
         self.patcher1.start()
 
-    @patch("moban.plugins.template.MobanEngine.render_to_file")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_file")
     def test_template_option_override_moban_file(self, fake_template_doer):
         test_args = ["moban", "-t", "setup.py.jj2"]
         with patch.object(sys, "argv", test_args):
@@ -306,7 +308,7 @@ class TestTemplateOption:
                 "setup.py.jj2", "data.yml", "moban.output"
             )
 
-    @patch("moban.plugins.template.MobanEngine.render_to_file")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_file")
     def test_template_option_not_in_moban_file(self, fake_template_doer):
         test_args = ["moban", "-t", "foo.jj2"]
         with patch.object(sys, "argv", test_args):
@@ -339,7 +341,7 @@ class TestInvalidMobanFile:
         self.config_file = ".moban.yml"
 
     @raises(SystemExit)
-    @patch("moban.plugins.template.MobanEngine.render_to_files")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_no_configuration(self, fake_template_doer):
         with open(self.config_file, "w") as f:
             f.write("")
@@ -350,7 +352,7 @@ class TestInvalidMobanFile:
             main()
 
     @raises(SystemExit)
-    @patch("moban.plugins.template.MobanEngine.render_to_files")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_no_configuration_2(self, fake_template_doer):
         with open(self.config_file, "w") as f:
             f.write("not: related")
@@ -361,7 +363,7 @@ class TestInvalidMobanFile:
             main()
 
     @raises(SystemExit)
-    @patch("moban.plugins.template.MobanEngine.render_to_files")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_no_targets(self, fake_template_doer):
         with open(self.config_file, "w") as f:
             f.write("configuration: test")
@@ -385,16 +387,14 @@ class TestComplexOptions:
         with open(self.data_file, "w") as f:
             f.write("hello: world")
 
-    @patch(
-        "moban.utils.verify_the_existence_of_directories", return_value=True
-    )
+    @patch("moban.utils.verify_the_existence_of_directories", return_value=".")
     def test_single_command(self, _):
         test_args = ["moban"]
         with patch.object(sys, "argv", test_args):
             from moban.main import main
 
             with patch(
-                "moban.plugins.template.MobanEngine.render_to_files"
+                "moban.core.moban_factory.MobanEngine.render_to_files"
             ) as fake:
                 main()
                 call_args = list(fake.call_args[0][0])
@@ -419,7 +419,7 @@ class TestTemplateTypeOption:
         with open(self.config_file, "w") as f:
             f.write("hello: world")
 
-    @patch("moban.plugins.template.MobanEngine.render_to_file")
+    @patch("moban.core.moban_factory.MobanEngine.render_to_file")
     def test_mako_option(self, fake_template_doer):
         test_args = ["moban", "-t", "a.mako"]
         with patch.object(sys, "argv", test_args):
@@ -436,8 +436,66 @@ class TestTemplateTypeOption:
 
 @raises(SystemExit)
 def test_version_option():
-    test_args = ["moban", "-v"]
+    test_args = ["moban", "-V"]
     with patch.object(sys, "argv", test_args):
         from moban.main import main
 
         main()
+
+
+@patch("logging.basicConfig")
+def test_debug_option(fake_config):
+    fake_config.side_effect = [IOError("stop test")]
+    test_args = ["moban", "-vv"]
+    with patch.object(sys, "argv", test_args):
+        from moban.main import main
+
+        try:
+            main()
+        except IOError:
+            fake_config.assert_called_with(
+                format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+                level=10,
+            )
+
+
+@patch("moban.utils.verify_the_existence_of_directories", return_value=[])
+def test_git_repo_example(_):
+    test_args = [
+        "moban",
+        "-t",
+        "git://github.com/moremoban/pypi-mobans.git!/templates/_version.py.jj2",
+        "-c",
+        "git://github.com/moremoban/pypi-mobans.git!/config/data.yml",
+        "-o",
+        "test_git_repo_example.py",
+    ]
+    with patch.object(sys, "argv", test_args):
+        from moban.main import main
+
+        main()
+        with open("test_git_repo_example.py") as f:
+            content = f.read()
+            eq_(content, '__version__ = "0.1.1rc3"\n__author__ = "C.W."')
+        os.unlink("test_git_repo_example.py")
+
+
+@patch("moban.utils.verify_the_existence_of_directories", return_value=[])
+def test_pypi_pkg_example(_):
+    test_args = [
+        "moban",
+        "-t",
+        "pypi://pypi-mobans-pkg/resources/templates/_version.py.jj2",
+        "-c",
+        "pypi://pypi-mobans-pkg/resources/config/data.yml",
+        "-o",
+        "test_pypi_pkg_example.py",
+    ]
+    with patch.object(sys, "argv", test_args):
+        from moban.main import main
+
+        main()
+        with open("test_pypi_pkg_example.py") as f:
+            content = f.read()
+            eq_(content, '__version__ = "0.1.1rc3"\n__author__ = "C.W."')
+        os.unlink("test_pypi_pkg_example.py")

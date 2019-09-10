@@ -27,3 +27,10 @@ format:
 	git diff
 	black -l 79 tests
 	git diff
+
+uml:
+	plantuml -tsvg -o ./images/ docs/*.uml
+
+
+doc: uml
+	sphinx-build -b html docs build

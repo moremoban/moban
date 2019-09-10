@@ -3,9 +3,21 @@
 package "moban" {
 [engine factory]
 [jinja2 engine]
+[data loader]
+[yaml loader]
+[json loader]
+[file system layer]
 }
 
 [lml]
+
+package "pyfilesystem2" {
+[fs]
+[tar]
+[zip]
+[file]
+[s3]
+}
 
 package "moban-mako" {
 [mako engine]
@@ -15,9 +27,30 @@ package "moban-haml" {
 [haml engine]
 }
 
+package "moremobans/gitfs2" {
+[git repo]
+}
+
+package "moremobans/pypifs" {
+[python package]
+}
+
+[fs.dropbox]
+
+
 [engine factory] -> [lml] : get all engines
 [lml] <-- [jinja2 engine] : register
 [lml] <.. [mako engine] : register
 [lml] <.. [haml engine] : register
-
+[lml] <.. [yaml loader] : register
+[lml] <.. [json loader] : register
+[data loader] -> [lml] : get all loaders
+[file system layer] -> [fs] : access templates,config,output
+[fs] <.. [git repo]
+[fs] <.. [python package]
+[fs] <.. [tar]
+[fs] <.. [zip]
+[fs] <.. [file]
+[fs] <.. [s3]
+[fs] <.. [fs.dropbox]
 @enduml
