@@ -4,6 +4,12 @@ releases:
   - changes:
       - action: Added
         details:
+          - "`#328`: update backward compatibility"
+    date: 10.09.2019
+    version: 0.6.1
+  - changes:
+      - action: Added
+        details:
           - "`#205`: support `pyFilesystem2 <https://pyfilesystem2.readthedocs.io/>`_"
           - "`#185`: -v will enable moban application logging for development. And -V is for version."
           - "`#325`: -vv show debug trace"
