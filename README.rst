@@ -17,7 +17,7 @@ moban - 模板 Any template, any data in any location
 .. image:: https://img.shields.io/gitter/room/gitterHQ/gitter.svg
    :target: https://gitter.im/chfw_moban/Lobby
 
-:Author: C.W.
+:Author: C.W. and its contributors (See contributors.rst)
 :Issues: http://github.com/moremoban/moban/issues
 :License: MIT
 :Version: |version|
