@@ -37,8 +37,6 @@ any location: zip, git, pypi package, s3, etc.
 Please look at our issues. We have many more template engines and data format on the
 road map.
 
-.. image:: https://raw.githubusercontent.com/moremoban/moban/dev/docs/images/engine.svg
-
 All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
 
 Installation
@@ -151,6 +149,9 @@ Work with S3 and other cloud based file systems
 Please install `fs-s3fs <https://github.com/PyFilesystem/s3fs>`_::
 
     $ pip install fs-s3fs
+
+
+Then you can access your files in s3 bucket:
 
 .. code-block:: bash
 
