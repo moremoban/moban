@@ -22,7 +22,13 @@ class MobanFactory(PluginManager):
         self.options_registry = {}
 
     def register_extensions(self, extensions):
-        self.extensions.update(extensions)
+        for template_type in extensions.keys():
+            if template_type in self.extensions:
+                self.extensions[template_type] = self.extensions[
+                    template_type
+                ].union(extensions[template_type])
+            else:
+                self.extensions[template_type] = extensions[template_type]
 
     def register_options(self, template_types):
         # need the value of 'template_types'

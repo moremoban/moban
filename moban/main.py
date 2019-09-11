@@ -12,6 +12,7 @@ import sys
 import logging
 import argparse
 import logging.config
+from collections import defaultdict
 
 from moban import (
     core,
@@ -41,6 +42,7 @@ def main():
     options[constants.CLI_DICT] = handle_custom_variables(
         options.pop(constants.LABEL_DEFINE)
     )
+    handle_custom_variables(options.pop(constants.LABEL_EXTENSION))
     OPTIONS.update(options)
     handle_verbose(options[constants.LABEL_VERBOSE])
 
@@ -155,6 +157,12 @@ def create_parser():
         nargs="+",
         help="to take a list of VAR=VALUEs",
     )
+    parser.add_argument(
+        "-e",
+        "--%s" % constants.LABEL_EXTENSION,
+        nargs="+",
+        help="to add an extension to TEMPLATE_TYPE=EXTENSION_NAME",
+    )
     return parser
 
 
@@ -263,6 +271,16 @@ def handle_custom_variables(list_of_definitions):
             custom_data[key] = value
 
     return custom_data
+
+
+def handle_custom_extensions(list_of_definitions):
+    user_extensions = defaultdict(set)
+    if list_of_definitions:
+        for definition in list_of_definitions:
+            key, value = definition.split("=")
+            user_extensions[key].append(value)
+
+    core.ENGINES.register_options(user_extensions)
 
 
 def handle_verbose(verbose_level):
