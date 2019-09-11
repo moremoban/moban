@@ -4,6 +4,12 @@ releases:
   - changes:
       - action: Added
         details:
+          - "`#322`: Implicit targets with template extensions default to copy"
+    date: tbd
+    version: 0.6.2
+  - changes:
+      - action: Fixed
+        details:
           - "`#328`: update backward compatibility"
     date: 10.09.2019
     version: 0.6.1
