@@ -6,5 +6,7 @@ jinja2==2.7.1
 lml==0.0.9
 appdirs==1.4.3
 crayons== 0.1.0
-fs==2.4.6
+fs==2.4.11
+gitfs2==0.0.1
+pypifs==0.0.1
 jinja2-fsloader==0.2.0

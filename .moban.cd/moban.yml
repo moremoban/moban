@@ -4,9 +4,9 @@ organisation: moremoban
 author: C. W.
 contact: wangc_2011@hotmail.com
 license: MIT
-version: 0.6.0
-current_version: 0.6.0
-release: 0.5.0
+version: 0.6.1
+current_version: 0.6.1
+release: 0.6.1
 branch: master
 master: index
 command_line_interface: "moban"
@@ -26,7 +26,9 @@ dependencies:
   - lml>=0.0.9
   - appdirs>=1.4.3
   - crayons>= 0.1.0
-  - fs>=2.4.6
+  - fs>=2.4.11
+  - gitfs2>=0.0.1
+  - pypifs>=0.0.1
   - jinja2-fsloader>=0.2.0
 description: Yet another jinja2 cli command for static text generation
 scm_host: github.com

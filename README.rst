@@ -175,38 +175,43 @@ Usage
 .. code-block:: bash
 
 
-   usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
-                [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-t TEMPLATE] [-o OUTPUT]
-                [-f] [-m MOBANFILE]
-                [template]
-
-   Yet another jinja2 cli command for static text generation
-   
-   positional arguments:
-     template              string templates
-
-   optional arguments:
-     -h, --help            show this help message and exit
-     -cd CONFIGURATION_DIR, --configuration_dir CONFIGURATION_DIR
-                           the directory for configuration file lookup
-     -c CONFIGURATION, --configuration CONFIGURATION
-                           the dictionary file. if not present, moban
-                           will try to use environment vars as data
-     -td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]
-                           the directories for template file lookup
-     -t TEMPLATE, --template TEMPLATE
-                           the template file. this overrides any targets
-                           defined in a custom moban file
-     -o OUTPUT, --output OUTPUT
-                           the output file
-     --template_type TEMPLATE_TYPE
-                           the template type, default is jinja2
-     -f                    force moban to template all files despite of
-                           .moban.hashes
-     --exit-code           tell moban to change exit code                      
-     -m MOBANFILE, --mobanfile MOBANFILE
-                           custom moban file
-   
+    usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
+                 [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-t TEMPLATE] [-o OUTPUT]
+                 [--template_type TEMPLATE_TYPE] [-f] [--exit-code] [-m MOBANFILE]
+                 [-g GROUP] [-V] [-v] [-D DEFINE [DEFINE ...]]
+                 [template]
+    
+    Yet another jinja2 cli command for static text generation
+    
+    positional arguments:
+      template              string templates
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      -cd CONFIGURATION_DIR, --configuration_dir CONFIGURATION_DIR
+                            the directory for configuration file lookup
+      -c CONFIGURATION, --configuration CONFIGURATION
+                            the dictionary file
+      -td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]
+                            the directories for template file lookup
+      -t TEMPLATE, --template TEMPLATE
+                            the template file
+      -o OUTPUT, --output OUTPUT
+                            the output file
+      --template_type TEMPLATE_TYPE
+                            the template type, default is jinja2
+      -f                    force moban to template all files despite of
+                            .moban.hashes
+      --exit-code           tell moban to change exit code
+      -m MOBANFILE, --mobanfile MOBANFILE
+                            custom moban file
+      -g GROUP, --group GROUP
+                            a subset of targets
+      -V, --version         show program's version number and exit
+      -v                    show verbose
+      -d DEFINE [DEFINE ...], --define DEFINE [DEFINE ...]
+                            to take a list of VAR=VALUEs
+    
 
 Exit codes
 --------------------------------------------------------------------------------

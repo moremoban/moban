@@ -38,7 +38,7 @@ except (ValueError, UnicodeError, locale.Error):
 
 NAME = "moban"
 AUTHOR = "C. W."
-VERSION = "0.6.0"
+VERSION = "0.6.1"
 EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
 ENTRY_POINTS = {
@@ -50,7 +50,7 @@ DESCRIPTION = (
     "Yet another jinja2 cli command for static text generation"
 )
 URL = "https://github.com/moremoban/moban"
-DOWNLOAD_URL = "%s/archive/0.5.0.tar.gz" % URL
+DOWNLOAD_URL = "%s/archive/0.6.1.tar.gz" % URL
 FILES = ["README.rst", "CONTRIBUTORS.rst", "CHANGELOG.rst"]
 KEYWORDS = [
     "python",
@@ -80,7 +80,9 @@ INSTALL_REQUIRES = [
     "lml>=0.0.9",
     "appdirs>=1.4.3",
     "crayons>= 0.1.0",
-    "fs>=2.4.6",
+    "fs>=2.4.11",
+    "gitfs2>=0.0.1",
+    "pypifs>=0.0.1",
     "jinja2-fsloader>=0.2.0",
 ]
 SETUP_COMMANDS = {}
@@ -95,8 +97,8 @@ EXTRAS_REQUIRE = {
 }
 # You do not need to read beyond this line
 PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(sys.executable)
-GS_COMMAND = ("gs moban v0.5.0 " +
-              "Find 0.5.0 in changelog for more details")
+GS_COMMAND = ("gs moban v0.6.1 " +
+              "Find 0.6.1 in changelog for more details")
 NO_GS_MESSAGE = ("Automatic github release is disabled. " +
                  "Please install gease to enable it.")
 UPLOAD_FAILED_MSG = (

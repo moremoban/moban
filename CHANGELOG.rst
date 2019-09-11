@@ -1,7 +1,16 @@
 Change log
 ================================================================================
 
-0.6.0 - tba
+0.6.1 - 10.09.2019
+--------------------------------------------------------------------------------
+
+Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#328 <https://github.com/moremoban/moban/issues/328>`_: update backward
+   compatibility
+
+0.6.0 - 10.09.2019
 --------------------------------------------------------------------------------
 
 Added
@@ -9,10 +18,13 @@ Added
 
 #. `#205 <https://github.com/moremoban/moban/issues/205>`_: support
    `pyFilesystem2 <https://pyfilesystem2.readthedocs.io/>`_
-#. `#185 <https://github.com/moremoban/moban/issues/185>`_: -d will enable moban
-   application logging for development
+#. `#185 <https://github.com/moremoban/moban/issues/185>`_: -v will enable moban
+   application logging for development. And -V is for version.
+#. `#325 <https://github.com/moremoban/moban/issues/325>`_: -vv show debug trace
 #. `#126 <https://github.com/moremoban/moban/issues/126>`_: Allow mobanfile to
    include data from arbitrary config files
+#. `#256 <https://github.com/moremoban/moban/issues/256>`_: jinja2-cli parity:
+   '-D hello=world' to define custom variable on cli
 
 Updated
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
