@@ -24,7 +24,7 @@ Added
 #. `#126 <https://github.com/moremoban/moban/issues/126>`_: Allow mobanfile to
    include data from arbitrary config files
 #. `#256 <https://github.com/moremoban/moban/issues/256>`_: jinja2-cli parity:
-   '-D hello=world' to define custom variable on cli
+   '-d hello=world' to define custom variable on cli
 
 Updated
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
