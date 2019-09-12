@@ -233,6 +233,10 @@ class TestTutorial(Docs):
                     + "so as to trigger ContentForwardEngine, 'copy' engine.\n"
                 ),
             ),
+            (
+                "output_is_copied.same_file_extension",
+                "it is implicit copy as well",
+            ),
         ]
         self.run_moban(["moban"], folder, assertions)
 
