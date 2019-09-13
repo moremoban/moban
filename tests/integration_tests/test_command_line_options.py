@@ -3,6 +3,7 @@ import sys
 from shutil import copyfile
 
 from mock import patch
+from nose import SkipTest
 from nose.tools import eq_, raises, assert_raises
 from moban.definitions import TemplateTarget
 
@@ -493,6 +494,8 @@ def test_pypi_pkg_example(_):
 
 
 def test_add_extension():
+    if sys.version_info[0] == 2:
+        raise SkipTest("jinja2-python-version does not support python 2")
     test_args = [
         "moban",
         "-t",
