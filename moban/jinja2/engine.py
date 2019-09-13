@@ -2,6 +2,7 @@ import re
 import logging
 from importlib import import_module
 
+import fs.errors
 from moban import constants, file_system
 from jinja2 import Template, Environment
 from lml.loader import scan_plugins_regex
@@ -87,7 +88,6 @@ class Engine(object):
                     # because it is modified here
                     env_params["extensions"] += extensions
                     import_module_of_extension(extensions)
-
             env_params.update(options)
         self.jj2_environment = Environment(**env_params)
         for filter_name, filter_function in FILTERS.get_all():
@@ -117,10 +117,13 @@ class Engine(object):
         """
         try:
             template = self.jj2_environment.get_template(template_file)
+            return template
         except TemplateNotFound:
-            content = file_system.read_unicode(template_file)
-            return Template(content)
-        return template
+            try:
+                content = file_system.read_unicode(template_file)
+                return self.jj2_environment.from_string(content)
+            except fs.errors.ResourceNotFound:
+                return self.jj2_environment.from_string(template_file)
 
     def get_template_from_string(self, string):
         return Template(string)

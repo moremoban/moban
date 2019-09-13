@@ -38,16 +38,15 @@ def main():
     """
     parser = create_parser()
     options = vars(parser.parse_args())
-    HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
-    options[constants.CLI_DICT] = handle_custom_variables(
-        options.pop(constants.LABEL_DEFINE)
-    )
-    handle_custom_extensions(options.pop(constants.LABEL_EXTENSION))
-    OPTIONS.update(options)
     handle_verbose(options[constants.LABEL_VERBOSE])
-
-    moban_file = options[constants.LABEL_MOBANFILE]
     load_engine_factory_and_engines()  # Error: jinja2 if removed
+    HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
+    handle_custom_variables(options.pop(constants.LABEL_DEFINE))
+    options[constants.EXTENSION_DICT] = handle_custom_extensions(
+        options.pop(constants.LABEL_EXTENSION)
+    )
+    OPTIONS.update(options)
+    moban_file = options[constants.LABEL_MOBANFILE]
     if moban_file is None:
         moban_file = find_default_moban_file()
     if moban_file:
@@ -279,7 +278,6 @@ def handle_custom_extensions(list_of_definitions):
         for definition in list_of_definitions:
             key, value = definition.split("=")
             user_extensions[key].add(value)
-
     core.ENGINES.register_extensions(user_extensions)
 
 
