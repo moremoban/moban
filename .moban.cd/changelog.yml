@@ -5,6 +5,7 @@ releases:
       - action: Added
         details:
           - "`#322`: Implicit targets with template extensions default to copy"
+          - "`#257`: '-e' to load extensions for template engines, i.e. jinja2"
     date: tbd
     version: 0.6.2
   - changes:

@@ -9,6 +9,8 @@ Added
 
 #. `#322 <https://github.com/moremoban/moban/issues/322>`_: Implicit targets
    with template extensions default to copy
+#. `#257 <https://github.com/moremoban/moban/issues/257>`_: '-e' to load
+   extensions for template engines, i.e. jinja2
 
 0.6.1 - 10.09.2019
 --------------------------------------------------------------------------------
