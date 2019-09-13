@@ -1,4 +1,8 @@
+import logging
+
 from moban import constants
+
+LOG = logging.getLogger(__name__)
 
 
 class TemplateTarget(object):
@@ -16,6 +20,7 @@ class TemplateTarget(object):
         self.output = self.original_output
 
         self.set_template_type(template_type)
+        LOG.info("create a target {}".format(self))
 
     def set_template_type(self, new_template_type):
         self.template_type = new_template_type
