@@ -42,7 +42,8 @@ def main():
     load_engine_factory_and_engines()  # Error: jinja2 if removed
     HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
     options[constants.CLI_DICT] = handle_custom_variables(
-        options.pop(constants.LABEL_DEFINE))
+        options.pop(constants.LABEL_DEFINE)
+    )
     options[constants.EXTENSION_DICT] = handle_custom_extensions(
         options.pop(constants.LABEL_EXTENSION)
     )
