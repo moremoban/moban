@@ -42,7 +42,7 @@ def main():
     options[constants.CLI_DICT] = handle_custom_variables(
         options.pop(constants.LABEL_DEFINE)
     )
-    handle_custom_variables(options.pop(constants.LABEL_EXTENSION))
+    handle_custom_extensions(options.pop(constants.LABEL_EXTENSION))
     OPTIONS.update(options)
     handle_verbose(options[constants.LABEL_VERBOSE])
 
@@ -278,9 +278,9 @@ def handle_custom_extensions(list_of_definitions):
     if list_of_definitions:
         for definition in list_of_definitions:
             key, value = definition.split("=")
-            user_extensions[key].append(value)
+            user_extensions[key].add(value)
 
-    core.ENGINES.register_options(user_extensions)
+    core.ENGINES.register_extensions(user_extensions)
 
 
 def handle_verbose(verbose_level):

@@ -23,6 +23,11 @@ class MobanFactory(PluginManager):
 
     def register_extensions(self, extensions):
         for template_type in extensions.keys():
+            log.debug(
+                "Registering extensions: {0}={1}".format(
+                    template_type, extensions[template_type]
+                )
+            )
             if template_type in self.extensions:
                 self.extensions[template_type] = self.extensions[
                     template_type
