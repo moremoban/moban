@@ -510,12 +510,12 @@ def test_add_extension():
             "{{ python_version }}",
             "-e",
             "jj2=jinja2_python_version.PythonVersionExtension",
-        ]
+        ],
     ]
     for test_args in test_commands:
         with patch.object(sys, "argv", test_args):
             from moban.main import main
-        
+
             main()
             with open("moban.output") as f:
                 content = f.read()

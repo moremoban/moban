@@ -12,7 +12,7 @@ from jinja2.exceptions import TemplateNotFound
 from jinja2_fsloader import FSLoader
 
 JINJA2_LIBRARIES = "^moban_jinja2_.+$"
-JINJA2_EXENSIONS = [
+JINJA2_EXTENSIONS = [
     "moban.jinja2.filters.repr",
     "moban.jinja2.filters.github",
     "moban.jinja2.filters.text",
@@ -146,7 +146,7 @@ class Engine(object):
 
 
 def load_jinja2_extensions():
-    scan_plugins_regex(JINJA2_LIBRARIES, "moban", None, JINJA2_EXENSIONS)
+    scan_plugins_regex(JINJA2_LIBRARIES, "moban", None, JINJA2_EXTENSIONS)
 
 
 def is_extension_list_valid(extensions):
