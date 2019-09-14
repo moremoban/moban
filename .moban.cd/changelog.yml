@@ -4,6 +4,14 @@ releases:
   - changes:
       - action: Added
         details:
+          - "`#322`: Implicit targets with template extensions default to copy"
+          - "`#257`: '-e' to load extensions for template engines, i.e. jinja2"
+          - "`#333`: command line template fails with version 0.6.1"
+    date: 15.09.2019
+    version: 0.6.2
+  - changes:
+      - action: Fixed
+        details:
           - "`#328`: update backward compatibility"
     date: 10.09.2019
     version: 0.6.1
@@ -14,7 +22,7 @@ releases:
           - "`#185`: -v will enable moban application logging for development. And -V is for version."
           - "`#325`: -vv show debug trace"
           - "`#126`: Allow mobanfile to include data from arbitrary config files"
-          - "`#256`: jinja2-cli parity: '-D hello=world' to define custom variable on cli"
+          - "`#256`: jinja2-cli parity: '-d hello=world' to define custom variable on cli"
       - action: Updated
         details:
           - "`#275`: fix moban 0.4.5 test failures on openSUSE Tumbleweed"

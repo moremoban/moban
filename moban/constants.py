@@ -37,7 +37,9 @@ LABEL_FORCE = "force"
 LABEL_VERSION = "version"
 LABEL_GROUP = "group"
 LABEL_DEFINE = "define"
+LABEL_EXTENSION = "extension"
 CLI_DICT = "user_dict"
+EXTENSION_DICT = "user_extensions"
 
 DEFAULT_CONFIGURATION_DIRNAME = ".%s.cd" % PROGRAM_NAME
 DEFAULT_TEMPLATE_DIRNAME = ".%s.td" % PROGRAM_NAME

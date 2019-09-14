@@ -1,5 +1,5 @@
 ================================================================================
-moban - 模板 Yet another jinja2 cli command for static text generation
+moban - 模板 Any template, any data in any location
 ================================================================================
 
 .. image:: https://api.travis-ci.org/moremoban/moban.svg?branch=master
@@ -17,26 +17,25 @@ moban - 模板 Yet another jinja2 cli command for static text generation
 .. image:: https://img.shields.io/gitter/room/gitterHQ/gitter.svg
    :target: https://gitter.im/chfw_moban/Lobby
 
-:Author: C.W.
+:Author: C.W. and its contributors (See contributors.rst)
 :Issues: http://github.com/moremoban/moban/issues
 :License: MIT
 :Version: |version|
 :Generated: |today|
 
 
-**moban** brings the high performance template engine (JINJA2) for web into
-static text generation. It is used in `pyexcel` and `coala` project to keep
-documentation consistent across the documentations of individual libraries.
+**moban** started with bringing the high performance template engine (JINJA2) for web
+into static text generation. It has been used in `pyexcel` and `coala` project to keep
+documentation consistent across the documentations of individual libraries in the same
+organisation.
 
-Our vision is: any template, any data in any location. Our current architecture
-enables moban to plugin any python template engine: mako, handlebars, velocity,
-haml, slim and tornado, to plugin any data format: json and yaml, and in
-any location: zip, git, pypi package, s3, etc. Please
-look at our issues. We have many more template engines and data format on the
+**moban** can use other python template engine: mako, handlebars, velocity,
+haml, slim and tornado, can read other data format: json and yaml, and can access both
+template file and configuration file in
+any location: zip, git, pypi package, s3, etc.
+
+Please look at our issues. We have many more template engines and data format on the
 road map.
-
-Documentation
-=================================================================================
 
 All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
 
@@ -104,12 +103,10 @@ Please note that data.yml will take precedence over environment variables.
 Work with files in a git repo
 ================================================================================
 
-Please install `gitfs2 <https://github.com/moremoban/gitfs2>`_::
-
-    $ pip install gitfs2
+`gitfs2 <https://github.com/moremoban/gitfs2>`_ is installed by default since v0.6.1
 
 
-And then you can do the following:
+You can do the following with moban:
 
 .. code-block:: bash
 
@@ -127,12 +124,9 @@ And then you can do the following:
 Work with files in a python package
 ================================================================================
 
-Please install `pypifs <https://github.com/moremoban/pypifs>`_::
+`pypifs <https://github.com/moremoban/pypifs>`_ is installed by default since v0.6.1
 
-    $ pip install pypifs
-
-
-And then you can do the following:
+You can do the following with moban:
 
 .. code-block:: bash
 
@@ -155,6 +149,9 @@ Work with S3 and other cloud based file systems
 Please install `fs-s3fs <https://github.com/PyFilesystem/s3fs>`_::
 
     $ pip install fs-s3fs
+
+
+Then you can access your files in s3 bucket:
 
 .. code-block:: bash
 

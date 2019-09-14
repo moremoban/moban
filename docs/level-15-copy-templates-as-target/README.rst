@@ -23,7 +23,7 @@ Shorthand syntax::
 
     targets:
        - explicit: template_file.copy
-
+       - output_is_copied.same_file_extension: when_source_have.same_file_extension
 
 No implicit nor short hand syntax for the following directory copying unless
 you take a look at `force-template-type`. When you read
@@ -64,6 +64,7 @@ Here is example moban file for copying::
       - output: target_without_template_type
         template: file_extension_will_trigger.copy
       - target_in_short_form: as_long_as_this_one_has.copy
+      - output_is_copied.same_file_extension: when_source_have.same_file_extension
       - output: "misc-1-copying/can-create-folder/if-not-exists.txt"
         template: file-in-template-sources-folder.txt
         template_type: copy

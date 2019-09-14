@@ -34,12 +34,12 @@ command to launch it:
 
 
 New development
-================================================================================
+--------------------------------------------------------------------------------
 
 Since verison 0.6.0, `overrides` syntax support two more use cases:
 
 1 override more than one configuration file
----------------------------------------------
+*********************************************
 
 For example::
 
@@ -48,7 +48,7 @@ For example::
       - config-file-b.yaml
 
 2 override more than one configuration file
----------------------------------------------
+********************************************
 
 For example::
 

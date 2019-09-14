@@ -1,15 +1,10 @@
-requires:
-  - type: git
-    url: https://github.com/moremoban/pypi-mobans
-    submodule: true
-    branch: dev
 configuration:
   template_dir:
-    - "pypi-mobans:templates"
+    - "git://github.com/moremoban/pypi-mobans.git?submodule=true&brach=dev!/templates"
     - ".moban.d"
   configuration: moban.yml
 targets:
-  - setup.py: setup.py
+  - setup.py: moban_setup.py.jj2
   - moban/__init__.py: __init__.py.jj2
   - moban/_version.py: _version.py.jj2
   - docs/conf.py: custom_conf.py.jj2

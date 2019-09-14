@@ -1,10 +1,23 @@
 Change log
 ================================================================================
 
-0.6.1 - 10.09.2019
+0.6.2 - 15.09.2019
 --------------------------------------------------------------------------------
 
 Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. `#322 <https://github.com/moremoban/moban/issues/322>`_: Implicit targets
+   with template extensions default to copy
+#. `#257 <https://github.com/moremoban/moban/issues/257>`_: '-e' to load
+   extensions for template engines, i.e. jinja2
+#. `#333 <https://github.com/moremoban/moban/issues/333>`_: command line
+   template fails with version 0.6.1
+
+0.6.1 - 10.09.2019
+--------------------------------------------------------------------------------
+
+Fixed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. `#328 <https://github.com/moremoban/moban/issues/328>`_: update backward
@@ -24,7 +37,7 @@ Added
 #. `#126 <https://github.com/moremoban/moban/issues/126>`_: Allow mobanfile to
    include data from arbitrary config files
 #. `#256 <https://github.com/moremoban/moban/issues/256>`_: jinja2-cli parity:
-   '-D hello=world' to define custom variable on cli
+   '-d hello=world' to define custom variable on cli
 
 Updated
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
