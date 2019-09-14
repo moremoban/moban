@@ -1,6 +1,7 @@
 import os
 import sys
 import logging
+from collections import defaultdict
 
 from moban import utils, reporter, constants, exceptions, file_system
 from fs.errors import ResourceNotFound
@@ -18,11 +19,24 @@ PY3_ABOVE = sys.version_info[0] > 2
 class MobanFactory(PluginManager):
     def __init__(self):
         super(MobanFactory, self).__init__(constants.TEMPLATE_ENGINE_EXTENSION)
-        self.extensions = {}
+        self.extensions = defaultdict(set)
         self.options_registry = {}
 
     def register_extensions(self, extensions):
-        self.extensions.update(extensions)
+        for user_template_type in extensions.keys():
+            template_type = self.get_primary_key(user_template_type)
+
+            log.debug(
+                "Registering extensions: {0}={1}".format(
+                    user_template_type, extensions[user_template_type]
+                )
+            )
+            if template_type in self.extensions:
+                self.extensions[template_type] = self.extensions[
+                    user_template_type
+                ].union(extensions[user_template_type])
+            else:
+                self.extensions[template_type] = extensions[user_template_type]
 
     def register_options(self, template_types):
         # need the value of 'template_types'
@@ -34,6 +48,7 @@ class MobanFactory(PluginManager):
         template_dirs = utils.verify_the_existence_of_directories(
             template_dirs
         )
+
         if template_type in self.options_registry:
             custom_engine_spec = self.options_registry[template_type]
             engine_cls = self.load_me_now(
@@ -43,7 +58,10 @@ class MobanFactory(PluginManager):
         else:
             engine_cls = self.load_me_now(template_type)
             engine_extensions = self.extensions.get(template_type)
-            options = dict(extensions=engine_extensions)
+            if engine_extensions:
+                options = dict(extensions=list(engine_extensions))
+            else:
+                options = dict()
         template_fs = file_system.get_multi_fs(template_dirs)
         engine = engine_cls(template_fs, options)
         return MobanEngine(template_fs, context_dirs, engine)

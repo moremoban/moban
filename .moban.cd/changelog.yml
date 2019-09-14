@@ -5,7 +5,9 @@ releases:
       - action: Added
         details:
           - "`#322`: Implicit targets with template extensions default to copy"
-    date: tbd
+          - "`#257`: '-e' to load extensions for template engines, i.e. jinja2"
+          - "`#333`: command line template fails with version 0.6.1"
+    date: 15.09.2019
     version: 0.6.2
   - changes:
       - action: Fixed

@@ -3,6 +3,7 @@ import sys
 from shutil import copyfile
 
 from mock import patch
+from nose import SkipTest
 from nose.tools import eq_, raises, assert_raises
 from moban.definitions import TemplateTarget
 
@@ -107,15 +108,6 @@ class TestOptions:
     def tearDown(self):
         self.patcher1.stop()
         os.unlink(self.config_file)
-
-
-@raises(Exception)
-def test_missing_configuration():
-    test_args = ["moban", "-t", "a.jj2"]
-    with patch.object(sys, "argv", test_args):
-        from moban.main import main
-
-        main()
 
 
 class TestNoOptions:
@@ -476,7 +468,7 @@ def test_git_repo_example(_):
         main()
         with open("test_git_repo_example.py") as f:
             content = f.read()
-            eq_(content, '__version__ = "0.1.1rc3"\n__author__ = "C.W."')
+            eq_(content, '__version__ = "0.1.1rc3"\n__author__ = "C.W."\n')
         os.unlink("test_git_repo_example.py")
 
 
@@ -497,5 +489,38 @@ def test_pypi_pkg_example(_):
         main()
         with open("test_pypi_pkg_example.py") as f:
             content = f.read()
-            eq_(content, '__version__ = "0.1.1rc3"\n__author__ = "C.W."')
+            eq_(content, '__version__ = "0.1.1rc3"\n__author__ = "C.W."\n')
         os.unlink("test_pypi_pkg_example.py")
+
+
+def test_add_extension():
+    if sys.version_info[0] == 2:
+        raise SkipTest("jinja2-python-version does not support python 2")
+    test_commands = [
+        [
+            "moban",
+            "-t",
+            "{{ python_version }}",
+            "-e",
+            "jinja2=jinja2_python_version.PythonVersionExtension",
+        ],
+        [
+            "moban",
+            "-t",
+            "{{ python_version }}",
+            "-e",
+            "jj2=jinja2_python_version.PythonVersionExtension",
+        ],
+    ]
+    for test_args in test_commands:
+        with patch.object(sys, "argv", test_args):
+            from moban.main import main
+
+            main()
+            with open("moban.output") as f:
+                content = f.read()
+                eq_(
+                    content,
+                    "{}.{}".format(sys.version_info[0], sys.version_info[1]),
+                )
+            os.unlink("moban.output")
