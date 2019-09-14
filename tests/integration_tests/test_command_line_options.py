@@ -496,21 +496,31 @@ def test_pypi_pkg_example(_):
 def test_add_extension():
     if sys.version_info[0] == 2:
         raise SkipTest("jinja2-python-version does not support python 2")
-    test_args = [
-        "moban",
-        "-t",
-        "{{ python_version }}",
-        "-e",
-        "jinja2=jinja2_python_version.PythonVersionExtension",
+    test_commands = [
+        [
+            "moban",
+            "-t",
+            "{{ python_version }}",
+            "-e",
+            "jinja2=jinja2_python_version.PythonVersionExtension",
+        ],
+        [
+            "moban",
+            "-t",
+            "{{ python_version }}",
+            "-e",
+            "jj2=jinja2_python_version.PythonVersionExtension",
+        ]
     ]
-    with patch.object(sys, "argv", test_args):
-        from moban.main import main
-
-        main()
-        with open("moban.output") as f:
-            content = f.read()
-            eq_(
-                content,
-                "{}.{}".format(sys.version_info[0], sys.version_info[1]),
-            )
-        os.unlink("moban.output")
+    for test_args in test_commands:
+        with patch.object(sys, "argv", test_args):
+            from moban.main import main
+        
+            main()
+            with open("moban.output") as f:
+                content = f.read()
+                eq_(
+                    content,
+                    "{}.{}".format(sys.version_info[0], sys.version_info[1]),
+                )
+            os.unlink("moban.output")

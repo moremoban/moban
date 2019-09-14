@@ -34,7 +34,7 @@ class MobanFactory(PluginManager):
             if template_type in self.extensions:
                 self.extensions[template_type] = self.extensions[
                     user_template_type
-                ].union(extensions[template_type])
+                ].union(extensions[user_template_type])
             else:
                 self.extensions[template_type] = extensions[user_template_type]
 
