@@ -230,7 +230,17 @@ def handle_command_line(options):
     )
     if options[constants.LABEL_TEMPLATE] is None:
         if options[constants.POSITIONAL_LABEL_TEMPLATE] is None:
-            raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
+            content = None
+            if not sys.stdin.isatty():
+                content = sys.stdin.read().strip()
+            if content:
+                engine.render_string_to_file(
+                    content,
+                    options[constants.LABEL_CONFIG],
+                    options[constants.LABEL_OUTPUT],
+                )
+            else:
+                raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
         else:
             engine.render_string_to_file(
                 options[constants.POSITIONAL_LABEL_TEMPLATE],
