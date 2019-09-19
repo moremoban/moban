@@ -71,6 +71,13 @@ Quick start
     $ cat moban.output 
     world
 
+Or
+
+.. code-block:: bash
+
+    $ export HELLO="world"
+    $ echo "{{HELLO}}" | moban
+
 Or simply
 
 .. code-block:: bash
