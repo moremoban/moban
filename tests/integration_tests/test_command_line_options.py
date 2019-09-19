@@ -1,12 +1,16 @@
 import os
 import sys
-from io import StringIO
 from shutil import copyfile
 
 from mock import patch
 from nose import SkipTest
 from nose.tools import eq_, raises, assert_raises
 from moban.definitions import TemplateTarget
+
+try:
+    from io import StringIO
+except ImportError:
+    from StringIO import StringIO
 
 
 class TestCustomOptions:
