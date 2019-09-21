@@ -527,18 +527,3 @@ def test_add_extension():
                     "{}.{}".format(sys.version_info[0], sys.version_info[1]),
                 )
             os.unlink("moban.output")
-
-
-def test_stdin_input():
-    if sys.version_info[0] == 2:
-        raise SkipTest("windows test fails with this pipe test")
-    test_args = ["moban", "-d", "hello=world"]
-    with patch.object(sys, "stdin", StringIO("{{hello}}")):
-        with patch.object(sys, "argv", test_args):
-            from moban.main import main
-
-            main()
-            with open("moban.output") as f:
-                content = f.read()
-                eq_(content, "world")
-            os.unlink("moban.output")
