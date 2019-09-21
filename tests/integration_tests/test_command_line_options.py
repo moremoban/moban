@@ -8,9 +8,9 @@ from nose.tools import eq_, raises, assert_raises
 from moban.definitions import TemplateTarget
 
 try:
-    from io import StringIO
-except ImportError:
     from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 
 class TestCustomOptions:
