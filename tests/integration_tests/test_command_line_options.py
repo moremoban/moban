@@ -499,8 +499,6 @@ def test_pypi_pkg_example(_):
 
 
 def test_add_extension():
-    if sys.version_info[0] == 2:
-        raise SkipTest("jinja2-python-version does not support python 2")
     test_commands = [
         [
             "moban",
