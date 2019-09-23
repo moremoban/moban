@@ -231,7 +231,7 @@ def handle_command_line(options):
     if options[constants.LABEL_TEMPLATE] is None:
         content = options[constants.POSITIONAL_LABEL_TEMPLATE]
         if content is None:
-            if not sys.stdin.isatty():
+            if not sys.stdin.isatty() and sys.platform != 'win32':
                 content = sys.stdin.read().strip()
         if content is None:
             raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
