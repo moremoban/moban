@@ -5,7 +5,7 @@ releases:
       - action: Added
         details:
           - "`#260`: jinja-cli parity: support command line pipe stream."
-    date: tbd
+    date: 25.09.2019
     version: 0.6.3
   - changes:
       - action: Added
