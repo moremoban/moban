@@ -2,7 +2,7 @@ import os
 import sys
 from shutil import copyfile
 
-from mock import patch
+from mock import MagicMock, patch
 from nose import SkipTest
 from nose.tools import eq_, raises, assert_raises
 from moban.definitions import TemplateTarget
@@ -59,10 +59,12 @@ class TestCustomOptions:
     @raises(SystemExit)
     def test_missing_template(self):
         test_args = ["moban", "-c", self.config_file]
-        with patch.object(sys, "argv", test_args):
-            from moban.main import main
+        fake_stdin = MagicMock(isatty=MagicMock(return_value=True))
+        with patch.object(sys, "stdin", fake_stdin):
+            with patch.object(sys, "argv", test_args):
+                from moban.main import main
 
-            main()
+                main()
 
     def tearDown(self):
         self.patcher1.stop()
