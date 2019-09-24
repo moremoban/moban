@@ -532,7 +532,7 @@ def test_add_extension():
 
 
 def test_stdin_input():
-    if sys.version_info[0] == 2:
+    if sys.platform == "win32":
         raise SkipTest("windows test fails with this pipe test 2")
     test_args = ["moban", "-d", "hello=world"]
     with patch.object(sys, "stdin", StringIO("{{hello}}")):
