@@ -107,10 +107,12 @@ class TestOptions:
     @raises(SystemExit)
     def test_no_argments(self):
         test_args = ["moban"]
-        with patch.object(sys, "argv", test_args):
-            from moban.main import main
+        fake_stdin = MagicMock(isatty=MagicMock(return_value=True))
+        with patch.object(sys, "stdin", fake_stdin):
+            with patch.object(sys, "argv", test_args):
+                from moban.main import main
 
-            main()
+                main()
 
     def tearDown(self):
         self.patcher1.stop()
