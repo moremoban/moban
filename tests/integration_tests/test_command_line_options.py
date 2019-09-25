@@ -2,10 +2,15 @@ import os
 import sys
 from shutil import copyfile
 
-from mock import patch
+from mock import MagicMock, patch
 from nose import SkipTest
 from nose.tools import eq_, raises, assert_raises
 from moban.definitions import TemplateTarget
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 
 class TestCustomOptions:
@@ -54,10 +59,12 @@ class TestCustomOptions:
     @raises(SystemExit)
     def test_missing_template(self):
         test_args = ["moban", "-c", self.config_file]
-        with patch.object(sys, "argv", test_args):
-            from moban.main import main
+        fake_stdin = MagicMock(isatty=MagicMock(return_value=True))
+        with patch.object(sys, "stdin", fake_stdin):
+            with patch.object(sys, "argv", test_args):
+                from moban.main import main
 
-            main()
+                main()
 
     def tearDown(self):
         self.patcher1.stop()
@@ -100,10 +107,12 @@ class TestOptions:
     @raises(SystemExit)
     def test_no_argments(self):
         test_args = ["moban"]
-        with patch.object(sys, "argv", test_args):
-            from moban.main import main
+        fake_stdin = MagicMock(isatty=MagicMock(return_value=True))
+        with patch.object(sys, "stdin", fake_stdin):
+            with patch.object(sys, "argv", test_args):
+                from moban.main import main
 
-            main()
+                main()
 
     def tearDown(self):
         self.patcher1.stop()
@@ -523,4 +532,19 @@ def test_add_extension():
                     content,
                     "{}.{}".format(sys.version_info[0], sys.version_info[1]),
                 )
+            os.unlink("moban.output")
+
+
+def test_stdin_input():
+    if sys.platform == "win32":
+        raise SkipTest("windows test fails with this pipe test 2")
+    test_args = ["moban", "-d", "hello=world"]
+    with patch.object(sys, "stdin", StringIO("{{hello}}")):
+        with patch.object(sys, "argv", test_args):
+            from moban.main import main
+
+            main()
+            with open("moban.output") as f:
+                content = f.read()
+                eq_(content, "world")
             os.unlink("moban.output")

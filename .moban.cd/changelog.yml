@@ -4,6 +4,12 @@ releases:
   - changes:
       - action: Added
         details:
+          - "`#260`: jinja-cli parity: support command line pipe stream."
+    date: 25.09.2019
+    version: 0.6.3
+  - changes:
+      - action: Added
+        details:
           - "`#322`: Implicit targets with template extensions default to copy"
           - "`#257`: '-e' to load extensions for template engines, i.e. jinja2"
           - "`#333`: command line template fails with version 0.6.1"
