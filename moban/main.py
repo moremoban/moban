@@ -229,14 +229,18 @@ def handle_command_line(options):
         options[constants.LABEL_CONFIG_DIR],
     )
     if options[constants.LABEL_TEMPLATE] is None:
-        if options[constants.POSITIONAL_LABEL_TEMPLATE] is None:
+        content = options[constants.POSITIONAL_LABEL_TEMPLATE]
+        if content is None:
+            if not sys.stdin.isatty() and sys.platform != "win32":
+                content = sys.stdin.read().strip()
+        if content is None:
             raise exceptions.NoTemplate(constants.ERROR_NO_TEMPLATE)
-        else:
-            engine.render_string_to_file(
-                options[constants.POSITIONAL_LABEL_TEMPLATE],
-                options[constants.LABEL_CONFIG],
-                options[constants.LABEL_OUTPUT],
-            )
+
+        engine.render_string_to_file(
+            content,
+            options[constants.LABEL_CONFIG],
+            options[constants.LABEL_OUTPUT],
+        )
     else:
         engine.render_to_file(
             options[constants.LABEL_TEMPLATE],

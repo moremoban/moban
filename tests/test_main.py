@@ -3,7 +3,7 @@ import sys
 from shutil import copyfile
 
 import moban.exceptions as exceptions
-from mock import patch
+from mock import MagicMock, patch
 from nose.tools import eq_, raises, assert_raises
 
 
@@ -86,10 +86,12 @@ class TestException:
     ):
         fake_file.return_value = True
         fake_moban_file.side_effect = exceptions.DirectoryNotFound
-        from moban.main import main
+        fake_stdin = MagicMock(isatty=MagicMock(return_value=True))
+        with patch.object(sys, "stdin", fake_stdin):
+            with patch.object(sys, "argv", ["moban"]):
+                from moban.main import main
 
-        with patch.object(sys, "argv", ["moban"]):
-            main()
+                main()
 
     @raises(SystemExit)
     @patch("os.path.exists")
@@ -100,10 +102,12 @@ class TestException:
     ):
         fake_file.return_value = True
         fake_moban_file.side_effect = exceptions.NoThirdPartyEngine
-        from moban.main import main
+        fake_stdin = MagicMock(isatty=MagicMock(return_value=True))
+        with patch.object(sys, "stdin", fake_stdin):
+            from moban.main import main
 
-        with patch.object(sys, "argv", ["moban"]):
-            main()
+            with patch.object(sys, "argv", ["moban"]):
+                main()
 
     @raises(SystemExit)
     @patch("os.path.exists")
@@ -114,10 +118,12 @@ class TestException:
     ):
         fake_file.return_value = True
         fake_moban_file.side_effect = exceptions.DirectoryNotFound
-        from moban.__main__ import main
+        fake_stdin = MagicMock(isatty=MagicMock(return_value=True))
+        with patch.object(sys, "stdin", fake_stdin):
+            from moban.__main__ import main
 
-        with patch.object(sys, "argv", ["moban"]):
-            main()
+            with patch.object(sys, "argv", ["moban"]):
+                main()
 
 
 class TestExitCodes:
