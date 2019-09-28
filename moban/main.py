@@ -89,18 +89,7 @@ def create_parser():
         prog=constants.PROGRAM_NAME, description=constants.PROGRAM_DESCRIPTION
     )
     parser.add_argument(
-        "-cd",
-        "--%s" % constants.LABEL_CONFIG_DIR,
-        help="the directory for configuration file lookup",
-    )
-    parser.add_argument(
         "-c", "--%s" % constants.LABEL_CONFIG, help="the dictionary file"
-    )
-    parser.add_argument(
-        "-td",
-        "--%s" % constants.LABEL_TMPL_DIRS,
-        nargs="*",
-        help="the directories for template file lookup",
     )
     parser.add_argument(
         "-t", "--%s" % constants.LABEL_TEMPLATE, help="the template file"
@@ -109,60 +98,80 @@ def create_parser():
         "-o", "--%s" % constants.LABEL_OUTPUT, help="the output file"
     )
     parser.add_argument(
-        "--%s" % constants.LABEL_TEMPLATE_TYPE,
-        help="the template type, default is jinja2",
-    )
-    parser.add_argument(
-        "-f",
-        action="store_true",
-        dest=constants.LABEL_FORCE,
-        default=False,
-        help="force moban to template all files despite of .moban.hashes",
-    )
-    parser.add_argument(
-        "--%s" % constants.LABEL_EXIT_CODE,
-        action="store_true",
-        dest=constants.LABEL_EXIT_CODE,
-        default=False,
-        help="tell moban to change exit code",
-    )
-    parser.add_argument(
-        "-m", "--%s" % constants.LABEL_MOBANFILE, help="custom moban file"
-    )
-    parser.add_argument(
-        "-g", "--%s" % constants.LABEL_GROUP, help="a subset of targets"
-    )
-    parser.add_argument(
         constants.POSITIONAL_LABEL_TEMPLATE,
         metavar="template",
         type=str,
         nargs="?",
         help="string templates",
     )
-    parser.add_argument(
+    advanced = parser.add_argument_group(
+        "Advanced options", "For better control"
+    )
+    advanced.add_argument(
+        "-td",
+        "--%s" % constants.LABEL_TMPL_DIRS,
+        nargs="*",
+        help="add more directories for template file lookup",
+    )
+    advanced.add_argument(
+        "-cd",
+        "--%s" % constants.LABEL_CONFIG_DIR,
+        help="the directory for configuration file lookup",
+    )
+    advanced.add_argument(
+        "-m", "--%s" % constants.LABEL_MOBANFILE, help="custom moban file"
+    )
+    advanced.add_argument(
+        "-g", "--%s" % constants.LABEL_GROUP, help="a subset of targets"
+    )
+    advanced.add_argument(
+        "--%s" % constants.LABEL_TEMPLATE_TYPE.replace("_", "-"),
+        help="the template type, default is jinja2",
+    )
+    advanced.add_argument(
+        "-d",
+        "--%s" % constants.LABEL_DEFINE,
+        nargs="+",
+        help=(
+            "to supply additional or override predefined variables,"
+            + " format: VAR=VALUEs"
+        ),
+    )
+    advanced.add_argument(
+        "-e",
+        "--%s" % constants.LABEL_EXTENSION,
+        nargs="+",
+        help="to to TEMPLATE_TYPE=EXTENSION_NAME",
+    )
+    advanced.add_argument(
+        "-f",
+        action="store_true",
+        dest=constants.LABEL_FORCE,
+        default=False,
+        help="force moban to template all files despite of .moban.hashes",
+    )
+    developer = parser.add_argument_group(
+        "Developer options", "For debugging and development"
+    )
+    developer.add_argument(
+        "--%s" % constants.LABEL_EXIT_CODE,
+        action="store_true",
+        dest=constants.LABEL_EXIT_CODE,
+        default=False,
+        help="tell moban to change exit code",
+    )
+    developer.add_argument(
         "-V",
         "--%s" % constants.LABEL_VERSION,
         action="version",
         version="%(prog)s {v}".format(v=__version__),
     )
-    parser.add_argument(
+    developer.add_argument(
         "-v",
         action="count",
         dest=constants.LABEL_VERBOSE,
         default=0,
-        help="show verbose",
-    )
-    parser.add_argument(
-        "-d",
-        "--%s" % constants.LABEL_DEFINE,
-        nargs="+",
-        help="to take a list of VAR=VALUEs",
-    )
-    parser.add_argument(
-        "-e",
-        "--%s" % constants.LABEL_EXTENSION,
-        nargs="+",
-        help="to add an extension to TEMPLATE_TYPE=EXTENSION_NAME",
+        help="show verbose, try -v, -vv",
     )
     return parser
 
