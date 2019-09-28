@@ -5,8 +5,8 @@ releases:
       - action: Updated
         details:
           - "Command options have been grouped. --template_type became --template-type"
-    date: 25.09.2019
-    version: 0.6.3
+    date: tbd
+    version: 0.6.4
   - changes:
       - action: Added
         details:
