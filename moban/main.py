@@ -89,7 +89,7 @@ def create_parser():
         prog=constants.PROGRAM_NAME, description=constants.PROGRAM_DESCRIPTION
     )
     parser.add_argument(
-        "-c", "--%s" % constants.LABEL_CONFIG, help="the dictionary file"
+        "-c", "--%s" % constants.LABEL_CONFIG, help="the data file"
     )
     parser.add_argument(
         "-t", "--%s" % constants.LABEL_TEMPLATE, help="the template file"
