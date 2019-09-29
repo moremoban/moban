@@ -7,7 +7,7 @@ TEMPLATE_COPY = "copy"
 # Configurations
 PROGRAM_NAME = "moban"
 PROGRAM_DESCRIPTION = (
-    "Yet another jinja2 cli command for static " + "text generation"
+    "Static text generator using any template, any data and any location."
 )
 DEFAULT_YAML_SUFFIX = ".yml"
 # .moban.yml, default moban configuration file
