@@ -5,7 +5,7 @@ releases:
       - action: Updated
         details:
           - "Command options have been grouped. --template_type became --template-type"
-          - "Increment gitfs2 to version 0.0.2"
+          - "Increment gitfs2 to version 0.0.2. `gitfs#4`"
     date: 4.10.2019
     version: 0.6.4
   - changes:
