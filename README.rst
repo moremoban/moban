@@ -171,51 +171,62 @@ Then you can access your files in s3 bucket:
 Where the configuration sits in a s3 bucket, the output is a file in a zip. The content of s3data.yaml is::
 
     hello: world
-
 	
-Usage
+
+
+CLI documentation
 ================================================================================
 
 .. code-block:: bash
 
-
-    usage: moban [-h] [-cd CONFIGURATION_DIR] [-c CONFIGURATION]
-                 [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-t TEMPLATE] [-o OUTPUT]
-                 [--template_type TEMPLATE_TYPE] [-f] [--exit-code] [-m MOBANFILE]
-                 [-g GROUP] [-V] [-v] [-D DEFINE [DEFINE ...]]
+    usage: moban [-h] [-c CONFIGURATION] [-t TEMPLATE] [-o OUTPUT]
+                 [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-cd CONFIGURATION_DIR]
+                 [-m MOBANFILE] [-g GROUP] [--template-type TEMPLATE_TYPE]
+                 [-d DEFINE [DEFINE ...]] [-e EXTENSION [EXTENSION ...]] [-f]
+                 [--exit-code] [-V] [-v]
                  [template]
     
-    Yet another jinja2 cli command for static text generation
+    Static text generator using any template, any data and any location.
     
     positional arguments:
       template              string templates
     
     optional arguments:
       -h, --help            show this help message and exit
-      -cd CONFIGURATION_DIR, --configuration_dir CONFIGURATION_DIR
-                            the directory for configuration file lookup
       -c CONFIGURATION, --configuration CONFIGURATION
-                            the dictionary file
-      -td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]
-                            the directories for template file lookup
+                            the data file
       -t TEMPLATE, --template TEMPLATE
                             the template file
       -o OUTPUT, --output OUTPUT
                             the output file
-      --template_type TEMPLATE_TYPE
-                            the template type, default is jinja2
-      -f                    force moban to template all files despite of
-                            .moban.hashes
-      --exit-code           tell moban to change exit code
+    
+    Advanced options:
+      For better control
+    
+      -td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]
+                            add more directories for template file lookup
+      -cd CONFIGURATION_DIR, --configuration_dir CONFIGURATION_DIR
+                            the directory for configuration file lookup
       -m MOBANFILE, --mobanfile MOBANFILE
                             custom moban file
       -g GROUP, --group GROUP
                             a subset of targets
-      -V, --version         show program's version number and exit
-      -v                    show verbose
+      --template-type TEMPLATE_TYPE
+                            the template type, default is jinja2
       -d DEFINE [DEFINE ...], --define DEFINE [DEFINE ...]
-                            to take a list of VAR=VALUEs
+                            to supply additional or override predefined variables,
+                            format: VAR=VALUEs
+      -e EXTENSION [EXTENSION ...], --extension EXTENSION [EXTENSION ...]
+                            to to TEMPLATE_TYPE=EXTENSION_NAME
+      -f                    force moban to template all files despite of
+                            .moban.hashes
     
+    Developer options:
+      For debugging and development
+    
+      --exit-code           tell moban to change exit code
+      -V, --version         show program's version number and exit
+      -v                    show verbose, try -v, -vv
 
 Exit codes
 --------------------------------------------------------------------------------

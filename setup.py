@@ -50,7 +50,7 @@ DESCRIPTION = (
     "Yet another jinja2 cli command for static text generation"
 )
 URL = "https://github.com/moremoban/moban"
-DOWNLOAD_URL = "%s/archive/0.6.3.tar.gz" % URL
+DOWNLOAD_URL = "%s/archive/0.6.4.tar.gz" % URL
 FILES = ["README.rst", "CONTRIBUTORS.rst", "CHANGELOG.rst"]
 KEYWORDS = [
     "python",
@@ -81,7 +81,7 @@ INSTALL_REQUIRES = [
     "appdirs>=1.4.3",
     "crayons>= 0.1.0",
     "fs>=2.4.11",
-    "gitfs2>=0.0.1",
+    "gitfs2>=0.0.2",
     "pypifs>=0.0.1",
     "jinja2-fsloader>=0.2.0",
 ]
@@ -97,8 +97,8 @@ EXTRAS_REQUIRE = {
 }
 # You do not need to read beyond this line
 PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(sys.executable)
-GS_COMMAND = ("gs moban v0.6.3 " +
-              "Find 0.6.3 in changelog for more details")
+GS_COMMAND = ("gs moban v0.6.4 " +
+              "Find 0.6.4 in changelog for more details")
 NO_GS_MESSAGE = ("Automatic github release is disabled. " +
                  "Please install gease to enable it.")
 UPLOAD_FAILED_MSG = (
