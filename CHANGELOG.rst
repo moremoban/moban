@@ -8,6 +8,7 @@ Updated
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Command options have been grouped. --template_type became --template-type
+#. Increment gitfs2 to version 0.0.2
 
 0.6.3 - 25.09.2019
 --------------------------------------------------------------------------------
