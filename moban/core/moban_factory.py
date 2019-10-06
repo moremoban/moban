@@ -7,10 +7,10 @@ from moban import utils, constants, exceptions
 from fs.errors import ResourceNotFound
 from lml.plugin import PluginManager
 from moban.externals import reporter, file_system
-from moban.core.hashstore import HASH_STORE
 from moban.deprecated import deprecated_moban_path_notation
 from moban.core.context import Context
 from moban.core.strategy import Strategy
+from moban.core.hashstore import HASH_STORE
 from moban.externals.buffered_writer import BufferedWriter
 
 log = logging.getLogger(__name__)
