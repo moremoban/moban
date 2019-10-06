@@ -3,7 +3,7 @@ import logging
 
 from moban import core, constants, exceptions
 from moban.externals import reporter
-from moban.definitions import TemplateTarget
+from moban.core.definitions import TemplateTarget
 from moban.mobanfile.templates import handle_template
 
 LOG = logging.getLogger(__name__)

@@ -5,7 +5,7 @@ from shutil import copyfile
 from mock import MagicMock, patch
 from nose import SkipTest
 from nose.tools import eq_, raises, assert_raises
-from moban.definitions import TemplateTarget
+from moban.core.definitions import TemplateTarget
 
 try:
     from StringIO import StringIO

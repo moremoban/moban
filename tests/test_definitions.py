@@ -1,6 +1,6 @@
 from nose.tools import eq_
 from moban.deprecated import GitRequire
-from moban.definitions import TemplateTarget
+from moban.core.definitions import TemplateTarget
 
 
 def test_git_require_repr():
