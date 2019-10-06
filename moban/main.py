@@ -17,7 +17,7 @@ from collections import defaultdict
 from moban import core, constants, mobanfile, exceptions
 from moban._version import __version__
 from moban.externals import reporter, file_system
-from moban.hashstore import HASH_STORE
+from moban.core.hashstore import HASH_STORE
 from moban.program_options import OPTIONS
 from moban.core.data_loader import merge, load_data
 

@@ -7,7 +7,7 @@ from moban import utils, constants, exceptions
 from fs.errors import ResourceNotFound
 from lml.plugin import PluginManager
 from moban.externals import reporter, file_system
-from moban.hashstore import HASH_STORE
+from moban.core.hashstore import HASH_STORE
 from moban.deprecated import deprecated_moban_path_notation
 from moban.core.context import Context
 from moban.core.strategy import Strategy
