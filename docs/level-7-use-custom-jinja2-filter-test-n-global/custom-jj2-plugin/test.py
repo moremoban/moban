@@ -1,4 +1,4 @@
-from moban.jinja2.extensions import JinjaTest
+from moban.plugins.jinja2.extensions import JinjaTest
 
 
 @JinjaTest()

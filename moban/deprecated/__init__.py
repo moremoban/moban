@@ -1,8 +1,8 @@
 import sys
 from functools import wraps
 
-from moban.core import plugins
 from moban import constants
+from moban.core import plugins
 from moban.externals import reporter, file_system
 from moban.deprecated import repo
 from moban.deprecated.repo import git_clone

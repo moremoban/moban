@@ -2,10 +2,10 @@ from moban import constants
 from lml.loader import scan_plugins_regex
 
 BUILTIN_EXENSIONS = [
-    "moban.jinja2.engine",
-    "moban.data_loaders.yaml",
-    "moban.data_loaders.json_loader",
-    "moban.copy",
+    "moban.plugins.jinja2.engine",
+    "moban.plugins.yaml_loader",
+    "moban.plugins.json_loader",
+    "moban.plugins.copy",
 ]
 
 
