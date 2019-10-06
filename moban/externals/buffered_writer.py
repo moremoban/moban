@@ -3,7 +3,7 @@ import sys
 
 import fs
 import fs.path
-from moban import utils
+from moban.core import utils
 from moban.externals import file_system
 
 PY2 = sys.version_info[0] == 2

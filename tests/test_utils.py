@@ -2,7 +2,7 @@ import os
 from shutil import rmtree
 
 from mock import patch
-from moban.utils import mkdir_p
+from moban.core.utils import mkdir_p
 
 
 def test_mkdir_p():

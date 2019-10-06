@@ -3,9 +3,10 @@ import sys
 import logging
 from collections import defaultdict
 
-from moban import utils, constants, exceptions
+from moban import constants, exceptions
 from fs.errors import ResourceNotFound
 from lml.plugin import PluginManager
+from moban.core import utils
 from moban.externals import reporter, file_system
 from moban.deprecated import deprecated_moban_path_notation
 from moban.core.context import Context

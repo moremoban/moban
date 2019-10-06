@@ -19,7 +19,7 @@ class TestCustomOptions:
         with open(self.config_file, "w") as f:
             f.write("hello: world")
         self.patcher1 = patch(
-            "moban.utils.verify_the_existence_of_directories"
+            "moban.core.utils.verify_the_existence_of_directories"
         )
         self.patcher1.start()
 
@@ -77,7 +77,7 @@ class TestOptions:
         with open(self.config_file, "w") as f:
             f.write("hello: world")
         self.patcher1 = patch(
-            "moban.utils.verify_the_existence_of_directories"
+            "moban.core.utils.verify_the_existence_of_directories"
         )
         self.patcher1.start()
 
@@ -130,7 +130,7 @@ class TestNoOptions:
         with open(self.data_file, "w") as f:
             f.write("hello: world")
         self.patcher1 = patch(
-            "moban.utils.verify_the_existence_of_directories"
+            "moban.core.utils.verify_the_existence_of_directories"
         )
         self.patcher1.start()
 
@@ -221,7 +221,7 @@ class TestNoOptions2:
         with open(self.data_file, "w") as f:
             f.write("hello: world")
         self.patcher1 = patch(
-            "moban.utils.verify_the_existence_of_directories"
+            "moban.core.utils.verify_the_existence_of_directories"
         )
         self.patcher1.start()
 
@@ -259,7 +259,7 @@ class TestCustomMobanFile:
         with open(self.data_file, "w") as f:
             f.write("hello: world")
         self.patcher1 = patch(
-            "moban.utils.verify_the_existence_of_directories"
+            "moban.core.utils.verify_the_existence_of_directories"
         )
         self.patcher1.start()
 
@@ -294,7 +294,7 @@ class TestTemplateOption:
             os.path.join("tests", "fixtures", ".moban.yml"), self.config_file
         )
         self.patcher1 = patch(
-            "moban.utils.verify_the_existence_of_directories"
+            "moban.core.utils.verify_the_existence_of_directories"
         )
         self.patcher1.start()
 
@@ -325,7 +325,7 @@ class TestTemplateOption:
         os.unlink(self.config_file)
 
 
-@patch("moban.utils.verify_the_existence_of_directories")
+@patch("moban.core.utils.verify_the_existence_of_directories")
 def test_duplicated_targets_in_moban_file(fake_verify):
     config_file = "duplicated.moban.yml"
     copyfile(os.path.join("tests", "fixtures", config_file), ".moban.yml")
@@ -388,7 +388,10 @@ class TestComplexOptions:
         with open(self.data_file, "w") as f:
             f.write("hello: world")
 
-    @patch("moban.utils.verify_the_existence_of_directories", return_value=".")
+    @patch(
+        "moban.core.utils.verify_the_existence_of_directories",
+        return_value=".",
+    )
     def test_single_command(self, _):
         test_args = ["moban"]
         with patch.object(sys, "argv", test_args):
@@ -460,7 +463,7 @@ def test_debug_option(fake_config):
             )
 
 
-@patch("moban.utils.verify_the_existence_of_directories", return_value=[])
+@patch("moban.core.utils.verify_the_existence_of_directories", return_value=[])
 def test_git_repo_example(_):
     test_args = [
         "moban",
@@ -481,7 +484,7 @@ def test_git_repo_example(_):
         os.unlink("test_git_repo_example.py")
 
 
-@patch("moban.utils.verify_the_existence_of_directories", return_value=[])
+@patch("moban.core.utils.verify_the_existence_of_directories", return_value=[])
 def test_pypi_pkg_example(_):
     test_args = [
         "moban",
