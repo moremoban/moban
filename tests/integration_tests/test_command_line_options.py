@@ -23,7 +23,7 @@ class TestCustomOptions:
         )
         self.patcher1.start()
 
-    @patch("moban.file_system.abspath")
+    @patch("moban.externals.file_system.abspath")
     @patch("moban.core.moban_factory.MobanEngine.render_to_file")
     def test_custom_options(self, fake_template_doer, fake_abspath):
         test_args = [

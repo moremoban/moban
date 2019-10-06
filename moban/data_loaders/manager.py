@@ -2,8 +2,9 @@ from collections import OrderedDict
 
 import moban.data_loaders.yaml  # noqa: F401
 import moban.data_loaders.json_loader  # noqa: F401
-from moban import constants, file_system
+from moban import constants
 from lml.plugin import PluginManager
+from moban.externals import file_system
 
 
 class AnyDataLoader(PluginManager):

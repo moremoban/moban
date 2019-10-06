@@ -2,7 +2,8 @@ import os
 import errno
 import logging
 
-from moban import constants, exceptions, file_system
+from moban import constants, exceptions
+from moban.externals import file_system
 
 LOG = logging.getLogger(__name__)
 

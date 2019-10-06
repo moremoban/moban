@@ -3,8 +3,8 @@ import sys
 import stat
 
 from nose import SkipTest
-from moban import file_system
 from nose.tools import eq_, raises
+from moban.externals import file_system
 from moban.exceptions import FileNotFound
 
 LOCAL_FOLDER = "tests/fixtures"

@@ -1,8 +1,9 @@
 import sys
 import subprocess
 
-from moban import reporter, constants, exceptions, file_system
+from moban import constants, exceptions
 from moban.utils import mkdir_p
+from moban.externals import reporter, file_system
 
 
 def git_clone(requires):

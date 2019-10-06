@@ -2,7 +2,7 @@ import os
 import sys
 
 from nose import SkipTest
-from moban import file_system
+from moban.externals import file_system
 from moban.hashstore import HashStore
 
 

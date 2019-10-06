@@ -1,6 +1,7 @@
 import logging
 
-from moban import reporter, constants, file_system
+from moban import constants
+from moban.externals import reporter, file_system
 
 LOG = logging.getLogger(__name__)
 

@@ -80,7 +80,7 @@ class TestException:
     @raises(SystemExit)
     @patch("os.path.exists")
     @patch("moban.main.handle_moban_file")
-    @patch("moban.reporter.report_error_message")
+    @patch("moban.externals.reporter.report_error_message")
     def test_directory_not_found(
         self, fake_reporter, fake_moban_file, fake_file
     ):
@@ -96,7 +96,7 @@ class TestException:
     @raises(SystemExit)
     @patch("os.path.exists")
     @patch("moban.main.handle_moban_file")
-    @patch("moban.reporter.report_error_message")
+    @patch("moban.externals.reporter.report_error_message")
     def test_no_third_party_engine(
         self, fake_reporter, fake_moban_file, fake_file
     ):
@@ -112,7 +112,7 @@ class TestException:
     @raises(SystemExit)
     @patch("os.path.exists")
     @patch("moban.main.handle_moban_file")
-    @patch("moban.reporter.report_error_message")
+    @patch("moban.externals.reporter.report_error_message")
     def test_double_underscore_main(
         self, fake_reporter, fake_moban_file, fake_file
     ):
@@ -176,7 +176,7 @@ class TestExitCodes:
 
 class TestFinder:
     def setUp(self):
-        self.patcher = patch("moban.file_system.exists")
+        self.patcher = patch("moban.externals.file_system.exists")
         self.fake_file_existence = self.patcher.start()
         self.fake_file_existence.__name__ = "fake"
         self.fake_file_existence.__module__ = "fake"
