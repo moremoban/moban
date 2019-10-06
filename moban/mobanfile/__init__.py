@@ -15,7 +15,7 @@ from moban.mobanfile.targets import (
     extract_group_targets,
 )
 from moban.core.moban_factory import expand_template_directories
-from moban.data_loaders.manager import merge
+from moban.core.data_loader import merge
 
 LOG = logging.getLogger(__name__)
 

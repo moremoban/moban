@@ -19,7 +19,7 @@ from moban._version import __version__
 from moban.externals import reporter, file_system
 from moban.hashstore import HASH_STORE
 from moban.program_options import OPTIONS
-from moban.data_loaders.manager import merge, load_data
+from moban.core.data_loader import merge, load_data
 
 LOG = logging.getLogger()
 LOG_LEVEL = [logging.WARNING, logging.INFO, logging.DEBUG]
