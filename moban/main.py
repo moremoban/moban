@@ -14,7 +14,7 @@ import argparse
 import logging.config
 from collections import defaultdict
 
-from moban import core, plugins, constants, mobanfile, exceptions
+from moban import core, constants, mobanfile, exceptions
 from moban._version import __version__
 from moban.externals import reporter, file_system
 from moban.hashstore import HASH_STORE
@@ -267,7 +267,7 @@ def find_default_moban_file():
 
 
 def load_engine_factory_and_engines():
-    plugins.make_sure_all_pkg_are_loaded()
+    core.plugins.make_sure_all_pkg_are_loaded()
 
 
 def handle_custom_variables(list_of_definitions):
