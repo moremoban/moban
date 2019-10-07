@@ -14,19 +14,12 @@ import argparse
 import logging.config
 from collections import defaultdict
 
-from moban import (
-    core,
-    plugins,
-    reporter,
-    constants,
-    mobanfile,
-    exceptions,
-    file_system,
-)
+from moban import core, constants, mobanfile, exceptions
 from moban._version import __version__
-from moban.hashstore import HASH_STORE
+from moban.externals import reporter, file_system
+from moban.core.hashstore import HASH_STORE
 from moban.program_options import OPTIONS
-from moban.data_loaders.manager import merge, load_data
+from moban.core.data_loader import merge, load_data
 
 LOG = logging.getLogger()
 LOG_LEVEL = [logging.WARNING, logging.INFO, logging.DEBUG]
@@ -274,7 +267,7 @@ def find_default_moban_file():
 
 
 def load_engine_factory_and_engines():
-    plugins.make_sure_all_pkg_are_loaded()
+    core.plugins.make_sure_all_pkg_are_loaded()
 
 
 def handle_custom_variables(list_of_definitions):

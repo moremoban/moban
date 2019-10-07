@@ -3,20 +3,21 @@ import logging
 from importlib import import_module
 
 import fs.errors
-from moban import constants, file_system
+from moban import constants
 from jinja2 import Template, Environment
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
+from moban.externals import file_system
 from jinja2.exceptions import TemplateNotFound
 
 from jinja2_fsloader import FSLoader
 
 JINJA2_LIBRARIES = "^moban_jinja2_.+$"
 JINJA2_EXTENSIONS = [
-    "moban.jinja2.filters.repr",
-    "moban.jinja2.filters.github",
-    "moban.jinja2.filters.text",
-    "moban.jinja2.tests.files",
+    "moban.plugins.jinja2.filters.repr",
+    "moban.plugins.jinja2.filters.github",
+    "moban.plugins.jinja2.filters.text",
+    "moban.plugins.jinja2.tests.files",
 ]
 JINJA2_THIRD_PARTY_EXTENSIONS = ["jinja2.ext.do", "jinja2.ext.loopcontrols"]
 LOG = logging.getLogger(__name__)

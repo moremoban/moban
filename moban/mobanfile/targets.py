@@ -1,8 +1,9 @@
 import uuid
 import logging
 
-from moban import core, reporter, constants, exceptions
-from moban.definitions import TemplateTarget
+from moban import core, constants, exceptions
+from moban.externals import reporter
+from moban.core.definitions import TemplateTarget
 from moban.mobanfile.templates import handle_template
 
 LOG = logging.getLogger(__name__)

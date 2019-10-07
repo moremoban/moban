@@ -1,7 +1,7 @@
 import fs.path
 from mock import patch
 from nose.tools import eq_
-from moban.definitions import TemplateTarget
+from moban.core.definitions import TemplateTarget
 
 
 @patch("moban.core.moban_factory.MobanEngine.render_to_files")

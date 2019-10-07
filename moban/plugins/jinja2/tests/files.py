@@ -1,7 +1,7 @@
 import sys
 from os.path import isabs, isdir, exists, isfile, islink, ismount, lexists
 
-from moban.jinja2.extensions import jinja_tests
+from moban.plugins.jinja2.extensions import jinja_tests
 
 if sys.platform == "win32":
     from moban.jinja2.tests.win32 import samefile

@@ -48,6 +48,14 @@ Developer Guide
 
 .. include:: ../CHANGELOG.rst
 
+Migration Notes
+================================================================================
+
+.. toctree::
+
+   migration-note
+
+   
 Indices and tables
 ==================
 

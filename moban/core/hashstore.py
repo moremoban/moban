@@ -2,7 +2,8 @@ import sys
 import json
 import hashlib
 
-from moban import constants, file_system
+from moban import constants
+from moban.externals import file_system
 
 PY2 = sys.version_info[0] == 2
 

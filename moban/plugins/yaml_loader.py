@@ -1,7 +1,7 @@
 from moban import constants
 from lml.plugin import PluginInfo
 from ruamel.yaml import YAML
-from moban.file_system import open_file
+from moban.externals.file_system import open_file
 
 
 @PluginInfo(constants.DATA_LOADER_EXTENSION, tags=["yaml", "yml"])

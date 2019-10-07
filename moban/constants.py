@@ -1,4 +1,4 @@
-from moban import file_system
+from moban.externals import file_system
 
 # Template type
 TEMPLATE_JINJA2 = "jinja2"

@@ -4,17 +4,18 @@ import sys
 import logging
 from collections import OrderedDict
 
-from moban import core, reporter, constants
+from moban import core, constants
 from lml.utils import do_import
-from moban.utils import verify_the_existence_of_directories
+from moban.externals import reporter
+from moban.core.utils import verify_the_existence_of_directories
 from moban.deprecated import handle_copy, handle_requires
+from moban.core.data_loader import merge
 from moban.mobanfile.targets import (
     parse_targets,
     extract_target,
     extract_group_targets,
 )
 from moban.core.moban_factory import expand_template_directories
-from moban.data_loaders.manager import merge
 
 LOG = logging.getLogger(__name__)
 
