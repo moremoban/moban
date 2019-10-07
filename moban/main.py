@@ -14,7 +14,8 @@ import argparse
 import logging.config
 from collections import defaultdict
 
-from moban import core, constants, mobanfile, exceptions
+from moban import core, constants, exceptions
+from moban.core import mobanfile
 from moban._version import __version__
 from moban.externals import reporter, file_system
 from moban.core.hashstore import HASH_STORE
