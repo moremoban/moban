@@ -3,7 +3,6 @@ import subprocess
 
 from moban import constants, exceptions
 from moban.externals import reporter, file_system
-from moban.core.utils import mkdir_p
 
 
 def git_clone(requires):
@@ -16,7 +15,7 @@ def git_clone(requires):
         make_sure_git_is_available()
 
     moban_home = get_moban_home()
-    mkdir_p(moban_home)
+    file_system.mkdir_p(moban_home)
 
     for require in requires:
         repo_name = get_repo_name(require.git_url)

@@ -1,6 +1,7 @@
 import os
 import sys
 import stat
+import errno
 import logging
 from contextlib import contextmanager
 
@@ -260,3 +261,13 @@ def get_multi_fs(directories):
     for directory in directories:
         filesystem.add_fs(directory, fs.open_fs(directory))
     return filesystem
+
+
+def mkdir_p(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
