@@ -1,7 +1,8 @@
 from collections import OrderedDict
 
-from moban import constants
 from lml.plugin import PluginManager
+
+from moban import constants
 from moban.externals import file_system
 
 

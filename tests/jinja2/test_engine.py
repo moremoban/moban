@@ -1,7 +1,8 @@
 import os
 
-from moban import file_system
 from nose.tools import eq_
+
+from moban import file_system
 from moban.jinja2.engine import Engine
 
 

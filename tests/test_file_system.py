@@ -6,6 +6,7 @@ from shutil import rmtree
 from mock import patch
 from nose import SkipTest
 from nose.tools import eq_, raises
+
 from moban.externals import file_system
 from moban.exceptions import FileNotFound
 

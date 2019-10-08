@@ -1,5 +1,6 @@
-from moban import constants
 from lml.plugin import PluginInfo
+
+from moban import constants
 from moban.externals import file_system
 
 

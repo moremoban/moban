@@ -1,4 +1,5 @@
 import crayons
+
 import moban.constants as constants
 
 MESSAGE_TEMPLATING = "Templating {0} to {1}"

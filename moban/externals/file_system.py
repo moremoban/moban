@@ -7,8 +7,9 @@ from contextlib import contextmanager
 
 import fs
 import fs.path
-from moban import exceptions
 from fs.multifs import MultiFS
+
+from moban import exceptions
 
 try:
     from urllib.parse import urlparse
