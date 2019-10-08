@@ -3,14 +3,14 @@ import logging
 from importlib import import_module
 
 import fs.errors
-from moban import constants
 from jinja2 import Template, Environment
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
-from moban.externals import file_system
+from jinja2_fsloader import FSLoader
 from jinja2.exceptions import TemplateNotFound
 
-from jinja2_fsloader import FSLoader
+from moban import constants
+from moban.externals import file_system
 
 JINJA2_LIBRARIES = "^moban_jinja2_.+$"
 JINJA2_EXTENSIONS = [

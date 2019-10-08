@@ -4,8 +4,8 @@ import filecmp
 
 import fs.path
 from mock import patch
-from moban.main import main
 
+from moban.main import main
 from .utils import Docs
 
 

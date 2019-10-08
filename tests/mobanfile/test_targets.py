@@ -2,6 +2,7 @@ import uuid
 
 import fs.path
 from nose.tools import eq_, raises
+
 from moban.exceptions import GroupTargetNotFound
 from moban.core.mobanfile import targets
 from moban.core.definitions import TemplateTarget

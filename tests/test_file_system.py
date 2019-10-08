@@ -1,9 +1,12 @@
 import os
 import sys
 import stat
+from shutil import rmtree
 
+from mock import patch
 from nose import SkipTest
 from nose.tools import eq_, raises
+
 from moban.externals import file_system
 from moban.exceptions import FileNotFound
 
@@ -243,3 +246,21 @@ def test_file_permission_copy_symlink():
     os.unlink(test_source)
     os.unlink(test_dest)
     os.unlink(test_symlink)
+
+
+def test_mkdir_p():
+    test_path = "a/b/c/d"
+    file_system.mkdir_p(test_path)
+    assert os.path.exists(test_path)
+    rmtree(test_path)
+
+
+@patch("subprocess.check_call")
+def test_pip_install(fake_check_all):
+    import sys
+    from moban.deprecated import pip_install
+
+    pip_install(["package1", "package2"])
+    fake_check_all.assert_called_with(
+        [sys.executable, "-m", "pip", "install", "package1 package2"]
+    )

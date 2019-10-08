@@ -2,6 +2,7 @@ import os
 
 import fs.path
 from nose.tools import eq_
+
 from moban.externals import file_system
 from moban.plugins.copy import ContentForwardEngine
 

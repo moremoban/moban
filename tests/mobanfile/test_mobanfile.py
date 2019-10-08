@@ -1,6 +1,7 @@
 import fs.path
 from mock import patch
 from nose.tools import eq_
+
 from moban.core.definitions import TemplateTarget
 
 

@@ -1,6 +1,7 @@
 import os
 
 from nose.tools import eq_
+
 from moban.data_loaders.manager import load_data
 
 

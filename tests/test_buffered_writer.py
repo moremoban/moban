@@ -2,6 +2,7 @@ import os
 import tempfile
 
 from nose.tools import eq_
+
 from moban.externals import file_system
 from moban.externals.buffered_writer import BufferedWriter, write_file_out
 
