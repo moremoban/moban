@@ -6,7 +6,7 @@ from moban.core.definitions import TemplateTarget
 
 @patch("moban.core.moban_factory.MobanEngine.render_to_files")
 def test_handle_targets(fake_renderer):
-    from moban.mobanfile import handle_targets
+    from moban.core.mobanfile import handle_targets
 
     TEMPLATE = "copier-test01.csv"
     OUTPUT = "output.csv"
@@ -39,7 +39,7 @@ def test_handle_targets(fake_renderer):
 
 @patch("moban.core.moban_factory.MobanEngine.render_to_files")
 def test_handle_targets_sequence(fake_renderer):
-    from moban.mobanfile import handle_targets
+    from moban.core.mobanfile import handle_targets
 
     TEMPLATE1 = "a.template.jj2"
     OUTPUT1 = "filterme.handlebars"  # in the future, this could dynamic output
