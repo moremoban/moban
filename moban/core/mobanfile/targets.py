@@ -4,7 +4,8 @@ import logging
 from moban import core, constants, exceptions
 from moban.externals import reporter
 from moban.core.definitions import TemplateTarget
-from moban.core.mobanfile.templates import handle_template
+from .store import STORE
+from .templates import handle_template
 
 LOG = logging.getLogger(__name__)
 
@@ -50,7 +51,7 @@ def parse_targets(options, targets):
     for target in targets:
         if constants.LABEL_OUTPUT in target:
             for template_target in _handle_explicit_target(options, target):
-                yield template_target
+                STORE.add(template_target)
         else:
             for output, template_file in target.items():
                 if isinstance(template_file, str) is False:
@@ -60,12 +61,12 @@ def parse_targets(options, targets):
                     for template_target in _handle_group_target(
                         options, a_list_short_hand_targets, group_template_type
                     ):
-                        yield template_target
+                        STORE.add(template_target)
                 else:
                     for template_target in _handle_implicit_target(
                         options, template_file, output
                     ):
-                        yield template_target
+                        STORE.add(template_target)
 
 
 def _handle_explicit_target(options, target):
