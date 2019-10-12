@@ -315,9 +315,7 @@ class TestTutorial(Docs):
         expected = "a world\n"
 
         folder = "level-22-intermediate-targets"
-        self.run_moban(
-            ["moban"], folder, [("final", expected)]
-        )
+        self.run_moban(["moban"], folder, [("final", expected)])
 
     def test_misc_1(self):
         expected = "test file\n"
