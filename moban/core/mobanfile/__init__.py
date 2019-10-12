@@ -17,6 +17,7 @@ from moban.core.mobanfile.targets import (
     extract_target,
     extract_group_targets,
 )
+from .store import STORE
 
 LOG = logging.getLogger(__name__)
 
@@ -89,7 +90,8 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
 def handle_targets(merged_options, targets):
     LOG.info("handling targets")
-    list_of_templating_parameters = parse_targets(merged_options, targets)
+    parse_targets(merged_options, targets)
+    list_of_templating_parameters = STORE.targets
     jobs_for_each_engine = OrderedDict()
 
     for target in list_of_templating_parameters:
