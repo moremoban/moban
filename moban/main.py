@@ -33,6 +33,7 @@ def main():
     handle_verbose(options[constants.LABEL_VERBOSE])
     load_engine_factory_and_engines()  # Error: jinja2 if removed
     hashstore.HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
+    mobanfile.store.STORE.init()
     options[constants.CLI_DICT] = handle_custom_variables(
         options.pop(constants.LABEL_DEFINE)
     )
