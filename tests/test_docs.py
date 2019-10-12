@@ -311,6 +311,14 @@ class TestTutorial(Docs):
         # make sure only copy target is executed
         eq_(False, os.path.exists("a.output"))
 
+    def test_level_22_intermediate_targets(self):
+        expected = "a world\n"
+
+        folder = "level-22-intermediate-targets"
+        self.run_moban(
+            ["moban"], folder, [("final", expected)]
+        )
+
     def test_misc_1(self):
         expected = "test file\n"
 
