@@ -4,6 +4,12 @@ releases:
   - changes:
       - action: Updated
         details:
+          - "`#335`: support intermediate targets in moban file"
+    date: tbd
+    version: 0.6.5
+  - changes:
+      - action: Updated
+        details:
           - "Command options have been grouped. --template_type became --template-type"
           - "Increment gitfs2 to version 0.0.2. `gitfs#4`"
     date: 4.10.2019
