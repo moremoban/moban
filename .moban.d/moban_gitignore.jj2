@@ -27,4 +27,5 @@ docs/level-19-moban-a-sub-group-in-targets/test-dir/
 docs/level-19-moban-a-sub-group-in-targets/test-recursive-dir/
 docs/level-6-complex-configuration/a.output
 docs/level-7-use-custom-jinja2-filter-test-n-global/filter.output
+docs/level-8-pass-a-folder-full-of-templates/templated-folder
 {% endblock %}

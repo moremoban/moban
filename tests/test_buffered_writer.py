@@ -1,9 +1,10 @@
 import os
 import tempfile
 
-from moban import file_system
 from nose.tools import eq_
-from moban.buffered_writer import BufferedWriter, write_file_out
+
+from moban.externals import file_system
+from moban.externals.buffered_writer import BufferedWriter, write_file_out
 
 CONTENT = b"""
     helloworld

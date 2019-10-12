@@ -1,0 +1,3 @@
+targets:
+  - intermediate.jj2: original.jj2
+  - final: intermediate.jj2

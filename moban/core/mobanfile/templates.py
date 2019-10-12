@@ -1,6 +1,8 @@
 import logging
 
-from moban import reporter, constants, file_system
+from moban import constants
+from moban.externals import reporter, file_system
+from .store import STORE
 
 LOG = logging.getLogger(__name__)
 
@@ -19,29 +21,24 @@ def handle_template(template_file, output, template_dirs):
             ):
                 yield a_triple
         else:
-            reporter.report_error_message(
-                "{0} cannot be found".format(template_file)
-            )
+            if STORE.look_up_by_output.get(template_file) is None:
+                reporter.report_error_message(
+                    "{0} cannot be found".format(template_file)
+                )
     else:
         _, fs = multi_fs.which(template_file)
         if fs is None:
-            reporter.report_error_message(
-                "{0} cannot be found".format(template_file)
-            )
+            if STORE.look_up_by_output.get(template_file) is None:
+                reporter.report_error_message(
+                    "{0} cannot be found".format(template_file)
+                )
+            else:
+                yield _create_a_single_target(template_file, output)
         elif fs.isdir(template_file):
             for a_triple in _list_dir_files(fs, template_file, output):
                 yield a_triple
         else:
-            template_type = _get_template_type(template_file)
-            # output.jj2: source.jj2 means 'copy'
-            if template_type and output.endswith("." + template_type):
-                LOG.info(
-                    "template type switched to from {0} to {1}".format(
-                        template_type, constants.TEMPLATE_COPY
-                    )
-                )
-                template_type = constants.TEMPLATE_COPY
-            yield (template_file, output, template_type)
+            yield _create_a_single_target(template_file, output)
 
 
 def _list_dir_files(fs, source, dest):
@@ -69,6 +66,19 @@ def _listing_directory_files_recusively(fs, source, dest):
                 fs, src_file_under_dir, dest_file_under_dir
             ):
                 yield a_triple
+
+
+def _create_a_single_target(template_file, output):
+    template_type = _get_template_type(template_file)
+    # output.jj2: source.jj2 means 'copy'
+    if template_type and output.endswith("." + template_type):
+        LOG.info(
+            "template type switched to from {0} to {1}".format(
+                template_type, constants.TEMPLATE_COPY
+            )
+        )
+        template_type = constants.TEMPLATE_COPY
+    return (template_file, output, template_type)
 
 
 def _get_template_type(template_file):

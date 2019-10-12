@@ -3,10 +3,11 @@ import sys
 from textwrap import dedent
 
 from mock import patch
-from moban import file_system
-from moban.main import main
 from nose.tools import eq_
 from fs.opener.parse import parse_fs_url
+
+from moban.main import main
+from moban.externals import file_system
 
 
 def verify_content(file_name, expected):

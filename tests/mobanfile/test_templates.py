@@ -1,7 +1,8 @@
 import fs.path
 from mock import patch
 from nose.tools import eq_
-from moban.mobanfile.templates import handle_template
+
+from moban.core.mobanfile.templates import handle_template
 
 
 class TestHandleTemplateFunction:
@@ -15,7 +16,7 @@ class TestHandleTemplateFunction:
         expected = [("copier-test01.csv", "/tmp/test", "csv")]
         eq_(expected, results)
 
-    @patch("moban.reporter.report_error_message")
+    @patch("moban.externals.reporter.report_error_message")
     def test_file_not_found(self, reporter):
         list(
             handle_template(
@@ -64,7 +65,7 @@ class TestHandleTemplateFunction:
             sorted(expected, key=lambda x: x[0]),
         )
 
-    @patch("moban.reporter.report_error_message")
+    @patch("moban.externals.reporter.report_error_message")
     def test_listing_dir_recusively_with_error(self, reporter):
         test_dir = "/tmp/copy-a-directory"
         list(

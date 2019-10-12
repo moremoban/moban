@@ -3,7 +3,8 @@ import sys
 
 import fs
 import fs.path
-from moban import utils, file_system
+
+from moban.externals import file_system
 
 PY2 = sys.version_info[0] == 2
 
@@ -43,6 +44,6 @@ def write_file_out(filename, content):
     if not file_system.is_zip_alike_url(filename):
         dest_folder = os.path.dirname(filename)
         if dest_folder:
-            utils.mkdir_p(dest_folder)
+            file_system.mkdir_p(dest_folder)
 
     file_system.write_bytes(filename, content)

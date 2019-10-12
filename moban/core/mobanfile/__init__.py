@@ -4,17 +4,20 @@ import sys
 import logging
 from collections import OrderedDict
 
-from moban import core, reporter, constants
 from lml.utils import do_import
-from moban.utils import verify_the_existence_of_directories
+
+from moban import core, constants
+from moban.externals import reporter
+from moban.core.utils import verify_the_existence_of_directories
 from moban.deprecated import handle_copy, handle_requires
-from moban.mobanfile.targets import (
+from moban.core.data_loader import merge
+from moban.core.moban_factory import expand_template_directories
+from moban.core.mobanfile.targets import (
     parse_targets,
     extract_target,
     extract_group_targets,
 )
-from moban.core.moban_factory import expand_template_directories
-from moban.data_loaders.manager import merge
+from .store import STORE
 
 LOG = logging.getLogger(__name__)
 
@@ -87,7 +90,8 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
 
 def handle_targets(merged_options, targets):
     LOG.info("handling targets")
-    list_of_templating_parameters = parse_targets(merged_options, targets)
+    parse_targets(merged_options, targets)
+    list_of_templating_parameters = STORE.targets
     jobs_for_each_engine = OrderedDict()
 
     for target in list_of_templating_parameters:

@@ -3,14 +3,17 @@ import sys
 import logging
 from collections import defaultdict
 
-from moban import utils, reporter, constants, exceptions, file_system
 from fs.errors import ResourceNotFound
 from lml.plugin import PluginManager
-from moban.hashstore import HASH_STORE
+
+from moban import constants, exceptions
+from moban.core import utils
+from moban.externals import reporter, file_system
 from moban.deprecated import deprecated_moban_path_notation
 from moban.core.context import Context
 from moban.core.strategy import Strategy
-from moban.buffered_writer import BufferedWriter
+from moban.core.hashstore import HASH_STORE
+from moban.externals.buffered_writer import BufferedWriter
 
 log = logging.getLogger(__name__)
 PY3_ABOVE = sys.version_info[0] > 2

@@ -1,8 +1,9 @@
 import sys
 
-import moban.reporter as reporter
 from mock import patch
 from nose.tools import eq_
+
+from moban.externals import reporter
 
 PY2 = sys.version_info[0] == 2
 if PY2:

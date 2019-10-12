@@ -1,9 +1,10 @@
 import os
 
 import fs.path
-from moban import file_system
-from moban.copy import ContentForwardEngine
 from nose.tools import eq_
+
+from moban.externals import file_system
+from moban.plugins.copy import ContentForwardEngine
 
 
 class TestContentForwardEngine:

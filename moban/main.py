@@ -14,19 +14,11 @@ import argparse
 import logging.config
 from collections import defaultdict
 
-from moban import (
-    core,
-    plugins,
-    reporter,
-    constants,
-    mobanfile,
-    exceptions,
-    file_system,
-)
+from moban import constants, exceptions
+from moban.core import ENGINES, plugins, hashstore, mobanfile, data_loader
 from moban._version import __version__
-from moban.hashstore import HASH_STORE
+from moban.externals import reporter, file_system
 from moban.program_options import OPTIONS
-from moban.data_loaders.manager import merge, load_data
 
 LOG = logging.getLogger()
 LOG_LEVEL = [logging.WARNING, logging.INFO, logging.DEBUG]
@@ -40,7 +32,7 @@ def main():
     options = vars(parser.parse_args())
     handle_verbose(options[constants.LABEL_VERBOSE])
     load_engine_factory_and_engines()  # Error: jinja2 if removed
-    HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
+    hashstore.HASH_STORE.IGNORE_CACHE_FILE = options[constants.LABEL_FORCE]
     options[constants.CLI_DICT] = handle_custom_variables(
         options.pop(constants.LABEL_DEFINE)
     )
@@ -180,7 +172,7 @@ def handle_moban_file(moban_file, options):
     """
     act upon default moban file
     """
-    moban_file_configurations = load_data(None, moban_file)
+    moban_file_configurations = data_loader.load_data(None, moban_file)
     if moban_file_configurations is None:
         raise exceptions.MobanfileGrammarException(
             constants.ERROR_INVALID_MOBAN_FILE % moban_file
@@ -202,7 +194,7 @@ def handle_moban_file(moban_file, options):
         raise exceptions.MobanfileGrammarException(
             constants.MESSAGE_FILE_VERSION_NOT_SUPPORTED % version
         )
-    HASH_STORE.save_hashes()
+    hashstore.HASH_STORE.save_hashes()
 
 
 def check_none(data, moban_file):
@@ -231,8 +223,8 @@ def handle_command_line(options):
     """
     act upon command options
     """
-    options = merge(options, constants.DEFAULT_OPTIONS)
-    engine = core.ENGINES.get_engine(
+    options = data_loader.merge(options, constants.DEFAULT_OPTIONS)
+    engine = ENGINES.get_engine(
         options[constants.LABEL_TEMPLATE_TYPE],
         options[constants.LABEL_TMPL_DIRS],
         options[constants.LABEL_CONFIG_DIR],
@@ -257,7 +249,7 @@ def handle_command_line(options):
             options[constants.LABEL_OUTPUT],
         )
     engine.report()
-    HASH_STORE.save_hashes()
+    hashstore.HASH_STORE.save_hashes()
     exit_code = reporter.convert_to_shell_exit_code(
         engine.number_of_templated_files()
     )
@@ -293,7 +285,7 @@ def handle_custom_extensions(list_of_definitions):
         for definition in list_of_definitions:
             key, value = definition.split("=")
             user_extensions[key].add(value)
-    core.ENGINES.register_extensions(user_extensions)
+    ENGINES.register_extensions(user_extensions)
 
 
 def handle_verbose(verbose_level):
