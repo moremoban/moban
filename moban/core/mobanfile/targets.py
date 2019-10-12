@@ -48,6 +48,7 @@ def extract_group_targets(group, targets):
 
 def parse_targets(options, targets):
     LOG.info("paring targets..")
+    STORE.init()
     for target in targets:
         if constants.LABEL_OUTPUT in target:
             for template_target in _handle_explicit_target(options, target):
