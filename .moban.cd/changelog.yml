@@ -5,7 +5,7 @@ releases:
       - action: Updated
         details:
           - "`#335`: support intermediate targets in moban file"
-    date: tbd
+    date: 13.10.2019
     version: 0.6.5
   - changes:
       - action: Updated
