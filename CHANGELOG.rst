@@ -4,8 +4,7 @@ Change log
 0.6.4 - 4.10.2019
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. Command options have been grouped. --template_type became --template-type
 #. Increment gitfs2 to version 0.0.2. `gitfs#4
@@ -14,8 +13,7 @@ Updated
 0.6.3 - 25.09.2019
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#260 <https://github.com/moremoban/moban/issues/260>`_: jinja-cli parity:
    support command line pipe stream.
@@ -23,8 +21,7 @@ Added
 0.6.2 - 15.09.2019
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#322 <https://github.com/moremoban/moban/issues/322>`_: Implicit targets
    with template extensions default to copy
@@ -36,8 +33,7 @@ Added
 0.6.1 - 10.09.2019
 --------------------------------------------------------------------------------
 
-Fixed
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Fixed**
 
 #. `#328 <https://github.com/moremoban/moban/issues/328>`_: update backward
    compatibility
@@ -45,8 +41,7 @@ Fixed
 0.6.0 - 10.09.2019
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#205 <https://github.com/moremoban/moban/issues/205>`_: support
    `pyFilesystem2 <https://pyfilesystem2.readthedocs.io/>`_
@@ -58,8 +53,7 @@ Added
 #. `#256 <https://github.com/moremoban/moban/issues/256>`_: jinja2-cli parity:
    '-d hello=world' to define custom variable on cli
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#275 <https://github.com/moremoban/moban/issues/275>`_: fix moban 0.4.5 test
    failures on openSUSE Tumbleweed
@@ -67,8 +61,7 @@ Updated
 0.5.0 - 14.07.2019
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#277 <https://github.com/moremoban/moban/issues/277>`_: Restored dependency
    git-url-parse, replacing incompatible giturlparse which was used during moban
@@ -94,8 +87,7 @@ Updated
 0.4.5 - 07.07.2019
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#271 <https://github.com/moremoban/moban/issues/271>`_: support git branch
    change in later run.
@@ -103,8 +95,7 @@ Updated
 0.4.4 - 26.05.2019
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#265 <https://github.com/moremoban/moban/issues/265>`_: Use simple `read
    binary` to read instead of encoding
@@ -112,20 +103,17 @@ Updated
 0.4.3 - 16.03.2019
 --------------------------------------------------------------------------------
 
-Removed
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Removed**
 
 #. `#253 <https://github.com/moremoban/moban/issues/253>`_: symbolic link in
    regression pack causes python setup.py to do recursive include
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#209 <https://github.com/moremoban/moban/issues/209>`_: Alert moban user
    when `git` is not available and is used.
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#261 <https://github.com/moremoban/moban/issues/261>`_: since moban group
    template files per template type, this fill use first come first register to
@@ -134,16 +122,14 @@ Updated
 0.4.2 - 08.03.2019
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#234 <https://github.com/moremoban/moban/issues/234>`_: Define template
    parameters on the fly inside `targets` section
 #. `#62 <https://github.com/moremoban/moban/issues/62>`_: select a group target
    to run
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#180 <https://github.com/moremoban/moban/issues/180>`_: No longer two
    statistics will be shown in v0.4.x. legacy copy targets are injected into a
@@ -158,8 +144,7 @@ Updated
 0.4.1 - 28.02.2019
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#235 <https://github.com/moremoban/moban/issues/235>`_: user defined
    template types so that custom file extensions, template configurations can be
@@ -171,13 +156,11 @@ Added
 0.4.0 - 20.02.2019
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#165 <https://github.com/moremoban/moban/issues/165>`_: Copy as plugins
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#219 <https://github.com/moremoban/moban/issues/219>`_: git clone depth set
    to 2
@@ -187,8 +170,7 @@ Updated
 0.3.10 - 03.02.2019
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#174 <https://github.com/moremoban/moban/issues/174>`_: Store git cache in
    XDG_CACHE_DIR
@@ -197,8 +179,7 @@ Added
 #. `#164 <https://github.com/moremoban/moban/issues/164>`_: support additional
    data formats
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#178 <https://github.com/moremoban/moban/issues/178>`_: UnboundLocalError:
    local variable 'target' referenced before assignment
@@ -208,8 +189,7 @@ Updated
 0.3.9 - 18-1-2019
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#90 <https://github.com/moremoban/moban/issues/90>`_: allow adding extra
    jinja2 extensions. `jinja2.ext.do`, `jinja2.ext.loopcontrols` are included by
@@ -221,8 +201,7 @@ Updated
 0.3.8 - 12-1-2019
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#141 <https://github.com/moremoban/moban/issues/141>`_: disable file
    permissions copy feature and not to check file permission changes on windows.
@@ -235,8 +214,7 @@ Updated
 0.3.7 - 6-1-2019
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#146 <https://github.com/moremoban/moban/issues/146>`_: added a low-setup
    usage mode via environment variables to moban
@@ -247,8 +225,7 @@ Updated
 0.3.6 - 30-12-2018
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#143 <https://github.com/moremoban/moban/issues/143>`_: moban shall report
    permission error and continue the rest of the copying task.
@@ -259,8 +236,7 @@ Updated
 0.3.5 - 10-12-2018
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#37 <https://github.com/moremoban/moban/issues/37>`_: moban will report line
    number where the value is empty and the name of mobanfile. Switch from pyyaml
@@ -269,8 +245,7 @@ Updated
 0.3.4.1 - 28-11-2018
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#137 <https://github.com/moremoban/moban/issues/137>`_: missing
    contributors.rst file
@@ -278,23 +253,20 @@ Updated
 0.3.4 - 18-11-2018
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. global variables to store the target and template file names in the jinja2
    engine
 #. moban-handlebars is tested to work well with this version and above
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. Template engine interface has been clarified and documented
 
 0.3.3 - 05-11-2018
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. alternative and expanded syntax for requires, so as to accomendate github
    submodule recursive
@@ -302,8 +274,7 @@ Added
 0.3.2 - 04-11-2018
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. configuration dirs may be located by `requires`, i.e. configuration files may
    be in a python package or git repository.
@@ -311,8 +282,7 @@ Added
 0.3.1 - 02-11-2018
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#97 <https://github.com/moremoban/moban/issues/97>`_: requires will clone a
    repo if given. Note: only github, gitlab, bitbucket for now
@@ -320,21 +290,18 @@ Added
 0.3.0 - 27-18-2018
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#89 <https://github.com/moremoban/moban/issues/89>`_: Install pypi-hosted
    mobans through requires syntax
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#96 <https://github.com/moremoban/moban/issues/96>`_: Fix for
    FileNotFoundError for plugins
 #. various documentation updates
 
-Removed
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Removed**
 
 #. `#88 <https://github.com/moremoban/moban/issues/88>`_: removed python 2.6
    support
@@ -343,8 +310,7 @@ Removed
 0.2.4 - 14-07-2018
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#32 <https://github.com/moremoban/moban/issues/32>`_: option 1 copy a
    directory without its subdirectories.
@@ -354,8 +320,7 @@ Added
 0.2.3 - 10-07-2018
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#76 <https://github.com/moremoban/moban/issues/76>`_: running moban as a
    module from python command
@@ -367,14 +332,12 @@ Added
 0.2.2 - 16-06-2018
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#31 <https://github.com/moremoban/moban/issues/31>`_: create directory if
    missing during copying
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#28 <https://github.com/moremoban/moban/issues/28>`_: if a template has been
    copied once before, it is skipped in the next moban call
@@ -382,8 +345,7 @@ Updated
 0.2.1 - 13-06-2018
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. templates using the same template engine will be templated as a group
 #. update lml dependency to 0.0.3
@@ -391,8 +353,7 @@ Updated
 0.2.0 - 11-06-2018
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#18 <https://github.com/moremoban/moban/issues/18>`_: file exists test
 #. `#23 <https://github.com/moremoban/moban/issues/23>`_: custom jinja plugins
@@ -402,8 +363,7 @@ Added
 #. `#58 <https://github.com/moremoban/moban/issues/58>`_: allow template type
    per template
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#34 <https://github.com/moremoban/moban/issues/34>`_: fix plural message if
    single file is processed
@@ -411,8 +371,7 @@ Updated
 0.1.4 - 29-May-2018
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. `#21 <https://github.com/moremoban/moban/issues/21>`_: targets become
    optional
@@ -424,16 +383,14 @@ Updated
 0.1.3 - 12-Mar-2018
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. handle unicode on python 2
 
 0.1.2 - 10-Jan-2018
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#13 <https://github.com/moremoban/moban/issues/13>`_: strip off new lines in
    the templated file
@@ -441,8 +398,7 @@ Added
 0.1.1 - 08-Jan-2018
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. the ability to present a long text as multi-line paragraph with a custom
    upper limit
@@ -453,8 +409,7 @@ Added
 0.1.0 - 19-Dec-2017
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#14 <https://github.com/moremoban/moban/issues/14>`_, provide shell exit
    code
@@ -462,8 +417,7 @@ Added
 0.0.9 - 24-Nov-2017
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#11 <https://github.com/moremoban/moban/issues/11>`_, recognize .moban.yaml
    as well as .moban.yml.
@@ -472,8 +426,7 @@ Added
 #. `-m` option is added to allow you to specify a custom moban file. kinda
    related to issue 11.
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. use explicit version name: `moban_file_spec_version` so that `version` can be
    used by users. `#10 <https://github.com/moremoban/moban/issues/10>`_ Please
@@ -485,23 +438,20 @@ Updated
 0.0.8 - 18-Nov-2017
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. `#8 <https://github.com/moremoban/moban/issues/8>`_, verify the existence of
    custom template and configuration directories. default .moban.td, .moban.cd
    are ignored if they do not exist.
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. Colorize error messages and processing messages. crayons become a dependency.
 
 0.0.7 - 19-Jul-2017
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. Bring the visibility of environment variable into jinja2 templating process:
    `#7 <https://github.com/moremoban/moban/issues/7>`_
@@ -509,13 +459,11 @@ Added
 0.0.6 - 16-Jun-2017
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. added '-f' flag to force moban to template all files despite of .moban.hashes
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. moban will not template target file in the situation where the changes
    occured in target file than in the source: the template file + the data
@@ -525,8 +473,7 @@ Updated
 0.0.5 - 17-Mar-2017
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. Create a default hash store when processing a moban file. It will save
    unnecessary file write to the disc if the rendered content is not changed.
@@ -535,8 +482,7 @@ Added
 0.0.4 - 11-May-2016
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. Bug fix `#5 <https://github.com/moremoban/moban/issues/5>`_, should detect
    duplicated targets in `.moban.yml` file.
@@ -544,8 +490,7 @@ Updated
 0.0.3 - 09-May-2016
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. Bug fix `#4 <https://github.com/moremoban/moban/issues/4>`_, keep trailing
    new lines
@@ -553,8 +498,7 @@ Updated
 0.0.2 - 27-Apr-2016
 --------------------------------------------------------------------------------
 
-Updated
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Updated**
 
 #. Bug fix `#1 <https://github.com/moremoban/moban/issues/1>`_, failed to save
    utf-8 characters
@@ -562,7 +506,6 @@ Updated
 0.0.1 - 23-Mar-2016
 --------------------------------------------------------------------------------
 
-Added
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Added**
 
 #. Initial release
