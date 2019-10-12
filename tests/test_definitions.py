@@ -47,6 +47,7 @@ def test_branch_params():
 
 def test_store():
     store = Store()
-    target = TemplateTarget("template_file", "data_file", "output")
+    output = "output"
+    target = TemplateTarget("template_file", "data_file", output)
     store.add(target)
-    eq_(target, store.look_up_by_output.get("template_file"))
+    eq_(target, store.look_up_by_output.get(output))
