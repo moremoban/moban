@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 from lml.plugin import PluginManager
+from ruamel.yaml.comments import CommentedSeq
 
 from moban import constants
 from moban.externals import file_system
@@ -31,7 +32,7 @@ def load_data(base_dir, file_name):
     data = LOADER.get_data(abs_file_path)
     if data is not None:
         parent_data = OrderedDict()
-        if base_dir and constants.LABEL_OVERRIDES in data:
+        if constants.LABEL_OVERRIDES in data:
             overrides = data.pop(constants.LABEL_OVERRIDES)
             if not isinstance(overrides, list):
                 overrides = [overrides]
@@ -69,6 +70,8 @@ def merge(left, right):
                 left[key] = value
             else:
                 left[key] = merge(left[key], value)
+    elif isinstance(left, CommentedSeq) and isinstance(right, CommentedSeq):
+        left.extend(right)
     return left
 
 
