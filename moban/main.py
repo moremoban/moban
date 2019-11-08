@@ -173,7 +173,6 @@ def handle_moban_file(moban_file, options):
     act upon default moban file
     """
     moban_file_configurations = data_loader.load_data(None, moban_file)
-    print(moban_file_configurations)
     if moban_file_configurations is None:
         raise exceptions.MobanfileGrammarException(
             constants.ERROR_INVALID_MOBAN_FILE % moban_file
