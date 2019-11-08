@@ -70,8 +70,12 @@ def merge(left, right):
                 left[key] = value
             else:
                 left[key] = merge(left[key], value)
-    elif isinstance(left, CommentedSeq) and isinstance(right, CommentedSeq):
-        left.extend(right)
+    else:
+        both_list_alike = (
+            isinstance(left, CommentedSeq) and isinstance(right, CommentedSeq)
+        ) or (isinstance(left, list) and isinstance(right, list))
+        if both_list_alike:
+            left.extend(right)
     return left
 
 

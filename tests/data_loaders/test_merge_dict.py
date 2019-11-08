@@ -1,4 +1,7 @@
-from moban.data_loaders.manager import merge
+from nose.tools import eq_
+from ruamel.yaml import YAML
+
+from moban.core.data_loader import merge
 
 
 def test_simple_union():
@@ -34,3 +37,30 @@ def test_three_level_conflict():
     default = {"L1": {"L2": {"L3": "Hi"}}}
     merged = merge(user, default)
     assert merged == {"L1": {"L2": {"L3": "World"}}}
+
+
+def test_merge_value_as_list():
+    user = {"L1": ["a", "b"]}
+    default = {"L1": ["c", "d"]}
+    merged = merge(user, default)
+    assert merged == {"L1": ["a", "b", "c", "d"]}
+
+
+def test_merge_value_as_list_in_yaml():
+    yaml = YAML(typ="rt")
+    user = yaml.load(
+        """
+L1:
+  - a
+  - b
+"""
+    )
+    default = yaml.load(
+        """
+L1:
+  - c
+  - d
+"""
+    )
+    merged = merge(user, default)
+    eq_(merged, {"L1": ["a", "b", "c", "d"]})
