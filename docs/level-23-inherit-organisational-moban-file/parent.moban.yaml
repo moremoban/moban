@@ -1,0 +1,4 @@
+configuration:
+  configuration: data.yaml
+targets:
+  - output_b: template_b.jj2
