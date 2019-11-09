@@ -2,7 +2,13 @@ name: moban
 organisation: moremoban
 releases:
   - changes:
-      - action: Updated
+      - action: Added
+        details:
+          - "support moban file inheritance. one base moban file and child repos can inherit and override"
+    date: tbd
+    version: 0.6.6
+  - changes:
+      - action: Added
         details:
           - "`#335`: support intermediate targets in moban file"
     date: 13.10.2019

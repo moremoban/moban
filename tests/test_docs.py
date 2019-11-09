@@ -317,6 +317,14 @@ class TestTutorial(Docs):
         folder = "level-22-intermediate-targets"
         self.run_moban(["moban"], folder, [("final", expected)])
 
+    def test_level_23_inherit_parent_moban_file(self):
+        folder = "level-23-inherit-organisational-moban-file"
+        self.run_moban(
+            ["moban"],
+            folder,
+            [("output_a", "I am template a"), ("output_b", "I am template b")],
+        )
+
     def test_misc_1(self):
         expected = "test file\n"
 

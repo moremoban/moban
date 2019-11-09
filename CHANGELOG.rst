@@ -1,10 +1,18 @@
 Change log
 ================================================================================
 
+0.6.6 - tbd
+--------------------------------------------------------------------------------
+
+**Added**
+
+#. support moban file inheritance. one base moban file and child repos can
+   inherit and override
+
 0.6.5 - 13.10.2019
 --------------------------------------------------------------------------------
 
-**Updated**
+**Added**
 
 #. `#335 <https://github.com/moremoban/moban/issues/335>`_: support intermediate
    targets in moban file
