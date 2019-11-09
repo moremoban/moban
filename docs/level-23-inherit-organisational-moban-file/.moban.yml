@@ -1,0 +1,3 @@
+overrides: parent.moban.yaml
+targets:
+  - output_a: template_a.jj2
