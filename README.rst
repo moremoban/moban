@@ -14,8 +14,8 @@ moban - 模板 Any template, any data in any location
 .. image:: https://badge.fury.io/py/moban.svg
    :target: https://pypi.org/project/moban
 
-.. image:: https://pepy.tech/badge/moban/month
-   :target: https://pepy.tech/project/moban/month
+.. image:: https://pepy.tech/badge/moban
+   :target: https://pepy.tech/project/moban
 
 .. image:: https://readthedocs.org/projects/moban/badge/?version=latest
     :target: http://moban.readthedocs.org/en/latest/
