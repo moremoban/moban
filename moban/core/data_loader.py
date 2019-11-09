@@ -38,7 +38,10 @@ def load_data(base_dir, file_name):
                 overrides = [overrides]
             for parent_file in overrides:
                 file_name, key = parent_file, None
-                if ":" in parent_file:
+                results = match_fs_url(parent_file)
+                if results:
+                    file_name, key = results
+                elif ":" in parent_file and "://" not in parent_file:
                     file_name, key = parent_file.split(":")
                 child_data = load_data(base_dir, file_name)
                 if data:
@@ -93,3 +96,11 @@ def search_file(base_dir, file_name):
         else:
             raise IOError(constants.ERROR_DATA_FILE_ABSENT % the_file)
     return the_file
+
+
+def match_fs_url(file_name):
+    import re
+
+    results = re.match("(.*://.*):(.*)", file_name)
+    if results:
+        return (results.group(1), results.group(2))
