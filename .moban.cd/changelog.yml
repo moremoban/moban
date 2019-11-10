@@ -5,7 +5,7 @@ releases:
       - action: Added
         details:
           - "support moban file inheritance. one base moban file and child repos can inherit and override"
-    date: tbd
+    date: 10.11.2019
     version: 0.6.6
   - changes:
       - action: Added
