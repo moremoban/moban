@@ -84,17 +84,6 @@ def test_overrides_nested_keys():
 def test_overrides_fs_url():
     base_dir = os.path.join("tests", "fixtures")
     actual = load_data(None, os.path.join(base_dir, "override_fs_url.yaml"))
-    expected = {
-        "raspberry": {
-            "other": "OpenGL 3.0",
-            "version": 4,
-            "memory": "4GB",
-            "core": "quad",
-            "wifi": "2.5 & 5.0 GHz",
-            "USB": 3.0,
-            "Bluetooth": 5.0,
-        },
-        "tessel": {"version": 2, "USB": "micro", "wifi": "802.11gn"},
-    }
+    expected = {}
 
     eq_(dict(actual), expected)
