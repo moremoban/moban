@@ -2,7 +2,7 @@ import os
 
 from nose.tools import eq_
 
-from moban.data_loaders.manager import load_data
+from moban.core.data_loader import load_data
 
 
 def test_overrides_a_list_of_config_files():
@@ -65,6 +65,25 @@ def test_overrides_nested_keys():
     base_dir = os.path.join("tests", "fixtures", "issue_126")
     config_dir = os.path.join(base_dir, "config")
     actual = load_data(config_dir, os.path.join(base_dir, "raspberry.yaml"))
+    expected = {
+        "raspberry": {
+            "other": "OpenGL 3.0",
+            "version": 4,
+            "memory": "4GB",
+            "core": "quad",
+            "wifi": "2.5 & 5.0 GHz",
+            "USB": 3.0,
+            "Bluetooth": 5.0,
+        },
+        "tessel": {"version": 2, "USB": "micro", "wifi": "802.11gn"},
+    }
+
+    eq_(dict(actual), expected)
+
+
+def test_overrides_fs_url():
+    base_dir = os.path.join("tests", "fixtures")
+    actual = load_data(None, os.path.join(base_dir, "override_fs_url.yaml"))
     expected = {
         "raspberry": {
             "other": "OpenGL 3.0",
