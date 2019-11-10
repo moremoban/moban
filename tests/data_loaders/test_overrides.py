@@ -2,6 +2,7 @@ import os
 
 from nose.tools import eq_
 
+from moban.main import load_engine_factory_and_engines
 from moban.core.data_loader import load_data
 
 
@@ -82,8 +83,7 @@ def test_overrides_nested_keys():
 
 
 def test_overrides_fs_url():
+    load_engine_factory_and_engines()
     base_dir = os.path.join("tests", "fixtures")
     actual = load_data(None, os.path.join(base_dir, "override_fs_url.yaml"))
-    expected = {}
-
-    eq_(dict(actual), expected)
+    assert "requires" in actual
