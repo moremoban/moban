@@ -1,3 +1,0 @@
-{% include "conf.py.jj2" %}
-
-master_doc = "index"
