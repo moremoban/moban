@@ -25,9 +25,9 @@ project = 'moban'
 copyright = '2017-2019 Onni Software Ltd.'
 author = 'C. W.'
 # The short X.Y version
-version = '0.6.5'
+version = '0.6.6'
 # The full version, including alpha/beta/rc tags
-release = '0.6.5'
+release = '0.6.6'
 
 # -- General configuration ---------------------------------------------------
 
@@ -82,5 +82,4 @@ texinfo_documents = [
 ]
 intersphinx_mapping.update({
 })
-
 master_doc = "index"

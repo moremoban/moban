@@ -1,8 +1,8 @@
 import fs.path
 from nose.tools import eq_, raises
 
-from moban.data_loaders.yaml import open_yaml
-from moban.data_loaders.manager import load_data
+from moban.core.data_loader import load_data
+from moban.plugins.yaml_loader import open_yaml
 
 
 def test_simple_yaml():

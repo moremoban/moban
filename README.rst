@@ -11,6 +11,12 @@ moban - 模板 Any template, any data in any location
 .. image:: https://codecov.io/gh/moremoban/moban/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/moremoban/moban
 
+.. image:: https://badge.fury.io/py/moban.svg
+   :target: https://pypi.org/project/moban
+
+.. image:: https://pepy.tech/badge/moban
+   :target: https://pepy.tech/project/moban
+
 .. image:: https://readthedocs.org/projects/moban/badge/?version=latest
     :target: http://moban.readthedocs.org/en/latest/
 
@@ -38,6 +44,18 @@ Please look at our issues. We have many more template engines and data format on
 road map.
 
 All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
+
+Support
+================================================================================
+
+If you like moban, please support me on `github <https://github.com/sponsors/chfw>`_,
+`patreon <https://www.patreon.com/bePatron?u=5537627>`_
+or `bounty source <https://salt.bountysource.com/teams/chfw-pyexcel>`_ to maintain
+the project and develop it further.
+
+With your financial support, I will be able to invest
+a little bit more time in coding, documentation and writing interesting extensions.
+
 
 Installation
 ================================================================================

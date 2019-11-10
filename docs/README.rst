@@ -25,6 +25,7 @@ This section covers the use cases for moban. Please check them out individually.
 #. `Template files in a zip or tar`_
 #. `Template copying from a zip to a zip`_
 #. `Intermeidate targets`_
+#. `Mobanfile inheritance`_
    
 .. _Jinja2 command line: level-1-jinja2-cli
 .. _Template inheritance: level-2-template-inheritance
@@ -48,3 +49,5 @@ This section covers the use cases for moban. Please check them out individually.
 .. _Template files in a zip or tar: level-20-templates-configs-in-zip-or-tar
 .. _Template copying from a zip to a zip: level-21-copy-templates-into-an-alien-file-system
 .. _Intermeidate targets: level-22-intermediate-targets
+.. _Mobanfile inheritance: level-23-inherit-organisational-moban-file
+

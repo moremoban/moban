@@ -1,0 +1,3 @@
+overrides: "git://github.com/moremoban/moban!/tests/fixtures/.moban.yml"
+targets:
+  - my: test

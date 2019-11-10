@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 from lml.plugin import PluginManager
+from ruamel.yaml.comments import CommentedSeq
 
 from moban import constants
 from moban.externals import file_system
@@ -27,17 +28,21 @@ LOADER = AnyDataLoader()
 
 
 def load_data(base_dir, file_name):
+
     abs_file_path = search_file(base_dir, file_name)
     data = LOADER.get_data(abs_file_path)
     if data is not None:
         parent_data = OrderedDict()
-        if base_dir and constants.LABEL_OVERRIDES in data:
+        if constants.LABEL_OVERRIDES in data:
             overrides = data.pop(constants.LABEL_OVERRIDES)
             if not isinstance(overrides, list):
                 overrides = [overrides]
             for parent_file in overrides:
                 file_name, key = parent_file, None
-                if ":" in parent_file:
+                results = match_fs_url(parent_file)
+                if results:
+                    file_name, key = results
+                elif ":" in parent_file and "://" not in parent_file:
                     file_name, key = parent_file.split(":")
                 child_data = load_data(base_dir, file_name)
                 if data:
@@ -69,6 +74,12 @@ def merge(left, right):
                 left[key] = value
             else:
                 left[key] = merge(left[key], value)
+    else:
+        both_list_alike = (
+            isinstance(left, CommentedSeq) and isinstance(right, CommentedSeq)
+        ) or (isinstance(left, list) and isinstance(right, list))
+        if both_list_alike:
+            left.extend(right)
     return left
 
 
@@ -86,3 +97,11 @@ def search_file(base_dir, file_name):
         else:
             raise IOError(constants.ERROR_DATA_FILE_ABSENT % the_file)
     return the_file
+
+
+def match_fs_url(file_name):
+    import re
+
+    results = re.match("(.*://.*):(.*)", file_name)
+    if results:
+        return (results.group(1), results.group(2))

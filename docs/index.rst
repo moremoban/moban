@@ -37,6 +37,8 @@ examples folder.
    level-20-templates-configs-in-zip-or-tar/README.rst
    level-21-copy-templates-into-an-alien-file-system/README.rst
    level-22-intermediate-targets/README.rst
+   level-23-inherit-organisational-moban-file/README.rst
+
 
 For more complex use case, please look at `its usage in pyexcel project <http://pyexcel.readthedocs.io/en/latest/guide.html>`_
 

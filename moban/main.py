@@ -14,11 +14,18 @@ import argparse
 import logging.config
 from collections import defaultdict
 
+from ruamel.yaml import YAML
+
 from moban import constants, exceptions
 from moban.core import ENGINES, plugins, hashstore, mobanfile, data_loader
 from moban._version import __version__
 from moban.externals import reporter, file_system
 from moban.program_options import OPTIONS
+
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 LOG = logging.getLogger()
 LOG_LEVEL = [logging.WARNING, logging.INFO, logging.DEBUG]
@@ -173,6 +180,10 @@ def handle_moban_file(moban_file, options):
     act upon default moban file
     """
     moban_file_configurations = data_loader.load_data(None, moban_file)
+    yaml = YAML(typ="rt")
+    dumped_yaml = StringIO()
+    yaml.dump(moban_file_configurations, dumped_yaml)
+    LOG.info(dumped_yaml.getvalue())
     if moban_file_configurations is None:
         raise exceptions.MobanfileGrammarException(
             constants.ERROR_INVALID_MOBAN_FILE % moban_file
