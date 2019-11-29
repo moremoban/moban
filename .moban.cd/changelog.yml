@@ -2,6 +2,17 @@ name: moban
 organisation: moremoban
 releases:
   - changes:
+      - action: Updated
+        details:
+          - "no verbose for error,  -v for warning, -vv for warning+info, -vvv for warning+info+debug"
+      - action: Removed
+        details:
+          - "Message: 'Warning: Attempting to use environment vars as data...' became warning log"
+          - "Message: 'Warning: Both data.yml and /.../.moban.cd/data.yml does not exist' became warning log"
+          - "with -vv, you would see them"
+    date: tbd
+    version: 0.6.7
+  - changes:
       - action: Added
         details:
           - "support moban file inheritance. one base moban file and child repos can inherit and override"

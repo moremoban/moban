@@ -305,7 +305,6 @@ def handle_custom_extensions(list_of_definitions):
 
 
 def handle_verbose(verbose_level):
-    print(verbose_level)
     if verbose_level > len(LOG_LEVEL):
         verbose_level = len(LOG_LEVEL) - 1
     level = LOG_LEVEL[verbose_level]
