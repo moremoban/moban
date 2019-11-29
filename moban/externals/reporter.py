@@ -9,7 +9,6 @@ MESSAGE_REPORT = "Templated {0} out of {1} files."
 MESSAGE_TEMPLATED_ALL = "Templated {0} files."
 MESSAGE_PULLING_REPO = "Updating {0}..."
 MESSAGE_CLONING_REPO = "Cloning {0}..."
-MESSAGE_USING_ENV_VARS = "Attempting to use environment vars as data..."
 MESSAGE_TEMPLATE_NOT_IN_MOBAN_FILE = "{0} is not defined in your moban file!"
 MESSAGE_FILE_EXTENSION_NOT_NEEDED = "File extension is not required for ad-hoc\
  type"
@@ -72,10 +71,6 @@ def report_git_pull(repo):
 def report_git_clone(repo):
     colored_repo = crayons.green(repo, bold=True)
     print(MESSAGE_CLONING_REPO.format(colored_repo))
-
-
-def report_using_env_vars():
-    report_warning_message(MESSAGE_USING_ENV_VARS)
 
 
 def report_template_not_in_moban_file(template):
