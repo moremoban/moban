@@ -9,7 +9,7 @@ releases:
         details:
           - "Message: 'Warning: Attempting to use environment vars as data...' became warning log"
           - "Message: 'Warning: Both data.yml and /.../.moban.cd/data.yml does not exist' became warning log"
-          - "with -vv, you would see them"
+          - "with -v, you would see them in such a situation"
     date: tbd
     version: 0.6.7
   - changes:

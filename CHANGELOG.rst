@@ -15,7 +15,7 @@ Change log
    warning log
 #. Message: 'Warning: Both data.yml and /.../.moban.cd/data.yml does not exist'
    became warning log
-#. with -vv, you would see them
+#. with -v, you would see them in such a situation
 
 0.6.6 - 10.11.2019
 --------------------------------------------------------------------------------
