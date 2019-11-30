@@ -464,6 +464,22 @@ def test_debug_option(fake_config):
             )
 
 
+@patch("logging.basicConfig")
+def test_debug_five_verbose_option(fake_config, *_):
+    fake_config.side_effect = [IOError("stop test")]
+    test_args = ["moban", "-vvvvv"]
+    with patch.object(sys, "argv", test_args):
+        from moban.main import main
+
+        try:
+            main()
+        except IOError:
+            fake_config.assert_called_with(
+                format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+                level=10,
+            )
+
+
 @patch("moban.core.utils.verify_the_existence_of_directories", return_value=[])
 def test_git_repo_example(_):
     test_args = [
