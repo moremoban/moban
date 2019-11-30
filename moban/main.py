@@ -28,7 +28,12 @@ except ImportError:
     from io import StringIO
 
 LOG = logging.getLogger()
-LOG_LEVEL = [logging.WARNING, logging.INFO, logging.DEBUG]
+LOG_LEVEL = [
+    logging.ERROR,
+    logging.WARNING,
+    logging.INFO,
+    logging.DEBUG,
+]
 
 
 def main():
@@ -301,7 +306,7 @@ def handle_custom_extensions(list_of_definitions):
 
 def handle_verbose(verbose_level):
     if verbose_level > len(LOG_LEVEL):
-        verbose_level = 3
+        verbose_level = len(LOG_LEVEL) - 1
     level = LOG_LEVEL[verbose_level]
     logging.basicConfig(
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",

@@ -1,6 +1,22 @@
 Change log
 ================================================================================
 
+0.6.7 - tbd
+--------------------------------------------------------------------------------
+
+**Updated**
+
+#. no verbose for error, -v for warning, -vv for warning+info, -vvv for
+   warning+info+debug
+
+**Removed**
+
+#. Message: 'Warning: Attempting to use environment vars as data...' became
+   warning log
+#. Message: 'Warning: Both data.yml and /.../.moban.cd/data.yml does not exist'
+   became warning log
+#. with -v, you would see them in such a situation
+
 0.6.6 - 10.11.2019
 --------------------------------------------------------------------------------
 
