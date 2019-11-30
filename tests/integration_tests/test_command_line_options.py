@@ -460,7 +460,7 @@ def test_debug_option(fake_config):
         except IOError:
             fake_config.assert_called_with(
                 format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-                level=10,
+                level=20,
             )
 
 
