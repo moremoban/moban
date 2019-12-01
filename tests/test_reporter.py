@@ -15,17 +15,17 @@ else:
 def test_partial_run():
     patcher = patch("sys.stdout", new_callable=StringIO)
     fake_stdout = patcher.start()
-    reporter.report_partial_run(1, 20)
+    reporter.report_partial_run("Actioned", 1, 20)
     patcher.stop()
-    eq_(fake_stdout.getvalue(), "Templated 1 out of 20 files.\n")
+    eq_(fake_stdout.getvalue(), "Actioned 1 out of 20 files.\n")
 
 
 def test_full_run():
     patcher = patch("sys.stdout", new_callable=StringIO)
     fake_stdout = patcher.start()
-    reporter.report_full_run(20)
+    reporter.report_full_run("Worked on", 20)
     patcher.stop()
-    eq_(fake_stdout.getvalue(), "Templated 20 files.\n")
+    eq_(fake_stdout.getvalue(), "Worked on 20 files.\n")
 
 
 def test_error_message():
@@ -55,9 +55,9 @@ def test_warning_message():
 def test_report_templating():
     patcher = patch("sys.stdout", new_callable=StringIO)
     fake_stdout = patcher.start()
-    reporter.report_templating("a", "b")
+    reporter.report_templating("Transforming", "a", "b")
     patcher.stop()
-    eq_(fake_stdout.getvalue(), "Templating a to b\n")
+    eq_(fake_stdout.getvalue(), "Transforming a to b\n")
 
 
 def test_no_action():
@@ -65,7 +65,7 @@ def test_no_action():
     fake_stdout = patcher.start()
     reporter.report_no_action()
     patcher.stop()
-    eq_(fake_stdout.getvalue(), "No templating\n")
+    eq_(fake_stdout.getvalue(), "No actions performed\n")
 
 
 def test_format_single():
