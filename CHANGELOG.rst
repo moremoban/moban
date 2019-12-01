@@ -8,6 +8,8 @@ Change log
 
 #. no verbose for error, -v for warning, -vv for warning+info, -vvv for
    warning+info+debug
+#. `#351 <https://github.com/moremoban/moban/issues/351>`_, show template plugin
+   name, i.e. 'copying' for copy instead of 'templating'
 
 **Removed**
 
