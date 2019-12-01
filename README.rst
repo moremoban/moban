@@ -26,8 +26,6 @@ moban - 模板 Any template, any data in any location
 :Author: C.W. and its contributors (See contributors.rst)
 :Issues: http://github.com/moremoban/moban/issues
 :License: MIT
-:Version: |version|
-:Generated: |today|
 
 
 **moban** started with bringing the high performance template engine (JINJA2) for web
@@ -242,7 +240,7 @@ CLI documentation
     
       --exit-code           tell moban to change exit code
       -V, --version         show program's version number and exit
-      -v                    show verbose, try -v, -vv
+      -v                    show verbose, try -v, -vv, -vvv
 
 Exit codes
 --------------------------------------------------------------------------------
