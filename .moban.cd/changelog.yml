@@ -5,12 +5,13 @@ releases:
       - action: Updated
         details:
           - "no verbose for error,  -v for warning, -vv for warning+info, -vvv for warning+info+debug"
+          - "`#351`, show template plugin name, i.e. 'copying' for copy instead of 'templating'"
       - action: Removed
         details:
           - "Message: 'Warning: Attempting to use environment vars as data...' became warning log"
           - "Message: 'Warning: Both data.yml and /.../.moban.cd/data.yml does not exist' became warning log"
           - "with -v, you would see them in such a situation"
-    date: tbd
+    date: 1.12.2019
     version: 0.6.7
   - changes:
       - action: Added

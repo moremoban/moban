@@ -28,12 +28,7 @@ except ImportError:
     from io import StringIO
 
 LOG = logging.getLogger()
-LOG_LEVEL = [
-    logging.ERROR,
-    logging.WARNING,
-    logging.INFO,
-    logging.DEBUG,
-]
+LOG_LEVEL = [logging.ERROR, logging.WARNING, logging.INFO, logging.DEBUG]
 
 
 def main():
@@ -175,7 +170,7 @@ def create_parser():
         action="count",
         dest=constants.LABEL_VERBOSE,
         default=0,
-        help="show verbose, try -v, -vv",
+        help="show verbose, try -v, -vv, -vvv",
     )
     return parser
 

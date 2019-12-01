@@ -1,13 +1,15 @@
 Change log
 ================================================================================
 
-0.6.7 - tbd
+0.6.7 - 1.12.2019
 --------------------------------------------------------------------------------
 
 **Updated**
 
 #. no verbose for error, -v for warning, -vv for warning+info, -vvv for
    warning+info+debug
+#. `#351 <https://github.com/moremoban/moban/issues/351>`_, show template plugin
+   name, i.e. 'copying' for copy instead of 'templating'
 
 **Removed**
 

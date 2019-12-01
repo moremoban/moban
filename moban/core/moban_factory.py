@@ -15,7 +15,7 @@ from moban.core.strategy import Strategy
 from moban.core.hashstore import HASH_STORE
 from moban.externals.buffered_writer import BufferedWriter
 
-log = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 PY3_ABOVE = sys.version_info[0] > 2
 
 
@@ -29,7 +29,7 @@ class MobanFactory(PluginManager):
         for user_template_type in extensions.keys():
             template_type = self.get_primary_key(user_template_type)
 
-            log.debug(
+            LOG.debug(
                 "Registering extensions: {0}={1}".format(
                     user_template_type, extensions[user_template_type]
                 )
@@ -92,14 +92,26 @@ class MobanEngine(object):
         self.templated_count = 0
         self.file_count = 0
         self.buffered_writer = BufferedWriter()
+        self.engine_action = getattr(
+            engine,
+            "ACTION_IN_PRESENT_CONTINUOUS_TENSE",
+            constants.LABEL_MOBAN_ACTION_IN_PRESENT_CONTINUOUS_TENSE,
+        )
+        self.engine_actioned = getattr(
+            engine,
+            "ACTION_IN_PAST_TENSE",
+            constants.LABEL_MOBAN_ACTION_IN_PAST_TENSE,
+        )
 
     def report(self):
         if self.templated_count == 0:
             reporter.report_no_action()
         elif self.templated_count == self.file_count:
-            reporter.report_full_run(self.file_count)
+            reporter.report_full_run(self.engine_actioned, self.file_count)
         else:
-            reporter.report_partial_run(self.templated_count, self.file_count)
+            reporter.report_partial_run(
+                self.engine_actioned, self.templated_count, self.file_count
+            )
 
     def number_of_templated_files(self):
         return self.templated_count
@@ -119,7 +131,9 @@ class MobanEngine(object):
             template_abs_path, template, data, output_file
         )
         if flag:
-            reporter.report_templating(template_file, output_file)
+            reporter.report_templating(
+                self.engine_action, template_file, output_file
+            )
             self.templated_count += 1
         self.buffered_writer.close()
 
@@ -133,7 +147,9 @@ class MobanEngine(object):
             template_abs_path, template, data, output_file
         )
         if flag:
-            reporter.report_templating(template_abs_path, output_file)
+            reporter.report_templating(
+                self.engine_action, template_abs_path, output_file
+            )
             self.templated_count += 1
         self.buffered_writer.close()
 
@@ -159,7 +175,7 @@ class MobanEngine(object):
             return flag
         except exceptions.FileNotFound:
             # the template is a string from command line
-            log.info("{} is not a file".format(template_abs_path))
+            LOG.info("{} is not a file".format(template_abs_path))
             self.buffered_writer.write_file_out(output_file, rendered_content)
             return True
 
@@ -186,7 +202,9 @@ class MobanEngine(object):
                     template_abs_path, template, data, output
                 )
                 if flag:
-                    reporter.report_templating(template_file, output)
+                    reporter.report_templating(
+                        self.engine_action, template_file, output
+                    )
                     self.templated_count += 1
                 self.file_count += 1
 
@@ -202,13 +220,15 @@ class MobanEngine(object):
                     template_abs_path, template, data, output
                 )
                 if flag:
-                    reporter.report_templating(template_file, output)
+                    reporter.report_templating(
+                        self.engine_action, template_file, output
+                    )
                     self.templated_count += 1
                 self.file_count += 1
 
 
 def expand_template_directories(dirs):
-    log.debug("Expanding %s..." % dirs)
+    LOG.debug("Expanding %s..." % dirs)
     if not isinstance(dirs, list):
         dirs = [dirs]
 
@@ -217,7 +237,7 @@ def expand_template_directories(dirs):
 
 
 def expand_template_directory(directory):
-    log.debug("Expanding %s..." % directory)
+    LOG.debug("Expanding %s..." % directory)
     translated_directory = None
     if ":" in directory and directory[1] != ":" and "://" not in directory:
         translated_directory = deprecated_moban_path_notation(directory)
