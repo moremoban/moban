@@ -460,6 +460,22 @@ def test_debug_option(fake_config):
         except IOError:
             fake_config.assert_called_with(
                 format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+                level=20,
+            )
+
+
+@patch("logging.basicConfig")
+def test_debug_five_verbose_option(fake_config, *_):
+    fake_config.side_effect = [IOError("stop test")]
+    test_args = ["moban", "-vvvvv"]
+    with patch.object(sys, "argv", test_args):
+        from moban.main import main
+
+        try:
+            main()
+        except IOError:
+            fake_config.assert_called_with(
+                format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
                 level=10,
             )
 

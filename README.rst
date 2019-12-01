@@ -26,8 +26,6 @@ moban - 模板 Any template, any data in any location
 :Author: C.W. and its contributors (See contributors.rst)
 :Issues: http://github.com/moremoban/moban/issues
 :License: MIT
-:Version: |version|
-:Generated: |today|
 
 
 **moban** started with bringing the high performance template engine (JINJA2) for web
@@ -82,8 +80,6 @@ Quick start
 
     $ export HELLO="world"
     $ moban "{{HELLO}}"
-    Warning: Both data.yml and /.../.moban.cd/data.yml does not exist
-    Warning: Attempting to use environment vars as data...
     Templating {{HELLO}}... to moban.output
     Templated 1 file.
     $ cat moban.output 
@@ -244,7 +240,7 @@ CLI documentation
     
       --exit-code           tell moban to change exit code
       -V, --version         show program's version number and exit
-      -v                    show verbose, try -v, -vv
+      -v                    show verbose, try -v, -vv, -vvv
 
 Exit codes
 --------------------------------------------------------------------------------

@@ -1,11 +1,14 @@
 import os
 import copy
+import logging
 
 from moban import constants, exceptions
 from moban.core import utils
-from moban.externals import reporter
 from moban.program_options import OPTIONS
 from moban.core.data_loader import merge, load_data
+
+LOG = logging.getLogger(__name__)
+MESSAGE_USING_ENV_VARS = "Attempting to use environment vars as data..."
 
 
 class Context(object):
@@ -27,7 +30,7 @@ class Context(object):
             # If data file doesn't exist:
             # 1. Alert the user of their (potential) mistake
             # 2. Attempt to use environment vars as data
-            reporter.report_warning_message(str(exception))
-            reporter.report_using_env_vars()
+            LOG.warn(str(exception))
+            LOG.info(MESSAGE_USING_ENV_VARS)
             merge(custom_data, self.__cached_environ_variables)
             return custom_data
