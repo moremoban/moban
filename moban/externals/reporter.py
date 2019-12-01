@@ -4,9 +4,9 @@ import moban.constants as constants
 
 MESSAGE_TEMPLATING = "{0} {1} to {2}"
 MESSAGE_UP_TO_DATE = "Everything is up to date!"
-MESSAGE_NO_TEMPLATING = "No templating"
-MESSAGE_REPORT = "Templated {0} out of {1} files."
-MESSAGE_TEMPLATED_ALL = "Templated {0} files."
+MESSAGE_NO_TEMPLATING = "No actions performed"
+MESSAGE_REPORT = "{0} {1} out of {2} files."
+MESSAGE_TEMPLATED_ALL = "{0} {1} files."
 MESSAGE_PULLING_REPO = "Updating {0}..."
 MESSAGE_CLONING_REPO = "Cloning {0}..."
 MESSAGE_TEMPLATE_NOT_IN_MOBAN_FILE = "{0} is not defined in your moban file!"
@@ -30,16 +30,16 @@ def report_no_action():
     print(crayons.yellow(MESSAGE_NO_TEMPLATING, bold=True))
 
 
-def report_full_run(file_count):
+def report_full_run(action_in_past_tense, file_count):
     figure = crayons.green(str(file_count), bold=True)
-    message = MESSAGE_TEMPLATED_ALL.format(figure)
+    message = MESSAGE_TEMPLATED_ALL.format(action_in_past_tense, figure)
     print(_format_single(message, file_count))
 
 
-def report_partial_run(file_count, total):
+def report_partial_run(action_in_past_tense, file_count, total):
     figure = crayons.green(str(file_count), bold=True)
     total_figure = crayons.yellow(str(total), bold=True)
-    message = MESSAGE_REPORT.format(figure, total_figure)
+    message = MESSAGE_REPORT.format(action_in_past_tense, figure, total_figure)
     print(_format_single(message, total))
 
 

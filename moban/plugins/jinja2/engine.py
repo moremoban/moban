@@ -59,6 +59,10 @@ GLOBALS = JinjaGlobalsManager()
     constants.TEMPLATE_ENGINE_EXTENSION, tags=["jinja2", "jinja", "jj2", "j2"]
 )
 class Engine(object):
+
+    ACTION_IN_PRESENT_CONTINUOUS_TENSE = "Jinja2 Templating"
+    ACTION_IN_PAST_TENSE = "Jinja2 Templated"
+
     def __init__(self, template_fs, options=None):
         """
         Contruct a jinja2 template engine

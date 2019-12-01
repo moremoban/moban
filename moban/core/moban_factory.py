@@ -93,14 +93,17 @@ class MobanEngine(object):
         self.file_count = 0
         self.buffered_writer = BufferedWriter()
         self.engine_action = get_action_in_present_continuous_tense(engine)
+        self.engine_actioned = get_action_in_past_tense(engine)
 
     def report(self):
         if self.templated_count == 0:
             reporter.report_no_action()
         elif self.templated_count == self.file_count:
-            reporter.report_full_run(self.file_count)
+            reporter.report_full_run(self.engine_actioned, self.file_count)
         else:
-            reporter.report_partial_run(self.templated_count, self.file_count)
+            reporter.report_partial_run(
+                self.engine_actioned, self.templated_count, self.file_count
+            )
 
     def number_of_templated_files(self):
         return self.templated_count
@@ -241,3 +244,7 @@ def expand_template_directory(directory):
 
 def get_action_in_present_continuous_tense(engine):
     return getattr(engine, "ACTION_IN_PRESENT_CONTINUOUS_TENSE", "Mobanizing")
+
+
+def get_action_in_past_tense(engine):
+    return getattr(engine, "ACTION_IN_PAST_TENSE", "Mobanized")

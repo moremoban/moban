@@ -28,12 +28,7 @@ except ImportError:
     from io import StringIO
 
 LOG = logging.getLogger()
-LOG_LEVEL = [
-    logging.ERROR,
-    logging.WARNING,
-    logging.INFO,
-    logging.DEBUG,
-]
+LOG_LEVEL = [logging.ERROR, logging.WARNING, logging.INFO, logging.DEBUG]
 
 
 def main():

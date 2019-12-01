@@ -22,6 +22,7 @@ class ContentForwardEngine(object):
     """
 
     ACTION_IN_PRESENT_CONTINUOUS_TENSE = "Copying"
+    ACTION_IN_PAST_TENSE = "Copied"
 
     def __init__(self, template_fs, extensions=None):
         self.template_fs = template_fs
