@@ -15,7 +15,7 @@ from moban.core.strategy import Strategy
 from moban.core.hashstore import HASH_STORE
 from moban.externals.buffered_writer import BufferedWriter
 
-log = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 PY3_ABOVE = sys.version_info[0] > 2
 
 
@@ -29,7 +29,7 @@ class MobanFactory(PluginManager):
         for user_template_type in extensions.keys():
             template_type = self.get_primary_key(user_template_type)
 
-            log.debug(
+            LOG.debug(
                 "Registering extensions: {0}={1}".format(
                     user_template_type, extensions[user_template_type]
                 )
@@ -92,8 +92,16 @@ class MobanEngine(object):
         self.templated_count = 0
         self.file_count = 0
         self.buffered_writer = BufferedWriter()
-        self.engine_action = get_action_in_present_continuous_tense(engine)
-        self.engine_actioned = get_action_in_past_tense(engine)
+        self.engine_action = getattr(
+            engine,
+            "ACTION_IN_PRESENT_CONTINUOUS_TENSE",
+            constants.LABEL_MOBAN_ACTION_IN_PRESENT_CONTINUOUS_TENSE,
+        )
+        self.engine_actioned = getattr(
+            engine,
+            "ACTION_IN_PAST_TENSE",
+            constants.LABEL_MOBAN_ACTION_IN_PAST_TENSE,
+        )
 
     def report(self):
         if self.templated_count == 0:
@@ -167,7 +175,7 @@ class MobanEngine(object):
             return flag
         except exceptions.FileNotFound:
             # the template is a string from command line
-            log.info("{} is not a file".format(template_abs_path))
+            LOG.info("{} is not a file".format(template_abs_path))
             self.buffered_writer.write_file_out(output_file, rendered_content)
             return True
 
@@ -220,7 +228,7 @@ class MobanEngine(object):
 
 
 def expand_template_directories(dirs):
-    log.debug("Expanding %s..." % dirs)
+    LOG.debug("Expanding %s..." % dirs)
     if not isinstance(dirs, list):
         dirs = [dirs]
 
@@ -229,7 +237,7 @@ def expand_template_directories(dirs):
 
 
 def expand_template_directory(directory):
-    log.debug("Expanding %s..." % directory)
+    LOG.debug("Expanding %s..." % directory)
     translated_directory = None
     if ":" in directory and directory[1] != ":" and "://" not in directory:
         translated_directory = deprecated_moban_path_notation(directory)
@@ -240,11 +248,3 @@ def expand_template_directory(directory):
         translated_directory = os.path.normcase(os.path.abspath(directory))
         translated_directory = file_system.fs_url(translated_directory)
     return translated_directory
-
-
-def get_action_in_present_continuous_tense(engine):
-    return getattr(engine, "ACTION_IN_PRESENT_CONTINUOUS_TENSE", "Mobanizing")
-
-
-def get_action_in_past_tense(engine):
-    return getattr(engine, "ACTION_IN_PAST_TENSE", "Mobanized")

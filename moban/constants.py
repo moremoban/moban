@@ -75,6 +75,10 @@ LABEL_DEST = "destination"
 LABEL_FORCE_TEMPLATE_TYPE = "force_template_type"
 LABEL_TEMPLATE_TYPES = "template_types"
 LABEL_VERBOSE = "verbose"
+LABEL_MOBAN_ACTION_IN_PRESENT_CONTINUOUS_TENSE = "Mobanizing"
+LABEL_MOBAN_ACTION_IN_PAST_TENSE = "Mobanized"
+LABEL_MOBAN_ACTION_IN_PRESENT_CONTINUOUS_TENSE = "Mobanizing"
+LABEL_MOBAN_ACTION_IN_PAST_TENSE = "Mobanized"
 
 # error messages
 ERROR_DATA_FILE_NOT_FOUND = "Both %s and %s does not exist"
