@@ -92,6 +92,7 @@ class MobanEngine(object):
         self.templated_count = 0
         self.file_count = 0
         self.buffered_writer = BufferedWriter()
+        self.engine_action = get_action_in_present_continuous_tense(engine)
 
     def report(self):
         if self.templated_count == 0:
@@ -119,7 +120,9 @@ class MobanEngine(object):
             template_abs_path, template, data, output_file
         )
         if flag:
-            reporter.report_templating(template_file, output_file)
+            reporter.report_templating(
+                self.engine_action, template_file, output_file
+            )
             self.templated_count += 1
         self.buffered_writer.close()
 
@@ -133,7 +136,9 @@ class MobanEngine(object):
             template_abs_path, template, data, output_file
         )
         if flag:
-            reporter.report_templating(template_abs_path, output_file)
+            reporter.report_templating(
+                self.engine_action, template_abs_path, output_file
+            )
             self.templated_count += 1
         self.buffered_writer.close()
 
@@ -186,7 +191,9 @@ class MobanEngine(object):
                     template_abs_path, template, data, output
                 )
                 if flag:
-                    reporter.report_templating(template_file, output)
+                    reporter.report_templating(
+                        self.engine_action, template_file, output
+                    )
                     self.templated_count += 1
                 self.file_count += 1
 
@@ -202,7 +209,9 @@ class MobanEngine(object):
                     template_abs_path, template, data, output
                 )
                 if flag:
-                    reporter.report_templating(template_file, output)
+                    reporter.report_templating(
+                        self.engine_action, template_file, output
+                    )
                     self.templated_count += 1
                 self.file_count += 1
 
@@ -228,3 +237,7 @@ def expand_template_directory(directory):
         translated_directory = os.path.normcase(os.path.abspath(directory))
         translated_directory = file_system.fs_url(translated_directory)
     return translated_directory
+
+
+def get_action_in_present_continuous_tense(engine):
+    return getattr(engine, "ACTION_IN_PRESENT_CONTINUOUS_TENSE", "Mobanizing")

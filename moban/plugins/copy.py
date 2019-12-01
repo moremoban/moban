@@ -21,6 +21,8 @@ class ContentForwardEngine(object):
     templating mechanism.
     """
 
+    ACTION_IN_PRESENT_CONTINUOUS_TENSE = "Copying"
+
     def __init__(self, template_fs, extensions=None):
         self.template_fs = template_fs
 
