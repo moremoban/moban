@@ -5,6 +5,7 @@ releases:
       - action: Updated
         details:
           - "no verbose for error,  -v for warning, -vv for warning+info, -vvv for warning+info+debug"
+          - "`#351`, show template plugin name, i.e. 'copying' for copy instead of 'templating'"
       - action: Removed
         details:
           - "Message: 'Warning: Attempting to use environment vars as data...' became warning log"

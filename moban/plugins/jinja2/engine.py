@@ -60,8 +60,8 @@ GLOBALS = JinjaGlobalsManager()
 )
 class Engine(object):
 
-    ACTION_IN_PRESENT_CONTINUOUS_TENSE = "Jinja2 Templating"
-    ACTION_IN_PAST_TENSE = "Jinja2 Templated"
+    ACTION_IN_PRESENT_CONTINUOUS_TENSE = "Templating"
+    ACTION_IN_PAST_TENSE = "Templated"
 
     def __init__(self, template_fs, options=None):
         """

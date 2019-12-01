@@ -170,7 +170,7 @@ def create_parser():
         action="count",
         dest=constants.LABEL_VERBOSE,
         default=0,
-        help="show verbose, try -v, -vv",
+        help="show verbose, try -v, -vv, -vvv",
     )
     return parser
 
