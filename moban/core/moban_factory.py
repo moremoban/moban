@@ -135,6 +135,8 @@ class MobanEngine(object):
                 self.engine_action, template_file, output_file
             )
             self.templated_count += 1
+        self.file_count += 1
+
         self.buffered_writer.close()
 
     def render_string_to_file(
@@ -151,6 +153,7 @@ class MobanEngine(object):
                 self.engine_action, template_abs_path, output_file
             )
             self.templated_count += 1
+        self.file_count += 1
         self.buffered_writer.close()
 
     def apply_template(self, template_abs_path, template, data, output_file):
