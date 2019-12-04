@@ -4,6 +4,12 @@ releases:
   - changes:
       - action: Updated
         details:
+          - "since version 0.5.0, when rendering a single file or string, moban would report 'Templated 1 of 0 files', which should have been 'Templated 1 file.'"
+    date: tbd
+    version: 0.6.8
+  - changes:
+      - action: Updated
+        details:
           - "no verbose for error,  -v for warning, -vv for warning+info, -vvv for warning+info+debug"
           - "`#351`, show template plugin name, i.e. 'copying' for copy instead of 'templating'"
       - action: Removed
