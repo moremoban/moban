@@ -38,6 +38,9 @@ haml, slim and tornado, can read other data format: json and yaml, and can acces
 template file and configuration file in
 any location: zip, git, pypi package, s3, etc.
 
+.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-pyexcel-demo.gif
+   :width: 600px
+
 Please look at our issues. We have many more template engines and data format on the
 road map.
 
