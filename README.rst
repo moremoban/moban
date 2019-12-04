@@ -119,7 +119,7 @@ moban.output will contain::
 
 Please note that data.yml will take precedence over environment variables.
 
-Moban in live action::
+Moban in live action:
 
 .. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-pyexcel-demo.gif
 
