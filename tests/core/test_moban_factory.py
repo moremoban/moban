@@ -85,6 +85,21 @@ def test_file_tests():
     with open(output, "r") as output_file:
         content = output_file.read()
         eq_(content, "yes\nhere")
+    eq_(engine.file_count, 1)
+    eq_(engine.templated_count, 1)
+    os.unlink(output)
+
+
+def test_render_string_to_file():
+    output = "test.txt"
+    path = fs.path.join("tests", "fixtures", "jinja_tests")
+    engine = ENGINES.get_engine("jinja2", [path], path)
+    engine.render_string_to_file("{{test}}", "file_tests.yml", output)
+    with open(output, "r") as output_file:
+        content = output_file.read()
+        eq_(content, "here")
+    eq_(engine.file_count, 1)
+    eq_(engine.templated_count, 1)
     os.unlink(output)
 
 
