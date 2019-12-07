@@ -9,6 +9,11 @@ Change log
 #. since version 0.5.0, when rendering a single file or string, moban would
    report 'Templated 1 of 0 files', which should have been 'Templated 1 file.' 
 
+**Removed**
+
+#. python 3.4 support is gone because colorama requires Python '>=2.7, !=3.0.*,
+   !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*' 
+
 0.6.7 - 1.12.2019
 --------------------------------------------------------------------------------
 
