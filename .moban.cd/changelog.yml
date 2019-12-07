@@ -7,7 +7,7 @@ releases:
           - |
             since version 0.5.0, when rendering a single file or string, moban would report
             'Templated 1 of 0 files', which should have been 'Templated 1 file.'
-    date: tbd
+    date: 7.12.2019
     version: 0.6.8
   - changes:
       - action: Updated
