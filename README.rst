@@ -38,11 +38,6 @@ haml, slim and tornado, can read other data format: json and yaml, and can acces
 template file and configuration file in
 any location: zip, git, pypi package, s3, etc.
 
-Please look at our issues. We have many more template engines and data format on the
-road map.
-
-All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
-
 Support
 ================================================================================
 
@@ -75,6 +70,10 @@ or clone it and install it:
 
 Quick start
 ================================================================================
+
+
+.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-intro.gif
+
 
 .. code-block:: bash
 
@@ -119,6 +118,12 @@ moban.output will contain::
     world
 
 Please note that data.yml will take precedence over environment variables.
+
+Moban in live action:
+
+.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-pyexcel-demo.gif
+
+All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
 
 
 Work with files in a git repo

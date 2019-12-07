@@ -8,9 +8,8 @@ python:
   - 3.7
   - 3.6
   - 3.5
-  - 3.4
   - 2.7
-  - 3.8-dev
+  - 3.8
 env:
   - MINREQ=0
   - MINREQ=1
