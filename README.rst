@@ -134,7 +134,8 @@ All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tuto
 Work with files in a git repo
 ================================================================================
 
-`gitfs2 <https://github.com/moremoban/gitfs2>`_ is installed by default since v0.6.1
+`gitfs2 <https://github.com/moremoban/gitfs2>`_ is optional since v0.7.0 but was
+installed by default since v0.6.1
 
 
 You can do the following with moban:
@@ -155,7 +156,8 @@ You can do the following with moban:
 Work with files in a python package
 ================================================================================
 
-`pypifs <https://github.com/moremoban/pypifs>`_ is installed by default since v0.6.1
+`pypifs <https://github.com/moremoban/pypifs>`_ is optional since v0.7.0 but
+was installed by default since v0.6.1
 
 You can do the following with moban:
 
