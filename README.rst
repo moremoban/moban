@@ -49,6 +49,11 @@ the project and develop it further.
 With your financial support, I will be able to invest
 a little bit more time in coding, documentation and writing interesting extensions.
 
+Credit
+================================================================================
+
+`jinja2-fsloader` is the key component to enable PyFilesystem2 support in moban
+v0.6x. Please show your stars there too!
 
 Installation
 ================================================================================
