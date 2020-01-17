@@ -16,10 +16,9 @@ def handle_template(template_file, output, template_dirs):
         source_dir = template_file[:-3]
         _, fs = multi_fs.which(source_dir)
         if fs:
-            for a_triple in _listing_directory_files_recusively(
+            yield from _listing_directory_files_recusively(
                 fs, source_dir, output
-            ):
-                yield a_triple
+            )
         else:
             if STORE.look_up_by_output.get(template_file) is None:
                 reporter.report_error_message(
@@ -35,8 +34,7 @@ def handle_template(template_file, output, template_dirs):
             else:
                 yield _create_a_single_target(template_file, output)
         elif fs.isdir(template_file):
-            for a_triple in _list_dir_files(fs, template_file, output):
-                yield a_triple
+            yield from _list_dir_files(fs, template_file, output)
         else:
             yield _create_a_single_target(template_file, output)
 
