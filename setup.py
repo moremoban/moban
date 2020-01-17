@@ -76,6 +76,8 @@ CLASSIFIERS = [
 
 ]
 
+PYTHON_REQUIRES = ">=3.6"
+
 INSTALL_REQUIRES = [
     "jinja2>=2.7.1",
     "lml>=0.0.9",
@@ -258,6 +260,7 @@ if __name__ == "__main__":
         long_description=read_files(*FILES),
         license=LICENSE,
         keywords=KEYWORDS,
+        python_requires=PYTHON_REQUIRES,
         extras_require=EXTRAS_REQUIRE,
         tests_require=["nose"],
         install_requires=INSTALL_REQUIRES,

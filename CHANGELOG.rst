@@ -7,7 +7,12 @@ Change log
 **Removed**
 
 #. `#360 <https://github.com/moremoban/moban/issues/360>`_: make gitfs2 and
-   pypifs optional
+   pypifs optional.
+
+**Updated**
+
+#. `#360 <https://github.com/moremoban/moban/issues/360>`_: show friendlier
+   error when unknown protocol exception was raised.
 
 0.6.8 - 7.12.2019
 --------------------------------------------------------------------------------

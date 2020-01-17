@@ -8,10 +8,7 @@ env:
 
 {%block custom_python_versions%}
 python:
-  - &pypy2 pypy2.7-6.0
   - 3.7
   - 3.6
-  - 3.5
-  - 2.7
   - 3.8
 {%endblock%}
