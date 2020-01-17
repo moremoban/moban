@@ -8,6 +8,8 @@ Change log
 
 #. `#360 <https://github.com/moremoban/moban/issues/360>`_: make gitfs2 and
    pypifs optional.
+#. `#303 <https://github.com/moremoban/moban/issues/303>`_: python 2.7 support
+   is dropped.
 
 **Updated**
 

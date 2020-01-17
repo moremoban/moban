@@ -5,6 +5,7 @@ releases:
       - action: Removed
         details:
           - "`#360`: make gitfs2 and pypifs optional."
+          - "`#303`: python 2.7 support is dropped."
       - action: Updated
         details:
           - "`#360`: show friendlier error when unknown protocol exception was raised."
