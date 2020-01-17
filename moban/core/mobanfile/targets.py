@@ -20,7 +20,7 @@ def extract_target(options):
     if template:
         if output is None:
             raise Exception(
-                "Please specify a output file name for %s." % template
+                f"Please specify a output file name for {template}"
             )
         if config:
             result = {
@@ -43,7 +43,7 @@ def extract_group_targets(group, targets):
             if isinstance(group_targets, str) is False and group_name == group:
                 # grouping by template type feature
                 return [{group_name: group_targets}]
-    raise exceptions.GroupTargetNotFound("%s is not found" % group)
+    raise exceptions.GroupTargetNotFound(f"{group} is not found")
 
 
 def parse_targets(options, targets):

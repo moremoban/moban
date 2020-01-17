@@ -142,7 +142,7 @@ class MobanEngine(object):
         self, template_in_string, data_file, output_file
     ):
         template = self.engine.get_template_from_string(template_in_string)
-        template_abs_path = template_in_string[:10] + "..."
+        template_abs_path = f"{template_in_string[:10]}..."
         data = self.context.get_data(data_file)
         flag = self.apply_template(
             template_abs_path, template, data, output_file
@@ -230,7 +230,7 @@ class MobanEngine(object):
 
 
 def expand_template_directories(dirs):
-    LOG.debug("Expanding %s..." % dirs)
+    LOG.debug(f"Expanding {dirs}...")
     if not isinstance(dirs, list):
         dirs = [dirs]
 
