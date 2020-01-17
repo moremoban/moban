@@ -27,9 +27,9 @@ path_splitext = fs.path.splitext
 def url_join(path, path2):
     result = urlparse(path)
     if result.scheme and path.endswith(result.scheme):
-        return path + to_unicode("!/") + path2
+        return f"{path}!/{path2}"
     else:
-        return path + to_unicode("/") + path2
+        return f"{path}/{path2}"
 
 
 def log_fs_failure(function_in_this_module):
@@ -53,7 +53,6 @@ def log_fs_failure(function_in_this_module):
 @log_fs_failure
 @contextmanager
 def open_fs(path):
-    path = to_unicode(path)
     if is_zip_alike_url(path):
         zip_file, folder = url_split(path)
         the_fs = fs.open_fs(zip_file)
@@ -68,7 +67,6 @@ def open_fs(path):
 @log_fs_failure
 @contextmanager
 def open_file(path):
-    path = to_unicode(path)
     if is_zip_alike_url(path):
         zip_file, folder = url_split(path)
         the_fs = fs.open_fs(zip_file)
@@ -88,7 +86,6 @@ def open_file(path):
 @log_fs_failure
 @contextmanager
 def open_binary_file(path):
-    path = to_unicode(path)
     if is_zip_alike_url(path):
         zip_file, folder = url_split(path)
         the_fs = fs.open_fs(zip_file)
@@ -123,7 +120,6 @@ read_text = read_unicode
 
 @log_fs_failure
 def write_bytes(filename, bytes_content):
-    filename = to_unicode(filename)
     if "://" in filename:
         zip_file, folder = url_split(filename)
         with fs.open_fs(zip_file, create=True) as the_fs:
@@ -150,8 +146,6 @@ def is_file(path):
 
 
 def exists(path):
-    path = to_unicode(path)
-
     if is_zip_alike_url(path):
         zip_file, folder = url_split(path)
         try:
@@ -179,7 +173,6 @@ def exists(path):
 
 @log_fs_failure
 def list_dir(path):
-    path = to_unicode(path)
     folder_or_file, path = _path_split(path)
     with fs.open_fs(folder_or_file) as the_fs:
         for file_name in the_fs.listdir(path):
@@ -188,7 +181,6 @@ def list_dir(path):
 
 @log_fs_failure
 def abspath(path):
-    path = to_unicode(path)
     folder_or_file, path = _path_split(path)
     with fs.open_fs(folder_or_file) as the_fs:
         return the_fs.getsyspath(path)
@@ -196,7 +188,6 @@ def abspath(path):
 
 @log_fs_failure
 def fs_url(path):
-    path = to_unicode(path)
     folder_or_file, path = _path_split(path)
     with fs.open_fs(folder_or_file) as the_fs:
         return the_fs.geturl(path, purpose="fs")
@@ -204,15 +195,12 @@ def fs_url(path):
 
 @log_fs_failure
 def system_path(path):
-    path = to_unicode(path)
     folder_or_file, path = _path_split(path)
     with fs.open_fs(folder_or_file) as the_fs:
         return the_fs.getsyspath(path)
 
 
 def to_unicode(path):
-    if PY2 and path.__class__.__name__ != "unicode":
-        return u"".__class__(path)
     return path
 
 
@@ -258,7 +246,6 @@ def url_split(url):
 
 
 def _path_split(url_or_path):
-    url_or_path = to_unicode(url_or_path)
     if is_zip_alike_url(url_or_path):
         return url_split(url_or_path)
     else:

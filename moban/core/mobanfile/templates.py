@@ -10,7 +10,7 @@ LOG = logging.getLogger(__name__)
 def handle_template(template_file, output, template_dirs):
     LOG.info("handling %s" % template_file)
 
-    template_file = file_system.to_unicode(template_file)
+    template_file = template_file
     multi_fs = file_system.get_multi_fs(template_dirs)
     if template_file.endswith("**"):
         source_dir = template_file[:-3]

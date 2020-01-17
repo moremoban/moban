@@ -12,9 +12,7 @@ class HashStore:
     IGNORE_CACHE_FILE = False
 
     def __init__(self):
-        self.cache_file = file_system.to_unicode(
-            constants.DEFAULT_MOBAN_CACHE_FILE
-        )
+        self.cache_file = constants.DEFAULT_MOBAN_CACHE_FILE
         if (
             file_system.exists(self.cache_file)
             and self.IGNORE_CACHE_FILE is False

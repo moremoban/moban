@@ -22,15 +22,11 @@ class BufferedWriter(object):
     def write_file_out_to_zip(self, filename, content):
         zip_file, file_name = file_system.url_split(filename)
         if zip_file not in self.fs_list:
-            self.fs_list[zip_file] = fs.open_fs(
-                file_system.to_unicode(zip_file), create=True
-            )
+            self.fs_list[zip_file] = fs.open_fs(zip_file, create=True)
         base_dirs = fs.path.dirname(file_name)
         if not self.fs_list[zip_file].exists(base_dirs):
             self.fs_list[zip_file].makedirs(base_dirs)
-        self.fs_list[zip_file].writebytes(
-            file_system.to_unicode(file_name), content
-        )
+        self.fs_list[zip_file].writebytes(file_name, content)
 
     def close(self):
         for fsx in self.fs_list.values():

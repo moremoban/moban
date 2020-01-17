@@ -117,7 +117,6 @@ class MobanEngine(object):
         return self.templated_count
 
     def render_to_file(self, template_file, data_file, output_file):
-        template_file = file_system.to_unicode(template_file)
         data = self.context.get_data(data_file)
         template = self.engine.get_template(template_file)
         try:
@@ -178,7 +177,7 @@ class MobanEngine(object):
             return flag
         except exceptions.FileNotFound:
             # the template is a string from command line
-            LOG.info("{} is not a file".format(template_abs_path))
+            LOG.info(f"{template_abs_path} is not a file")
             self.buffered_writer.write_file_out(output_file, rendered_content)
             return True
 
@@ -197,7 +196,7 @@ class MobanEngine(object):
         for (template_file, data_output_pairs) in template_file_index.items():
             template = self.engine.get_template(template_file)
             template_abs_path = self.template_fs.geturl(
-                file_system.to_unicode(template_file), purpose="fs"
+                template_file, purpose="fs"
             )
             for (data_file, output) in data_output_pairs:
                 data = self.context.get_data(data_file)
@@ -217,7 +216,7 @@ class MobanEngine(object):
             for (template_file, output) in template_output_pairs:
                 template = self.engine.get_template(template_file)
                 template_abs_path = self.template_fs.geturl(
-                    file_system.to_unicode(template_file), purpose="fs"
+                    template_file, purpose="fs"
                 )
                 flag = self.apply_template(
                     template_abs_path, template, data, output
@@ -240,7 +239,7 @@ def expand_template_directories(dirs):
 
 
 def expand_template_directory(directory):
-    LOG.debug("Expanding %s..." % directory)
+    LOG.debug(f"Expanding {directory}...")
     translated_directory = None
     if ":" in directory and directory[1] != ":" and "://" not in directory:
         translated_directory = deprecated_moban_path_notation(directory)
