@@ -58,6 +58,7 @@ def main():
             exceptions.DirectoryNotFound,
             exceptions.NoThirdPartyEngine,
             exceptions.MobanfileGrammarException,
+            exceptions.UnsupportedPyFS2Protocol,
         ) as e:
             LOG.exception(e)
             reporter.report_error_message(str(e))
@@ -66,7 +67,10 @@ def main():
         try:
             count = handle_command_line(options)
             moban_exit(options[constants.LABEL_EXIT_CODE], count)
-        except exceptions.NoTemplate as e:
+        except (
+            exceptions.NoTemplate,
+            exceptions.UnsupportedPyFS2Protocol,
+        ) as e:
             reporter.report_error_message(str(e))
             moban_exit(options[constants.LABEL_EXIT_CODE], constants.ERROR)
 

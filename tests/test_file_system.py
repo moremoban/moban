@@ -8,7 +8,7 @@ from nose import SkipTest
 from nose.tools import eq_, raises
 
 from moban.externals import file_system
-from moban.exceptions import FileNotFound
+from moban.exceptions import FileNotFound, UnsupportedPyFS2Protocol
 
 LOCAL_FOLDER = "tests/fixtures"
 LOCAL_FILE = LOCAL_FOLDER + "/a.jj2"
@@ -123,6 +123,16 @@ def test_exists():
     for url, expected in TEST_URL_EXITENCE_SPEC:
         status = file_system.exists(url)
         eq_(status, expected)
+
+
+@raises(UnsupportedPyFS2Protocol)
+def test_exists_raise_exception():
+    file_system.exists("git2://protocol/abc")
+
+
+@raises(UnsupportedPyFS2Protocol)
+def test_is_file_raise_exception():
+    file_system.is_file("git2://protocol/abc")
 
 
 TEST_LIST_DIR_SPEC = [

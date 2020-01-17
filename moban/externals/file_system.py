@@ -37,12 +37,15 @@ def log_fs_failure(function_in_this_module):
         try:
             return function_in_this_module(*args, **kwds)
         except fs.errors.CreateFailed:
-            from moban import reporter
+            from moban.externals import reporter
 
             message = "Failed to open %s" % args[0]
             LOG.debug(message)
             reporter.report_error_message(message)
             raise exceptions.FileNotFound(args[0])
+        except fs.opener.errors.UnsupportedProtocol as e:
+            LOG.exception(e)
+            raise exceptions.UnsupportedPyFS2Protocol(e)
 
     return wrapper
 
@@ -146,7 +149,6 @@ def is_file(path):
         return the_fs.isfile(path)
 
 
-@log_fs_failure
 def exists(path):
     path = to_unicode(path)
 
@@ -159,6 +161,9 @@ def exists(path):
                 return True
         except fs.errors.CreateFailed:
             return False
+        except fs.opener.errors.UnsupportedProtocol as e:
+            LOG.exception(e)
+            raise exceptions.UnsupportedPyFS2Protocol(e)
     dir_name = fs.path.dirname(path)
     the_file_name = fs.path.basename(path)
 
@@ -167,6 +172,9 @@ def exists(path):
             return the_fs.exists(the_file_name)
     except fs.errors.CreateFailed:
         return False
+    except fs.opener.errors.UnsupportedProtocol as e:
+        LOG.exception(e)
+        raise exceptions.UnsupportedPyFS2Protocol(e)
 
 
 @log_fs_failure
