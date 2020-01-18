@@ -82,9 +82,6 @@ def moban_exit(exit_code_toggle_flag, exit_code):
 
 
 def create_parser():
-    """
-    construct the program options
-    """
     parser = argparse.ArgumentParser(
         prog=constants.PROGRAM_NAME, description=constants.PROGRAM_DESCRIPTION
     )
@@ -109,13 +106,13 @@ def create_parser():
     )
     advanced.add_argument(
         "-td",
-        "--%s" % constants.LABEL_TMPL_DIRS,
+        f"--{constants.LABEL_TMPL_DIRS}",
         nargs="*",
         help="add more directories for template file lookup",
     )
     advanced.add_argument(
         "-cd",
-        "--%s" % constants.LABEL_CONFIG_DIR,
+        f"--{constants.LABEL_CONFIG_DIR}",
         help="the directory for configuration file lookup",
     )
     advanced.add_argument(
@@ -125,12 +122,12 @@ def create_parser():
         "-g", "--%s" % constants.LABEL_GROUP, help="a subset of targets"
     )
     advanced.add_argument(
-        "--%s" % constants.LABEL_TEMPLATE_TYPE.replace("_", "-"),
+        f"--{constants.LABEL_TEMPLATE_TYPE.replace('_', '-')}",
         help="the template type, default is jinja2",
     )
     advanced.add_argument(
         "-d",
-        "--%s" % constants.LABEL_DEFINE,
+        f"--{constants.LABEL_DEFINE}",
         nargs="+",
         help=(
             "to supply additional or override predefined variables,"
@@ -139,7 +136,7 @@ def create_parser():
     )
     advanced.add_argument(
         "-e",
-        "--%s" % constants.LABEL_EXTENSION,
+        f"--{constants.LABEL_EXTENSION}",
         nargs="+",
         help="to to TEMPLATE_TYPE=EXTENSION_NAME",
     )
@@ -154,7 +151,7 @@ def create_parser():
         "Developer options", "For debugging and development"
     )
     developer.add_argument(
-        "--%s" % constants.LABEL_EXIT_CODE,
+        f"--{constants.LABEL_EXIT_CODE}",
         action="store_true",
         dest=constants.LABEL_EXIT_CODE,
         default=False,
@@ -162,7 +159,7 @@ def create_parser():
     )
     developer.add_argument(
         "-V",
-        "--%s" % constants.LABEL_VERSION,
+        f"--{constants.LABEL_VERSION}",
         action="version",
         version="%(prog)s {v}".format(v=__version__),
     )
