@@ -28,6 +28,17 @@ mó bǎn - 模板 Any template, any data in any location
 :License: MIT
 
 
+Announcement
+================================================================================
+
+For existing moban users, python 2 support has been dropped. Please stay with
+versions lower than 0.7.0 if you are still using python 2.
+
+From 2020 onwards, minimum requirement is Python 3.6
+
+Introduction
+================================================================================
+
 **moban** started with bringing the high performance template engine (JINJA2) for web
 into static text generation. It has been used in `pyexcel` and `coala` project to keep
 documentation consistent across the documentations of individual libraries in the same
