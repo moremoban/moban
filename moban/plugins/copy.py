@@ -1,7 +1,6 @@
 from lml.plugin import PluginInfo
 
 from moban import constants
-from moban.externals import file_system
 
 
 @PluginInfo(
@@ -28,9 +27,7 @@ class ContentForwardEngine(object):
         self.template_fs = template_fs
 
     def get_template(self, template_file):
-        return self.template_fs.readbytes(
-            file_system.to_unicode(template_file)
-        )
+        return self.template_fs.readbytes(template_file)
 
     def get_template_from_string(self, string):
         return string

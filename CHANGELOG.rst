@@ -1,6 +1,21 @@
 Change log
 ================================================================================
 
+0.7.0 - 18.01.2020
+--------------------------------------------------------------------------------
+
+**Removed**
+
+#. `#360 <https://github.com/moremoban/moban/issues/360>`_: make gitfs2 and
+   pypifs optional.
+#. `#303 <https://github.com/moremoban/moban/issues/303>`_: python 2.7 support
+   is dropped.
+
+**Updated**
+
+#. `#360 <https://github.com/moremoban/moban/issues/360>`_: show friendlier
+   error when unknown protocol exception was raised.
+
 0.6.8 - 7.12.2019
 --------------------------------------------------------------------------------
 

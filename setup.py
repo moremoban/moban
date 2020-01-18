@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 
-# Template by pypi-mobans
+"""
+Template by pypi-mobans
+"""
+
+import os
+import sys
 import codecs
 import locale
-import os
 import platform
-import sys
 from shutil import rmtree
 
-from setuptools import Command, find_packages, setup
+from setuptools import Command, setup, find_packages
 from setuptools import __version__ as setuptools_version
 from pkg_resources import parse_version
 
@@ -38,7 +41,7 @@ except (ValueError, UnicodeError, locale.Error):
 
 NAME = "moban"
 AUTHOR = "C. W."
-VERSION = "0.6.8"
+VERSION = "0.7.0"
 EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
 ENTRY_POINTS = {
@@ -47,10 +50,10 @@ ENTRY_POINTS = {
     ],
 }
 DESCRIPTION = (
-    "Yet another jinja2 cli command for static text generation"
+    "General purpose static text generator"
 )
 URL = "https://github.com/moremoban/moban"
-DOWNLOAD_URL = "%s/archive/0.6.8.tar.gz" % URL
+DOWNLOAD_URL = "%s/archive/0.7.0.tar.gz" % URL
 FILES = ["README.rst", "CONTRIBUTORS.rst", "CHANGELOG.rst"]
 KEYWORDS = [
     "python",
@@ -68,12 +71,12 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 3.4",
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
-
     "Programming Language :: Python :: 3.7",
-
     "Programming Language :: Python :: 3.8",
 
 ]
+
+PYTHON_REQUIRES = ">=3.6"
 
 INSTALL_REQUIRES = [
     "jinja2>=2.7.1",
@@ -81,14 +84,11 @@ INSTALL_REQUIRES = [
     "appdirs>=1.4.3",
     "crayons>= 0.1.0",
     "fs>=2.4.11",
-    "gitfs2>=0.0.2",
-    "pypifs>=0.0.1",
     "jinja2-fsloader>=0.2.0",
 ]
 SETUP_COMMANDS = {}
 
-
-PACKAGES = find_packages(exclude=["ez_setup", "examples", "tests"])
+PACKAGES = find_packages(exclude=["ez_setup", "examples", "tests", "tests.*"])
 EXTRAS_REQUIRE = {
     ":python_version == '3.4'": ["ruamel.yaml>=0.15.5,<=0.15.94"],
     ":python_version == '3.7'": ["ruamel.yaml>=0.15.42"],
@@ -97,8 +97,8 @@ EXTRAS_REQUIRE = {
 }
 # You do not need to read beyond this line
 PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(sys.executable)
-GS_COMMAND = ("gs moban v0.6.8 " +
-              "Find 0.6.8 in changelog for more details")
+GS_COMMAND = ("gs moban v0.7.0 " +
+              "Find 0.7.0 in changelog for more details")
 NO_GS_MESSAGE = ("Automatic github release is disabled. " +
                  "Please install gease to enable it.")
 UPLOAD_FAILED_MSG = (
@@ -260,6 +260,7 @@ if __name__ == "__main__":
         long_description=read_files(*FILES),
         license=LICENSE,
         keywords=KEYWORDS,
+        python_requires=PYTHON_REQUIRES,
         extras_require=EXTRAS_REQUIRE,
         tests_require=["nose"],
         install_requires=INSTALL_REQUIRES,

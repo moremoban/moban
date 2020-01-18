@@ -98,6 +98,36 @@ class TestException:
     @patch("os.path.exists")
     @patch("moban.main.handle_moban_file")
     @patch("moban.externals.reporter.report_error_message")
+    def test_unknown_protocol(self, fake_reporter, fake_moban_file, fake_file):
+        fake_file.return_value = True
+        fake_moban_file.side_effect = exceptions.UnsupportedPyFS2Protocol
+        fake_stdin = MagicMock(isatty=MagicMock(return_value=True))
+        with patch.object(sys, "stdin", fake_stdin):
+            from moban.main import main
+
+            with patch.object(sys, "argv", ["moban"]):
+                main()
+
+    @raises(SystemExit)
+    @patch("os.path.exists")
+    @patch("moban.main.handle_command_line")
+    @patch("moban.externals.reporter.report_error_message")
+    def test_unknown_protocol_at_command_line(
+        self, fake_reporter, fake_moban_file, fake_file
+    ):
+        fake_file.return_value = False
+        fake_moban_file.side_effect = exceptions.UnsupportedPyFS2Protocol
+        fake_stdin = MagicMock(isatty=MagicMock(return_value=True))
+        with patch.object(sys, "stdin", fake_stdin):
+            from moban.main import main
+
+            with patch.object(sys, "argv", ["moban"]):
+                main()
+
+    @raises(SystemExit)
+    @patch("os.path.exists")
+    @patch("moban.main.handle_moban_file")
+    @patch("moban.externals.reporter.report_error_message")
     def test_no_third_party_engine(
         self, fake_reporter, fake_moban_file, fake_file
     ):

@@ -1,5 +1,5 @@
 ================================================================================
-moban - 模板 Any template, any data in any location
+mó bǎn - 模板 General purpose static text generator
 ================================================================================
 
 .. image:: https://api.travis-ci.org/moremoban/moban.svg?branch=master
@@ -28,6 +28,17 @@ moban - 模板 Any template, any data in any location
 :License: MIT
 
 
+Announcement
+================================================================================
+
+For existing moban users, python 2 support has been dropped. Please stay with
+versions lower than 0.7.0 if you are still using python 2.
+
+From 2020 onwards, minimum requirement is Python 3.6
+
+Introduction
+================================================================================
+
 **moban** started with bringing the high performance template engine (JINJA2) for web
 into static text generation. It has been used in `pyexcel` and `coala` project to keep
 documentation consistent across the documentations of individual libraries in the same
@@ -37,6 +48,11 @@ organisation.
 haml, slim and tornado, can read other data format: json and yaml, and can access both
 template file and configuration file in
 any location: zip, git, pypi package, s3, etc.
+
+Vision
+================================================================================
+
+Any template, any data in any location
 
 Support
 ================================================================================
@@ -49,6 +65,11 @@ the project and develop it further.
 With your financial support, I will be able to invest
 a little bit more time in coding, documentation and writing interesting extensions.
 
+Credit
+================================================================================
+
+`jinja2-fsloader` is the key component to enable PyFilesystem2 support in moban
+v0.6x. Please show your stars there too!
 
 Installation
 ================================================================================
@@ -129,7 +150,8 @@ All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tuto
 Work with files in a git repo
 ================================================================================
 
-`gitfs2 <https://github.com/moremoban/gitfs2>`_ is installed by default since v0.6.1
+`gitfs2 <https://github.com/moremoban/gitfs2>`_ is optional since v0.7.0 but was
+installed by default since v0.6.1
 
 
 You can do the following with moban:
@@ -150,7 +172,8 @@ You can do the following with moban:
 Work with files in a python package
 ================================================================================
 
-`pypifs <https://github.com/moremoban/pypifs>`_ is installed by default since v0.6.1
+`pypifs <https://github.com/moremoban/pypifs>`_ is optional since v0.7.0 but
+was installed by default since v0.6.1
 
 You can do the following with moban:
 
