@@ -1,11 +1,8 @@
-import sys
 import json
 import hashlib
 
 from moban import constants
 from moban.externals import file_system
-
-PY2 = sys.version_info[0] == 2
 
 
 class HashStore:
@@ -66,13 +63,10 @@ def get_file_hash(afile):
 
 def get_hash(content):
     md5 = hashlib.md5()
-    if PY2 and content.__class__.__name__ == "unicode":
-        content = content.encode("utf-8")
     md5.update(content)
     return md5.digest().decode("latin1")
 
 
 def _mix(content, file_permissions_copy):
-    if not PY2:
-        file_permissions_copy = file_permissions_copy.encode("utf-8")
+    file_permissions_copy = file_permissions_copy.encode("utf-8")
     return content + file_permissions_copy

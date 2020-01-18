@@ -17,7 +17,6 @@ except ImportError:
     from urlparse import urlparse
 
 
-PY2 = sys.version_info[0] == 2
 LOG = logging.getLogger(__name__)
 
 path_join = fs.path.join

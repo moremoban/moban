@@ -4,7 +4,7 @@
 
     Bring jinja2 to command line
 
-    :copyright: (c) 2016-2019 by Onni Software Ltd.
+    :copyright: (c) 2016-2020 by Onni Software Ltd.
     :license: MIT License, see LICENSE for more details
 
 """
@@ -32,9 +32,6 @@ LOG_LEVEL = [logging.ERROR, logging.WARNING, logging.INFO, logging.DEBUG]
 
 
 def main():
-    """
-    program entry point
-    """
     parser = create_parser()
     options = vars(parser.parse_args())
     handle_verbose(options[constants.LABEL_VERBOSE])

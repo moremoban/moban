@@ -6,8 +6,6 @@ import fs.path
 
 from moban.externals import file_system
 
-PY2 = sys.version_info[0] == 2
-
 
 class BufferedWriter(object):
     def __init__(self):
@@ -34,9 +32,6 @@ class BufferedWriter(object):
 
 
 def write_file_out(filename, content):
-    if PY2 and content.__class__.__name__ == "unicode":
-        content = content.encode("utf-8")
-
     if not file_system.is_zip_alike_url(filename):
         dest_folder = os.path.dirname(filename)
         if dest_folder:
