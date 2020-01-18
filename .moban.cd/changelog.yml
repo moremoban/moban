@@ -9,7 +9,7 @@ releases:
       - action: Updated
         details:
           - "`#360`: show friendlier error when unknown protocol exception was raised."
-    date: tbd
+    date: 18.01.2020
     version: 0.7.0
   - changes:
       - action: Updated
