@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 DESCRIPTION = (
-    'Yet another jinja2 cli command for static text generation' +
+    'General purpose static text generator' +
     ''
 )
 # Configuration file for the Sphinx documentation builder.

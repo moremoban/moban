@@ -1,5 +1,5 @@
 ================================================================================
-mó bǎn - 模板 Any template, any data in any location
+mó bǎn - 模板 General purpose static text generator
 ================================================================================
 
 .. image:: https://api.travis-ci.org/moremoban/moban.svg?branch=master
@@ -48,6 +48,11 @@ organisation.
 haml, slim and tornado, can read other data format: json and yaml, and can access both
 template file and configuration file in
 any location: zip, git, pypi package, s3, etc.
+
+Vision
+================================================================================
+
+Any template, any data in any location
 
 Support
 ================================================================================

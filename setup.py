@@ -50,7 +50,7 @@ ENTRY_POINTS = {
     ],
 }
 DESCRIPTION = (
-    "Yet another jinja2 cli command for static text generation"
+    "General purpose static text generator"
 )
 URL = "https://github.com/moremoban/moban"
 DOWNLOAD_URL = "%s/archive/0.7.0.tar.gz" % URL
