@@ -21,13 +21,13 @@ stages:
   cache: false
   env: {}
   python: false
-  before_install: false
-  install: false
-  before_script: false
-  script: false
-  after_success: false
-  after_failure: false
-  before_deploy: false
+  before_install: []
+  install: []
+  before_script: []
+  script: []
+  after_success: []
+  after_failure: []
+  before_deploy: []
   deploy: {}
 
 .lint: &lint
