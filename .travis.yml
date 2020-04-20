@@ -28,7 +28,7 @@ stages:
   after_success: false
   after_failure: false
   before_deploy: false
-  deploy: false
+  deploy: {}
 
 .lint: &lint
   <<: *disable_global
