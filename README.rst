@@ -27,6 +27,7 @@ mó bǎn - 模板 General purpose static text generator
 :Issues: http://github.com/moremoban/moban/issues
 :License: MIT
 
+.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-intro.gif
 
 Announcement
 ================================================================================
@@ -92,10 +93,6 @@ or clone it and install it:
 Quick start
 ================================================================================
 
-
-.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-intro.gif
-
-
 .. code-block:: bash
 
     $ export HELLO="world"
@@ -126,15 +123,21 @@ A bit formal example:
 	$ moban -c data.yml -t my.template
 	$ cat moban.output
 
-Given data.yml as::
+Given data.yml as:
+
+.. code-block:: bash
 
     hello: world
 
-and my.template as::
+and my.template as:
+
+.. code-block:: bash
 
     {{hello}}
 
-moban.output will contain::
+moban.output will contain:
+
+.. code-block:: bash
 
     world
 
