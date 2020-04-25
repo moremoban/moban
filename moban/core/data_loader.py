@@ -49,9 +49,7 @@ def load_data(base_dir, file_name):
                 try:
                     child_data = load_data(base_dir, file_name)
                 except IOError:
-                    LOG.warn(
-                        f"failed to load {file_name} in {base_dir}"
-                    )
+                    LOG.warn(f"failed to load {file_name} in {base_dir}")
                     child_data = {}
                 if data:
                     if key:

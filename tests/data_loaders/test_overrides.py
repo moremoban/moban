@@ -25,9 +25,7 @@ def test_overrides_a_list_of_config_files_but_cannot_find_them():
     base_dir = os.path.join("tests", "fixtures", "issue_126")
     actual = load_data(None, os.path.join(base_dir, "the_config.yaml"))
 
-    expected = [
-        ("key", "value"),
-    ]
+    expected = [("key", "value")]
     for item, expected_item in zip(actual.items(), expected):
         eq_(item, expected_item)
 
