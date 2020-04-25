@@ -8,7 +8,7 @@ releases:
 	     If you uses mobanfile as data configuration file,
 	     you are very likely to have this show stopper.
 	     Please upgrade to this version."
-    date: 18.01.2020
+    date: 25.04.2020
     version: 0.7.1
   - changes:
       - action: Removed
