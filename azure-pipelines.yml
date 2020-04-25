@@ -9,6 +9,6 @@ jobs:
       - template: '.azure-pipelines-steps.yml'
   - job: 'MacOS'
     pool:
-      vmImage: macOS-10.13
+      vmImage: macOS-10.15
     steps:
       - template: '.azure-pipelines-steps-macos.yml'
