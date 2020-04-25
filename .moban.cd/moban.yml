@@ -4,16 +4,16 @@ organisation: moremoban
 author: C. W.
 contact: wangc_2011@hotmail.com
 license: MIT
-version: 0.7.0
-current_version: 0.7.0
+version: 0.7.1
+current_version: 0.7.1
 release: 0.7.0
 branch: master
 master: index
 command_line_interface: "moban"
 entry_point: "moban.main:main"
 company: Onni Software Ltd.
-copyright_year: 2017-2019
-copyright: 2017-2019 Onni Software Ltd. and its contributors
+copyright_year: 2017-2020
+copyright: 2017-2020 Onni Software Ltd. and its contributors
 keywords:
   - jinja2
   - moban

@@ -1,6 +1,15 @@
 Change log
 ================================================================================
 
+0.7.1 - 18.01.2020
+--------------------------------------------------------------------------------
+
+**Fixed**
+
+#. `#365 <https://github.com/moremoban/moban/issues/365>`_: regression was
+   introduced by v0.6.5. If you uses mobanfile as data configuration file, you
+   are very likely to have this show stopper. Please upgrade to this version.
+
 0.7.0 - 18.01.2020
 --------------------------------------------------------------------------------
 

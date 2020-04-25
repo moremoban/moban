@@ -1,3 +1,4 @@
+import logging
 from collections import OrderedDict
 
 from lml.plugin import PluginManager
@@ -5,6 +6,8 @@ from ruamel.yaml.comments import CommentedSeq
 
 from moban import constants
 from moban.externals import file_system
+
+LOG = logging.getLogger()
 
 
 class AnyDataLoader(PluginManager):
@@ -28,7 +31,6 @@ LOADER = AnyDataLoader()
 
 
 def load_data(base_dir, file_name):
-
     abs_file_path = search_file(base_dir, file_name)
     data = LOADER.get_data(abs_file_path)
     if data is not None:
@@ -44,7 +46,11 @@ def load_data(base_dir, file_name):
                     file_name, key = results
                 elif ":" in parent_file and "://" not in parent_file:
                     file_name, key = parent_file.split(":")
-                child_data = load_data(base_dir, file_name)
+                try:
+                    child_data = load_data(base_dir, file_name)
+                except IOError:
+                    LOG.warn(f"failed to load {file_name} in {base_dir}")
+                    child_data = {}
                 if data:
                     if key:
                         child_data = OrderedDict({key: child_data[key]})

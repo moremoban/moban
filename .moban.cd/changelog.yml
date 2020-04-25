@@ -2,6 +2,15 @@ name: moban
 organisation: moremoban
 releases:
   - changes:
+      - action: Fixed
+        details:
+          - "`#365`: regression was introduced by v0.6.5.
+	     If you uses mobanfile as data configuration file,
+	     you are very likely to have this show stopper.
+	     Please upgrade to this version."
+    date: 18.01.2020
+    version: 0.7.1
+  - changes:
       - action: Removed
         details:
           - "`#360`: make gitfs2 and pypifs optional."

@@ -17,10 +17,10 @@ def test_inheritance_yaml():
     eq_(data, {"key": "hello world", "pass": "ox"})
 
 
-@raises(IOError)
 def test_exception():
     test_file = fs.path.join("tests", "fixtures", "orphan.yaml")
-    load_data(fs.path.join("tests", "fixtures", "config"), test_file)
+    data = load_data(fs.path.join("tests", "fixtures", "config"), test_file)
+    eq_(len(data), 0)
 
 
 @raises(IOError)

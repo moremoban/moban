@@ -1,6 +1,7 @@
 configuration:
   template_dir:
     - "git://github.com/moremoban/pypi-mobans.git?submodule=true&brach=dev!/templates"
+    - "git://github.com/moremoban/pypi-mobans.git?submodule=true&brach=dev!/statics"
     - ".moban.d"
   configuration: moban.yml
 targets:
@@ -15,3 +16,4 @@ targets:
     configuration: changelog.yml
     template: CHANGELOG.rst.jj2
   - min_requirements.txt: min_requirements.txt.jj2
+  - ".github/workflows/pythonpublish.yml": "pythonpublish.yml"
