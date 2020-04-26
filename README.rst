@@ -41,14 +41,24 @@ Introduction
 ================================================================================
 
 **moban** started with bringing the high performance template engine (JINJA2) for web
-into static text generation. It has been used in `pyexcel` and `coala` project to keep
-documentation consistent across the documentations of individual libraries in the same
-organisation.
+into static text generation. 
 
 **moban** can use other python template engine: mako, handlebars, velocity,
 haml, slim and tornado, can read other data format: json and yaml, and can access both
 template file and configuration file in
 any location: zip, git, pypi package, s3, etc.
+
+
+It has been used in `pyexcel <https://github.com/pyexcel/pyexcel>`_ and
+`coala <https://github.com//coala/coala>`_ project to keep
+documentation consistent across the documentations of individual libraries in the same
+organisation.
+
+And here is a list of other usages:
+
+1. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets
+   in pdf
+
 
 Vision
 ================================================================================
@@ -58,7 +68,7 @@ Any template, any data in any location
 Support
 ================================================================================
 
-If you like moban, please support me on `github <https://github.com/sponsors/chfw>`_,
+If you like moban, please support me on,
 `patreon <https://www.patreon.com/bePatron?u=5537627>`_
 or `bounty source <https://salt.bountysource.com/teams/chfw-pyexcel>`_ to maintain
 the project and develop it further.
@@ -69,7 +79,7 @@ a little bit more time in coding, documentation and writing interesting extensio
 Credit
 ================================================================================
 
-`jinja2-fsloader` is the key component to enable PyFilesystem2 support in moban
+`jinja2-fsloader <https://github.com/althonos/jinja2-fsloader>`_ is the key component to enable PyFilesystem2 support in moban
 v0.6x. Please show your stars there too!
 
 Installation
