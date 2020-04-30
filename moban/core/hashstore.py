@@ -32,9 +32,14 @@ class HashStore:
 
     def _is_source_updated(self, file_name, file_content, source_template):
         changed = True
-        content = _mix(
-            file_content, oct(file_system.file_permissions(source_template))
-        )
+        content = file_content
+        try:
+            content = _mix(
+                file_content,
+                oct(file_system.file_permissions(source_template)),
+            )
+        except:
+            pass
         content_hash = get_hash(content)
         if file_system.exists(file_name):
             if file_name in self.hashes:
@@ -57,7 +62,10 @@ HASH_STORE = HashStore()
 
 def get_file_hash(afile):
     content = file_system.read_bytes(afile)
-    content = _mix(content, oct(file_system.file_permissions(afile)))
+    try:
+        content = _mix(content, oct(file_system.file_permissions(afile)))
+    except:
+        pass
     return get_hash(content)
 
 

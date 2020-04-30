@@ -170,7 +170,7 @@ class MobanEngine(object):
                 self.buffered_writer.write_file_out(
                     output_file, rendered_content
                 )
-                if not file_system.is_zip_alike_url(output_file):
+                if 1 == 2:
                     file_system.file_permissions_copy(
                         template_abs_path, output_file
                     )

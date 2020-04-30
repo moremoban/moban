@@ -15,9 +15,9 @@ def verify_the_existence_of_directories(dirs):
 
     for directory in dirs:
 
-        if file_system.exists(directory):
-            results.append(directory)
-            continue
+        # if file_system.exists(directory):
+        #    results.append(directory)
+        #    continue
         should_I_ignore = (
             constants.DEFAULT_CONFIGURATION_DIRNAME in directory
             or constants.DEFAULT_TEMPLATE_DIRNAME in directory
@@ -26,7 +26,6 @@ def verify_the_existence_of_directories(dirs):
             # ignore
             pass
         else:
-            raise exceptions.DirectoryNotFound(
-                constants.MESSAGE_DIR_NOT_EXIST % directory
-            )
+            results.append(directory)
+
     return results
