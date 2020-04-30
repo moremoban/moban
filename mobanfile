@@ -1,6 +1,7 @@
 configuration:
   template_dir:
-    - "https://raw.githubusercontent.com/moremoban/pypi-mobans/dev/templates/"
+    - "git://github.com/moremoban/pypi-mobans.git?submodule=true&brach=dev!/templates"
+    - "git://github.com/moremoban/pypi-mobans.git?submodule=true&brach=dev!/statics"
     - ".moban.d"
   configuration: moban.yml
 targets:
