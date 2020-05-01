@@ -32,3 +32,11 @@ class NoGitCommand(Exception):
 
 class UnsupportedPyFS2Protocol(Exception):
     pass
+
+
+class NoPermissionsNeeded(Exception):
+    pass
+
+
+class SingleHTTPURLConstraint(Exception):
+    pass

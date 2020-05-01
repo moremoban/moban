@@ -56,6 +56,7 @@ organisation.
 
 And here is a list of other usages:
 
+1. `Django Mobans <https://github.com/django-mobans>`_, templates for django, docker etc.
 1. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets
    in pdf
 
@@ -160,7 +161,23 @@ Moban in live action:
 All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
 
 
-Work with files in a git repo
+Templates and configuration files over HTTP(S)
+================================================================================
+
+`httpfs <https://github.com/moremoban/httpfs>`_ should be installed first.
+
+.. code-block:: bash
+
+    $ moban -t 'https://raw.githubusercontent.com/moremoban/pypi-mobans/dev/templates/_version.py.jj2'\
+      -c 'https://raw.githubusercontent.com/moremoban/pypi-mobans/dev/config/data.yml'\
+      -o _version.py
+
+
+In an edge case, if github repo's public url is given,
+this github repo shall not have sub repos. This library will fail to
+translate sub-repo as url. No magic.
+
+Templates and configuration files in a git repo
 ================================================================================
 
 `gitfs2 <https://github.com/moremoban/gitfs2>`_ is optional since v0.7.0 but was
@@ -182,7 +199,7 @@ You can do the following with moban:
     __author__ = "C.W."
 
 
-Work with files in a python package
+Templates and configuration files in a python package
 ================================================================================
 
 `pypifs <https://github.com/moremoban/pypifs>`_ is optional since v0.7.0 but
