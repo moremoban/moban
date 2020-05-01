@@ -1,6 +1,7 @@
 import logging
 
 from moban import constants
+from moban.externals import file_system
 
 LOG = logging.getLogger(__name__)
 
@@ -9,7 +10,7 @@ def verify_the_existence_of_directories(dirs):
     if not isinstance(dirs, list):
         dirs = [dirs]
 
-    return [
+    dirs = [
         directory
         for directory in dirs
         if not (
@@ -17,3 +18,9 @@ def verify_the_existence_of_directories(dirs):
             or constants.DEFAULT_TEMPLATE_DIRNAME in directory
         )
     ]
+    if file_system.exists(constants.DEFAULT_CONFIGURATION_DIRNAME):
+        dirs.append(constants.DEFAULT_CONFIGURATION_DIRNAME)
+
+    if file_system.exists(constants.DEFAULT_TEMPLATE_DIRNAME):
+        dirs.append(constants.DEFAULT_TEMPLATE_DIRNAME)
+    return dirs
