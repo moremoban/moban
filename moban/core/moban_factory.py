@@ -175,8 +175,10 @@ class MobanEngine(object):
                         file_system.file_permissions_copy(
                             template_abs_path, output_file
                         )
-                    except NoSysPath:
+                    except exceptions.NoPermissionsNeeded:
                         # HttpFs does not have getsyspath
+                        # zip, tar have no permission
+                        # win32 does not work
                         pass
             return flag
         except exceptions.FileNotFound:
