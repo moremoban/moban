@@ -1,13 +1,13 @@
 Change log
 ================================================================================
 
-0.7.2 - tbd
+0.7.2 - 1.5.2020
 --------------------------------------------------------------------------------
 
 **Added**
 
-#. Partial support for templates and configuration files over HTTP(S) protocol
-   with httpfs.
+#. Support for templates and configuration files over HTTP(S) protocol with
+   httpfs! Yepee!
 
 0.7.1 - 25.04.2020
 --------------------------------------------------------------------------------

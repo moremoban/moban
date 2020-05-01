@@ -173,6 +173,10 @@ Templates and configuration files over HTTP(S)
       -o _version.py
 
 
+In an edge case, if github repo's public url is given,
+this github repo shall not have sub repos. This library will fail to
+translate sub-repo as url. No magic.
+
 Templates and configuration files in a git repo
 ================================================================================
 
