@@ -224,12 +224,15 @@ def file_permissions(url):
     if not exists(url):
         raise exceptions.FileNotFound(url)
     if sys.platform == "win32":
-        return 0
+        raise exceptions.NoPermissionsNeeded()
     elif is_zip_alike_url(url):
-        return 755
+        raise exceptions.NoPermissionsNeeded()
     else:
-        unix_path = system_path(url)
-        return stat.S_IMODE(os.stat(unix_path).st_mode)
+        try:
+            unix_path = system_path(url)
+            return stat.S_IMODE(os.stat(unix_path).st_mode)
+        except fs.errors.NoSysPath:
+            raise exceptions.NoPermissionsNeeded()
 
 
 def url_split(url):

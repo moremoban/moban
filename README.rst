@@ -41,14 +41,25 @@ Introduction
 ================================================================================
 
 **moban** started with bringing the high performance template engine (JINJA2) for web
-into static text generation. It has been used in `pyexcel` and `coala` project to keep
-documentation consistent across the documentations of individual libraries in the same
-organisation.
+into static text generation. 
 
 **moban** can use other python template engine: mako, handlebars, velocity,
 haml, slim and tornado, can read other data format: json and yaml, and can access both
 template file and configuration file in
 any location: zip, git, pypi package, s3, etc.
+
+
+It has been used in `pyexcel <https://github.com/pyexcel/pyexcel>`_ and
+`coala <https://github.com//coala/coala>`_ project to keep
+documentation consistent across the documentations of individual libraries in the same
+organisation.
+
+And here is a list of other usages:
+
+1. `Django Mobans <https://github.com/django-mobans>`_, templates for django, docker etc.
+1. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets
+   in pdf
+
 
 Vision
 ================================================================================
@@ -58,7 +69,7 @@ Any template, any data in any location
 Support
 ================================================================================
 
-If you like moban, please support me on `github <https://github.com/sponsors/chfw>`_,
+If you like moban, please support me on,
 `patreon <https://www.patreon.com/bePatron?u=5537627>`_
 or `bounty source <https://salt.bountysource.com/teams/chfw-pyexcel>`_ to maintain
 the project and develop it further.
@@ -69,7 +80,7 @@ a little bit more time in coding, documentation and writing interesting extensio
 Credit
 ================================================================================
 
-`jinja2-fsloader` is the key component to enable PyFilesystem2 support in moban
+`jinja2-fsloader <https://github.com/althonos/jinja2-fsloader>`_ is the key component to enable PyFilesystem2 support in moban
 v0.6x. Please show your stars there too!
 
 Installation
@@ -150,7 +161,23 @@ Moban in live action:
 All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
 
 
-Work with files in a git repo
+Templates and configuration files over HTTP(S)
+================================================================================
+
+`httpfs <https://github.com/moremoban/httpfs>`_ should be installed first.
+
+.. code-block:: bash
+
+    $ moban -t 'https://raw.githubusercontent.com/moremoban/pypi-mobans/dev/templates/_version.py.jj2'\
+      -c 'https://raw.githubusercontent.com/moremoban/pypi-mobans/dev/config/data.yml'\
+      -o _version.py
+
+
+In an edge case, if github repo's public url is given,
+this github repo shall not have sub repos. This library will fail to
+translate sub-repo as url. No magic.
+
+Templates and configuration files in a git repo
 ================================================================================
 
 `gitfs2 <https://github.com/moremoban/gitfs2>`_ is optional since v0.7.0 but was
@@ -172,7 +199,7 @@ You can do the following with moban:
     __author__ = "C.W."
 
 
-Work with files in a python package
+Templates and configuration files in a python package
 ================================================================================
 
 `pypifs <https://github.com/moremoban/pypifs>`_ is optional since v0.7.0 but
