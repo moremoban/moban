@@ -43,6 +43,7 @@ def main():
     options[constants.EXTENSION_DICT] = handle_custom_extensions(
         options.pop(constants.LABEL_EXTENSION)
     )
+
     OPTIONS.update(options)
     moban_file = options[constants.LABEL_MOBANFILE]
     if moban_file is None:

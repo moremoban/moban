@@ -31,9 +31,24 @@ When you refer to it in configuration section, here is the syntax::
      template_dir:
        - "https://raw.githubusercontent.com/moremoban/pypi-mobans/dev/templates/"
 
-And the limitation is: you cannot have more than one http based url in the list
-of `template_dir`. 
-
 .. warn::
 
    The trailing '/' must be there.
+
+
+Maintenance note
+--------------------------------------------------------------------------------
+
+To the maintainer, in order to eat the dog food. Please checkout pypi-mobans
+and run a http server inside local pypi-mobans folder.
+
+Then update moban's mobanfile to::
+
+   configuration:
+     template_dir:
+       - "http://localhost:8000/templates/"
+       - "http://localhost:8000/statics/"
+       - ".moban.d"
+
+Then run `make update`
+

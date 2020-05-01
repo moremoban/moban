@@ -36,3 +36,7 @@ class UnsupportedPyFS2Protocol(Exception):
 
 class NoPermissionsNeeded(Exception):
     pass
+
+
+class SingleHTTPURLConstraint(Exception):
+    pass
