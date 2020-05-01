@@ -1,6 +1,7 @@
 import json
 import hashlib
 
+from fs.errors import NoSysPath
 from moban import constants
 from moban.externals import file_system
 
@@ -38,7 +39,8 @@ class HashStore:
                 file_content,
                 oct(file_system.file_permissions(source_template)),
             )
-        except:
+        except NoSysPath:
+            # HttpFs does not have getsyspath            
             pass
         content_hash = get_hash(content)
         if file_system.exists(file_name):
@@ -64,7 +66,8 @@ def get_file_hash(afile):
     content = file_system.read_bytes(afile)
     try:
         content = _mix(content, oct(file_system.file_permissions(afile)))
-    except:
+    except NoSysPath:
+        # HttpFs does not have getsyspath
         pass
     return get_hash(content)
 
