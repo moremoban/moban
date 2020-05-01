@@ -8,7 +8,6 @@ python:
   - 3.6
   - 3.8
 env:
-  - MINREQ=0
   - MINREQ=1
 
 stages:
