@@ -38,6 +38,7 @@ examples folder.
    level-21-copy-templates-into-an-alien-file-system/README.rst
    level-22-intermediate-targets/README.rst
    level-23-inherit-organisational-moban-file/README.rst
+   level-24-files-over-http/README.rst
 
 
 For more complex use case, please look at `its usage in pyexcel project <http://pyexcel.readthedocs.io/en/latest/guide.html>`_
