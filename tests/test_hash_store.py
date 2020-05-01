@@ -1,10 +1,12 @@
 import os
 import sys
+from unittest.mock import patch
 
 from nose import SkipTest
 
 from moban.externals import file_system
-from moban.core.hashstore import HashStore
+from moban.exceptions import NoPermissionsNeeded
+from moban.core.hashstore import HashStore, get_file_hash
 
 
 class TestHashStore:
@@ -17,6 +19,7 @@ class TestHashStore:
             "test content".encode("utf-8"),
             self.source_template,
         )
+        self.file_hash = get_file_hash(self.source_template)
 
     def tearDown(self):
         if os.path.exists(".moban.hashes"):
@@ -25,6 +28,21 @@ class TestHashStore:
     def test_simple_use_case(self):
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
+
+        hs.save_hashes()
+        assert flag is True
+
+    @patch("moban.core.hashstore.file_system.file_permissions")
+    def test_permission_check_failed(self, fake):
+        """
+        when system permission fails, both source hash and
+        target hash shall not use permission.
+        """
+        fake.side_effect = [NoPermissionsNeeded()]
+        hs = HashStore()
+        flag = hs.is_file_changed(*self.fixture)
+
+        assert hs.hashes["test.out"] != self.file_hash
         hs.save_hashes()
         assert flag is True
 

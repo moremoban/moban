@@ -1,5 +1,4 @@
 import os
-import sys
 import logging
 from collections import defaultdict
 
@@ -16,7 +15,6 @@ from moban.core.hashstore import HASH_STORE
 from moban.externals.buffered_writer import BufferedWriter
 
 LOG = logging.getLogger(__name__)
-PY3_ABOVE = sys.version_info[0] > 2
 
 
 class MobanFactory(PluginManager):
@@ -171,9 +169,15 @@ class MobanEngine(object):
                     output_file, rendered_content
                 )
                 if not file_system.is_zip_alike_url(output_file):
-                    file_system.file_permissions_copy(
-                        template_abs_path, output_file
-                    )
+                    try:
+                        file_system.file_permissions_copy(
+                            template_abs_path, output_file
+                        )
+                    except exceptions.NoPermissionsNeeded:
+                        # HttpFs does not have getsyspath
+                        # zip, tar have no permission
+                        # win32 does not work
+                        pass
             return flag
         except exceptions.FileNotFound:
             # the template is a string from command line

@@ -129,6 +129,11 @@ class TestTutorial(Docs):
         folder = "level-9-moban-dependency-as-pypi-package"
         self.run_moban(["moban"], folder, [("test.txt", expected)])
 
+    def test_level_24(self):
+        expected = "pypi-mobans: files over http protocol"
+        folder = "level-24-files-over-http"
+        self.run_moban(["moban"], folder, [("test.txt", expected)])
+
     def test_level_9_deprecated(self):
         expected = "pypi-mobans: moban dependency as pypi package"
         folder = "deprecated-level-9-moban-dependency-as-pypi-package"
