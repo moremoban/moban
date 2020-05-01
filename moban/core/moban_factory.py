@@ -1,5 +1,4 @@
 import os
-import sys
 import logging
 from collections import defaultdict
 
@@ -16,7 +15,6 @@ from moban.core.hashstore import HASH_STORE
 from moban.externals.buffered_writer import BufferedWriter
 
 LOG = logging.getLogger(__name__)
-PY3_ABOVE = sys.version_info[0] > 2
 
 
 class MobanFactory(PluginManager):

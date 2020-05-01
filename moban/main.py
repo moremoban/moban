@@ -12,6 +12,7 @@ import sys
 import logging
 import argparse
 import logging.config
+from io import StringIO
 from collections import defaultdict
 
 from ruamel.yaml import YAML
@@ -21,11 +22,6 @@ from moban.core import ENGINES, plugins, hashstore, mobanfile, data_loader
 from moban._version import __version__
 from moban.externals import reporter, file_system
 from moban.program_options import OPTIONS
-
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from io import StringIO
 
 LOG = logging.getLogger()
 LOG_LEVEL = [logging.ERROR, logging.WARNING, logging.INFO, logging.DEBUG]
