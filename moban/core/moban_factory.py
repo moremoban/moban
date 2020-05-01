@@ -3,7 +3,7 @@ import sys
 import logging
 from collections import defaultdict
 
-from fs.errors import ResourceNotFound, NoSysPath
+from fs.errors import NoSysPath, ResourceNotFound
 from lml.plugin import PluginManager
 
 from moban import constants, exceptions

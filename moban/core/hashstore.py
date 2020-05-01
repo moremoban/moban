@@ -2,6 +2,7 @@ import json
 import hashlib
 
 from fs.errors import NoSysPath
+
 from moban import constants
 from moban.externals import file_system
 
@@ -40,7 +41,7 @@ class HashStore:
                 oct(file_system.file_permissions(source_template)),
             )
         except NoSysPath:
-            # HttpFs does not have getsyspath            
+            # HttpFs does not have getsyspath
             pass
         content_hash = get_hash(content)
         if file_system.exists(file_name):
