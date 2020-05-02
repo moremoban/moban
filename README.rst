@@ -56,9 +56,8 @@ organisation.
 
 And here is a list of other usages:
 
-1. `Django Mobans <https://github.com/django-mobans>`_, templates for django, docker etc.
-1. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets
-   in pdf
+#. `Django Mobans <https://github.com/django-mobans>`_, templates for django, docker etc.
+#. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets in pdf
 
 
 Vision
