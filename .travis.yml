@@ -28,6 +28,8 @@ stages:
 .moban: &moban
   python: 3.6
   stage: moban
+  env:
+    - MINREQ=0
   install: pip install moban>=0.0.4 gitfs2 pypifs
   script: make update git-diff-check
 
