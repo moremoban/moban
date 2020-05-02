@@ -4,9 +4,9 @@ organisation: moremoban
 author: C. W.
 contact: wangc_2011@hotmail.com
 license: MIT
-version: 0.7.2
-current_version: 0.7.2
-release: 0.7.2
+version: 0.7.3
+current_version: 0.7.3
+release: 0.7.3
 branch: master
 master: index
 command_line_interface: "moban"
