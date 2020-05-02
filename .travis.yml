@@ -21,6 +21,8 @@ stages:
     submodules: false
   python: 3.6
   stage: lint
+  env:
+    - MINREQ=0
   script: make install_test format git-diff-check lint
 
 .moban: &moban
