@@ -35,3 +35,4 @@ moban_command: make update git-diff-check
 setup_use_markers: true
 setup_use_markers_fix: true
 python_requires: ">=3.6"
+min_python_version: "3.6"
