@@ -90,7 +90,6 @@ SETUP_COMMANDS = {}
 
 PACKAGES = find_packages(exclude=["ez_setup", "examples", "tests", "tests.*"])
 EXTRAS_REQUIRE = {
-    ":python_version == '3.4'": ["ruamel.yaml>=0.15.5,<=0.15.94"],
     ":python_version == '3.7'": ["ruamel.yaml>=0.15.42"],
     ":python_version != '3.4' and python_version < '3.7'": ["ruamel.yaml>=0.15.5"],
     ":python_version == '3.8'": ["ruamel.yaml>=0.15.98"],
