@@ -4,6 +4,12 @@ releases:
   - changes:
       - action: Added
         details:
+          - "Added continuous check in travis for setup.py descriptions. No impact to moban user."
+    date: 2.5.2020
+    version: 0.7.3
+  - changes:
+      - action: Added
+        details:
           - "Support for templates and configuration files over HTTP(S) protocol with httpfs! Yepee!"
     date: 1.5.2020
     version: 0.7.2
