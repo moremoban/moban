@@ -49,8 +49,8 @@ class MobanFactory(PluginManager):
         template_dirs = utils.verify_the_existence_of_directories(
             template_dirs
         )
-
         if template_type in self.options_registry:
+
             custom_engine_spec = self.options_registry[template_type]
             engine_cls = self.load_me_now(
                 custom_engine_spec[constants.TEMPLATE_TYPES_BASE_TYPE]
