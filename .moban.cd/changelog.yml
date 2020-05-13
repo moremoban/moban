@@ -2,11 +2,11 @@ name: moban
 organisation: moremoban
 releases:
   - changes:
-      - action: Added
+      - action: Fixed
         details:
-        - "`#378`: suppress stdout message from deprecated pip install.
-	  but please do not use and migrate deprecated`requires` syntax."
-    date: tbd
+          - "`#378`: suppress stdout message from deprecated pip install.
+	    but please do not use and migrate deprecated`requires` syntax."
+    date: 13.5.2020
     version: 0.7.4
   - changes:
       - action: Added

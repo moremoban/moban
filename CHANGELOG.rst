@@ -1,10 +1,10 @@
 Change log
 ================================================================================
 
-0.7.4 - tbd
+0.7.4 - 13.5.2020
 --------------------------------------------------------------------------------
 
-**Added**
+**Fixed**
 
 #. `#378 <https://github.com/moremoban/moban/issues/378>`_: suppress stdout
    message from deprecated pip install. but please do not use and migrate
