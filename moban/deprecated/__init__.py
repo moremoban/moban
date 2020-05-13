@@ -65,7 +65,8 @@ def pip_install(packages):
     import subprocess
 
     subprocess.check_call(
-        [sys.executable, "-m", "pip", "install", " ".join(packages)]
+        [sys.executable, "-m", "pip", "install", " ".join(packages)],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
     )
 
 

@@ -86,6 +86,7 @@ class Engine(object):
             ],  # get a copy of this global variable
         )
         self.template_loader = template_loader
+
         if options:
             if "extensions" in options:
                 extensions = options.pop("extensions")
