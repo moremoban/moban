@@ -1,5 +1,5 @@
 requires:
-  - pypi-mobans-pkg
+  - pypi-mobans-pkg==0.0.12
 configuration:
   configuration_dir: "setupmobans:config"
   template_dir:

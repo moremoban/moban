@@ -4,9 +4,9 @@ organisation: moremoban
 author: C. W.
 contact: wangc_2011@hotmail.com
 license: MIT
-version: 0.7.3
-current_version: 0.7.3
-release: 0.7.3
+version: 0.7.4
+current_version: 0.7.4
+release: 0.7.4
 branch: master
 master: index
 command_line_interface: "moban"
@@ -18,7 +18,6 @@ keywords:
   - jinja2
   - moban
 dependencies:
-  - ruamel.yaml>=0.15.5,<=0.15.94;python_version == '3.4'
   - ruamel.yaml>=0.15.42;python_version == '3.7'
   - ruamel.yaml>=0.15.5;python_version != '3.4' and python_version < '3.7'
   - ruamel.yaml>=0.15.98;python_version == '3.8'
@@ -35,3 +34,4 @@ moban_command: make update git-diff-check
 setup_use_markers: true
 setup_use_markers_fix: true
 python_requires: ">=3.6"
+min_python_version: "3.6"

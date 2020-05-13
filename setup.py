@@ -41,7 +41,7 @@ except (ValueError, UnicodeError, locale.Error):
 
 NAME = "moban"
 AUTHOR = "C. W."
-VERSION = "0.7.3"
+VERSION = "0.7.4"
 EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
 ENTRY_POINTS = {
@@ -53,7 +53,7 @@ DESCRIPTION = (
     "General purpose static text generator"
 )
 URL = "https://github.com/moremoban/moban"
-DOWNLOAD_URL = "%s/archive/0.7.3.tar.gz" % URL
+DOWNLOAD_URL = "%s/archive/0.7.4.tar.gz" % URL
 FILES = ["README.rst", "CONTRIBUTORS.rst", "CHANGELOG.rst"]
 KEYWORDS = [
     "python",
@@ -65,11 +65,11 @@ CLASSIFIERS = [
     "Topic :: Software Development :: Libraries",
     "Programming Language :: Python",
     "Intended Audience :: Developers",
-    "Programming Language :: Python :: 2.6",
-    "Programming Language :: Python :: 2.7",
-    "Programming Language :: Python :: 3.3",
-    "Programming Language :: Python :: 3.4",
-    "Programming Language :: Python :: 3.5",
+
+    "Programming Language :: Python :: 3 :: Only",
+
+
+
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
@@ -90,15 +90,14 @@ SETUP_COMMANDS = {}
 
 PACKAGES = find_packages(exclude=["ez_setup", "examples", "tests", "tests.*"])
 EXTRAS_REQUIRE = {
-    ":python_version == '3.4'": ["ruamel.yaml>=0.15.5,<=0.15.94"],
     ":python_version == '3.7'": ["ruamel.yaml>=0.15.42"],
     ":python_version != '3.4' and python_version < '3.7'": ["ruamel.yaml>=0.15.5"],
     ":python_version == '3.8'": ["ruamel.yaml>=0.15.98"],
 }
 # You do not need to read beyond this line
 PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(sys.executable)
-GS_COMMAND = ("gs moban v0.7.3 " +
-              "Find 0.7.3 in changelog for more details")
+GS_COMMAND = ("gs moban v0.7.4 " +
+              "Find 0.7.4 in changelog for more details")
 NO_GS_MESSAGE = ("Automatic github release is disabled. " +
                  "Please install gease to enable it.")
 UPLOAD_FAILED_MSG = (

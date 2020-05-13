@@ -7,7 +7,7 @@ flake8
 black;python_version>="3.6"
 isort;python_version>="3.6"
 moban-handlebars
-pypi-mobans-pkg
+pypi-mobans-pkg==0.0.12
 # arrow 0.14.0 doesnt support Python 3.4
 arrow<0.14.0;python_version=="3.4"
 arrow;python_version!="3.4"

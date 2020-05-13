@@ -17,7 +17,7 @@ MESSAGE_FILE_EXTENSION_NOT_NEEDED = "File extension is not required for ad-hoc\
 def report_templating(
     action_in_present_continuous_tense, source_file, destination_file
 ):
-    print(
+    do_print(
         MESSAGE_TEMPLATING.format(
             action_in_present_continuous_tense,
             crayons.yellow(source_file),
@@ -27,36 +27,36 @@ def report_templating(
 
 
 def report_no_action():
-    print(crayons.yellow(MESSAGE_NO_TEMPLATING, bold=True))
+    do_print(crayons.yellow(MESSAGE_NO_TEMPLATING, bold=True))
 
 
 def report_full_run(action_in_past_tense, file_count):
     figure = crayons.green(str(file_count), bold=True)
     message = MESSAGE_TEMPLATED_ALL.format(action_in_past_tense, figure)
-    print(_format_single(message, file_count))
+    do_print(_format_single(message, file_count))
 
 
 def report_partial_run(action_in_past_tense, file_count, total):
     figure = crayons.green(str(file_count), bold=True)
     total_figure = crayons.yellow(str(total), bold=True)
     message = MESSAGE_REPORT.format(action_in_past_tense, figure, total_figure)
-    print(_format_single(message, total))
+    do_print(_format_single(message, total))
 
 
 def report_error_message(message):
-    print(crayons.white("Error: ", bold=True) + crayons.red(message))
+    do_print(crayons.white("Error: ", bold=True) + crayons.red(message))
 
 
 def report_warning_message(message):
-    print(crayons.white("Warning: ", bold=True) + crayons.yellow(message))
+    do_print(crayons.white("Warning: ", bold=True) + crayons.yellow(message))
 
 
 def report_info_message(message):
-    print(crayons.white("Info: ") + crayons.green(message))
+    do_print(crayons.white("Info: ") + crayons.green(message))
 
 
 def report_up_to_date():
-    print(crayons.green(MESSAGE_UP_TO_DATE, bold=True))
+    do_print(crayons.green(MESSAGE_UP_TO_DATE, bold=True))
 
 
 def convert_to_shell_exit_code(number_of_templated_files):
@@ -69,12 +69,12 @@ def convert_to_shell_exit_code(number_of_templated_files):
 
 def report_git_pull(repo):
     colored_repo = crayons.green(repo, bold=True)
-    print(MESSAGE_PULLING_REPO.format(colored_repo))
+    do_print(MESSAGE_PULLING_REPO.format(colored_repo))
 
 
 def report_git_clone(repo):
     colored_repo = crayons.green(repo, bold=True)
-    print(MESSAGE_CLONING_REPO.format(colored_repo))
+    do_print(MESSAGE_CLONING_REPO.format(colored_repo))
 
 
 def report_template_not_in_moban_file(template):
@@ -90,3 +90,7 @@ def _format_single(message, count):
 
 def report_file_extension_not_needed():
     report_info_message(MESSAGE_FILE_EXTENSION_NOT_NEEDED)
+
+
+def do_print(message):
+    print(message)

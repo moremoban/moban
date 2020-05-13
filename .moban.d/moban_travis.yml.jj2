@@ -2,7 +2,6 @@
 
 {%block extra_matrix %}
 env:
-  - MINREQ=0
   - MINREQ=1
 {%endblock%}
 

@@ -2,6 +2,13 @@ name: moban
 organisation: moremoban
 releases:
   - changes:
+      - action: Fixed
+        details:
+          - "`#378`: suppress stdout message from deprecated pip install.
+	    but please do not use and migrate deprecated`requires` syntax."
+    date: 13.5.2020
+    version: 0.7.4
+  - changes:
       - action: Added
         details:
           - "Added continuous check in travis for setup.py descriptions. No impact to moban user."
