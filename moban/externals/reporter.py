@@ -14,7 +14,6 @@ MESSAGE_FILE_EXTENSION_NOT_NEEDED = "File extension is not required for ad-hoc\
  type"
 
 
-
 def report_templating(
     action_in_present_continuous_tense, source_file, destination_file
 ):

@@ -273,5 +273,6 @@ def test_pip_install(fake_check_all):
     pip_install(["package1", "package2"])
     fake_check_all.assert_called_with(
         [sys.executable, "-m", "pip", "install", "package1 package2"],
-        stderr=-3, stdout=-3        
+        stderr=-3,
+        stdout=-3,
     )
