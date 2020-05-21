@@ -2,6 +2,12 @@ name: moban
 organisation: moremoban
 releases:
   - changes:
+      - action: Added
+        details:
+          - "`#167`: reverse what moban have done: delete"
+    date: 21.5.2020
+    version: 0.7.5
+  - changes:
       - action: Fixed
         details:
           - "`#378`: suppress stdout message from deprecated pip install.
