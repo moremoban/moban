@@ -25,9 +25,9 @@ project = 'moban'
 copyright = '2017-2020 Onni Software Ltd.'
 author = 'C. W.'
 # The short X.Y version
-version = '0.7.4'
+version = '0.7.5'
 # The full version, including alpha/beta/rc tags
-release = '0.7.4'
+release = '0.7.5'
 
 # -- General configuration ---------------------------------------------------
 
