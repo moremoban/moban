@@ -3,6 +3,7 @@ from moban.externals import file_system
 # Template type
 TEMPLATE_JINJA2 = "jinja2"
 TEMPLATE_COPY = "copy"
+TEMPLATE_DELETE = "delete"
 
 # Configurations
 PROGRAM_NAME = "moban"

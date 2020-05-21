@@ -24,9 +24,10 @@ This section covers the use cases for moban. Please check them out individually.
 #. `Select a group target to run`_
 #. `Template files in a zip or tar`_
 #. `Template copying from a zip to a zip`_
-#. `Intermeidate targets`_
+#. `Intermediate targets`_
 #. `Mobanfile inheritance`_
 #. `Files over http(s)`_
+#. `Remove intermediate targets`_
    
 .. _Jinja2 command line: level-1-jinja2-cli
 .. _Template inheritance: level-2-template-inheritance
@@ -49,6 +50,7 @@ This section covers the use cases for moban. Please check them out individually.
 .. _Select a group target to run: level-19-moban-a-sub-group-in-targets
 .. _Template files in a zip or tar: level-20-templates-configs-in-zip-or-tar
 .. _Template copying from a zip to a zip: level-21-copy-templates-into-an-alien-file-system
-.. _Intermeidate targets: level-22-intermediate-targets
+.. _Intermediate targets: level-22-intermediate-targets
 .. _Mobanfile inheritance: level-23-inherit-organisational-moban-file
 .. _Files over http(s): level-24-files-over-http
+.. _Remove intermediate targets: level-25-delete-intermediate

@@ -219,17 +219,24 @@ class MobanEngine(object):
             data = self.context.get_data(data_file)
             for (template_file, output) in template_output_pairs:
                 template = self.engine.get_template(template_file)
-                template_abs_path = self.template_fs.geturl(
-                    template_file, purpose="fs"
-                )
-                flag = self.apply_template(
-                    template_abs_path, template, data, output
-                )
-                if flag:
-                    reporter.report_templating(
-                        self.engine_action, template_file, output
+                if isinstance(template, bool):
+                    if template:
+                        reporter.report_templating(
+                            self.engine_action, template_file, None
+                        )
+                        self.templated_count += 1
+                else:
+                    template_abs_path = self.template_fs.geturl(
+                        template_file, purpose="fs"
                     )
-                    self.templated_count += 1
+                    flag = self.apply_template(
+                        template_abs_path, template, data, output
+                    )
+                    if flag:
+                        reporter.report_templating(
+                            self.engine_action, template_file, output
+                        )
+                        self.templated_count += 1
                 self.file_count += 1
 
 

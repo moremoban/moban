@@ -7,6 +7,7 @@ BUILTIN_EXENSIONS = [
     "moban.plugins.yaml_loader",
     "moban.plugins.json_loader",
     "moban.plugins.copy",
+    "moban.plugins.delete",
 ]
 
 

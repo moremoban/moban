@@ -1,7 +1,7 @@
 from nose.tools import eq_
 
 from moban.deprecated import GitRequire
-from moban.core.definitions import Store, TemplateTarget
+from moban.core.definitions import TemplateTarget
 
 
 def test_git_require_repr():
@@ -43,11 +43,3 @@ def test_branch_params():
     actual = require.clone_params()
     expected = {"single_branch": True, "branch": "ghpages", "depth": 2}
     eq_(expected, actual)
-
-
-def test_store():
-    store = Store()
-    output = "output"
-    target = TemplateTarget("template_file", "data_file", output)
-    store.add(target)
-    eq_(target, store.look_up_by_output.get(output))

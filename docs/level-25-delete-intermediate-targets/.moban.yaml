@@ -1,0 +1,11 @@
+targets:
+  - intermediate.jj2: original.jj2
+  - intermediate2.jj2: original.jj2
+  - intermediate3.jj2: original.jj2
+  - final: intermediate.jj2
+  - output: what_ever_here_will_be_ignored
+    template: intermediate.jj2
+    template_type: delete
+  - output: ''
+    template: intermediate2.jj2
+  - delete!: intermediate3.jj2

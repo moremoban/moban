@@ -17,13 +17,18 @@ MESSAGE_FILE_EXTENSION_NOT_NEEDED = "File extension is not required for ad-hoc\
 def report_templating(
     action_in_present_continuous_tense, source_file, destination_file
 ):
-    do_print(
-        MESSAGE_TEMPLATING.format(
-            action_in_present_continuous_tense,
-            crayons.yellow(source_file),
-            crayons.green(destination_file),
+    if destination_file:
+        do_print(
+            MESSAGE_TEMPLATING.format(
+                action_in_present_continuous_tense,
+                crayons.yellow(source_file),
+                crayons.green(destination_file),
+            )
         )
-    )
+    else:
+        do_print(
+            f"{action_in_present_continuous_tense} {crayons.yellow(source_file)}"
+        )
 
 
 def report_no_action():

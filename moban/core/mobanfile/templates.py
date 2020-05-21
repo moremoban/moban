@@ -20,22 +20,22 @@ def handle_template(template_file, output, template_dirs):
                 fs, source_dir, output
             )
         else:
-            if STORE.look_up_by_output.get(template_file) is None:
-                reporter.report_error_message(
-                    f"{template_file} cannot be found"
-                )
+            reporter.report_error_message(f"{template_file} cannot be found")
     else:
-        _, fs = multi_fs.which(template_file)
-        if fs is None:
-            if STORE.look_up_by_output.get(template_file) is None:
+        if STORE.look_up_by_output.get(template_file) is None:
+            _, fs = multi_fs.which(template_file)
+            if fs is None:
                 reporter.report_error_message(
                     f"{template_file} cannot be found"
                 )
+            elif fs.isdir(template_file):
+                yield from _list_dir_files(fs, template_file, output)
             else:
                 yield _create_a_single_target(template_file, output)
-        elif fs.isdir(template_file):
-            yield from _list_dir_files(fs, template_file, output)
         else:
+            # when template_file is not found, it means
+            it_is_generated_by_moban = template_file
+            STORE.intermediate_targets.append(it_is_generated_by_moban)
             yield _create_a_single_target(template_file, output)
 
 
@@ -66,7 +66,10 @@ def _listing_directory_files_recusively(fs, source, dest):
 
 
 def _create_a_single_target(template_file, output):
-    template_type = _get_template_type(template_file)
+    if output == constants.TEMPLATE_DELETE + "!":
+        template_type = constants.TEMPLATE_DELETE
+    else:
+        template_type = _get_template_type(template_file)
     # output.jj2: source.jj2 means 'copy'
     if template_type and output.endswith("." + template_type):
         LOG.info(
