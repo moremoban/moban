@@ -55,17 +55,17 @@ def parse_targets(options, targets):
                 STORE.add(template_target)
         else:
             for output, template_file in target.items():
-                if isinstance(template_file, str) is False:
+                if isinstance(template_file, str):
+                    for template_target in _handle_implicit_target(
+                        options, template_file, output
+                    ):
+                        STORE.add(template_target)
+                else:
                     # grouping by template type feature
                     group_template_type = output
                     a_list_short_hand_targets = template_file
                     for template_target in _handle_group_target(
                         options, a_list_short_hand_targets, group_template_type
-                    ):
-                        STORE.add(template_target)
-                else:
-                    for template_target in _handle_implicit_target(
-                        options, template_file, output
                     ):
                         STORE.add(template_target)
 
@@ -78,7 +78,10 @@ def _handle_explicit_target(options, target):
     )
     data_file = target.get(constants.LABEL_CONFIG, common_data_file)
     output = target[constants.LABEL_OUTPUT]
-    template_type = target.get(constants.LABEL_TEMPLATE_TYPE)
+    if output:
+        template_type = target.get(constants.LABEL_TEMPLATE_TYPE)
+    else:
+        template_type = constants.TEMPLATE_DELETE
     if template_type and len(template_type) > 0:
         if constants.TEMPLATE_TYPES_FILE_EXTENSIONS in template_type:
             reporter.report_file_extension_not_needed()
