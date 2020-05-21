@@ -2,6 +2,9 @@
 mó bǎn - 模板 General purpose static text generator
 ================================================================================
 
+.. image:: https://raw.githubusercontent.com/pyexcel/pyexcel.github.io/master/images/patreon.png
+   :target: https://www.patreon.com/chfw
+
 .. image:: https://api.travis-ci.org/moremoban/moban.svg?branch=master
    :target: http://travis-ci.org/moremoban/moban
 
@@ -68,7 +71,7 @@ Any template, any data in any location
 Support
 ================================================================================
 
-If you like moban, please support me on,
+If you like moban, please support me on github,
 `patreon <https://www.patreon.com/bePatron?u=5537627>`_
 or `bounty source <https://salt.bountysource.com/teams/chfw-pyexcel>`_ to maintain
 the project and develop it further.
