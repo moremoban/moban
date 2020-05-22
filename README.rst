@@ -2,6 +2,9 @@
 mó bǎn - 模板 General purpose static text generator
 ================================================================================
 
+.. image:: https://raw.githubusercontent.com/pyexcel/pyexcel.github.io/master/images/patreon.png
+   :target: https://www.patreon.com/chfw
+
 .. image:: https://api.travis-ci.org/moremoban/moban.svg?branch=master
    :target: http://travis-ci.org/moremoban/moban
 
@@ -27,18 +30,52 @@ mó bǎn - 模板 General purpose static text generator
 :Issues: http://github.com/moremoban/moban/issues
 :License: MIT
 
-.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-intro.gif
+.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-pyexcel-demo.gif
 
 Announcement
 ================================================================================
 
+From 2020 onwards, minimum requirement is Python 3.6
+
+
 For existing moban users, python 2 support has been dropped. Please stay with
 versions lower than 0.7.0 if you are still using python 2.
 
-From 2020 onwards, minimum requirement is Python 3.6
 
 Introduction
 ================================================================================
+
+**moban** enabled **continuous templating** in `pyexcel <https://github.com/pyexcel/pyexcel>`_ and
+`coala <https://github.com//coala/coala>`_ project to keep
+documentation consistent across the documentations of individual libraries in the same
+organisation. Here is the primary use case of moban, as of now:
+
+.. image:: https://github.com/moremoban/yehua/raw/dev/docs/source/_static/yehua-story.png
+   :width: 600px
+
+
+And here is a list of other usages:
+
+#. `Django Mobans <https://github.com/django-mobans>`_, templates for django, docker etc.
+#. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets in pdf
+
+All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
+
+Support
+================================================================================
+
+If you like moban, please support me on github,
+`patreon <https://www.patreon.com/bePatron?u=5537627>`_
+or `bounty source <https://salt.bountysource.com/teams/chfw-pyexcel>`_ to maintain
+the project and develop it further.
+
+With your financial support, I will be able to invest
+a little bit more time in coding, documentation and writing interesting extensions.
+
+Vision
+================================================================================
+
+Any template, any data in any location
 
 **moban** started with bringing the high performance template engine (JINJA2) for web
 into static text generation. 
@@ -49,59 +86,18 @@ template file and configuration file in
 any location: zip, git, pypi package, s3, etc.
 
 
-It has been used in `pyexcel <https://github.com/pyexcel/pyexcel>`_ and
-`coala <https://github.com//coala/coala>`_ project to keep
-documentation consistent across the documentations of individual libraries in the same
-organisation.
-
-And here is a list of other usages:
-
-#. `Django Mobans <https://github.com/django-mobans>`_, templates for django, docker etc.
-#. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets in pdf
-
-
-Vision
-================================================================================
-
-Any template, any data in any location
-
-Support
-================================================================================
-
-If you like moban, please support me on,
-`patreon <https://www.patreon.com/bePatron?u=5537627>`_
-or `bounty source <https://salt.bountysource.com/teams/chfw-pyexcel>`_ to maintain
-the project and develop it further.
-
-With your financial support, I will be able to invest
-a little bit more time in coding, documentation and writing interesting extensions.
-
 Credit
 ================================================================================
 
 `jinja2-fsloader <https://github.com/althonos/jinja2-fsloader>`_ is the key component to enable PyFilesystem2 support in moban
 v0.6x. Please show your stars there too!
 
-Installation
-================================================================================
-You can install it via pip:
-
-.. code-block:: bash
-
-    $ pip install moban
-
-
-or clone it and install it:
-
-.. code-block:: bash
-
-    $ git clone http://github.com/moremoban/moban.git
-    $ cd moban
-    $ python setup.py install
-
 
 Quick start
 ================================================================================
+
+.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-intro.gif
+
 
 .. code-block:: bash
 
@@ -152,12 +148,6 @@ moban.output will contain:
     world
 
 Please note that data.yml will take precedence over environment variables.
-
-Moban in live action:
-
-.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-pyexcel-demo.gif
-
-All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
 
 
 Templates and configuration files over HTTP(S)
@@ -243,6 +233,23 @@ Where the configuration sits in a s3 bucket, the output is a file in a zip. The 
 
     hello: world
 	
+
+Installation
+================================================================================
+You can install it via pip:
+
+.. code-block:: bash
+
+    $ pip install moban
+
+
+or clone it and install it:
+
+.. code-block:: bash
+
+    $ git clone http://github.com/moremoban/moban.git
+    $ cd moban
+    $ python setup.py install
 
 
 CLI documentation

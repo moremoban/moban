@@ -5,8 +5,10 @@ from moban import constants
 from moban.core.mobanfile.store import STORE
 
 
-@PluginInfo(constants.TEMPLATE_ENGINE_EXTENSION, tags=["delete"])
-class ContentForwardEngine(object):
+@PluginInfo(
+    constants.TEMPLATE_ENGINE_EXTENSION, tags=[constants.TEMPLATE_DELETE]
+)
+class DeleteEngine(object):
     """
     Does no templating but delete generated intermediate targets
 
