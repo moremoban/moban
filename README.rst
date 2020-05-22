@@ -30,15 +30,17 @@ mó bǎn - 模板 General purpose static text generator
 :Issues: http://github.com/moremoban/moban/issues
 :License: MIT
 
-.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-intro.gif
+.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-pyexcel-demo.gif
 
 Announcement
 ================================================================================
 
+From 2020 onwards, minimum requirement is Python 3.6
+
+
 For existing moban users, python 2 support has been dropped. Please stay with
 versions lower than 0.7.0 if you are still using python 2.
 
-From 2020 onwards, minimum requirement is Python 3.6
 
 Introduction
 ================================================================================
@@ -67,6 +69,8 @@ And here is a list of other usages:
 #. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets in pdf
 
 
+All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
+
 Vision
 ================================================================================
 
@@ -89,26 +93,12 @@ Credit
 `jinja2-fsloader <https://github.com/althonos/jinja2-fsloader>`_ is the key component to enable PyFilesystem2 support in moban
 v0.6x. Please show your stars there too!
 
-Installation
-================================================================================
-You can install it via pip:
-
-.. code-block:: bash
-
-    $ pip install moban
-
-
-or clone it and install it:
-
-.. code-block:: bash
-
-    $ git clone http://github.com/moremoban/moban.git
-    $ cd moban
-    $ python setup.py install
-
 
 Quick start
 ================================================================================
+
+.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-intro.gif
+
 
 .. code-block:: bash
 
@@ -159,12 +149,6 @@ moban.output will contain:
     world
 
 Please note that data.yml will take precedence over environment variables.
-
-Moban in live action:
-
-.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-pyexcel-demo.gif
-
-All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
 
 
 Templates and configuration files over HTTP(S)
@@ -250,6 +234,23 @@ Where the configuration sits in a s3 bucket, the output is a file in a zip. The 
 
     hello: world
 	
+
+Installation
+================================================================================
+You can install it via pip:
+
+.. code-block:: bash
+
+    $ pip install moban
+
+
+or clone it and install it:
+
+.. code-block:: bash
+
+    $ git clone http://github.com/moremoban/moban.git
+    $ cd moban
+    $ python setup.py install
 
 
 CLI documentation
