@@ -52,10 +52,14 @@ template file and configuration file in
 any location: zip, git, pypi package, s3, etc.
 
 
-It has been used in `pyexcel <https://github.com/pyexcel/pyexcel>`_ and
+**moban** enabled **continuous templating** in `pyexcel <https://github.com/pyexcel/pyexcel>`_ and
 `coala <https://github.com//coala/coala>`_ project to keep
 documentation consistent across the documentations of individual libraries in the same
-organisation.
+organisation. Here is the primary use case of moban, as of now:
+
+.. image:: https://github.com/moremoban/yehua/raw/dev/docs/source/_static/yehua-story.png
+   :width: 600px
+
 
 And here is a list of other usages:
 
