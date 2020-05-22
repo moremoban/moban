@@ -2,4 +2,3 @@ targets:
   - intermediate.strip: content_with_lots_of_white_spaces.jj2
   - final: intermediate.strip
   - delete!: intermediate.strip
-
