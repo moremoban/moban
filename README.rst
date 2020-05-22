@@ -45,15 +45,6 @@ versions lower than 0.7.0 if you are still using python 2.
 Introduction
 ================================================================================
 
-**moban** started with bringing the high performance template engine (JINJA2) for web
-into static text generation. 
-
-**moban** can use other python template engine: mako, handlebars, velocity,
-haml, slim and tornado, can read other data format: json and yaml, and can access both
-template file and configuration file in
-any location: zip, git, pypi package, s3, etc.
-
-
 **moban** enabled **continuous templating** in `pyexcel <https://github.com/pyexcel/pyexcel>`_ and
 `coala <https://github.com//coala/coala>`_ project to keep
 documentation consistent across the documentations of individual libraries in the same
@@ -68,13 +59,7 @@ And here is a list of other usages:
 #. `Django Mobans <https://github.com/django-mobans>`_, templates for django, docker etc.
 #. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets in pdf
 
-
 All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
-
-Vision
-================================================================================
-
-Any template, any data in any location
 
 Support
 ================================================================================
@@ -86,6 +71,20 @@ the project and develop it further.
 
 With your financial support, I will be able to invest
 a little bit more time in coding, documentation and writing interesting extensions.
+
+Vision
+================================================================================
+
+Any template, any data in any location
+
+**moban** started with bringing the high performance template engine (JINJA2) for web
+into static text generation. 
+
+**moban** can use other python template engine: mako, handlebars, velocity,
+haml, slim and tornado, can read other data format: json and yaml, and can access both
+template file and configuration file in
+any location: zip, git, pypi package, s3, etc.
+
 
 Credit
 ================================================================================
