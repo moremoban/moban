@@ -28,6 +28,7 @@ This section covers the use cases for moban. Please check them out individually.
 #. `Mobanfile inheritance`_
 #. `Files over http(s)`_
 #. `Remove intermediate targets`_
+#. `Striping the rendered content`_
    
 .. _Jinja2 command line: level-1-jinja2-cli
 .. _Template inheritance: level-2-template-inheritance
@@ -54,3 +55,4 @@ This section covers the use cases for moban. Please check them out individually.
 .. _Mobanfile inheritance: level-23-inherit-organisational-moban-file
 .. _Files over http(s): level-24-files-over-http
 .. _Remove intermediate targets: level-25-delete-intermediate
+.. _Striping the rendered content: level-26-strip-rendered-content

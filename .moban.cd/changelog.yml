@@ -4,6 +4,12 @@ releases:
   - changes:
       - action: Added
         details:
+          - "`#38`: finally be able strip the rendered content"
+    date: 22.5.2020
+    version: 0.7.6
+  - changes:
+      - action: Added
+        details:
           - "`#167`: reverse what moban have done: delete"
     date: 21.5.2020
     version: 0.7.5

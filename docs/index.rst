@@ -40,6 +40,7 @@ examples folder.
    level-23-inherit-organisational-moban-file/README.rst
    level-24-files-over-http/README.rst
    level-25-delete-intermediate/README.rst
+   level-26-strip-rendered-content/README.rst
 
 
 For more complex use case, please look at `its usage in pyexcel project <http://pyexcel.readthedocs.io/en/latest/guide.html>`_
