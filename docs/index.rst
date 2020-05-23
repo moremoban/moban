@@ -39,7 +39,7 @@ examples folder.
    level-22-intermediate-targets/README.rst
    level-23-inherit-organisational-moban-file/README.rst
    level-24-files-over-http/README.rst
-   level-25-delete-intermediate/README.rst
+   level-25-delete-intermediate-targets/README.rst
    level-26-strip-rendered-content/README.rst
 
 

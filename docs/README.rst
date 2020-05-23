@@ -54,5 +54,5 @@ This section covers the use cases for moban. Please check them out individually.
 .. _Intermediate targets: level-22-intermediate-targets
 .. _Mobanfile inheritance: level-23-inherit-organisational-moban-file
 .. _Files over http(s): level-24-files-over-http
-.. _Remove intermediate targets: level-25-delete-intermediate
+.. _Remove intermediate targets: level-25-delete-intermediate-targets
 .. _Striping the rendered content: level-26-strip-rendered-content
