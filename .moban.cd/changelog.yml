@@ -8,7 +8,7 @@ releases:
       - action: Fixed
         details:
           - "strip did not work in 0.7.6"
-    date: tbd
+    date: 24.5.2020
     version: 0.7.7
   - changes:
       - action: Added
