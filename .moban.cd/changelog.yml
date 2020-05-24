@@ -4,6 +4,15 @@ releases:
   - changes:
       - action: Added
         details:
+          - "`-pd` for command line to include custom plugin directories"
+      - action: Fixed
+        details:
+          - "strip did not work in 0.7.6"
+    date: 24.5.2020
+    version: 0.7.7
+  - changes:
+      - action: Added
+        details:
           - "`#38`: finally be able strip the rendered content"
     date: 22.5.2020
     version: 0.7.6

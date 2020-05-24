@@ -1,12 +1,8 @@
-from lml.plugin import PluginInfo
-
-from moban import constants
+from moban.core.content_processor import ContentProcessor
 
 
-@PluginInfo(
-    constants.TEMPLATE_ENGINE_EXTENSION, tags=[constants.TEMPLATE_COPY]
-)
-class ContentForwardEngine(object):
+@ContentProcessor("copy", "Copying", "Copied")
+def copy(content: str) -> str:
     """
     Does no templating, works like 'copy'.
 
@@ -19,18 +15,4 @@ class ContentForwardEngine(object):
     the source file. Everything else is taken care of by moban
     templating mechanism.
     """
-
-    ACTION_IN_PRESENT_CONTINUOUS_TENSE = "Copying"
-    ACTION_IN_PAST_TENSE = "Copied"
-
-    def __init__(self, template_fs, extensions=None):
-        self.template_fs = template_fs
-
-    def get_template(self, template_file):
-        return self.template_fs.readbytes(template_file)
-
-    def get_template_from_string(self, string):
-        return string
-
-    def apply_template(self, template, *_):
-        return template
+    return content

@@ -24,6 +24,24 @@ class TestRegression(Docs):
             "regression-test.png",
         )
 
+    def test_level_7(self):
+        expected = "YWJj\n"
+
+        folder = "level-7-plugin-dir-cli"
+        self.run_moban(
+            [
+                "moban",
+                "-td",
+                "my-templates/",
+                "-t",
+                "filter.jj2",
+                "-pd",
+                "custom-jj2-plugin",
+            ],
+            folder,
+            [("moban.output", expected)],
+        )
+
     def test_level_21_copy_templates_into_tars(self):
         expected = "test file\n"
 
