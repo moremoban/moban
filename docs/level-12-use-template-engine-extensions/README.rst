@@ -21,6 +21,9 @@ For example::
 Please also note that the following extensions are included by default:
 `jinja2.ext.do`, `jinja2.ext.loopcontrols`
 
+.. note::
+
+   if you intend to use extensions for one off usage, please use '-e' cli option
 
 Evaluation
 --------------------------------------------------------------------------------

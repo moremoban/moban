@@ -1,6 +1,6 @@
 Development guide
 =======================
-                   
+
 Jinja2 extensions for Moban
 ------------------------------
 
@@ -14,7 +14,7 @@ your plugins will NOT be loaded.
 Jinja2 Filter
 *******************
 
-.. literalinclude:: ../moban/filters/repr.py
+.. literalinclude:: ../moban/plugins/jinja2/filters/repr.py
 
 split_length
 --------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ Built-in Tests
 Jinja2 Test
 *******************
 
-.. literalinclude:: ../moban/tests/files.py
+.. literalinclude:: ../moban/plugins/jinja2/tests/files.py
 
 
 `exists`
@@ -104,16 +104,16 @@ is an example starting point for any template engine.
            """
            A list template directories will be given to your engine class
            """
-   
+
        def get_template(self, template_file):
            """
            Given a relative path to your template file, please return a templatable thing that does
            the templating function in next function below
            """
-   
+
        def apply_template(self, template, data, output):
             """
-            Given the template object from `get_template` function, and data as python dictionary, 
+            Given the template object from `get_template` function, and data as python dictionary,
             and output as intended output file, please return "utf-8" encoded string.
             """
 
@@ -121,6 +121,28 @@ is an example starting point for any template engine.
 After you will have finished the engine plugin, you can either place it in `plugin_dir`
 in order to get it loaded, or make an installable python package. In the latter case,
 please refer to `yehua`_: doing that in less than 5 minutes.
+
+
+Custom content processors for Moban
+----------------------------------------
+
+Since version 0.7.7, it became easy to write a content processor for moban.
+What you need is a content processing function, which will be fed the
+content of `template_file` and which is expected to return a string. And
+decorate your function with `ContentProcessor`:
+
+.. code-block:: python
+
+    @ContentProcessor('strip', 'Stripping', 'Stripped'):
+    def strip(template_file: str) -> str:
+        ret = template_file.strip()
+        return ret
+
+
+Here is how `copy` template type is coded:
+
+.. literalinclude:: ../moban/plugins/copy.py
+
 
 .. _lml: http://lml.readthedocs.io
 .. _yehua: http://yehua.readthedocs.io
