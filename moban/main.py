@@ -158,7 +158,10 @@ def create_parser():
         action="store_true",
         dest=constants.LABEL_EXIT_CODE,
         default=False,
-        help="tell moban to change exit code",
+        help=(
+            "by default, exist code 0 means no error, 1 means error occured. " +
+            "It tells moban to change 1 for changes, 2 for error occured"
+        )
     )
     developer.add_argument(
         "-V",

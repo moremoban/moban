@@ -258,7 +258,8 @@ CLI documentation
 .. code-block:: bash
 
     usage: moban [-h] [-c CONFIGURATION] [-t TEMPLATE] [-o OUTPUT]
-                 [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]] [-cd CONFIGURATION_DIR]
+                 [-td [TEMPLATE_DIR [TEMPLATE_DIR ...]]]
+                 [-pd [PLUGIN_DIR [PLUGIN_DIR ...]]] [-cd CONFIGURATION_DIR]
                  [-m MOBANFILE] [-g GROUP] [--template-type TEMPLATE_TYPE]
                  [-d DEFINE [DEFINE ...]] [-e EXTENSION [EXTENSION ...]] [-f]
                  [--exit-code] [-V] [-v]
@@ -283,6 +284,8 @@ CLI documentation
     
       -td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]
                             add more directories for template file lookup
+      -pd [PLUGIN_DIR [PLUGIN_DIR ...]], --plugin_dir [PLUGIN_DIR [PLUGIN_DIR ...]]
+                            add more directories for plugin lookup
       -cd CONFIGURATION_DIR, --configuration_dir CONFIGURATION_DIR
                             the directory for configuration file lookup
       -m MOBANFILE, --mobanfile MOBANFILE
@@ -302,19 +305,8 @@ CLI documentation
     Developer options:
       For debugging and development
     
-      --exit-code           tell moban to change exit code
+      --exit-code           by default, exist code 0 means no error, 1 means error
+                            occured. It tells moban to change 1 for changes, 2 for
+                            error occured
       -V, --version         show program's version number and exit
       -v                    show verbose, try -v, -vv, -vvv
-
-Exit codes
---------------------------------------------------------------------------------
-By default:
-
-- 0 : no error
-- 1 : error occured
-
-With `--exit-code`:
-
-- 0 : no changes
-- 1 : has changes
-- 2 : error occured
