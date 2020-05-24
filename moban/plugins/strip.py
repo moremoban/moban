@@ -1,4 +1,4 @@
-from moban.core.templater import ContentProcessor
+from moban.core.content_processor import ContentProcessor
 
 
 @ContentProcessor("strip", "Stripping", "Stripped")
