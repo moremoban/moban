@@ -8,6 +8,10 @@ Change log
 
 #. `-pd` for command line to include custom plugin directories
 
+**Fixed**
+
+#. strip did not work in 0.7.6
+
 0.7.6 - 22.5.2020
 --------------------------------------------------------------------------------
 

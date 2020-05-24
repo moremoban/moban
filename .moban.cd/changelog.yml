@@ -5,6 +5,9 @@ releases:
       - action: Added
         details:
           - "`-pd` for command line to include custom plugin directories"
+      - action: Fixed
+        details:
+          - "strip did not work in 0.7.6"
     date: tbd
     version: 0.7.7
   - changes:

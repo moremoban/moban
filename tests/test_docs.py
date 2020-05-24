@@ -333,9 +333,9 @@ class TestTutorial(Docs):
         assert not os.path.exists("intermediate3.jj2")
 
     def test_level_26_strip_intermediate_targets(self):
-        expected = "a world\n"
+        expected = "a world"
 
-        folder = "level-25-delete-intermediate-targets"
+        folder = "level-26-strip-rendered-content"
         self.run_moban(["moban"], folder, [("final", expected)])
         assert not os.path.exists("intermediate.strip")
 
