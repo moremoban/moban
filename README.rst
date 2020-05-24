@@ -42,57 +42,6 @@ For existing moban users, python 2 support has been dropped. Please stay with
 versions lower than 0.7.0 if you are still using python 2.
 
 
-Introduction
-================================================================================
-
-**moban** enabled **continuous templating** in `pyexcel <https://github.com/pyexcel/pyexcel>`_ and
-`coala <https://github.com//coala/coala>`_ project to keep
-documentation consistent across the documentations of individual libraries in the same
-organisation. Here is the primary use case of moban, as of now:
-
-.. image:: https://github.com/moremoban/yehua/raw/dev/docs/source/_static/yehua-story.png
-   :width: 600px
-
-
-And here is a list of other usages:
-
-#. `Django Mobans <https://github.com/django-mobans>`_, templates for django, docker etc.
-#. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets in pdf
-
-All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
-
-Support
-================================================================================
-
-If you like moban, please support me on github,
-`patreon <https://www.patreon.com/bePatron?u=5537627>`_
-or `bounty source <https://salt.bountysource.com/teams/chfw-pyexcel>`_ to maintain
-the project and develop it further.
-
-With your financial support, I will be able to invest
-a little bit more time in coding, documentation and writing interesting extensions.
-
-Vision
-================================================================================
-
-Any template, any data in any location
-
-**moban** started with bringing the high performance template engine (JINJA2) for web
-into static text generation. 
-
-**moban** can use other python template engine: mako, handlebars, velocity,
-haml, slim and tornado, can read other data format: json and yaml, and can access both
-template file and configuration file in
-any location: zip, git, pypi package, s3, etc.
-
-
-Credit
-================================================================================
-
-`jinja2-fsloader <https://github.com/althonos/jinja2-fsloader>`_ is the key component to enable PyFilesystem2 support in moban
-v0.6x. Please show your stars there too!
-
-
 Quick start
 ================================================================================
 
@@ -229,9 +178,63 @@ Then you can access your files in s3 bucket:
     $ cat moban.output
     world
 
-Where the configuration sits in a s3 bucket, the output is a file in a zip. The content of s3data.yaml is::
+Where the configuration sits in a s3 bucket, the output is a file in a zip. The content of s3data.yaml is:
+
+
+.. code-block:
 
     hello: world
+
+
+Introduction
+================================================================================
+
+**moban** enabled **continuous templating** in `pyexcel <https://github.com/pyexcel/pyexcel>`_ and
+`coala <https://github.com//coala/coala>`_ project to keep
+documentation consistent across the documentations of individual libraries in the same
+organisation. Here is the primary use case of moban, as of now:
+
+.. image:: https://github.com/moremoban/yehua/raw/dev/docs/source/_static/yehua-story.png
+   :width: 600px
+
+
+And here is a list of other usages:
+
+#. `Django Mobans <https://github.com/django-mobans>`_, templates for django, docker etc.
+#. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets in pdf
+
+All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
+
+Support
+================================================================================
+
+If you like moban, please support me on github,
+`patreon <https://www.patreon.com/bePatron?u=5537627>`_
+or `bounty source <https://salt.bountysource.com/teams/chfw-pyexcel>`_ to maintain
+the project and develop it further.
+
+With your financial support, I will be able to invest
+a little bit more time in coding, documentation and writing interesting extensions.
+
+Vision
+================================================================================
+
+Any template, any data in any location
+
+**moban** started with bringing the high performance template engine (JINJA2) for web
+into static text generation. 
+
+**moban** can use other python template engine: mako, handlebars, velocity,
+haml, slim and tornado, can read other data format: json and yaml, and can access both
+template file and configuration file in
+any location: zip, git, pypi package, s3, etc.
+
+
+Credit
+================================================================================
+
+`jinja2-fsloader <https://github.com/althonos/jinja2-fsloader>`_ is the key component to enable PyFilesystem2 support in moban
+v0.6x. Please show your stars there too!
 	
 
 Installation
