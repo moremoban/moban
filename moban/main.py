@@ -21,6 +21,7 @@ from moban import constants, exceptions
 from moban.core import ENGINES, plugins, hashstore, mobanfile, data_loader
 from moban._version import __version__
 from moban.externals import reporter, file_system
+from moban.core.utils import handle_plugin_dirs
 from moban.program_options import OPTIONS
 
 LOG = logging.getLogger()
@@ -36,9 +37,8 @@ def main():
     options[constants.CLI_DICT] = handle_custom_variables(
         options.pop(constants.LABEL_DEFINE)
     )
-    options[constants.EXTENSION_DICT] = handle_custom_extensions(
-        options.pop(constants.LABEL_EXTENSION)
-    )
+    handle_custom_extensions(options.pop(constants.LABEL_EXTENSION))
+    handle_plugin_dirs(options.pop(constants.LABEL_PLUGIN_DIRS))
 
     OPTIONS.update(options)
     moban_file = options[constants.LABEL_MOBANFILE]
@@ -106,6 +106,12 @@ def create_parser():
         f"--{constants.LABEL_TMPL_DIRS}",
         nargs="*",
         help="add more directories for template file lookup",
+    )
+    advanced.add_argument(
+        "-pd",
+        f"--{constants.LABEL_PLUGIN_DIRS}",
+        nargs="*",
+        help="add more directories for plugin lookup",
     )
     advanced.add_argument(
         "-cd",
