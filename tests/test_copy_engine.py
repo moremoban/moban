@@ -4,13 +4,14 @@ import fs.path
 from nose.tools import eq_
 
 from moban.externals import file_system
-from moban.plugins.copy import ContentForwardEngine
+from moban.core import ENGINES
 
 
 class TestContentForwardEngine:
     def setUp(self):
         template_path = os.path.join("tests", "fixtures")
         fs = file_system.get_multi_fs([template_path])
+        ContentForwardEngine = ENGINES.load_me_now('copy')
         self.engine = ContentForwardEngine(fs)
 
     def test_get_template(self):
@@ -39,6 +40,7 @@ class TestCopyEncoding:
     def setUp(self):
         template_path = fs.path.join("tests", "fixtures")
         template_fs = file_system.get_multi_fs([template_path])
+        ContentForwardEngine = ENGINES.load_me_now('copy')
         self.engine = ContentForwardEngine(template_fs)
 
     def test_encoding_of_template(self):
