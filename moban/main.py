@@ -108,15 +108,15 @@ def create_parser():
         help="add more directories for template file lookup",
     )
     advanced.add_argument(
+        "-cd",
+        f"--{constants.LABEL_CONFIG_DIR}",
+        help="the directory for configuration file lookup",
+    )
+    advanced.add_argument(
         "-pd",
         f"--{constants.LABEL_PLUGIN_DIRS}",
         nargs="*",
         help="add more directories for plugin lookup",
-    )
-    advanced.add_argument(
-        "-cd",
-        f"--{constants.LABEL_CONFIG_DIR}",
-        help="the directory for configuration file lookup",
     )
     advanced.add_argument(
         "-m", "--%s" % constants.LABEL_MOBANFILE, help="custom moban file"
@@ -159,9 +159,9 @@ def create_parser():
         dest=constants.LABEL_EXIT_CODE,
         default=False,
         help=(
-            "by default, exist code 0 means no error, 1 means error occured. " +
-            "It tells moban to change 1 for changes, 2 for error occured"
-        )
+            "by default, exist code 0 means no error, 1 means error occured. "
+            + "It tells moban to change 1 for changes, 2 for error occured"
+        ),
     )
     developer.add_argument(
         "-V",

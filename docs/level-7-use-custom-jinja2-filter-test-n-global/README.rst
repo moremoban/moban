@@ -23,6 +23,10 @@ It is very important to have `__init__.py`, otherwise, it will NOT work. Other t
 files are named to show case the feature. You can choose whichever name you prefer,
 as long as you and your team could make sense of the names.
 
+.. note::
+
+   if you intend to use extensions for one off usage, please use '-pd' cli option.
+   i.e. `moban -td my-templates/ -t filter.jj2 -pd custom-jj2-plugin`
 
 Evaluation
 --------------------------------------------------------------------------------

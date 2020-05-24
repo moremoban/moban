@@ -284,10 +284,10 @@ CLI documentation
     
       -td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]
                             add more directories for template file lookup
-      -pd [PLUGIN_DIR [PLUGIN_DIR ...]], --plugin_dir [PLUGIN_DIR [PLUGIN_DIR ...]]
-                            add more directories for plugin lookup
       -cd CONFIGURATION_DIR, --configuration_dir CONFIGURATION_DIR
                             the directory for configuration file lookup
+      -pd [PLUGIN_DIR [PLUGIN_DIR ...]], --plugin_dir [PLUGIN_DIR [PLUGIN_DIR ...]]
+                            add more directories for plugin lookup
       -m MOBANFILE, --mobanfile MOBANFILE
                             custom moban file
       -g GROUP, --group GROUP
