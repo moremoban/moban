@@ -112,10 +112,10 @@ Suppose there exists `shared/base.jj2`, and two templates `child1.jj2` and
 Data overload
 ---------------------------
 
-Effectively each data file you give to moban, it overrides environment variable.
+Effectively each data file you give to moban, it overrides environment variables.
 Still you can have different layers of data. For example, you can have
-`shared/company_info.yml`,  use `project1.yml` and `project2.yml` for different
-purpose. In each of the derived data file, simply mention:
+`shared/company_info.yml`,  use `project1.yml` for project 1 and
+`project2.yml` for project 2. In each of the derived data file, simply mention:
 
 .. code-block:: bash
 
@@ -126,7 +126,7 @@ Here is the command line to use your data:
 
 .. code-block:: bash
 
-   $ moban -cd shared -c project1.yaml -t your_template.jj2
+   $ moban -cd shared -c project1.yaml -t README.jj2
 
 Custom jinja2 extension
 ---------------------------
@@ -143,13 +143,35 @@ Can I write my own jinja2 test, filter and/or globals
 moban allows the freedom of craftsmanship. Please refer to the docs for more
 details. Here is an example:
 
-.. literalinclude:: tests/regression_tests/level-7-plugin-dir-cli/custom-jj2-plugin/filter.py
+.. code-block:: python
+
+   import sys
+   import base64
+   
+   from moban.plugins.jinja2.extensions import JinjaFilter
+   
+   
+   @JinjaFilter()
+   def base64encode(string):
+       if sys.version_info[0] > 2:
+           content = base64.b64encode(string.encode("utf-8"))
+           content = content.decode("utf-8")
+       else:
+           content = base64.b64encode(string)
+       return content
+
+And you can use it within your jinja2 template, `mytest.jj2`:
+
+.. code-block:: python
+
+      {{ 'abc' | base64encode }}
+
 
 Assume that the custom example was saved in `custom-jj2-plugin`
 
 .. code-block:: bash
 
-   $ moban -pd custom-jj2-plugin ...
+   $ moban -pd custom-jj2-plugin -t mytest.jj2 ...
 
 Moban will then load your custom jinja2 functions
 
