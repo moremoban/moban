@@ -54,7 +54,7 @@ Quick start
     $ moban "{{HELLO}}"
     Templating {{HELLO}}... to moban.output
     Templated 1 file.
-    $ cat moban.output 
+    $ cat moban.output
     world
 
 Or
@@ -70,7 +70,7 @@ Or simply
 
     $ HELLO="world" moban "{{HELLO}}"
 
-   
+
 A bit formal example:
 
 .. code-block:: bash
@@ -97,6 +97,61 @@ moban.output will contain:
     world
 
 Please note that data.yml will take precedence over environment variables.
+
+Template inheritance
+--------------------------
+
+Suppose there exists `shared/base.jj2`, and two templates `child1.jj2` and
+`child2.jj2` derives from it. You can do:
+
+.. code-block:: bash
+
+    $ moban -t child1.jj2 -td shared -o child1
+    $ moban -t child2.jj2 -td shared -o child2
+
+Data overload
+---------------------------
+
+Effectively each data file you give to moban, it overrides environment variable.
+Still you can have different layers of data. For example, you can have
+`shared/company_info.yml`,  use `project1.yml` and `project2.yml` for different
+purpose. In each of the derived data file, simply mention:
+
+.. code-block:: bash
+
+   overrides: company_info.yml
+   ...
+
+Here is the command line to use your data:
+
+.. code-block:: bash
+
+   $ moban -cd shared -c project1.yaml -t your_template.jj2
+
+Custom jinja2 extension
+---------------------------
+
+moban allows the injection of user preferred jinja2 extensions:
+
+.. code-block:: bash
+
+   $ moban -e jj2=jinja2_time.TimeExtension ...
+
+Can I write my own jinja2 test, filter and/or globals
+-----------------------------------------------------------
+
+moban allows the freedom of craftsmanship. Please refer to the docs for more
+details. Here is an example:
+
+.. literalinclude:: tests/regression_tests/level-7-plugin-dir-cli/custom-jj2-plugin/filter.py
+
+Assume that the custom example was saved in `custom-jj2-plugin`
+
+.. code-block:: bash
+
+   $ moban -pd custom-jj2-plugin ...
+
+Moban will then load your custom jinja2 functions
 
 
 Templates and configuration files over HTTP(S)
@@ -222,7 +277,7 @@ Vision
 Any template, any data in any location
 
 **moban** started with bringing the high performance template engine (JINJA2) for web
-into static text generation. 
+into static text generation.
 
 **moban** can use other python template engine: mako, handlebars, velocity,
 haml, slim and tornado, can read other data format: json and yaml, and can access both
@@ -235,7 +290,7 @@ Credit
 
 `jinja2-fsloader <https://github.com/althonos/jinja2-fsloader>`_ is the key component to enable PyFilesystem2 support in moban
 v0.6x. Please show your stars there too!
-	
+
 
 Installation
 ================================================================================
@@ -267,12 +322,12 @@ CLI documentation
                  [-d DEFINE [DEFINE ...]] [-e EXTENSION [EXTENSION ...]] [-f]
                  [--exit-code] [-V] [-v]
                  [template]
-    
+
     Static text generator using any template, any data and any location.
-    
+
     positional arguments:
       template              string templates
-    
+
     optional arguments:
       -h, --help            show this help message and exit
       -c CONFIGURATION, --configuration CONFIGURATION
@@ -281,10 +336,10 @@ CLI documentation
                             the template file
       -o OUTPUT, --output OUTPUT
                             the output file
-    
+
     Advanced options:
       For better control
-    
+
       -td [TEMPLATE_DIR [TEMPLATE_DIR ...]], --template_dir [TEMPLATE_DIR [TEMPLATE_DIR ...]]
                             add more directories for template file lookup
       -cd CONFIGURATION_DIR, --configuration_dir CONFIGURATION_DIR
@@ -304,10 +359,10 @@ CLI documentation
                             to to TEMPLATE_TYPE=EXTENSION_NAME
       -f                    force moban to template all files despite of
                             .moban.hashes
-    
+
     Developer options:
       For debugging and development
-    
+
       --exit-code           by default, exist code 0 means no error, 1 means error
                             occured. It tells moban to change 1 for changes, 2 for
                             error occured
