@@ -98,8 +98,8 @@ moban.output will contain:
 
 Please note that data.yml will take precedence over environment variables.
 
-Template inheritance
---------------------------
+Template inheritance and custom template directories
+-------------------------------------------------------
 
 Suppose there exists `shared/base.jj2`, and two templates `child1.jj2` and
 `child2.jj2` derives from it. You can do:
@@ -109,8 +109,8 @@ Suppose there exists `shared/base.jj2`, and two templates `child1.jj2` and
     $ moban -t child1.jj2 -td shared -o child1
     $ moban -t child2.jj2 -td shared -o child2
 
-Data overload
----------------------------
+Data overload and custom data directories
+---------------------------------------------
 
 Effectively each data file you give to moban, it overrides environment variables.
 Still you can have different layers of data. For example, you can have
