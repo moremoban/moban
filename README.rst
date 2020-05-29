@@ -178,7 +178,8 @@ Moban will then load your custom jinja2 functions
 Handlebars.js template
 ----------------------------
 
-Given a data.json file with the following content
+With `moban-handlebars <https://github.com/moremoban/moban-handlebars>`_
+installed and given a data.json file with the following content:
 
 .. code-block::
 
