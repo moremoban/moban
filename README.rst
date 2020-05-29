@@ -175,6 +175,28 @@ Assume that the custom example was saved in `custom-jj2-plugin`
 
 Moban will then load your custom jinja2 functions
 
+Handlebars.js template
+----------------------------
+
+Given a data.json file with the following content
+
+.. code-block::
+
+    {
+      "person": {
+        "firstname": "Yehuda",
+        "lastname": "Katz",
+      },
+    }
+
+.. code-block:: bash
+
+   $ moban --template-type handlebars -c data.json "{{#with person}}{{firstname}} {{lastname}} {{/with}}"
+   Handlebars-ing {{#with pe... to moban.output
+   Handlebarsed 1 file.
+   $ cat moban.output
+   Yehuda Katz
+
 
 Templates and configuration files over HTTP(S)
 ================================================================================
