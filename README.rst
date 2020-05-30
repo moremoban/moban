@@ -51,8 +51,8 @@ Quick start
 .. code-block:: bash
 
     $ export HELLO="world"
-    $ moban ""
-    Templating ... to moban.output
+    $ moban "{{HELLO}}"
+    Templating {{HELLO}}... to moban.output
     Templated 1 file.
     $ cat moban.output
     world
@@ -62,13 +62,13 @@ Or
 .. code-block:: bash
 
     $ export HELLO="world"
-    $ echo "" | moban
+    $ echo "{{HELLO}}" | moban
 
 Or simply
 
 .. code-block:: bash
 
-    $ HELLO="world" moban ""
+    $ HELLO="world" moban "{{HELLO}}"
 
 
 A bit formal example:
@@ -86,9 +86,12 @@ Given data.yml as:
 
 and my.template as:
 
+
+
 .. code-block:: bash
 
-    
+    {{hello}}
+
 
 moban.output will contain:
 
@@ -219,6 +222,8 @@ Let's continue with a bit more fancy feature:
 TOML data format
 ----------------------
 
+`moban-anyconfig <https://github.com/moremoban/moban-anyconfig>`_ should be installed first.
+
 Given the following toml file, sample.toml:
 
 .. code-block::
@@ -238,6 +243,38 @@ You can do:
    Templated 1 file.
    $ cat moban.output
    Tom Preston-Werner made TOML Example
+
+Not limited to toml, you can supply moban with the following data formats:
+
+.. csv-table:: Always supported formats, quoting from python-anyconfig
+   :header: "Format", "Type", "Requirement"
+   :widths: 15, 10, 40
+
+   JSON, json, ``json`` (standard lib) or ``simplejson`` [#]_
+   Ini-like, ini, ``configparser`` (standard lib)
+   Pickle, pickle, ``pickle`` (standard lib)
+   XML, xml, ``ElementTree`` (standard lib)
+   Java properties [#]_ , properties, None (native implementation with standard lib)
+   B-sh, shellvars, None (native implementation with standard lib)
+
+For any of the following data formats, you elect to install by yourself.
+
+.. csv-table:: Supported formats by pluggable backend modules
+   :header: "Format", "Type", "Required backend"
+   :widths: 15, 10, 40
+
+   Amazon Ion, ion, ``anyconfig-ion-backend`` 
+   BSON, bson, ``anyconfig-bson-backend`` 
+   CBOR, cbor, ``anyconfig-cbor-backend``  or ``anyconfig-cbor2-backend`` 
+   ConifgObj, configobj, ``anyconfig-configobj-backend`` 
+   MessagePack, msgpack, ``anyconfig-msgpack-backend``
+
+Or you could choose to install all:
+
+.. code-block:: bash
+
+   $ pip install moban-anyconfig[all-backends]
+
 
 Templates and configuration files over HTTP(S)
 ================================================================================
@@ -314,13 +351,17 @@ Please install `fs-s3fs <https://github.com/PyFilesystem/s3fs>`_::
 
 Then you can access your files in s3 bucket:
 
+
+
 .. code-block:: bash
 
     $ moban -c s3://${client_id}:${client_secrect}@moremoban/s3data.yml \
-            -o 'zip://my.zip!/moban.output' 
+            -o 'zip://my.zip!/moban.output' {{hello}}
     $ unzip my.zip
     $ cat moban.output
     world
+
+
 
 Where the configuration sits in a s3 bucket, the output is a file in a zip. The content of s3data.yaml is:
 

@@ -47,7 +47,7 @@ Quick start
 
 .. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-intro.gif
 
-
+{% raw %}
 .. code-block:: bash
 
     $ export HELLO="world"
@@ -70,6 +70,7 @@ Or simply
 
     $ HELLO="world" moban "{{HELLO}}"
 
+{% endraw %}
 
 A bit formal example:
 
@@ -86,9 +87,13 @@ Given data.yml as:
 
 and my.template as:
 
+{% raw %}
+
 .. code-block:: bash
 
     {{hello}}
+
+{% endraw %}
 
 moban.output will contain:
 
@@ -189,7 +194,10 @@ installed,
 TOML data format
 ----------------------
 
-{% include "toml_example.rst.jj2" %}
+`moban-anyconfig <https://github.com/moremoban/moban-anyconfig>`_ should be installed first.
+
+{% include "anyconfig_example.rst.jj2" %}
+
 
 Templates and configuration files over HTTP(S)
 ================================================================================
@@ -228,6 +236,8 @@ Please install `fs-s3fs <https://github.com/PyFilesystem/s3fs>`_::
 
 Then you can access your files in s3 bucket:
 
+{% raw %}
+
 .. code-block:: bash
 
     $ moban -c s3://${client_id}:${client_secrect}@moremoban/s3data.yml \
@@ -235,6 +245,9 @@ Then you can access your files in s3 bucket:
     $ unzip my.zip
     $ cat moban.output
     world
+
+{% endraw %}
+
 
 Where the configuration sits in a s3 bucket, the output is a file in a zip. The content of s3data.yaml is:
 
