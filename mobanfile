@@ -4,6 +4,9 @@ configuration:
     - "git://github.com/moremoban/pypi-mobans.git?submodule=true&brach=dev!/statics"
     - "git://github.com/moremoban/moban-anyconfig.git?branch=master!/.moban.d/"
     - "git://github.com/moremoban/moban-handlebars.git?branch=dev!/.moban.d/"
+    - "git://github.com/moremoban/httpfs.git?branch=master!/.moban.d/"
+    - "git://github.com/moremoban/gitfs2.git?branch=dev!/.moban.d/"
+    - "git://github.com/moremoban/pypifs.git?branch=master!/.moban.d/"
     - ".moban.d"
   configuration: moban.yml
 targets:

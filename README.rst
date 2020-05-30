@@ -244,12 +244,17 @@ Templates and configuration files over HTTP(S)
 
 `httpfs <https://github.com/moremoban/httpfs>`_ should be installed first.
 
+With httpfs, `moban`_ can access any files over http(s) as its
+template or data file:
+
 .. code-block:: bash
 
     $ moban -t 'https://raw.githubusercontent.com/moremoban/pypi-mobans/dev/templates/_version.py.jj2'\
       -c 'https://raw.githubusercontent.com/moremoban/pypi-mobans/dev/config/data.yml'\
       -o _version.py
 
+
+.. _moban: https://github.com/moremoban/moban
 
 In an edge case, if github repo's public url is given,
 this github repo shall not have sub repos. This library will fail to
@@ -260,7 +265,6 @@ Templates and configuration files in a git repo
 
 `gitfs2 <https://github.com/moremoban/gitfs2>`_ is optional since v0.7.0 but was
 installed by default since v0.6.1
-
 
 You can do the following with moban:
 
