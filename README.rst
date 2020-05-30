@@ -250,7 +250,7 @@ Not limited to toml, you can supply moban with the following data formats:
    :header: "Format", "Type", "Requirement"
    :widths: 15, 10, 40
 
-   JSON, json, ``json`` (standard lib) or ``simplejson`` [#]_
+   JSON, json, ``json`` (standard lib) or ``simplejson``
    Ini-like, ini, ``configparser`` (standard lib)
    Pickle, pickle, ``pickle`` (standard lib)
    XML, xml, ``ElementTree`` (standard lib)
