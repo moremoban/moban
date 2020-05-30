@@ -51,8 +51,8 @@ Quick start
 .. code-block:: bash
 
     $ export HELLO="world"
-    $ moban ""
-    Templating ... to moban.output
+    $ moban "{{HELLO}}"
+    Templating {{HELLO}}... to moban.output
     Templated 1 file.
     $ cat moban.output
     world
@@ -62,13 +62,13 @@ Or
 .. code-block:: bash
 
     $ export HELLO="world"
-    $ echo "" | moban
+    $ echo "{{HELLO}}" | moban
 
 Or simply
 
 .. code-block:: bash
 
-    $ HELLO="world" moban ""
+    $ HELLO="world" moban "{{HELLO}}"
 
 
 A bit formal example:
@@ -88,7 +88,7 @@ and my.template as:
 
 .. code-block:: bash
 
-    
+    {{hello}}
 
 moban.output will contain:
 
@@ -162,12 +162,13 @@ details. Here is an example:
 
 And you can use it within your jinja2 template, `mytest.jj2`:
 
-
+{% raw %}
 
 .. code-block:: python
 
       {{ 'abc' | base64encode }}
 
+{% endraw %}
 
 Assume that the custom example was saved in `custom-jj2-plugin`
 
@@ -183,61 +184,12 @@ Handlebars.js template
 With `moban-handlebars <https://github.com/moremoban/moban-handlebars>`_
 installed,
 
-Given a data.json file with the following content
-
-.. code-block::
-
-    {
-      "person": {
-        "firstname": "Yehuda",
-        "lastname": "Katz",
-      },
-    }
-
-
-.. code-block:: bash
-
-
-   $ moban --template-type handlebars -c data.json  "{{person.firstname}} {{person.lastname}}"
-   Handlebars-ing <p>{{first... to moban.output
-   Handlebarsed 1 file.
-   $ cat moban.output
-   Yehuda Katz
-
-For `handlebars.js` users, yes, the example was copied from handlebarjs.com. The
-aim is to show off what we can do.
-
-Let's continue with a bit more fancy feature:
-
-
-
-.. code-block:: bash
-
-   $ moban --template-type handlebars -c data.json "{{#with person}}{{firstname}} {{lastname}} {{/with}}"
-
+{% include "handlebars_example.rst.jj2" %}
 
 TOML data format
 ----------------------
 
-Given the following toml file, sample.toml:
-
-.. code-block::
-
-   title = "TOML Example"
-   [owner]
-   name = "Tom Preston-Werner"
-
-
-You can do:
-
-
-.. code-block:: bash
-
-   $ moban -c sample.toml "{{name}} made {{title}}"
-   Templating {{owner.na... to moban.output
-   Templated 1 file.
-   $ cat moban.output
-   Tom Preston-Werner made TOML Example
+{% include "toml_example.rst.jj2" %}
 
 Templates and configuration files over HTTP(S)
 ================================================================================
@@ -313,7 +265,7 @@ Then you can access your files in s3 bucket:
 .. code-block:: bash
 
     $ moban -c s3://${client_id}:${client_secrect}@moremoban/s3data.yml \
-            -o 'zip://my.zip!/moban.output' 
+            -o 'zip://my.zip!/moban.output' {{hello}}
     $ unzip my.zip
     $ cat moban.output
     world
