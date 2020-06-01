@@ -1,4 +1,4 @@
-Level 7: Custom jinja filters, tests and globals on cli
+Level 7 b: Custom template engine
 ================================================================================
 
 We will test this on '-pd' cli option with custom template engine.

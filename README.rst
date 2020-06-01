@@ -219,6 +219,42 @@ Let's continue with a bit more fancy feature:
    $ moban --template-type handlebars -c data.json "{{#with person}}{{firstname}} {{lastname}} {{/with}}"
 
 
+Can I write my own template engine?
+--------------------------------------
+
+Yes and please click `here <https://github.com/moremoban/moban/tree/dev/tests/regression_tests/level-7-b-template-engine-plugin>`_ for more details.
+
+Given the following template type function, and saved in custom-plugin dir:
+
+.. code-block:: python
+
+   from moban.core.content_processor import ContentProcessor
+   
+   
+   @ContentProcessor("de-duplicate", "De-duplicating", "De-duplicated")
+   def de_duplicate(content: str) -> str:
+       """
+       Does no templating, works like 'copy'.
+   
+       """
+       lines = content.split(b'\n')
+       new_lines = []
+       for line in lines:
+           if line not in new_lines:
+               new_lines.append(line)
+       return b'\n'.join(new_lines)
+
+
+You can start using it like this:
+
+.. code-block::bash
+
+   $ moban --template-type de-duplicate -pd custom-plugin -t duplicated_content.txt
+   De-duplicating duplicated_content.txt to moban.output
+   De-duplicating 1 file.
+   Everything is up to date!
+
+
 TOML data format
 ----------------------
 
@@ -282,7 +318,7 @@ moban gives you a promise of any location which `python-anyconfig` does not supp
 **Why do it mean 'any location'?**
 
 Thanks to `pyfilesystem 2 <https://github.com/PyFilesystem/pyfilesystem2>`_,
-moban allow to read data back from `git repo <https://github.com/moremoban/gitfs2>`_, `pypi <https://github.com/moremoban/pypifs>`_ package, `http(s) <https://github.com/moremoban/httpfs>`_, zip,
+moban is able to read data back from `git repo <https://github.com/moremoban/gitfs2>`_, `pypi <https://github.com/moremoban/pypifs>`_ package, `http(s) <https://github.com/moremoban/httpfs>`_, zip,
 tar, ftp, `s3 <https://github.com/PyFilesystem/s3fs>`_ or `you name it <https://www.pyfilesystem.org/page/index-of-filesystems/>`_.
 
 
