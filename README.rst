@@ -254,7 +254,7 @@ Not limited to toml, you can supply moban with the following data formats:
    Ini-like, ini, ``configparser`` (standard lib)
    Pickle, pickle, ``pickle`` (standard lib)
    XML, xml, ``ElementTree`` (standard lib)
-   Java properties [#]_ , properties, None (native implementation with standard lib)
+   Java properties, properties, None (native implementation with standard lib)
    B-sh, shellvars, None (native implementation with standard lib)
 
 For any of the following data formats, you elect to install by yourself.
@@ -274,6 +274,16 @@ Or you could choose to install all:
 .. code-block:: bash
 
    $ pip install moban-anyconfig[all-backends]
+
+**Why not to use python-anyconfig itself, but yet another package?**
+
+moban gives you a promise of any location which `python-anyconfig` does not support.
+
+**Why do it mean 'any location'?**
+
+Thanks to `pyfilesystem 2 <https://github.com/PyFilesystem/pyfilesystem2>`_,
+moban allow to read data back from `git repo <https://github.com/moremoban/gitfs2>`_, `pypi <https://github.com/moremoban/pypifs>`_ package, `http(s) <https://github.com/moremoban/httpfs>`_, zip,
+tar, ftp, `s3 <https://github.com/PyFilesystem/s3fs>`_ or `you name it <https://www.pyfilesystem.org/page/index-of-filesystems/>`_.
 
 
 Templates and configuration files over HTTP(S)
