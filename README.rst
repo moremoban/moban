@@ -233,10 +233,6 @@ Given the following template type function, and saved in custom-plugin dir:
    
    @ContentProcessor("de-duplicate", "De-duplicating", "De-duplicated")
    def de_duplicate(content: str) -> str:
-       """
-       Does no templating, works like 'copy'.
-   
-       """
        lines = content.split(b'\n')
        new_lines = []
        for line in lines:
@@ -247,7 +243,7 @@ Given the following template type function, and saved in custom-plugin dir:
 
 You can start using it like this:
 
-.. code-block::bash
+.. code-block:: bash
 
    $ moban --template-type de-duplicate -pd custom-plugin -t duplicated_content.txt
    De-duplicating duplicated_content.txt to moban.output
