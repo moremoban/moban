@@ -42,6 +42,24 @@ class TestRegression(Docs):
             [("moban.output", expected)],
         )
 
+    def test_level_7_b(self):
+        expected = "1\n2\n3\n4\n5\n6\n8\n"
+
+        folder = "level-7-b-template-engine-plugin"
+        self.run_moban(
+            [
+                "moban",
+                "--template-type",
+                "de-duplicate",
+                "-pd",
+                "custom-plugin",
+                "-t",
+                "duplicated_content.txt"
+            ],
+            folder,
+            [("moban.output", expected)],
+        )
+
     def test_level_21_copy_templates_into_tars(self):
         expected = "test file\n"
 
