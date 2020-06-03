@@ -191,6 +191,14 @@ installed,
 
 {% include "handlebars_example.rst.jj2" %}
 
+Velocity template
+----------------------------
+
+With `moban-velocity <https://github.com/moremoban/moban-velocity>`_
+installed,
+
+{% include "velocity_example.rst.jj2" %}
+
 Can I write my own template engine?
 --------------------------------------
 

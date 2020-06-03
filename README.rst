@@ -219,6 +219,56 @@ Let's continue with a bit more fancy feature:
    $ moban --template-type handlebars -c data.json "{{#with person}}{{firstname}} {{lastname}} {{/with}}"
 
 
+Velocity template
+----------------------------
+
+With `moban-velocity <https://github.com/moremoban/moban-velocity>`_
+installed,
+
+Given the following data.json:
+
+.. code-block::
+
+   {"people":
+       [
+           {"name": "Bill", "age": 100},
+           {"name": "Bob", "age": 90},
+           {"name": "Mark", "age": 25}
+       ]
+   }
+
+And given the following velocity.template:
+
+.. code-block::
+
+   Old people:
+   #foreach ($person in $people)
+    #if($person.age > 70)
+     $person.name
+    #end
+   #end
+   
+   Third person is $people[2].name
+
+**moban** can do the template:
+
+.. code-block:: bash
+
+   $ moban --template-type velocity -c data.json -t velocity.template
+   Velocity-templating vo.t to moban.output
+   Velocity-templated 1 file.
+   $ cat moban.output
+   Old people:
+
+   Bill
+ 
+   Bob
+ 
+ 
+   Third person is Mark
+
+
+
 Can I write my own template engine?
 --------------------------------------
 
