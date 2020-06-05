@@ -1,3 +1,4 @@
+from typing import Dict
 import re
 import logging
 from importlib import import_module
@@ -63,7 +64,7 @@ class Engine(object):
     ACTION_IN_PRESENT_CONTINUOUS_TENSE = "Templating"
     ACTION_IN_PAST_TENSE = "Templated"
 
-    def __init__(self, template_fs, options=None):
+    def __init__(self, template_fs, options: Dict = None):
         """
         Contruct a jinja2 template engine
 
