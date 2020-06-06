@@ -7,9 +7,9 @@ def de_duplicate(content: str) -> str:
     Does no templating, works like 'copy'.
 
     """
-    lines = content.split(b'\n')
+    lines = content.split(b"\n")
     new_lines = []
     for line in lines:
         if line not in new_lines:
             new_lines.append(line)
-    return b'\n'.join(new_lines)
+    return b"\n".join(new_lines)

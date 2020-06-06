@@ -54,7 +54,7 @@ class TestRegression(Docs):
                 "-pd",
                 "custom-plugin",
                 "-t",
-                "duplicated_content.txt"
+                "duplicated_content.txt",
             ],
             folder,
             [("moban.output", expected)],

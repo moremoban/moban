@@ -1,6 +1,6 @@
-from typing import Dict
 import re
 import logging
+from typing import Dict
 from importlib import import_module
 
 import fs.errors
