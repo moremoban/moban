@@ -30,7 +30,6 @@ mó bǎn - 模板 General purpose static text generator
 :Issues: http://github.com/moremoban/moban/issues
 :License: MIT
 
-.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-pyexcel-demo.gif
 
 Announcement
 ================================================================================
@@ -507,9 +506,19 @@ Where the configuration sits in a s3 bucket, the output is a file in a zip. The 
 
     hello: world
 
+So what can I do with it
+============================
 
-Introduction
+Here is a list of other usages:
+
+#. `Django Mobans <https://github.com/django-mobans>`_, templates for django, docker etc.
+#. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets in pdf
+
+
+At scale, continous templating for open source projects
 ================================================================================
+
+.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-pyexcel-demo.gif
 
 **moban** enabled **continuous templating** in `pyexcel <https://github.com/pyexcel/pyexcel>`_ and
 `coala <https://github.com//coala/coala>`_ project to keep
@@ -520,10 +529,8 @@ organisation. Here is the primary use case of moban, as of now:
    :width: 600px
 
 
-And here is a list of other usages:
-
-#. `Django Mobans <https://github.com/django-mobans>`_, templates for django, docker etc.
-#. `Math Sheets <https://github.com/chfw/math-sheets>`_, generate custom math sheets in pdf
+Usage beyond command line
+=============================
 
 All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
 
