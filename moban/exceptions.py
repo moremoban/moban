@@ -40,3 +40,13 @@ class NoPermissionsNeeded(Exception):
 
 class SingleHTTPURLConstraint(Exception):
     pass
+
+
+class PassOn(Exception):
+    """
+    Raised when template engine cannot do anything with the given template.
+
+    i.e. given a png image :/
+    """
+
+    pass

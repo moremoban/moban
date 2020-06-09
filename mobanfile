@@ -2,9 +2,16 @@ configuration:
   template_dir:
     - "git://github.com/moremoban/pypi-mobans.git?submodule=true&brach=dev!/templates"
     - "git://github.com/moremoban/pypi-mobans.git?submodule=true&brach=dev!/statics"
+    - "git://github.com/moremoban/moban-anyconfig.git?branch=master!/.moban.d/"
+    - "git://github.com/moremoban/moban-handlebars.git?branch=dev!/.moban.d/"
+    - "git://github.com/moremoban/moban-velocity.git?branch=dev!/.moban.d/"
+    - "git://github.com/moremoban/httpfs.git?branch=master!/.moban.d/"
+    - "git://github.com/moremoban/gitfs2.git?branch=dev!/.moban.d/"
+    - "git://github.com/moremoban/pypifs.git?branch=master!/.moban.d/"
     - ".moban.d"
   configuration: moban.yml
 targets:
+  - README.rst: moban_readme.jj2
   - setup.py: moban_setup.py.jj2
   - moban/__init__.py: __init__.py.jj2
   - moban/_version.py: _version.py.jj2

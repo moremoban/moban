@@ -102,13 +102,21 @@ is an example starting point for any template engine.
    class Engine(object):
        def __init__(self, template_fs, options=None):
            """
-           A list template directories will be given to your engine class
+           an instance of fs.multifs.MultiFS will be given.
+ 
+           :param fs.multifs.MultiFS template_fs: a MultiFS instance or a FS instance
+           :param dict options: a dictionary containing environmental parameters
            """
 
        def get_template(self, template_file):
            """
            Given a relative path to your template file, please return a templatable thing that does
            the templating function in next function below
+           """
+
+       def get_template_from_string(self, string):
+           """
+           Sometimes, user would pass on command line string as template
            """
 
        def apply_template(self, template, data, output):
@@ -121,6 +129,10 @@ is an example starting point for any template engine.
 After you will have finished the engine plugin, you can either place it in `plugin_dir`
 in order to get it loaded, or make an installable python package. In the latter case,
 please refer to `yehua`_: doing that in less than 5 minutes.
+
+When the template engine failed to obtain the template, i.e. UnicodeEncodingError,
+TemplateSyntaxError, your engine extension shall raise `moban.exceptions.PassOn`
+exception, and `moban` would replace your template engine with default engine.
 
 
 Custom content processors for Moban

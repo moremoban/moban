@@ -24,6 +24,16 @@ class TestRegression(Docs):
             "regression-test.png",
         )
 
+    def test_default_copy_as_error_handling_behavior(self):
+        folder = "regr-02-templating-failure-results-in-copy-action"
+        args = ["moban"]
+        self._raw_moban(
+            args,
+            folder,
+            fs.path.join("copy-source", "image.png"),
+            "regression-test.png",
+        )
+
     def test_level_7(self):
         expected = "YWJj\n"
 
@@ -37,6 +47,24 @@ class TestRegression(Docs):
                 "filter.jj2",
                 "-pd",
                 "custom-jj2-plugin",
+            ],
+            folder,
+            [("moban.output", expected)],
+        )
+
+    def test_level_7_b(self):
+        expected = "1\n2\n3\n4\n5\n6\n8\n"
+
+        folder = "level-7-b-template-engine-plugin"
+        self.run_moban(
+            [
+                "moban",
+                "--template-type",
+                "de-duplicate",
+                "-pd",
+                "custom-plugin",
+                "-t",
+                "duplicated_content.txt",
             ],
             folder,
             [("moban.output", expected)],

@@ -1,5 +1,6 @@
 import re
 import logging
+from typing import Dict
 from importlib import import_module
 
 import fs.errors
@@ -7,9 +8,9 @@ from jinja2 import Template, Environment
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
 from jinja2_fsloader import FSLoader
-from jinja2.exceptions import TemplateNotFound
+from jinja2.exceptions import TemplateNotFound, TemplateSyntaxError
 
-from moban import constants
+from moban import constants, exceptions
 from moban.externals import file_system
 
 JINJA2_LIBRARIES = "^moban_jinja2_.+$"
@@ -63,7 +64,7 @@ class Engine(object):
     ACTION_IN_PRESENT_CONTINUOUS_TENSE = "Templating"
     ACTION_IN_PAST_TENSE = "Templated"
 
-    def __init__(self, template_fs, options=None):
+    def __init__(self, template_fs, options: Dict = None):
         """
         Contruct a jinja2 template engine
 
@@ -130,6 +131,8 @@ class Engine(object):
                 return self.jj2_environment.from_string(content)
             except fs.errors.ResourceNotFound:
                 return self.jj2_environment.from_string(template_file)
+        except (UnicodeDecodeError, TemplateSyntaxError) as e:
+            raise exceptions.PassOn(str(e))
 
     def get_template_from_string(self, string):
         return Template(string)

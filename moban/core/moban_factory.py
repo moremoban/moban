@@ -12,6 +12,7 @@ from moban.deprecated import deprecated_moban_path_notation
 from moban.core.context import Context
 from moban.core.strategy import Strategy
 from moban.core.hashstore import HASH_STORE
+from moban.core.definitions import TemplateTarget
 from moban.externals.buffered_writer import BufferedWriter
 
 LOG = logging.getLogger(__name__)
@@ -100,6 +101,7 @@ class MobanEngine(object):
             "ACTION_IN_PAST_TENSE",
             constants.LABEL_MOBAN_ACTION_IN_PAST_TENSE,
         )
+        self.fall_out_targets = []
 
     def report(self):
         if self.templated_count == 0:
@@ -198,37 +200,13 @@ class MobanEngine(object):
 
     def _render_with_finding_template_first(self, template_file_index):
         for (template_file, data_output_pairs) in template_file_index.items():
-            template = self.engine.get_template(template_file)
-            template_abs_path = self.template_fs.geturl(
-                template_file, purpose="fs"
-            )
-            for (data_file, output) in data_output_pairs:
-                data = self.context.get_data(data_file)
-                flag = self.apply_template(
-                    template_abs_path, template, data, output
-                )
-                if flag:
-                    reporter.report_templating(
-                        self.engine_action, template_file, output
-                    )
-                    self.templated_count += 1
-                self.file_count += 1
-
-    def _render_with_finding_data_first(self, data_file_index):
-        for (data_file, template_output_pairs) in data_file_index.items():
-            data = self.context.get_data(data_file)
-            for (template_file, output) in template_output_pairs:
+            try:
                 template = self.engine.get_template(template_file)
-                if isinstance(template, bool):
-                    if template:
-                        reporter.report_templating(
-                            self.engine_action, template_file, None
-                        )
-                        self.templated_count += 1
-                else:
-                    template_abs_path = self.template_fs.geturl(
-                        template_file, purpose="fs"
-                    )
+                template_abs_path = self.template_fs.geturl(
+                    template_file, purpose="fs"
+                )
+                for (data_file, output) in data_output_pairs:
+                    data = self.context.get_data(data_file)
                     flag = self.apply_template(
                         template_abs_path, template, data, output
                     )
@@ -237,7 +215,64 @@ class MobanEngine(object):
                             self.engine_action, template_file, output
                         )
                         self.templated_count += 1
-                self.file_count += 1
+                    self.file_count += 1
+            except exceptions.PassOn:
+                for (data_file, output) in data_output_pairs:
+                    self.fall_out_targets.append(
+                        TemplateTarget(
+                            template_file,
+                            data_file,
+                            output,
+                            template_type=constants.TEMPLATE_COPY,
+                        )
+                    )
+                    reporter.report_info_message(
+                        f"{self.engine_action} is switched to copy:"
+                        + f" {template_file} to {output}"
+                    )
+                continue
+
+    def _render_with_finding_data_first(self, data_file_index):
+        for (data_file, template_output_pairs) in data_file_index.items():
+            data = self.context.get_data(data_file)
+            for (template_file, output) in template_output_pairs:
+                try:
+                    template = self.engine.get_template(template_file)
+
+                    if isinstance(template, bool):
+                        if template:
+                            reporter.report_templating(
+                                self.engine_action, template_file, None
+                            )
+                            self.templated_count += 1
+                    else:
+                        template_abs_path = self.template_fs.geturl(
+                            template_file, purpose="fs"
+                        )
+                        flag = self.apply_template(
+                            template_abs_path, template, data, output
+                        )
+                        if flag:
+                            reporter.report_templating(
+                                self.engine_action, template_file, output
+                            )
+                            self.templated_count += 1
+                    self.file_count += 1
+                except exceptions.PassOn:
+                    self.fall_out_targets.append(
+                        TemplateTarget(
+                            template_file,
+                            data_file,
+                            output,
+                            template_type=constants.TEMPLATE_COPY,
+                        )
+                    )
+
+                    reporter.report_info_message(
+                        f"{self.engine_action} is switched to copy:"
+                        + f" {template_file} to {output}"
+                    )
+                    continue
 
 
 def expand_template_directories(dirs):
