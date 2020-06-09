@@ -115,6 +115,7 @@ def handle_targets(merged_options, targets):
         jobs_for_each_engine[primary_template_type].append(target)
 
     count = 0
+    fall_out_targets = []
     for template_type in jobs_for_each_engine.keys():
         engine = core.ENGINES.get_engine(
             template_type,
@@ -124,4 +125,15 @@ def handle_targets(merged_options, targets):
         engine.render_to_files(jobs_for_each_engine[template_type])
         engine.report()
         count = count + engine.number_of_templated_files()
+        fall_out_targets += engine.fall_out_targets
+
+    if fall_out_targets:
+        copy_engine = core.ENGINES.get_engine(
+            constants.TEMPLATE_COPY,
+            merged_options[constants.LABEL_TMPL_DIRS],
+            merged_options[constants.LABEL_CONFIG_DIR],
+        )
+        copy_engine.render_to_files(fall_out_targets)
+        copy_engine.report()
+        count = count + copy_engine.number_of_templated_files()
     return count

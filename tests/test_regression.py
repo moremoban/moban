@@ -24,6 +24,16 @@ class TestRegression(Docs):
             "regression-test.png",
         )
 
+    def test_default_copy_as_error_handling_behavior(self):
+        folder = "regr-02-templating-failure-results-in-copy-action"
+        args = ["moban"]
+        self._raw_moban(
+            args,
+            folder,
+            fs.path.join("copy-source", "image.png"),
+            "regression-test.png",
+        )
+
     def test_level_7(self):
         expected = "YWJj\n"
 

@@ -4,6 +4,12 @@ releases:
   - changes:
       - action: Added
         details:
+          - "`#313`: Non-textual source files should default to copy"
+    date: tbd
+    version: 0.7.8
+  - changes:
+      - action: Added
+        details:
           - "`-pd` for command line to include custom plugin directories"
       - action: Fixed
         details:
