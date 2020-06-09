@@ -201,7 +201,7 @@ installed,
 Can I write my own template engine?
 --------------------------------------
 
-Yes and please click `here <https://github.com/moremoban/moban/tree/dev/tests/regression_tests/level-7-b-template-engine-plugin>`_ for more details.
+Yes and please check for `more details <https://github.com/moremoban/moban/tree/dev/tests/regression_tests/level-7-b-template-engine-plugin>`_.
 
 Given the following template type function, and saved in custom-plugin dir:
 
@@ -321,7 +321,7 @@ organisation. Here is the primary use case of moban, as of now:
 Usage beyond command line
 =============================
 
-All use cases are documented `here <http://moban.readthedocs.org/en/latest/#tutorial>`_
+All use cases are `documented <http://moban.readthedocs.org/en/latest/#tutorial>`_
 
 Support
 ================================================================================
