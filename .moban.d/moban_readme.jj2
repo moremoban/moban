@@ -182,6 +182,13 @@ Assume that the custom example was saved in `custom-jj2-plugin`
 
 Moban will then load your custom jinja2 functions
 
+Slim template syntax for jinja2
+---------------------------------
+
+with `moban-slim <https://github.com/moremoban/moban-slim>`_ installed,
+
+{% include "slim_example.rst.jj2" %}
+
 Handlebars.js template
 ----------------------------
 
