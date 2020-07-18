@@ -21,7 +21,7 @@ lint:
 	yamllint -d "{extends: default, ignore: .moban.cd/changelog.yml}" .
 
 format:
-	isort -y $(find moban -name "*.py"|xargs echo) $(find tests -name "*.py"|xargs echo)
+	isort $(find moban -name "*.py"|xargs echo) $(find tests -name "*.py"|xargs echo)
 	git diff
 	black -l 79 moban
 	git diff
