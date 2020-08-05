@@ -1,3 +1,5 @@
+import sys
+
 import crayons
 
 import moban.constants as constants
@@ -51,11 +53,13 @@ def report_partial_run(action_in_past_tense, file_count, total):
 
 
 def report_error_message(message):
-    raw_print(crayons.white("Error: ", bold=True) + crayons.red(message))
+    error_print(crayons.white("Error: ", bold=True) + crayons.red(message))
 
 
 def report_warning_message(message):
-    raw_print(crayons.white("Warning: ", bold=True) + crayons.yellow(message))
+    error_print(
+        crayons.white("Warning: ", bold=True) + crayons.yellow(message)
+    )
 
 
 def report_info_message(message):
@@ -104,5 +108,5 @@ def do_print(message):
         print(message)
 
 
-def raw_print(message):
-    print(message)
+def error_print(message):
+    sys.stderr.write(message)
