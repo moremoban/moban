@@ -13,6 +13,8 @@ MESSAGE_TEMPLATE_NOT_IN_MOBAN_FILE = "{0} is not defined in your moban file!"
 MESSAGE_FILE_EXTENSION_NOT_NEEDED = "File extension is not required for ad-hoc\
  type"
 
+GLOBAL = {"PRINT": True}
+
 
 def report_templating(
     action_in_present_continuous_tense, source_file, destination_file
@@ -49,11 +51,11 @@ def report_partial_run(action_in_past_tense, file_count, total):
 
 
 def report_error_message(message):
-    do_print(crayons.white("Error: ", bold=True) + crayons.red(message))
+    raw_print(crayons.white("Error: ", bold=True) + crayons.red(message))
 
 
 def report_warning_message(message):
-    do_print(crayons.white("Warning: ", bold=True) + crayons.yellow(message))
+    raw_print(crayons.white("Warning: ", bold=True) + crayons.yellow(message))
 
 
 def report_info_message(message):
@@ -98,4 +100,9 @@ def report_file_extension_not_needed():
 
 
 def do_print(message):
+    if GLOBAL["PRINT"]:
+        print(message)
+
+
+def raw_print(message):
     print(message)

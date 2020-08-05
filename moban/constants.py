@@ -56,7 +56,7 @@ DEFAULT_OPTIONS = {
         file_system.path_join(".", DEFAULT_TEMPLATE_DIRNAME),
     ],
     # moban.output, default output file name
-    LABEL_OUTPUT: "%s.output" % PROGRAM_NAME,
+    LABEL_OUTPUT: "-",
     # data.yml, default data input file
     LABEL_CONFIG: "data%s" % DEFAULT_YAML_SUFFIX,
     LABEL_TEMPLATE_TYPE: DEFAULT_TEMPLATE_TYPE,
