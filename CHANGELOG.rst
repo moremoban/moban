@@ -4,7 +4,7 @@ Change log
 0.7.9 - tbd
 --------------------------------------------------------------------------------
 
-**Added**
+**Updated**
 
 #. `#390 <https://github.com/moremoban/moban/issues/390>`_: single render action
    will print to stdout by defafult
