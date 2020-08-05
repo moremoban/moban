@@ -109,4 +109,4 @@ def do_print(message):
 
 
 def error_print(message):
-    sys.stderr.write(message)
+    sys.stderr.write(message + "\n")

@@ -5,7 +5,7 @@ releases:
       - action: Updated
         details:
           - "`#390`: single render action will print to stdout by defafult"
-    date: tbd
+    date: 06.08.2020
     version: 0.7.9
   - changes:
       - action: Added

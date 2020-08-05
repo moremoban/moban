@@ -31,7 +31,7 @@ class TestReporter:
         eq_(fake_stdout.getvalue(), "Worked on 20 files.\n")
 
     def test_error_message(self):
-        patcher = patch("sys.stdout", new_callable=StringIO)
+        patcher = patch("sys.stderr", new_callable=StringIO)
         fake_stdout = patcher.start()
         reporter.report_error_message("something wrong")
         patcher.stop()
@@ -45,7 +45,7 @@ class TestReporter:
         eq_(fake_stdout.getvalue(), "Info: for your information\n")
 
     def test_warning_message(self):
-        patcher = patch("sys.stdout", new_callable=StringIO)
+        patcher = patch("sys.stderr", new_callable=StringIO)
         fake_stdout = patcher.start()
         reporter.report_warning_message("Maybe you wanna know")
         patcher.stop()
@@ -71,7 +71,7 @@ class TestReporter:
         eq_(ret, "1 file")
 
     def test_report_template_not_in_moban_file(self):
-        patcher = patch("sys.stdout", new_callable=StringIO)
+        patcher = patch("sys.stderr", new_callable=StringIO)
         fake_stdout = patcher.start()
         reporter.report_template_not_in_moban_file("test.jj2")
         patcher.stop()
