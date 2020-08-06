@@ -42,9 +42,7 @@ class TestCustomOptions:
             from moban.main import main
 
             main()
-            fake_template_doer.assert_called_with(
-                "a.jj2", "config.yaml", "moban.output"
-            )
+            fake_template_doer.assert_called_with("a.jj2", "config.yaml", "-")
 
     @patch("moban.core.moban_factory.MobanEngine.render_to_file")
     def test_minimal_options(self, fake_template_doer):
@@ -53,9 +51,7 @@ class TestCustomOptions:
             from moban.main import main
 
             main()
-            fake_template_doer.assert_called_with(
-                "a.jj2", "config.yaml", "moban.output"
-            )
+            fake_template_doer.assert_called_with("a.jj2", "config.yaml", "-")
 
     @raises(SystemExit)
     def test_missing_template(self):
@@ -89,9 +85,7 @@ class TestOptions:
             from moban.main import main
 
             main()
-            fake_template_doer.assert_called_with(
-                "a.jj2", "data.yml", "moban.output"
-            )
+            fake_template_doer.assert_called_with("a.jj2", "data.yml", "-")
 
     @patch("moban.core.moban_factory.MobanEngine.render_string_to_file")
     def test_string_template(self, fake_template_doer):
@@ -102,7 +96,7 @@ class TestOptions:
 
             main()
             fake_template_doer.assert_called_with(
-                string_template, "data.yml", "moban.output"
+                string_template, "data.yml", "-"
             )
 
     @raises(SystemExit)
@@ -307,7 +301,7 @@ class TestTemplateOption:
 
             main()
             fake_template_doer.assert_called_with(
-                "setup.py.jj2", "data.yml", "moban.output"
+                "setup.py.jj2", "data.yml", "-"
             )
 
     @patch("moban.core.moban_factory.MobanEngine.render_to_file")
@@ -317,9 +311,7 @@ class TestTemplateOption:
             from moban.main import main
 
             main()
-            fake_template_doer.assert_called_with(
-                "foo.jj2", "data.yml", "moban.output"
-            )
+            fake_template_doer.assert_called_with("foo.jj2", "data.yml", "-")
 
     def tearDown(self):
         self.patcher1.stop()
@@ -431,9 +423,7 @@ class TestTemplateTypeOption:
             from moban.main import main
 
             main()
-            fake_template_doer.assert_called_with(
-                "a.mako", "data.yml", "moban.output"
-            )
+            fake_template_doer.assert_called_with("a.mako", "data.yml", "-")
 
     def tearDown(self):
         os.unlink(self.config_file)
@@ -532,6 +522,8 @@ def test_add_extension():
             "{{ python_version }}",
             "-e",
             "jinja2=jinja2_python_version.PythonVersionExtension",
+            "-o",
+            "moban.output",
         ],
         [
             "moban",
@@ -539,6 +531,8 @@ def test_add_extension():
             "{{ python_version }}",
             "-e",
             "jj2=jinja2_python_version.PythonVersionExtension",
+            "-o",
+            "moban.output",
         ],
     ]
     for test_args in test_commands:
@@ -558,7 +552,7 @@ def test_add_extension():
 def test_stdin_input():
     if sys.platform == "win32":
         raise SkipTest("windows test fails with this pipe test 2")
-    test_args = ["moban", "-d", "hello=world"]
+    test_args = ["moban", "-d", "hello=world", "-o", "moban.output"]
     with patch.object(sys, "stdin", StringIO("{{hello}}")):
         with patch.object(sys, "argv", test_args):
             from moban.main import main
@@ -568,3 +562,13 @@ def test_stdin_input():
                 content = f.read()
                 eq_(content, "world")
             os.unlink("moban.output")
+
+
+def test_stdout():
+    test_args = ["moban", "-d", "hello=world", "-t", "{{hello}}"]
+    with patch.object(sys, "argv", test_args):
+        with patch("sys.stdout", new_callable=StringIO) as fake_stdout:
+            from moban.main import main
+
+            main()
+            eq_(fake_stdout.getvalue(), "world\n")

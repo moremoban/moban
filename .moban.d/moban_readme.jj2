@@ -44,16 +44,11 @@ versions lower than 0.7.0 if you are still using python 2.
 Quick start
 ================================================================================
 
-.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-intro.gif
-
 {% raw %}
 .. code-block:: bash
 
     $ export HELLO="world"
     $ moban "{{HELLO}}"
-    Templating {{HELLO}}... to moban.output
-    Templated 1 file.
-    $ cat moban.output
     world
 
 Or
@@ -76,7 +71,6 @@ A bit formal example:
 .. code-block:: bash
 
 	$ moban -c data.yml -t my.template
-	$ cat moban.output
 
 Given data.yml as:
 

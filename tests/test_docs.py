@@ -14,7 +14,15 @@ class TestTutorial(Docs):
     def test_level_1_custom_define(self):
         expected = "maailman"
         folder = "level-1-jinja2-cli"
-        args = ["moban", "-d", "hello=maailman", "-t", "a.template"]
+        args = [
+            "moban",
+            "-d",
+            "hello=maailman",
+            "-t",
+            "a.template",
+            "-o",
+            "moban.output",
+        ]
         self.run_moban(args, folder, [("moban.output", expected)])
 
     def test_level_2(self):
@@ -187,7 +195,15 @@ class TestTutorial(Docs):
         """
         expected = custom_dedent(expected)
         folder = "level-13-any-data-override-any-data"
-        commands = ["moban", "-c", "child.json", "-t", "a.template"]
+        commands = [
+            "moban",
+            "-c",
+            "child.json",
+            "-t",
+            "a.template",
+            "-o",
+            "moban.output",
+        ]
         self.run_moban(commands, folder, [("moban.output", expected)])
 
     def test_level_13_yaml(self):
@@ -202,7 +218,15 @@ class TestTutorial(Docs):
         """
         expected = custom_dedent(expected)
         folder = "level-13-any-data-override-any-data"
-        commands = ["moban", "-c", "child.yaml", "-t", "a.template"]
+        commands = [
+            "moban",
+            "-c",
+            "child.yaml",
+            "-t",
+            "a.template",
+            "-o",
+            "moban.output",
+        ]
         self.run_moban(commands, folder, [("moban.output", expected)])
 
     def test_level_14_custom(self):
@@ -354,5 +378,13 @@ class TestTutorial(Docs):
         self.run_moban(["moban"], folder, [("simple.file", expected)])
 
     def _moban(self, folder, expected):
-        args = ["moban", "-c", "data.yml", "-t", "a.template"]
+        args = [
+            "moban",
+            "-c",
+            "data.yml",
+            "-t",
+            "a.template",
+            "-o",
+            "moban.output",
+        ]
         self.run_moban(args, folder, [("moban.output", expected)])
