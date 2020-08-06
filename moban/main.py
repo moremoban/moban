@@ -238,6 +238,7 @@ def handle_command_line(options):
     """
     act upon command options
     """
+    reporter.GLOBAL["PRINT"] = False
     options = data_loader.merge(options, constants.DEFAULT_OPTIONS)
     engine = ENGINES.get_engine(
         options[constants.LABEL_TEMPLATE_TYPE],

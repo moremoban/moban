@@ -11,7 +11,9 @@ class BufferedWriter(object):
         self.fs_list = {}
 
     def write_file_out(self, filename, content):
-        if file_system.is_zip_alike_url(filename):
+        if filename == "-":
+            print(content.decode())
+        elif file_system.is_zip_alike_url(filename):
             self.write_file_out_to_zip(filename, content)
         else:
             write_file_out(filename, content)

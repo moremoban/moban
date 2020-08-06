@@ -44,16 +44,11 @@ versions lower than 0.7.0 if you are still using python 2.
 Quick start
 ================================================================================
 
-.. image:: https://github.com/moremoban/moban/raw/dev/docs/images/moban-in-intro.gif
-
 
 .. code-block:: bash
 
     $ export HELLO="world"
     $ moban "{{HELLO}}"
-    Templating {{HELLO}}... to moban.output
-    Templated 1 file.
-    $ cat moban.output
     world
 
 Or
@@ -75,7 +70,7 @@ A bit formal example:
 .. code-block:: bash
 
 	$ moban -c data.yml -t my.template
-	$ cat moban.output
+    world
 
 Given data.yml as:
 
@@ -92,11 +87,6 @@ and my.template as:
     {{hello}}
 
 
-moban.output will contain:
-
-.. code-block:: bash
-
-    world
 
 Please note that data.yml will take precedence over environment variables.
 
@@ -178,6 +168,31 @@ Assume that the custom example was saved in `custom-jj2-plugin`
    $ moban -pd custom-jj2-plugin -t mytest.jj2 ...
 
 Moban will then load your custom jinja2 functions
+
+Slim template syntax for jinja2
+---------------------------------
+
+with `moban-slim <https://github.com/moremoban/moban-slim>`_ installed,
+
+Given a data.json file with the following content
+
+.. code-block::
+
+    {
+      "person": {
+        "firstname": "Smith",
+        "lastname": "Jones",
+      },
+    }
+
+.. code-block:: bash
+
+
+   $ moban --template-type slim -c data.json  "{{person.firstname}} {{person.lastname}}"
+   Slimming <p>{{first... to moban.output
+   Slimmed 1 file.
+   $ cat moban.output
+   Smith Jones
 
 Handlebars.js template
 ----------------------------

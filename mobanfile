@@ -5,6 +5,7 @@ configuration:
     - "git://github.com/moremoban/moban-anyconfig.git?branch=master!/.moban.d/"
     - "git://github.com/moremoban/moban-handlebars.git?branch=dev!/.moban.d/"
     - "git://github.com/moremoban/moban-velocity.git?branch=dev!/.moban.d/"
+    - "git://github.com/moremoban/moban-slim.git?branch=dev!/.moban.d/"
     - "git://github.com/moremoban/httpfs.git?branch=master!/.moban.d/"
     - "git://github.com/moremoban/gitfs2.git?branch=dev!/.moban.d/"
     - "git://github.com/moremoban/pypifs.git?branch=master!/.moban.d/"
