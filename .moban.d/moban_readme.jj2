@@ -70,7 +70,7 @@ A bit formal example:
 
 .. code-block:: bash
 
-	$ moban -c data.yml -t my.template
+    $ moban -c data.yml -t my.template
     world
 
 Given data.yml as:
