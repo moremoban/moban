@@ -70,6 +70,7 @@ A bit formal example:
 .. code-block:: bash
 
 	$ moban -c data.yml -t my.template
+    world
 
 Given data.yml as:
 
@@ -86,11 +87,6 @@ and my.template as:
     {{hello}}
 
 
-moban.output will contain:
-
-.. code-block:: bash
-
-    world
 
 Please note that data.yml will take precedence over environment variables.
 
