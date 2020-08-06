@@ -222,9 +222,6 @@ You can start using it like this:
 .. code-block:: bash
 
    $ moban --template-type de-duplicate -pd custom-plugin -t duplicated_content.txt
-   De-duplicating duplicated_content.txt to moban.output
-   De-duplicating 1 file.
-   Everything is up to date!
 
 
 TOML data format

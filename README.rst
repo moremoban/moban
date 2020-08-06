@@ -349,9 +349,6 @@ You can start using it like this:
 .. code-block:: bash
 
    $ moban --template-type de-duplicate -pd custom-plugin -t duplicated_content.txt
-   De-duplicating duplicated_content.txt to moban.output
-   De-duplicating 1 file.
-   Everything is up to date!
 
 
 TOML data format
@@ -374,9 +371,6 @@ You can do:
 .. code-block:: bash
 
    $ moban -c sample.toml "{{owner.name}} made {{title}}"
-   Templating {{owner.na... to moban.output
-   Templated 1 file.
-   $ cat moban.output
    Tom Preston-Werner made TOML Example
 
 Not limited to toml, you can supply moban with the following data formats:
