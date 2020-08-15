@@ -187,8 +187,10 @@ class MobanEngine(object):
                 # file to the output file
 
                 # if it isn't an archive proceed or stdout
-                if (not file_system.is_zip_alike_url(output_file) and
-                    output_file != '-'):
+                if (
+                    not file_system.is_zip_alike_url(output_file)
+                    and output_file != "-"
+                ):
 
                     try:
                         file_system.file_permissions_copy(
