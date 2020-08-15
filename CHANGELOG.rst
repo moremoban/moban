@@ -15,7 +15,7 @@ Change log
 **Updated**
 
 #. `#390 <https://github.com/moremoban/moban/issues/390>`_: single render action
-   will print to stdout by defafult
+   will print to stdout by default
 
 0.7.8 - 09.06.2020
 --------------------------------------------------------------------------------
