@@ -572,3 +572,19 @@ def test_stdout():
 
             main()
             eq_(fake_stdout.getvalue(), "world\n")
+
+
+def test_render_file_stdout():
+    config_file = "config.yaml"
+    with open(config_file, "w") as f:
+        f.write("hello: world")
+    template_file = "t.jj2"
+    with open(template_file, "w") as f:
+        f.write("{{hello}}")
+    test_args = ["moban", "-t", "t.jj2", "-c", "config.yaml"]
+    with patch.object(sys, "argv", test_args):
+        with patch("sys.stdout", new_callable=StringIO) as fake_stdout:
+            from moban.main import main
+
+            main()
+            eq_(fake_stdout.getvalue(), "world\n")
