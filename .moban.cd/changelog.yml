@@ -4,7 +4,13 @@ releases:
   - changes:
       - action: Updated
         details:
-          - "`#390`: single render action will print to stdout by defafult"
+          - "`#393`: Rendered content output to stdout once"
+    date: 16.08.2020
+    version: 0.7.10
+  - changes:
+      - action: Updated
+        details:
+          - "`#390`: single render action will print to stdout by default"
     date: 06.08.2020
     version: 0.7.9
   - changes:

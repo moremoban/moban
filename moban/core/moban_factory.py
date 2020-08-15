@@ -156,21 +156,42 @@ class MobanEngine(object):
         self.buffered_writer.close()
 
     def apply_template(self, template_abs_path, template, data, output_file):
+
+        # render the content
         rendered_content = self.engine.apply_template(
             template, data, output_file
         )
+
+        # convert to utf8 if not already
         if not isinstance(rendered_content, bytes):
             rendered_content = rendered_content.encode("utf-8")
 
+        # attempt to output to the file and printing to stdout instead
+        # if not found
         try:
+
+            # check if any of the files have changed
             flag = HASH_STORE.is_file_changed(
                 output_file, rendered_content, template_abs_path
             )
+
+            # if they have re-render things
             if flag:
+
+                # write the content to the output file
                 self.buffered_writer.write_file_out(
                     output_file, rendered_content
                 )
-                if not file_system.is_zip_alike_url(output_file):
+
+                # attempt to copy the file permissions of the template
+                # file to the output file
+
+                # if it isn't an archive proceed or stdout
+                if (
+                    not file_system.is_zip_alike_url(output_file)
+                    and output_file != "-"
+                ):
+
                     try:
                         file_system.file_permissions_copy(
                             template_abs_path, output_file

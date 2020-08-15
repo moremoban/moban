@@ -69,7 +69,7 @@ A bit formal example:
 
 .. code-block:: bash
 
-	$ moban -c data.yml -t my.template
+    $ moban -c data.yml -t my.template
     world
 
 Given data.yml as:
@@ -216,9 +216,6 @@ Given a data.json file with the following content
 
 
    $ moban --template-type handlebars -c data.json  "{{person.firstname}} {{person.lastname}}"
-   Handlebars-ing <p>{{first... to moban.output
-   Handlebarsed 1 file.
-   $ cat moban.output
    Yehuda Katz
 
 For `handlebars.js` users, yes, the example was copied from handlebarjs.com. The
@@ -314,9 +311,6 @@ And given the following velocity.template:
 .. code-block:: bash
 
    $ moban --template-type velocity -c data.json -t velocity.template
-   Velocity-templating vo.t to moban.output
-   Velocity-templated 1 file.
-   $ cat moban.output
    Old people:
 
    Bill
@@ -355,9 +349,6 @@ You can start using it like this:
 .. code-block:: bash
 
    $ moban --template-type de-duplicate -pd custom-plugin -t duplicated_content.txt
-   De-duplicating duplicated_content.txt to moban.output
-   De-duplicating 1 file.
-   Everything is up to date!
 
 
 TOML data format
@@ -380,9 +371,6 @@ You can do:
 .. code-block:: bash
 
    $ moban -c sample.toml "{{owner.name}} made {{title}}"
-   Templating {{owner.na... to moban.output
-   Templated 1 file.
-   $ cat moban.output
    Tom Preston-Werner made TOML Example
 
 Not limited to toml, you can supply moban with the following data formats:

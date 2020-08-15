@@ -70,7 +70,7 @@ A bit formal example:
 
 .. code-block:: bash
 
-	$ moban -c data.yml -t my.template
+    $ moban -c data.yml -t my.template
     world
 
 Given data.yml as:
@@ -222,9 +222,6 @@ You can start using it like this:
 .. code-block:: bash
 
    $ moban --template-type de-duplicate -pd custom-plugin -t duplicated_content.txt
-   De-duplicating duplicated_content.txt to moban.output
-   De-duplicating 1 file.
-   Everything is up to date!
 
 
 TOML data format
