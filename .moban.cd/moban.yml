@@ -1,11 +1,11 @@
 name: moban
 project: moban
 organisation: moremoban
-author: C. W.
+author: chfw
 contact: wangc_2011@hotmail.com
 license: MIT
-version: 0.7.10
-current_version: 0.7.10
+version: 0.8.0
+current_version: 0.8.0
 release: 0.7.10
 branch: master
 master: index

@@ -45,6 +45,7 @@ def handle_moban_file_v1(moban_file_configurations, command_line_options):
     merged_options = merge(command_line_options, constants.DEFAULT_OPTIONS)
 
     plugins_dirs = merged_options.get(constants.LABEL_PLUGIN_DIRS)
+
     if plugins_dirs:
         handle_plugin_dirs(plugins_dirs)
 
