@@ -1,12 +1,12 @@
 name: moban
 project: moban
 organisation: moremoban
-author: C. W.
+author: chfw
 contact: wangc_2011@hotmail.com
 license: MIT
-version: 0.7.10
-current_version: 0.7.10
-release: 0.7.10
+version: 0.8.0
+current_version: 0.8.0
+release: 0.8.0
 branch: master
 master: index
 command_line_interface: "moban"
@@ -27,6 +27,7 @@ dependencies:
   - crayons>= 0.1.0
   - fs>=2.4.11
   - jinja2-fsloader>=0.2.0
+  - moban-jinja2-github
 description: General purpose static text generator
 scm_host: github.com
 lint_command: make install_test format git-diff-check lint

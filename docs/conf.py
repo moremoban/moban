@@ -23,11 +23,11 @@ DESCRIPTION = (
 
 project = 'moban'
 copyright = '2017-2020 Onni Software Ltd.'
-author = 'C. W.'
+author = 'chfw'
 # The short X.Y version
-version = '0.7.10'
+version = '0.8.0'
 # The full version, including alpha/beta/rc tags
-release = '0.7.10'
+release = '0.8.0'
 
 # -- General configuration ---------------------------------------------------
 

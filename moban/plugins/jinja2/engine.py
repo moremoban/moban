@@ -4,7 +4,7 @@ from typing import Dict
 from importlib import import_module
 
 import fs.errors
-from jinja2 import Template, Environment
+from jinja2 import Environment
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
 from jinja2_fsloader import FSLoader
@@ -16,9 +16,7 @@ from moban.externals import file_system
 JINJA2_LIBRARIES = "^moban_jinja2_.+$"
 JINJA2_EXTENSIONS = [
     "moban.plugins.jinja2.filters.repr",
-    "moban.plugins.jinja2.filters.github",
     "moban.plugins.jinja2.filters.text",
-    "moban.plugins.jinja2.tests.files",
 ]
 JINJA2_THIRD_PARTY_EXTENSIONS = ["jinja2.ext.do", "jinja2.ext.loopcontrols"]
 LOG = logging.getLogger(__name__)
@@ -135,7 +133,7 @@ class Engine(object):
             raise exceptions.PassOn(str(e))
 
     def get_template_from_string(self, string):
-        return Template(string)
+        return self.jj2_environment.from_string(string)
 
     def apply_template(self, template, data, output):
         """

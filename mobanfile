@@ -25,3 +25,5 @@ targets:
     template: CHANGELOG.rst.jj2
   - min_requirements.txt: min_requirements.txt.jj2
   - ".github/workflows/pythonpublish.yml": "pythonpublish.yml"
+  - "CONTRIBUTORS.rst": "CONTRIBUTORS.rst.jj2"
+

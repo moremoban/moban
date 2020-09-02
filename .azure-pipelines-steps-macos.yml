@@ -2,6 +2,7 @@ steps:
   - task: UsePythonVersion@0
     displayName: 'Use Python 3.x'
   - script: |
+      export SETUPTOOLS_USE_DISTUTILS="stdlib"
       python -m pip install --upgrade pip setuptools wheel
       test ! -f rnd_requirements.txt || pip install -r rnd_requirements.txt
       pip install -r requirements.txt

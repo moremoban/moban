@@ -34,11 +34,19 @@ mó bǎn - 模板 General purpose static text generator
 Announcement
 ================================================================================
 
+
+In version 0.8.0, `moban.plugins.jinja2.tests.files` is moved to moban-ansible
+package. `moban.plugins.jinja2.filters.github` is moved to moban-jinja2-github
+package Please install them for backward compatibility.
+
+
 From 2020 onwards, minimum requirement is Python 3.6
 
 
 For existing moban users, python 2 support has been dropped. Please stay with
 versions lower than 0.7.0 if you are still using python 2.
+
+
 
 
 Quick start
@@ -189,9 +197,6 @@ Given a data.json file with the following content
 
 
    $ moban --template-type slim -c data.json  "{{person.firstname}} {{person.lastname}}"
-   Slimming <p>{{first... to moban.output
-   Slimmed 1 file.
-   $ cat moban.output
    Smith Jones
 
 Handlebars.js template
