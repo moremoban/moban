@@ -27,6 +27,7 @@ dependencies:
   - crayons>= 0.1.0
   - fs>=2.4.11
   - jinja2-fsloader>=0.2.0
+  - moban-jinja2-github
 description: General purpose static text generator
 scm_host: github.com
 lint_command: make install_test format git-diff-check lint
