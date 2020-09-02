@@ -1,6 +1,14 @@
 Change log
 ================================================================================
 
+0.8.0 - tbd
+--------------------------------------------------------------------------------
+
+**Removed**
+
+#. moban.plugins.jinja2.tests.files is moved to moban-ansible package
+#. moban.plugins.jinja2.filters.github is moved to moban-jinja2-github package
+
 0.7.10 - 16.08.2020
 --------------------------------------------------------------------------------
 

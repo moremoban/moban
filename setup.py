@@ -85,6 +85,7 @@ INSTALL_REQUIRES = [
     "crayons>= 0.1.0",
     "fs>=2.4.11",
     "jinja2-fsloader>=0.2.0",
+    "moban-jinja2-github",
 ]
 SETUP_COMMANDS = {}
 
