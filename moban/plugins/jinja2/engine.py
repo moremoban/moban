@@ -133,7 +133,7 @@ class Engine(object):
             raise exceptions.PassOn(str(e))
 
     def get_template_from_string(self, string):
-        return Template(string)
+        return self.jj2_environment.from_string(string)
 
     def apply_template(self, template, data, output):
         """
