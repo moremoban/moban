@@ -40,8 +40,8 @@ except (ValueError, UnicodeError, locale.Error):
     locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
 NAME = "moban"
-AUTHOR = "C. W."
-VERSION = "0.7.10"
+AUTHOR = "chfw"
+VERSION = "0.8.0"
 EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
 ENTRY_POINTS = {
@@ -85,6 +85,7 @@ INSTALL_REQUIRES = [
     "crayons>= 0.1.0",
     "fs>=2.4.11",
     "jinja2-fsloader>=0.2.0",
+    "moban-jinja2-github",
 ]
 SETUP_COMMANDS = {}
 

@@ -25,7 +25,6 @@ DEFAULT_MOBAN_CACHE_FILE = ".%s.hashes" % PROGRAM_NAME
 # Command line options
 LABEL_CONFIG = "configuration"
 LABEL_CONFIG_DIR = "configuration_dir"
-LABEL_PLUGIN_DIRS = "plugin_dir"
 LABEL_TEMPLATE = "template"
 POSITIONAL_LABEL_TEMPLATE = "template_in_string"
 LABEL_TMPL_DIRS = "template_dir"

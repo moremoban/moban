@@ -1,12 +1,14 @@
-Contributors
+
+8 contributors
 ================================================================================
 
 In alphabetical order:
 
-* `Ayan Banerjee <https://github.com/ayan-b>`_
-* `Charlie Liu <https://github.com/CLiu13>`_
-* `John Vandenberg <https://github.com/jayvdb>`_
-* `Joshua Chung <https://github.com/seeeturtle>`_
-* `PRAJWAL M <https://github.com/PrajwalM2212>`_
-* `salotz <https://github.com/salotz>`_
-* `SerekKiri <https://github.com/SerekKiri>`_
+* `Andrew Scheller <https://api.github.com/users/lurch>`_
+* `Ayan Banerjee <https://api.github.com/users/ayan-b>`_
+* `Charlie Liu <https://api.github.com/users/CLiu13>`_
+* `John Vandenberg <https://api.github.com/users/jayvdb>`_
+* `Joshua Chung <https://api.github.com/users/seeeturtle>`_
+* `PRAJWAL M <https://api.github.com/users/PrajwalM2212>`_
+* `salotz <https://api.github.com/users/salotz>`_
+* `SerekKiri <https://api.github.com/users/SerekKiri>`_
