@@ -6,7 +6,10 @@ releases:
         details:
           - moban.plugins.jinja2.tests.files is moved to moban-ansible package
           - moban.plugins.jinja2.filters.github is moved to moban-jinja2-github package
-    date: tbd
+      - action: Fixed
+        details:
+          - "`#396`: custom jinja2 plugins(filters, tests and globals) are not visible if a template is passed as a string."
+    date: 02.09.2020
     version: 0.8.0
   - changes:
       - action: Updated

@@ -1,13 +1,19 @@
 Change log
 ================================================================================
 
-0.8.0 - tbd
+0.8.0 - 02.09.2020
 --------------------------------------------------------------------------------
 
 **Removed**
 
 #. moban.plugins.jinja2.tests.files is moved to moban-ansible package
 #. moban.plugins.jinja2.filters.github is moved to moban-jinja2-github package
+
+**Fixed**
+
+#. `#396 <https://github.com/moremoban/moban/issues/396>`_: custom jinja2
+   plugins(filters, tests and globals) are not visible if a template is passed
+   as a string.
 
 0.7.10 - 16.08.2020
 --------------------------------------------------------------------------------
