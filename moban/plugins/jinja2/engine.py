@@ -4,7 +4,7 @@ from typing import Dict
 from importlib import import_module
 
 import fs.errors
-from jinja2 import Template, Environment
+from jinja2 import Environment
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
 from jinja2_fsloader import FSLoader
