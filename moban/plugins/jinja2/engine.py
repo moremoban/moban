@@ -7,10 +7,10 @@ import fs.errors
 from jinja2 import Environment
 from lml.loader import scan_plugins_regex
 from lml.plugin import PluginInfo, PluginManager
-from jinja2_fsloader import FSLoader
 from jinja2.exceptions import TemplateNotFound, TemplateSyntaxError
 
 from moban import constants, exceptions
+from jinja2_fsloader import FSLoader
 from moban.externals import file_system
 
 JINJA2_LIBRARIES = "^moban_jinja2_.+$"

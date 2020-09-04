@@ -26,4 +26,4 @@ targets:
   - min_requirements.txt: min_requirements.txt.jj2
   - ".github/workflows/pythonpublish.yml": "pythonpublish.yml"
   - "CONTRIBUTORS.rst": "CONTRIBUTORS.rst.jj2"
-
+  - format.sh: format.sh.jj2
