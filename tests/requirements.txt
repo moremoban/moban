@@ -18,3 +18,5 @@ jinja2-python-version>=1.1.2
 httpfs
 collective.checkdocs
 Pygments
+moban-ansible
+
