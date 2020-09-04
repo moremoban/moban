@@ -216,7 +216,7 @@ Given the following template type function, and saved in custom-plugin dir:
    
    
    @ContentProcessor("de-duplicate", "De-duplicating", "De-duplicated")
-   def de_duplicate(content: str) -> str:
+   def de_duplicate(content: str, options: dict) -> str:
        lines = content.split(b'\n')
        new_lines = []
        for line in lines:
