@@ -31,20 +31,19 @@ class ContentProcessor(PluginInfo):
             ACTION_IN_PRESENT_CONTINUOUS_TENSE = continuing_tense
             ACTION_IN_PAST_TENSE = past_tense
 
-            def __init__(self, template_fs, extensions=None):
+            def __init__(self, template_fs, options=None):
                 self.template_fs = template_fs
+                self.options = options
 
             def get_template(self, template_file):
                 content = self.template_fs.readbytes(template_file)
-                ret = a_content_processor_function(content)
-                return ret
+                return content
 
             def get_template_from_string(self, a_string):
-                ret = a_content_processor_function(a_string)
-                return ret
+                return a_string
 
             def apply_template(self, template, *_):
-                ret = a_content_processor_function(template)
+                ret = a_content_processor_function(template, self.options)
                 return ret
 
         super(ContentProcessor, self).__call__(CustomEngine)

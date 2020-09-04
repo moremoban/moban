@@ -2,6 +2,13 @@ name: moban
 organisation: moremoban
 releases:
   - changes:
+      - action: Fixed
+        details:
+          - "`#399`: content processor should be called only once"
+          - "content processor shall pass on options to content processors"
+    date: 04.09.2020
+    version: 0.8.1
+  - changes:
       - action: Removed
         details:
           - moban.plugins.jinja2.tests.files is moved to moban-ansible package

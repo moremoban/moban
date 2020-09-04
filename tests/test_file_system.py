@@ -268,6 +268,7 @@ def test_mkdir_p():
 @patch("subprocess.check_call")
 def test_pip_install(fake_check_all):
     import sys
+
     from moban.deprecated import pip_install
 
     pip_install(["package1", "package2"])

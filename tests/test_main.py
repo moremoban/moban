@@ -30,8 +30,9 @@ class TestException:
         main.handle_moban_file(self.moban_file, {})
 
     def test_check_none(self):
-        import moban.main as main
         from ruamel.yaml import YAML
+
+        import moban.main as main
 
         yaml = YAML()
 

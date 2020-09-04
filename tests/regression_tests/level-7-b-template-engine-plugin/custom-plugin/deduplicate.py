@@ -2,7 +2,7 @@ from moban.core.content_processor import ContentProcessor
 
 
 @ContentProcessor("de-duplicate", "De-duplicating", "De-duplicated")
-def de_duplicate(content: str) -> str:
+def de_duplicate(content: str, _: dict) -> str:
     """
     Does no templating, works like 'copy'.
 

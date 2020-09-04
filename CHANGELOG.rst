@@ -1,6 +1,15 @@
 Change log
 ================================================================================
 
+0.8.1 - 04.09.2020
+--------------------------------------------------------------------------------
+
+**Fixed**
+
+#. `#399 <https://github.com/moremoban/moban/issues/399>`_: content processor
+   should be called only once
+#. content processor shall pass on options to content processors
+
 0.8.0 - 02.09.2020
 --------------------------------------------------------------------------------
 

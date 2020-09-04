@@ -21,12 +21,7 @@ lint:
 	yamllint -d "{extends: default, ignore: .moban.cd/changelog.yml}" .
 
 format:
-	isort $(find moban -name "*.py"|xargs echo) $(find tests -name "*.py"|xargs echo)
-	git diff
-	black -l 79 moban
-	git diff
-	black -l 79 tests
-	git diff
+	bash format.sh
 
 uml:
 	plantuml -tsvg -o ./images/ docs/*.uml
