@@ -17,7 +17,7 @@ class DeleteEngine(object):
     ACTION_IN_PRESENT_CONTINUOUS_TENSE = "Deleting"
     ACTION_IN_PAST_TENSE = "Deleted"
 
-    def __init__(self, template_fs, extensions=None):
+    def __init__(self, template_fs, options=None):
         self.template_fs = template_fs
 
     def get_template(self, template_file):

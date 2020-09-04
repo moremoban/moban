@@ -2,7 +2,7 @@ from moban.core.content_processor import ContentProcessor
 
 
 @ContentProcessor("copy", "Copying", "Copied")
-def copy(content: str) -> str:
+def copy(content: str, _: dict) -> str:
     """
     Does no templating, works like 'copy'.
 
