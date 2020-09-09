@@ -23,7 +23,8 @@ Please also note that the following extensions are included by default:
 
 .. note::
 
-   if you intend to use extensions for one off usage, please use '-e' cli option
+   if you intend to use extensions for one off usage, please use '-e' cli option.
+   for example: `moban -e jinja2=your_custom_jinja2_extension <https://github.com/chfw/math-sheets/blob/master/reception/a_op_b_op_c/make.sh>`_
 
 Evaluation
 --------------------------------------------------------------------------------
