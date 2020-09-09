@@ -4,6 +4,13 @@ releases:
   - changes:
       - action: Fixed
         details:
+          - Use any functions, any data structure of any python packages
+	    as jinja2 filters, tests, globals
+    date: 04.09.2020
+    version: 0.8.2
+  - changes:
+      - action: Fixed
+        details:
           - "`#399`: content processor should be called only once"
           - "content processor shall pass on options to content processors"
     date: 04.09.2020
