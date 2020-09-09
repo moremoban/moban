@@ -99,9 +99,15 @@ class Engine(object):
                     import_module_of_extension(extensions)
             env_params.update(options)
         self.jj2_environment = Environment(**env_params)
-        self.jj2_environment.filters.update(filters)
-        self.jj2_environment.filters.update(tests)
-        self.jj2_environment.filters.update(_globals)
+        for filter_name, filter_function in filters.items():
+            self.jj2_environment.filters[filter_name] = filter_function
+
+        for test_name, test_function in tests.items():
+            self.jj2_environment.tests[test_name] = test_function
+
+        for identifier, dict_obj in _globals.items():
+            self.jj2_environment.globals[identifier] = dict_obj
+
         for filter_name, filter_function in FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
 
@@ -191,17 +197,18 @@ def parse_extensioins(extensions):
     tests = {}
     _globals = {}
     jinja2_extensions = []
+
     for extension in extensions:
         if extension.startswith("test:"):
-            test_function_string = extensions.replace("test:").strip()
+            test_function_string = extension.replace("test:", "").strip()
             test_function = import_string(test_function_string)
             tests[test_function.__name__] = test_function
         elif extension.startswith("filter:"):
-            filter_function_string = extensions.replace("filter:").strip()
+            filter_function_string = extension.replace("filter:", "").strip()
             filter_function = import_string(filter_function_string)
             filters[filter_function.__name__] = filter_function
         elif extension.startswith("global:"):
-            a_global = extensions.replace("global:").strip()
+            a_global = extension.replace("global:", "").strip()
             identifier, global_string = a_global.split("=")
             the_global = import_string(global_string)
             _globals[identifier] = the_global
