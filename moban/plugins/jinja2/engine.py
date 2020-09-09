@@ -86,15 +86,22 @@ class Engine(object):
         )
         self.template_loader = template_loader
 
+        filters = tests = _globals = {}
         if options:
             if "extensions" in options:
-                extensions = options.pop("extensions")
+                raw_extensions = options.pop("extensions")
+                (filters, tests, _globals, extensions,) = parse_extensioins(
+                    raw_extensions
+                )
                 if is_extension_list_valid(extensions):
                     # because it is modified here
                     env_params["extensions"] += extensions
                     import_module_of_extension(extensions)
             env_params.update(options)
         self.jj2_environment = Environment(**env_params)
+        self.jj2_environment.filters.update(filters)
+        self.jj2_environment.filters.update(tests)
+        self.jj2_environment.filters.update(_globals)
         for filter_name, filter_function in FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
 
@@ -175,3 +182,30 @@ def import_module_of_extension(extensions):
 
 def strip_off_trailing_new_lines(content):
     return re.sub(r"(\n\s+)+$", r"\n", content)
+
+
+def parse_extensioins(extensions):
+    from jinja2.utils import import_string
+
+    filters = {}
+    tests = {}
+    _globals = {}
+    jinja2_extensions = []
+    for extension in extensions:
+        if extension.startswith("test:"):
+            test_function_string = extensions.replace("test:").strip()
+            test_function = import_string(test_function_string)
+            tests[test_function.__name__] = test_function
+        elif extension.startswith("filter:"):
+            filter_function_string = extensions.replace("filter:").strip()
+            filter_function = import_string(filter_function_string)
+            filters[filter_function.__name__] = filter_function
+        elif extension.startswith("global:"):
+            a_global = extensions.replace("global:").strip()
+            identifier, global_string = a_global.split("=")
+            the_global = import_string(global_string)
+            _globals[identifier] = the_global
+        else:
+            jinja2_extensions.append(extension)
+
+    return filters, tests, _globals, jinja2_extensions
