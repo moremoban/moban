@@ -5,7 +5,7 @@ releases:
       - action: Fixed
         details:
           - Use any functions, any data structure of any python packages
-	    as jinja2 filters, tests, globals
+            as jinja2 filters, tests, globals
     date: 04.09.2020
     version: 0.8.2
   - changes:
