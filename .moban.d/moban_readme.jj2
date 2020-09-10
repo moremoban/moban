@@ -155,13 +155,14 @@ In this case, you would have to include the external library in your own require
 
 Here is an example:
 
+{% raw %}
 .. code-block:: bash
 
    $ moban -e jinja2=filter:moban.externals.file_system.url_join \
      jinja2=test:moban.externals.file_system.exists \
      jinja2=global:description=moban.constants.PROGRAM_DESCRIPTION \
      -t "{{ 'a'|url_join('b')}} {{'b' is exists}}"
-
+{% endraw %}
 
 Can I write my own jinja2 test, filter and/or globals?
 -----------------------------------------------------------

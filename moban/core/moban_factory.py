@@ -237,7 +237,7 @@ class MobanEngine(object):
                         )
                         self.templated_count += 1
                     self.file_count += 1
-            except exceptions.PassOn:
+            except exceptions.PassOn as e:
                 for (data_file, output) in data_output_pairs:
                     self.fall_out_targets.append(
                         TemplateTarget(

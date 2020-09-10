@@ -59,6 +59,7 @@ Migration Notes
 
 .. toctree::
 
+   trouble-shooting-guide
    migration-note
 
    
