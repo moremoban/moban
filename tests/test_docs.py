@@ -168,6 +168,9 @@ class TestTutorial(Docs):
         world
         world
         world
+        b.template exists
+        a/b
+        Static text generator using any template, any data and any location.
         """
         expected_b = """
         142

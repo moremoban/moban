@@ -99,14 +99,6 @@ class Engine(object):
                     import_module_of_extension(extensions)
             env_params.update(options)
         self.jj2_environment = Environment(**env_params)
-        for filter_name, filter_function in filters.items():
-            self.jj2_environment.filters[filter_name] = filter_function
-
-        for test_name, test_function in tests.items():
-            self.jj2_environment.tests[test_name] = test_function
-
-        for identifier, dict_obj in _globals.items():
-            self.jj2_environment.globals[identifier] = dict_obj
 
         for filter_name, filter_function in FILTERS.get_all():
             self.jj2_environment.filters[filter_name] = filter_function
@@ -116,6 +108,11 @@ class Engine(object):
 
         for global_name, dict_obj in GLOBALS.get_all():
             self.jj2_environment.globals[global_name] = dict_obj
+
+        # can override others too
+        self.jj2_environment.filters.update(filters)
+        self.jj2_environment.tests.update(tests)
+        self.jj2_environment.globals.update(_globals)
 
     def get_template(self, template_file):
         """
