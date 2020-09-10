@@ -90,9 +90,12 @@ class Engine(object):
         if options:
             if "extensions" in options:
                 raw_extensions = options.pop("extensions")
-                (filters, tests, _globals, extensions,) = parse_extensioins(
-                    raw_extensions
-                )
+                (
+                    filters,
+                    tests,
+                    _globals,
+                    extensions,
+                ) = parse_extensioins(raw_extensions)
                 if is_extension_list_valid(extensions):
                     # because it is modified here
                     env_params["extensions"] += extensions
