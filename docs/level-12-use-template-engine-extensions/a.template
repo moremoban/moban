@@ -1,3 +1,11 @@
 {% for _ in range(1,5) %}
 {{ hello }}
 {% endfor %}
+{% if 'b.template' is exists %}
+b.template exists
+{% endif %}
+{% if 'alien' is exists %}
+we are not the only intelligent life in the universe
+{% endif %}
+{{ 'a' | url_join('b')}}
+{{ description }}

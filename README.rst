@@ -40,15 +40,6 @@ package. `moban.plugins.jinja2.filters.github` is moved to moban-jinja2-github
 package Please install them for backward compatibility.
 
 
-From 2020 onwards, minimum requirement is Python 3.6
-
-
-For existing moban users, python 2 support has been dropped. Please stay with
-versions lower than 0.7.0 if you are still using python 2.
-
-
-
-
 Quick start
 ================================================================================
 
@@ -137,7 +128,31 @@ moban allows the injection of user preferred jinja2 extensions:
 
    $ moban -e jj2=jinja2_time.TimeExtension ...
 
-Can I write my own jinja2 test, filter and/or globals
+
+Well, can I nick some existing functions as filters, tests? Or create a global from another library?
+-----------------------------------------------------------------------------------------------------
+
+Sure, you can use the same '-e' syntax:
+
+.. code-block:: bash
+
+   $ moban -e jinja2=filter:module.path.filter_function \
+              jinja2=test:module.path.test_function \
+              jinja2=global:identifier=module.path.variable
+
+In this case, you would have to include the external library in your own requirements.txt
+
+Here is an example:
+
+
+.. code-block:: bash
+
+   $ moban -e jinja2=filter:moban.externals.file_system.url_join \
+     jinja2=test:moban.externals.file_system.exists \
+     jinja2=global:description=moban.constants.PROGRAM_DESCRIPTION \
+     -t "{{ 'a'|url_join('b')}} {{'b' is exists}}"
+
+Can I write my own jinja2 test, filter and/or globals?
 -----------------------------------------------------------
 
 moban allows the freedom of craftsmanship. Please refer to the docs for more

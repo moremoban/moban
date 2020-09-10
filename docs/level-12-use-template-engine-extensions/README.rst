@@ -1,6 +1,12 @@
 Level 12: use template engine extensions
 ================================================================================
 
+There are three possible ways to provide extensions for your template engine.
+Let's take jinja2 as an example.
+
+1. Ready made extensions
+-----------------------------
+
 jinja2 comes with a lot of extensions. In order not to be the blocker in the
 middle, **extensions** is allowed in moban file to initialize jinja2 engine
 with desired extensions. Two extensions, expression-statement and loop-controls
@@ -21,9 +27,61 @@ For example::
 Please also note that the following extensions are included by default:
 `jinja2.ext.do`, `jinja2.ext.loopcontrols`
 
-.. note::
 
-   if you intend to use extensions for one off usage, please use '-e' cli option
+**Command line**
+
+if you intend to use extensions for one off usage, please use '-e' cli option.
+for example: `moban -e jinja2=your_custom_jinja2_extension <https://github.com/chfw/math-sheets/blob/master/reception/a_op_b_op_c/make.sh>`_
+
+ 
+2. Ad-hoc declaration
+-----------------------------
+
+Let's say you are fond of some existing functions, for example, ansible's combine
+filter. With moban, you can immediately include it for your template via the following
+syntax:
+
+.. code-block::
+
+   extensions:
+     jinja2:
+       - filter:module.path.filter_function
+       - test:module.path.test_function
+       - global:identifier=module.path.variable
+
+For example::
+
+   extensions:
+     jinja2:
+       - filter:ansible.plugins.filter.core.combine
+       - test:moban.externals.file_system.exists
+
+**Command line**
+
+.. code-block:: bash
+
+   $ moban -e jinja2=filter:module.path.filter_function jinja2=test:module.path.test_function jinja2=global:identifier=module.path.variable
+
+you can do this::
+
+   $ moban -e jinja2=filter:module.path.filter_function \
+              jinja2=test:module.path.test_function \
+              jinja2=global:identifier=module.path.variable
+
+
+3. Make your own extensions
+--------------------------------
+
+You can choose to write an extension for the template type of your choice.
+For example, you can write a reusable extension for jinja2. moban will be
+able to load it as it is.
+
+If you decide that you only want to write them for moban but for your own
+use, you can follow `Level 7: Custom jinja filters, tests and globals` and
+write your own. When you would like to make yours avaiable for all moban
+users, you can follow `moban-jinja2-github <https://github.com/moremoban/moban-jinja2-github>`_ and
+`moban-ansible <https://github.com/moremoban/moban-ansible>`_ 
+
 
 Evaluation
 --------------------------------------------------------------------------------
