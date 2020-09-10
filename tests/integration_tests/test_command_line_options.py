@@ -610,12 +610,10 @@ def test_custom_jinja2_filters_tests():
         with patch("sys.stdout", new_callable=StringIO) as fake_stdout:
             from moban.main import main
 
-            main()
-            eq_(
-                fake_stdout.getvalue(),
-                (
-                    "a/b False"
-                    + "Static text generator using "
-                    + "any template, any data and any location.\n",
-                ),
+            expected_output = (
+                "a/b False"
+                + "Static text generator using "
+                + "any template, any data and any location.\n"
             )
+            main()
+            eq_(fake_stdout.getvalue(), expected_output)
