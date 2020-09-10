@@ -41,7 +41,7 @@ except (ValueError, UnicodeError, locale.Error):
 
 NAME = "moban"
 AUTHOR = "chfw"
-VERSION = "0.8.1"
+VERSION = "0.8.2"
 EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
 ENTRY_POINTS = {

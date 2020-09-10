@@ -8,6 +8,7 @@
     :license: MIT License, see LICENSE for more details
 
 """
+import re
 import sys
 import logging
 import argparse
@@ -299,8 +300,11 @@ def handle_custom_extensions(list_of_definitions):
     user_extensions = defaultdict(set)
     if list_of_definitions:
         for definition in list_of_definitions:
-            key, value = definition.split("=")
-            user_extensions[key].add(value)
+            result = re.match("(.*?)=(.*)", definition)
+            if result:
+                key, value = result.group(1), result.group(2)
+                user_extensions[key].add(value)
+
     ENGINES.register_extensions(user_extensions)
 
 
