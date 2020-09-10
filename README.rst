@@ -40,19 +40,10 @@ package. `moban.plugins.jinja2.filters.github` is moved to moban-jinja2-github
 package Please install them for backward compatibility.
 
 
-From 2020 onwards, minimum requirement is Python 3.6
-
-
-For existing moban users, python 2 support has been dropped. Please stay with
-versions lower than 0.7.0 if you are still using python 2.
-
-
-
-
 Quick start
 ================================================================================
 
-{% raw %}
+
 .. code-block:: bash
 
     $ export HELLO="world"
@@ -72,7 +63,6 @@ Or simply
 
     $ HELLO="world" moban "{{HELLO}}"
 
-{% endraw %}
 
 A bit formal example:
 
@@ -89,13 +79,12 @@ Given data.yml as:
 
 and my.template as:
 
-{% raw %}
+
 
 .. code-block:: bash
 
     {{hello}}
 
-{% endraw %}
 
 
 Please note that data.yml will take precedence over environment variables.
@@ -155,13 +144,13 @@ In this case, you would have to include the external library in your own require
 
 Here is an example:
 
+
 .. code-block:: bash
 
    $ moban -e jinja2=filter:moban.externals.file_system.url_join \
      jinja2=test:moban.externals.file_system.exists \
      jinja2=global:description=moban.constants.PROGRAM_DESCRIPTION \
      -t "{{ 'a'|url_join('b')}} {{'b' is exists}}"
-
 
 Can I write my own jinja2 test, filter and/or globals?
 -----------------------------------------------------------
@@ -188,13 +177,12 @@ details. Here is an example:
 
 And you can use it within your jinja2 template, `mytest.jj2`:
 
-{% raw %}
+
 
 .. code-block:: python
 
       {{ 'abc' | base64encode }}
 
-{% endraw %}
 
 Assume that the custom example was saved in `custom-jj2-plugin`
 
@@ -209,7 +197,22 @@ Slim template syntax for jinja2
 
 with `moban-slim <https://github.com/moremoban/moban-slim>`_ installed,
 
-{% include "slim_example.rst.jj2" %}
+Given a data.json file with the following content
+
+.. code-block::
+
+    {
+      "person": {
+        "firstname": "Smith",
+        "lastname": "Jones",
+      },
+    }
+
+.. code-block:: bash
+
+
+   $ moban --template-type slim -c data.json  "{{person.firstname}} {{person.lastname}}"
+   Smith Jones
 
 Handlebars.js template
 ----------------------------
@@ -217,7 +220,80 @@ Handlebars.js template
 With `moban-handlebars <https://github.com/moremoban/moban-handlebars>`_
 installed,
 
-{% include "handlebars_example.rst.jj2" %}
+Given a data.json file with the following content
+
+.. code-block::
+
+    {
+      "person": {
+        "firstname": "Yehuda",
+        "lastname": "Katz",
+      },
+    }
+
+
+.. code-block:: bash
+
+
+   $ moban --template-type handlebars -c data.json  "{{person.firstname}} {{person.lastname}}"
+   Yehuda Katz
+
+For `handlebars.js` users, yes, the example was copied from handlebarjs.com. The
+aim is to show off what we can do.
+
+Let's continue with a bit more fancy feature:
+
+
+
+.. code-block:: bash
+
+   $ moban --template-type handlebars -c data.json "{{#with person}}{{firstname}} {{lastname}} {{/with}}"
+
+
+Moban's way of `pybar3 usage <https://github.com/wbond/pybars3#usage>`_:
+
+Let's save the following file a `script.py` under `helper_and_partial` folder:
+
+.. code-block:: python
+
+   from moban_handlebars.api import Helper, register_partial
+
+   register_partial('header', '<h1>People</h1>')
+
+
+   @Helper('list')
+   def _list(this, options, items):
+       result = [u'<ul>']
+       for thing in items:
+           result.append(u'<li>')
+           result.extend(options['fn'](thing))
+           result.append(u'</li>')
+       result.append(u'</ul>')
+       return result
+
+And given `data.json` reads as the following:
+
+.. code-block::
+
+   {
+       "people":[
+           {"name": "Bill", "age": 100},
+           {"name": "Bob", "age": 90},
+           {"name": "Mark", "age": 25}
+       ]
+   }
+
+Let's invoke handlebar template:
+
+
+.. code-block:: bash
+
+   $ moban --template-type hbs -pd helper_and_partial -c data.json "{{>header}}{{#list people}}{{name}} {{age}}{{/list}}"
+   Handlebars-ing {{>header}... to moban.output
+   Handlebarsed 1 file.
+   $ cat moban.output
+   <h1>People</h1><ul><li>Bill 100</li><li>Bob 90</li><li>Mark 25</li></ul>
+
 
 Velocity template
 ----------------------------
@@ -225,7 +301,46 @@ Velocity template
 With `moban-velocity <https://github.com/moremoban/moban-velocity>`_
 installed,
 
-{% include "velocity_example.rst.jj2" %}
+Given the following data.json:
+
+.. code-block::
+
+   {"people":
+       [
+           {"name": "Bill", "age": 100},
+           {"name": "Bob", "age": 90},
+           {"name": "Mark", "age": 25}
+       ]
+   }
+
+And given the following velocity.template:
+
+.. code-block::
+
+   Old people:
+   #foreach ($person in $people)
+    #if($person.age > 70)
+     $person.name
+    #end
+   #end
+   
+   Third person is $people[2].name
+
+**moban** can do the template:
+
+.. code-block:: bash
+
+   $ moban --template-type velocity -c data.json -t velocity.template
+   Old people:
+
+   Bill
+ 
+   Bob
+ 
+ 
+   Third person is Mark
+
+
 
 Can I write my own template engine?
 --------------------------------------
@@ -261,7 +376,63 @@ TOML data format
 
 `moban-anyconfig <https://github.com/moremoban/moban-anyconfig>`_ should be installed first.
 
-{% include "anyconfig_example.rst.jj2" %}
+Given the following toml file, sample.toml:
+
+.. code-block::
+
+   title = "TOML Example"
+   [owner]
+   name = "Tom Preston-Werner"
+
+
+You can do:
+
+
+.. code-block:: bash
+
+   $ moban -c sample.toml "{{owner.name}} made {{title}}"
+   Tom Preston-Werner made TOML Example
+
+Not limited to toml, you can supply moban with the following data formats:
+
+.. csv-table:: Always supported formats, quoting from python-anyconfig
+   :header: "Format", "Type", "Requirement"
+   :widths: 15, 10, 40
+
+   JSON, json, ``json`` (standard lib) or ``simplejson``
+   Ini-like, ini, ``configparser`` (standard lib)
+   Pickle, pickle, ``pickle`` (standard lib)
+   XML, xml, ``ElementTree`` (standard lib)
+   Java properties, properties, None (native implementation with standard lib)
+   B-sh, shellvars, None (native implementation with standard lib)
+
+For any of the following data formats, you elect to install by yourself.
+
+.. csv-table:: Supported formats by pluggable backend modules
+   :header: "Format", "Type", "Required backend"
+   :widths: 15, 10, 40
+
+   Amazon Ion, ion, ``anyconfig-ion-backend`` 
+   BSON, bson, ``anyconfig-bson-backend`` 
+   CBOR, cbor, ``anyconfig-cbor-backend``  or ``anyconfig-cbor2-backend`` 
+   ConifgObj, configobj, ``anyconfig-configobj-backend`` 
+   MessagePack, msgpack, ``anyconfig-msgpack-backend``
+
+Or you could choose to install all:
+
+.. code-block:: bash
+
+   $ pip install moban-anyconfig[all-backends]
+
+**Why not to use python-anyconfig itself, but yet another package?**
+
+moban gives you a promise of any location which `python-anyconfig` does not support.
+
+**Why do it mean 'any location'?**
+
+Thanks to `pyfilesystem 2 <https://github.com/PyFilesystem/pyfilesystem2>`_,
+moban is able to read data back from `git repo <https://github.com/moremoban/gitfs2>`_, `pypi <https://github.com/moremoban/pypifs>`_ package, `http(s) <https://github.com/moremoban/httpfs>`_, zip,
+tar, ftp, `s3 <https://github.com/PyFilesystem/s3fs>`_ or `you name it <https://www.pyfilesystem.org/page/index-of-filesystems/>`_.
 
 
 Templates and configuration files over HTTP(S)
@@ -269,7 +440,17 @@ Templates and configuration files over HTTP(S)
 
 `httpfs <https://github.com/moremoban/httpfs>`_ should be installed first.
 
-{% include "httpfs_example.rst.jj2" %}
+With httpfs, `moban`_ can access any files over http(s) as its
+template or data file:
+
+.. code-block:: bash
+
+    $ moban -t 'https://raw.githubusercontent.com/moremoban/pypi-mobans/dev/templates/_version.py.jj2'\
+      -c 'https://raw.githubusercontent.com/moremoban/pypi-mobans/dev/config/data.yml'\
+      -o _version.py
+
+
+.. _moban: https://github.com/moremoban/moban
 
 In an edge case, if github repo's public url is given,
 this github repo shall not have sub repos. This library will fail to
@@ -281,7 +462,20 @@ Templates and configuration files in a git repo
 `gitfs2 <https://github.com/moremoban/gitfs2>`_ is optional since v0.7.0 but was
 installed by default since v0.6.1
 
-{% include "gitfs2_example.rst.jj2" %}
+You can do the following with moban:
+
+.. code-block:: bash
+
+    $ moban -t 'git://github.com/moremoban/pypi-mobans.git!/templates/_version.py.jj2' \
+            -c 'git://github.com/moremoban/pypi-mobans.git!/config/data.yml' \
+            -o _version.py
+    Info: Found repo in /Users/jaska/Library/Caches/gitfs2/repos/pypi-mobans
+    Templating git://github.com/moremoban/pypi-mobans.git!/templates/_version.py.jj2 to _version.py
+    Templated 1 file.
+    $ cat _version.py
+    __version__ = "0.1.1rc3"
+    __author__ = "C.W."
+
 
 Templates and configuration files in a python package
 ================================================================================
@@ -289,7 +483,22 @@ Templates and configuration files in a python package
 `pypifs <https://github.com/moremoban/pypifs>`_ is optional since v0.7.0 but
 was installed by default since v0.6.1
 
-{% include "pypi_example.rst.jj2" %}
+You can do the following with moban:
+
+.. code-block:: bash
+
+    $ moban -t 'pypi://pypi-mobans-pkg/resources/templates/_version.py.jj2' \
+            -c 'pypi://pypi-mobans-pkg/resources/config/data.yml' \
+            -o _version.py
+    Collecting pypi-mobans-pkg
+    ....
+    Installing collected packages: pypi-mobans-pkg
+    Successfully installed pypi-mobans-pkg-0.0.7
+    Templating pypi://pypi-mobans-pkg/resources/templates/_version.py.jj2 to _version.py
+    Templated 1 file.
+    $ cat _version.py
+    __version__ = "0.1.1rc3"
+    __author__ = "C.W."
 
 Work with S3 and other cloud based file systems
 ================================================================================
@@ -301,7 +510,7 @@ Please install `fs-s3fs <https://github.com/PyFilesystem/s3fs>`_::
 
 Then you can access your files in s3 bucket:
 
-{% raw %}
+
 
 .. code-block:: bash
 
@@ -311,7 +520,6 @@ Then you can access your files in s3 bucket:
     $ cat moban.output
     world
 
-{% endraw %}
 
 
 Where the configuration sits in a s3 bucket, the output is a file in a zip. The content of s3data.yaml is:

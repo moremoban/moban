@@ -143,6 +143,7 @@ class Engine(object):
             except fs.errors.ResourceNotFound:
                 return self.jj2_environment.from_string(template_file)
         except (UnicodeDecodeError, TemplateSyntaxError) as e:
+            LOG.error(e)
             raise exceptions.PassOn(str(e))
 
     def get_template_from_string(self, string):
