@@ -263,7 +263,7 @@ class TestCustomMobanFile(unittest.TestCase):
             main()
             call_args = list(fake_template_doer.call_args[0][0])
             assert \
-                call_args ==
+                call_args == \
                 [
                     TemplateTarget(
                         "README.rst.jj2", "data.yaml", "README.rst"
