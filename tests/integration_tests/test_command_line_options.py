@@ -137,7 +137,7 @@ class TestNoOptions(unittest.TestCase):
 
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            assert
+            assert \
                 call_args == \
                 [
                     TemplateTarget(
