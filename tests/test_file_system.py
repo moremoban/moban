@@ -1,13 +1,13 @@
 import os
-import sys
 import stat
+import sys
 from shutil import rmtree
 
-from mock import patch
 import pytest
+from mock import patch
 
-from moban.externals import file_system
 from moban.exceptions import FileNotFound, UnsupportedPyFS2Protocol
+from moban.externals import file_system
 
 LOCAL_FOLDER = "tests/fixtures"
 LOCAL_FILE = LOCAL_FOLDER + "/a.jj2"
@@ -217,9 +217,9 @@ def test_file_permission_copy():
     create_file(test_source, 0o755)
     create_file(test_dest, 0o646)
     file_system.file_permissions_copy(test_source, test_dest)
-    assert \
-        stat.S_IMODE(os.lstat(test_source).st_mode) == \
-        stat.S_IMODE(os.lstat(test_dest).st_mode)
+    assert stat.S_IMODE(os.lstat(test_source).st_mode) == stat.S_IMODE(
+        os.lstat(test_dest).st_mode
+    )
     os.unlink(test_source)
     os.unlink(test_dest)
 
@@ -247,9 +247,9 @@ def test_file_permission_copy_symlink():
     os.symlink(test_source, test_symlink)
     create_file(test_dest, 0o646)
     file_system.file_permissions_copy(test_source, test_dest)
-    assert \
-        stat.S_IMODE(os.lstat(test_source).st_mode) == \
-        stat.S_IMODE(os.lstat(test_dest).st_mode)
+    assert stat.S_IMODE(os.lstat(test_source).st_mode) == stat.S_IMODE(
+        os.lstat(test_dest).st_mode
+    )
     os.unlink(test_source)
     os.unlink(test_dest)
     os.unlink(test_symlink)

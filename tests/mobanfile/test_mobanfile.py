@@ -1,6 +1,6 @@
 import fs.path
-from mock import patch
 import pytest
+from mock import patch
 
 from moban.core.definitions import TemplateTarget
 
@@ -25,16 +25,14 @@ def test_handle_targets(fake_renderer):
     handle_targets(options, short_hand_targets)
 
     call_args = list(fake_renderer.call_args[0][0])
-    assert \
-        call_args == \
-        [
-            TemplateTarget(
-                "copier-test01.csv",
-                "child.yaml",
-                "output.csv",
-                template_type="jinja2",
-            )
-        ]
+    assert call_args == [
+        TemplateTarget(
+            "copier-test01.csv",
+            "child.yaml",
+            "output.csv",
+            template_type="jinja2",
+        )
+    ]
 
 
 @patch("moban.core.moban_factory.MobanEngine.render_to_files")
@@ -62,19 +60,15 @@ def test_handle_targets_sequence(fake_renderer):
 
     call_args = list(fake_renderer.call_args_list)
 
-    assert \
-        call_args[0][0][0][0] == \
-        TemplateTarget(
-            "a.template.jj2",
-            "child.yaml",
-            "filterme.handlebars",
-            template_type="jj2",
-        )
-    assert \
-        call_args[1][0][0][0] == \
-        TemplateTarget(
-            "filterme.handlebars",
-            "child.yaml",
-            "filtered_output.txt",
-            template_type="handlebars",
-        )
+    assert call_args[0][0][0][0] == TemplateTarget(
+        "a.template.jj2",
+        "child.yaml",
+        "filterme.handlebars",
+        template_type="jj2",
+    )
+    assert call_args[1][0][0][0] == TemplateTarget(
+        "filterme.handlebars",
+        "child.yaml",
+        "filtered_output.txt",
+        template_type="handlebars",
+    )

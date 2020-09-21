@@ -1,14 +1,14 @@
 import os
 import sys
+import unittest
 from textwrap import dedent
 
-from mock import patch
 import pytest
-import unittest
 from fs.opener.parse import parse_fs_url
+from mock import patch
 
-from moban.main import main
 from moban.externals import file_system
+from moban.main import main
 
 
 def verify_content(file_name, expected):

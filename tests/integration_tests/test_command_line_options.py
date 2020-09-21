@@ -1,10 +1,10 @@
 import os
 import sys
+import unittest
 from shutil import copyfile
 
-from mock import MagicMock, patch
 import pytest
-import unittest
+from mock import MagicMock, patch
 
 from moban.core.definitions import TemplateTarget
 
@@ -137,14 +137,10 @@ class TestNoOptions(unittest.TestCase):
 
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            assert \
-                call_args == \
-                [
-                    TemplateTarget(
-                        "README.rst.jj2", "data.yaml", "README.rst"
-                    ),
-                    TemplateTarget("setup.py.jj2", "data.yaml", "setup.py"),
-                ]
+            assert call_args == [
+                TemplateTarget("README.rst.jj2", "data.yaml", "README.rst"),
+                TemplateTarget("setup.py.jj2", "data.yaml", "setup.py"),
+            ]
 
     @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_single_command_with_missing_output(self, fake_template_doer):
@@ -164,9 +160,9 @@ class TestNoOptions(unittest.TestCase):
             main()
 
             call_args = list(fake_template_doer.call_args[0][0])
-            assert \
-                call_args == \
-                [TemplateTarget("README.rst.jj2", "data.yaml", "xyz.output")]
+            assert call_args == [
+                TemplateTarget("README.rst.jj2", "data.yaml", "xyz.output")
+            ]
 
     @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_single_command_with_options(self, fake_template_doer):
@@ -184,9 +180,9 @@ class TestNoOptions(unittest.TestCase):
 
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            assert \
-                call_args == \
-                [TemplateTarget("README.rst.jj2", "new.yml", "xyz.output")]
+            assert call_args == [
+                TemplateTarget("README.rst.jj2", "new.yml", "xyz.output")
+            ]
 
     def test_single_command_without_output_option(self):
         test_args = ["moban", "-t", "abc.jj2"]
@@ -225,14 +221,10 @@ class TestNoOptions2(unittest.TestCase):
 
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            assert \
-                call_args == \
-                [
-                    TemplateTarget(
-                        "README.rst.jj2", "data.yaml", "README.rst"
-                    ),
-                    TemplateTarget("setup.py.jj2", "data.yaml", "setup.py"),
-                ]
+            assert call_args == [
+                TemplateTarget("README.rst.jj2", "data.yaml", "README.rst"),
+                TemplateTarget("setup.py.jj2", "data.yaml", "setup.py"),
+            ]
 
     def tearDown(self):
         self.patcher1.stop()
@@ -262,14 +254,10 @@ class TestCustomMobanFile(unittest.TestCase):
 
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            assert \
-                call_args == \
-                [
-                    TemplateTarget(
-                        "README.rst.jj2", "data.yaml", "README.rst"
-                    ),
-                    TemplateTarget("setup.py.jj2", "data.yaml", "setup.py"),
-                ]
+            assert call_args == [
+                TemplateTarget("README.rst.jj2", "data.yaml", "README.rst"),
+                TemplateTarget("setup.py.jj2", "data.yaml", "setup.py"),
+            ]
 
     def tearDown(self):
         self.patcher1.stop()
@@ -390,14 +378,12 @@ class TestComplexOptions(unittest.TestCase):
             ) as fake:
                 main()
                 call_args = list(fake.call_args[0][0])
-                assert \
-                    call_args == \
-                    [
-                        TemplateTarget(
-                            "README.rst.jj2", "custom-data.yaml", "README.rst"
-                        ),
-                        TemplateTarget("setup.py.jj2", "data.yml", "setup.py"),
-                    ]
+                assert call_args == [
+                    TemplateTarget(
+                        "README.rst.jj2", "custom-data.yaml", "README.rst"
+                    ),
+                    TemplateTarget("setup.py.jj2", "data.yml", "setup.py"),
+                ]
 
     def tearDown(self):
         os.unlink(self.config_file)
@@ -536,9 +522,9 @@ def test_add_extension():
             main()
             with open("moban.output") as f:
                 content = f.read()
-                assert \
-                    content == \
-                    "{}.{}".format(sys.version_info[0], sys.version_info[1])
+                assert content == "{}.{}".format(
+                    sys.version_info[0], sys.version_info[1]
+                )
             os.unlink("moban.output")
 
 

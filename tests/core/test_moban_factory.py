@@ -2,19 +2,19 @@ import os
 import sys
 
 import fs.path
-from mock import patch
-from lml.plugin import PluginInfo
 import pytest
+from lml.plugin import PluginInfo
+from mock import patch
 
 import moban.exceptions as exceptions
 from moban.core import ENGINES
 from moban.core.context import Context
+from moban.core.moban_factory import MobanEngine, expand_template_directories
 from moban.jinja2.engine import (
     Engine,
-    is_extension_list_valid,
     import_module_of_extension,
+    is_extension_list_valid,
 )
-from moban.core.moban_factory import MobanEngine, expand_template_directories
 
 USER_HOME = fs.path.join("user", "home", ".moban", "repos")
 
@@ -110,7 +110,9 @@ def test_global_template_variables():
     engine.render_to_file("variables.template", "variables.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
-        assert content == "template: variables.template\ntarget: test.txt\nhere"
+        assert (
+            content == "template: variables.template\ntarget: test.txt\nhere"
+        )
     os.unlink(output)
 
 

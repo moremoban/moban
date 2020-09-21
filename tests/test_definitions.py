@@ -1,7 +1,7 @@
 import pytest
 
-from moban.deprecated import GitRequire
 from moban.core.definitions import TemplateTarget
+from moban.deprecated import GitRequire
 
 
 def test_git_require_repr():

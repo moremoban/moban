@@ -1,12 +1,13 @@
+import filecmp
 import os
 import sys
-import filecmp
+import unittest
 
 import fs.path
 from mock import patch
-import unittest
 
 from moban.main import main
+
 from .utils import Docs
 
 

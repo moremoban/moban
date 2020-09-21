@@ -1,8 +1,8 @@
 import os
 import tempfile
+import unittest
 
 import pytest
-import unittest
 
 from moban.externals import file_system
 from moban.externals.buffered_writer import BufferedWriter, write_file_out

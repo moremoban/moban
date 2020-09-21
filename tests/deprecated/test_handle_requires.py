@@ -1,5 +1,5 @@
-from mock import patch
 import pytest
+from mock import patch
 
 from moban.deprecated import GitRequire
 

@@ -1,10 +1,10 @@
 import os
 import sys
+import unittest
 from shutil import copyfile
 
-from mock import MagicMock, patch
 import pytest
-import unittest
+from mock import MagicMock, patch
 
 import moban.exceptions as exceptions
 

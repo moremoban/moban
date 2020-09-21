@@ -1,8 +1,8 @@
 import sys
-
-from mock import patch
-import pytest
 import unittest
+
+import pytest
+from mock import patch
 
 from moban.externals import reporter
 
@@ -76,15 +76,17 @@ class TestReporter(unittest.TestCase):
         fake_stdout = patcher.start()
         reporter.report_template_not_in_moban_file("test.jj2")
         patcher.stop()
-        assert \
-            fake_stdout.getvalue() == \
-            "Warning: test.jj2 is not defined in your moban file!\n"
+        assert (
+            fake_stdout.getvalue()
+            == "Warning: test.jj2 is not defined in your moban file!\n"
+        )
 
     def test_report_file_extension_not_needed(self):
         patcher = patch("sys.stdout", new_callable=StringIO)
         fake_stdout = patcher.start()
         reporter.report_file_extension_not_needed()
         patcher.stop()
-        assert \
-            fake_stdout.getvalue() == \
-            "Info: File extension is not required for ad-hoc type\n"
+        assert (
+            fake_stdout.getvalue()
+            == "Info: File extension is not required for ad-hoc type\n"
+        )

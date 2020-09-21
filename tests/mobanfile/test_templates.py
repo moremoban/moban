@@ -1,7 +1,8 @@
-import fs.path
-from mock import patch
-import pytest
 import unittest
+
+import fs.path
+import pytest
+from mock import patch
 
 from moban.core.mobanfile.templates import handle_template
 
@@ -61,9 +62,9 @@ class TestHandleTemplateFunction(unittest.TestCase):
                 None,
             ),
         ]
-        assert \
-            sorted(results, key=lambda x: x[0]) == \
-            sorted(expected, key=lambda x: x[0])
+        assert sorted(results, key=lambda x: x[0]) == sorted(
+            expected, key=lambda x: x[0]
+        )
 
     @patch("moban.externals.reporter.report_error_message")
     def test_listing_dir_recusively_with_error(self, reporter):
