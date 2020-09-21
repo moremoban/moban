@@ -6,9 +6,8 @@ import unittest
 import fs.path
 from mock import patch
 
-from moban.main import main
-
 from .utils import Docs
+from moban.main import main
 
 
 class TestRegression(Docs, unittest.TestCase):
