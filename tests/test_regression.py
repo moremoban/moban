@@ -4,12 +4,13 @@ import filecmp
 
 import fs.path
 from mock import patch
+import unittest
 
 from moban.main import main
 from .utils import Docs
 
 
-class TestRegression(Docs):
+class TestRegression(Docs, unittest.TestCase):
     def setUp(self):
         super(TestRegression, self).setUp()
         self.base_folder = fs.path.join("tests", "regression_tests")

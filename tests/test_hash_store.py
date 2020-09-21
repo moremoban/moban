@@ -2,14 +2,15 @@ import os
 import sys
 from unittest.mock import patch
 
-from nose import SkipTest
+import pytest
+import unittest
 
 from moban.externals import file_system
 from moban.exceptions import NoPermissionsNeeded
 from moban.core.hashstore import HashStore, get_file_hash
 
 
-class TestHashStore:
+class TestHashStore(unittest.TestCase):
     def setUp(self):
         self.source_template = file_system.path_join(
             "tests", "fixtures", "a.jj2"
@@ -102,7 +103,7 @@ class TestHashStore:
         the generated file had file permision change
         """
         if sys.platform == "win32":
-            raise SkipTest("No file permission check on windows")
+            return pytest.skip("No file permission check on windows")
         hs = HashStore()
         flag = hs.is_file_changed(*self.fixture)
         if flag:

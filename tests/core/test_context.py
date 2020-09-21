@@ -1,7 +1,7 @@
 import os
 
 import fs.path
-from nose.tools import eq_
+import pytest
 
 from moban.core.context import Context
 
@@ -9,7 +9,7 @@ from moban.core.context import Context
 def test_context():
     context = Context(fs.path.join("tests", "fixtures"))
     data = context.get_data("simple.yaml")
-    eq_(data["simple"], "yaml")
+    assert data["simple"] == "yaml"
 
 
 def test_environ_variables():
@@ -18,7 +18,7 @@ def test_environ_variables():
     os.environ[test_var] = test_value
     context = Context(fs.path.join("tests", "fixtures"))
     data = context.get_data("simple.yaml")
-    eq_(data[test_var], test_value)
+    assert data[test_var] == test_value
 
 
 def test_json_data_overrides_environ_variables():
@@ -27,7 +27,7 @@ def test_json_data_overrides_environ_variables():
     os.environ[test_var] = test_value
     context = Context(fs.path.join("tests", "fixtures"))
     data = context.get_data("simple.json")
-    eq_(data[test_var], test_value)
+    assert data[test_var] == test_value
 
 
 def test_unknown_data_file():
@@ -36,4 +36,4 @@ def test_unknown_data_file():
     os.environ[test_var] = test_value
     context = Context(fs.path.join("tests", "fixtures"))
     data = context.get_data("unknown.data")
-    eq_(data[test_var], test_value)
+    assert data[test_var] == test_value

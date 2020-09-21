@@ -1,6 +1,6 @@
 import os
 
-from nose.tools import eq_
+import pytest
 
 from .utils import Docs, custom_dedent
 
@@ -341,7 +341,7 @@ class TestTutorial(Docs):
             ["moban", "-g", "copy"], folder, [("simple.file", expected)]
         )
         # make sure only copy target is executed
-        eq_(False, os.path.exists("a.output"))
+        assert False == os.path.exists("a.output")
 
     def test_level_22_intermediate_targets(self):
         expected = "a world\n"

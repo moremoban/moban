@@ -1,6 +1,6 @@
 import os
 
-from nose.tools import eq_
+import pytest
 
 from moban import file_system
 from moban.jinja2.engine import Engine
@@ -18,5 +18,5 @@ def test_globals():
     engine.render_to_file("basic.template", "basic.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
-        eq_(content, "world\n\ntest")
+        assert content == "world\n\ntest"
     os.unlink(output)

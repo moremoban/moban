@@ -3,7 +3,8 @@ import sys
 from textwrap import dedent
 
 from mock import patch
-from nose.tools import eq_
+import pytest
+import unittest
 from fs.opener.parse import parse_fs_url
 
 from moban.main import main
@@ -13,12 +14,12 @@ from moban.externals import file_system
 def verify_content(file_name, expected):
     with open(file_name, "r") as f:
         content = f.read()
-        eq_(content, expected)
+        assert content == expected
 
 
 def verify_content_with_fs(file_name, expected):
     content = file_system.read_unicode(file_name)
-    eq_(content, expected)
+    assert content == expected
 
 
 def run_moban(args, folder, criterias):
@@ -39,7 +40,7 @@ def run_moban_with_fs(args, folder, criterias):
     os.unlink(result.resource)  # delete the zip file
 
 
-class Docs(object):
+class Docs(unittest.TestCase):
     def setUp(self):
         self.current = os.getcwd()
         self.base_folder = "docs"

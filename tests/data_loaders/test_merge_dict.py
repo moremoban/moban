@@ -1,4 +1,4 @@
-from nose.tools import eq_
+import pytest
 from ruamel.yaml import YAML
 
 from moban.core.data_loader import merge
@@ -63,4 +63,4 @@ L1:
 """
     )
     merged = merge(user, default)
-    eq_(merged, {"L1": ["a", "b", "c", "d"]})
+    assert merged == {"L1": ["a", "b", "c", "d"]}

@@ -1,6 +1,6 @@
 import os
 
-from nose.tools import eq_
+import pytest
 
 from moban.main import load_engine_factory_and_engines
 from moban.core.data_loader import load_data
@@ -16,9 +16,9 @@ def test_overrides_a_list_of_config_files():
         ("key_from_b", "bee"),
     ]
     for item, expected_item in zip(actual.items(), expected):
-        eq_(item, expected_item)
+        assert item == expected_item
 
-    eq_(len(actual), len(expected))
+    assert len(actual) == len(expected)
 
 
 def test_overrides_a_list_of_config_files_but_cannot_find_them():
@@ -27,9 +27,9 @@ def test_overrides_a_list_of_config_files_but_cannot_find_them():
 
     expected = [("key", "value")]
     for item, expected_item in zip(actual.items(), expected):
-        eq_(item, expected_item)
+        assert item == expected_item
 
-    eq_(len(actual), len(expected))
+    assert len(actual) == len(expected)
 
 
 def test_overrides_ignores_override_sequence():
@@ -42,7 +42,7 @@ def test_overrides_ignores_override_sequence():
         ("key_from_b", "bee"),
     ]
     for item, expected_item in zip(actual.items(), expected):
-        eq_(item, expected_item)
+        assert item == expected_item
 
 
 def test_overrides_select_keys_from_parent_files():
@@ -57,7 +57,7 @@ def test_overrides_select_keys_from_parent_files():
         ("beta", "from b"),
     ]
     for item, expected_item in zip(actual.items(), expected):
-        eq_(item, expected_item)
+        assert item == expected_item
 
 
 def test_overrides_select_keys():
@@ -72,7 +72,7 @@ def test_overrides_select_keys():
         ("beta", "from b"),
     ]
     for item, expected_item in zip(actual.items(), expected):
-        eq_(item, expected_item)
+        assert item == expected_item
 
 
 def test_overrides_nested_keys():
@@ -92,7 +92,7 @@ def test_overrides_nested_keys():
         "tessel": {"version": 2, "USB": "micro", "wifi": "802.11gn"},
     }
 
-    eq_(dict(actual), expected)
+    assert dict(actual) == expected
 
 
 def test_overrides_fs_url():

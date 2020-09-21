@@ -3,8 +3,8 @@ import sys
 from shutil import copyfile
 
 from mock import MagicMock, patch
-from nose import SkipTest
-from nose.tools import eq_, raises, assert_raises
+import pytest
+import unittest
 
 from moban.core.definitions import TemplateTarget
 
@@ -14,7 +14,7 @@ except ImportError:
     from io import StringIO
 
 
-class TestCustomOptions:
+class TestCustomOptions(unittest.TestCase):
     def setUp(self):
         self.config_file = "config.yaml"
         with open(self.config_file, "w") as f:
@@ -53,7 +53,6 @@ class TestCustomOptions:
             main()
             fake_template_doer.assert_called_with("a.jj2", "config.yaml", "-")
 
-    @raises(SystemExit)
     def test_missing_template(self):
         test_args = ["moban", "-c", self.config_file]
         fake_stdin = MagicMock(isatty=MagicMock(return_value=True))
@@ -61,14 +60,15 @@ class TestCustomOptions:
             with patch.object(sys, "argv", test_args):
                 from moban.main import main
 
-                main()
+                with pytest.raises(SystemExit):
+                    main()
 
     def tearDown(self):
         self.patcher1.stop()
         os.unlink(self.config_file)
 
 
-class TestOptions:
+class TestOptions(unittest.TestCase):
     def setUp(self):
         self.config_file = "data.yml"
         with open(self.config_file, "w") as f:
@@ -99,7 +99,6 @@ class TestOptions:
                 string_template, "data.yml", "-"
             )
 
-    @raises(SystemExit)
     def test_no_argments(self):
         test_args = ["moban"]
         fake_stdin = MagicMock(isatty=MagicMock(return_value=True))
@@ -107,14 +106,15 @@ class TestOptions:
             with patch.object(sys, "argv", test_args):
                 from moban.main import main
 
-                main()
+                with pytest.raises(SystemExit):
+                    main()
 
     def tearDown(self):
         self.patcher1.stop()
         os.unlink(self.config_file)
 
 
-class TestNoOptions:
+class TestNoOptions(unittest.TestCase):
     def setUp(self):
         self.config_file = ".moban.yml"
         copyfile(
@@ -137,24 +137,23 @@ class TestNoOptions:
 
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            eq_(
-                call_args,
+            assert
+                call_args == \
                 [
                     TemplateTarget(
                         "README.rst.jj2", "data.yaml", "README.rst"
                     ),
                     TemplateTarget("setup.py.jj2", "data.yaml", "setup.py"),
-                ],
-            )
+                ]
 
-    @raises(Exception)
     @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_single_command_with_missing_output(self, fake_template_doer):
         test_args = ["moban", "-t", "README.rst.jj2"]
         with patch.object(sys, "argv", test_args):
             from moban.main import main
 
-            main()
+            with pytest.raises(Exception):
+                main()
 
     @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_single_command_with_a_few_options(self, fake_template_doer):
@@ -165,10 +164,9 @@ class TestNoOptions:
             main()
 
             call_args = list(fake_template_doer.call_args[0][0])
-            eq_(
-                call_args,
-                [TemplateTarget("README.rst.jj2", "data.yaml", "xyz.output")],
-            )
+            assert \
+                call_args == \
+                [TemplateTarget("README.rst.jj2", "data.yaml", "xyz.output")]
 
     @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_single_command_with_options(self, fake_template_doer):
@@ -186,18 +184,17 @@ class TestNoOptions:
 
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            eq_(
-                call_args,
-                [TemplateTarget("README.rst.jj2", "new.yml", "xyz.output")],
-            )
+            assert \
+                call_args == \
+                [TemplateTarget("README.rst.jj2", "new.yml", "xyz.output")]
 
-    @raises(Exception)
     def test_single_command_without_output_option(self):
         test_args = ["moban", "-t", "abc.jj2"]
         with patch.object(sys, "argv", test_args):
             from moban.main import main
 
-            main()
+            with pytest.raises(Exception):
+                main()
 
     def tearDown(self):
         os.unlink(self.config_file)
@@ -205,7 +202,7 @@ class TestNoOptions:
         self.patcher1.stop()
 
 
-class TestNoOptions2:
+class TestNoOptions2(unittest.TestCase):
     def setUp(self):
         self.config_file = ".moban.yml"
         copyfile(
@@ -228,15 +225,14 @@ class TestNoOptions2:
 
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            eq_(
-                call_args,
+            assert \
+                call_args == \
                 [
                     TemplateTarget(
                         "README.rst.jj2", "data.yaml", "README.rst"
                     ),
                     TemplateTarget("setup.py.jj2", "data.yaml", "setup.py"),
-                ],
-            )
+                ]
 
     def tearDown(self):
         self.patcher1.stop()
@@ -244,7 +240,7 @@ class TestNoOptions2:
         os.unlink(self.data_file)
 
 
-class TestCustomMobanFile:
+class TestCustomMobanFile(unittest.TestCase):
     def setUp(self):
         self.config_file = "custom-moban.txt"
         copyfile(
@@ -266,15 +262,14 @@ class TestCustomMobanFile:
 
             main()
             call_args = list(fake_template_doer.call_args[0][0])
-            eq_(
-                call_args,
+            assert \
+                call_args ==
                 [
                     TemplateTarget(
                         "README.rst.jj2", "data.yaml", "README.rst"
                     ),
                     TemplateTarget("setup.py.jj2", "data.yaml", "setup.py"),
-                ],
-            )
+                ]
 
     def tearDown(self):
         self.patcher1.stop()
@@ -282,7 +277,7 @@ class TestCustomMobanFile:
         os.unlink(self.data_file)
 
 
-class TestTemplateOption:
+class TestTemplateOption(unittest.TestCase):
     def setUp(self):
         self.config_file = "custom-moban.txt"
         copyfile(
@@ -326,15 +321,14 @@ def test_duplicated_targets_in_moban_file(fake_verify):
     with patch.object(sys, "argv", test_args):
         from moban.main import main
 
-        assert_raises(SystemExit, main)
+        pytest.raises(SystemExit, main)
     os.unlink(".moban.yml")
 
 
-class TestInvalidMobanFile:
+class TestInvalidMobanFile(unittest.TestCase):
     def setUp(self):
         self.config_file = ".moban.yml"
 
-    @raises(SystemExit)
     @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_no_configuration(self, fake_template_doer):
         with open(self.config_file, "w") as f:
@@ -343,9 +337,9 @@ class TestInvalidMobanFile:
         with patch.object(sys, "argv", test_args):
             from moban.main import main
 
-            main()
+            with pytest.raises(SystemExit):
+                main()
 
-    @raises(SystemExit)
     @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_no_configuration_2(self, fake_template_doer):
         with open(self.config_file, "w") as f:
@@ -354,9 +348,9 @@ class TestInvalidMobanFile:
         with patch.object(sys, "argv", test_args):
             from moban.main import main
 
-            main()
+            with pytest.raises(SystemExit):
+                main()
 
-    @raises(SystemExit)
     @patch("moban.core.moban_factory.MobanEngine.render_to_files")
     def test_no_targets(self, fake_template_doer):
         with open(self.config_file, "w") as f:
@@ -365,13 +359,14 @@ class TestInvalidMobanFile:
         with patch.object(sys, "argv", test_args):
             from moban.main import main
 
-            main()
+            with pytest.raises(SystemExit):
+                main()
 
     def tearDown(self):
         os.unlink(self.config_file)
 
 
-class TestComplexOptions:
+class TestComplexOptions(unittest.TestCase):
     def setUp(self):
         self.config_file = ".moban.yml"
         copyfile(
@@ -395,22 +390,21 @@ class TestComplexOptions:
             ) as fake:
                 main()
                 call_args = list(fake.call_args[0][0])
-                eq_(
-                    call_args,
+                assert \
+                    call_args == \
                     [
                         TemplateTarget(
                             "README.rst.jj2", "custom-data.yaml", "README.rst"
                         ),
                         TemplateTarget("setup.py.jj2", "data.yml", "setup.py"),
-                    ],
-                )
+                    ]
 
     def tearDown(self):
         os.unlink(self.config_file)
         os.unlink(self.data_file)
 
 
-class TestTemplateTypeOption:
+class TestTemplateTypeOption(unittest.TestCase):
     def setUp(self):
         self.config_file = "data.yml"
         with open(self.config_file, "w") as f:
@@ -429,13 +423,13 @@ class TestTemplateTypeOption:
         os.unlink(self.config_file)
 
 
-@raises(SystemExit)
 def test_version_option():
     test_args = ["moban", "-V"]
     with patch.object(sys, "argv", test_args):
         from moban.main import main
 
-        main()
+        with pytest.raises(SystemExit):
+            main()
 
 
 @patch("logging.basicConfig")
@@ -487,7 +481,7 @@ def test_git_repo_example(_):
         main()
         with open("test_git_repo_example.py") as f:
             content = f.read()
-            eq_(content, '__version__ = "0.1.1rc3"\n__author__ = "C.W."\n')
+            assert content == '__version__ = "0.1.1rc3"\n__author__ = "C.W."\n'
         os.unlink("test_git_repo_example.py")
 
 
@@ -508,13 +502,13 @@ def test_pypi_pkg_example(_):
         main()
         with open("test_pypi_pkg_example.py") as f:
             content = f.read()
-            eq_(content, '__version__ = "0.1.1rc3"\n__author__ = "C.W."\n')
+            assert content == '__version__ = "0.1.1rc3"\n__author__ = "C.W."\n'
         os.unlink("test_pypi_pkg_example.py")
 
 
 def test_add_extension():
     if sys.version_info[0] == 2:
-        raise SkipTest("jinja2-python-version does not support python 2")
+        return pytest.skip("jinja2-python-version does not support python 2")
     test_commands = [
         [
             "moban",
@@ -542,16 +536,15 @@ def test_add_extension():
             main()
             with open("moban.output") as f:
                 content = f.read()
-                eq_(
-                    content,
-                    "{}.{}".format(sys.version_info[0], sys.version_info[1]),
-                )
+                assert \
+                    content == \
+                    "{}.{}".format(sys.version_info[0], sys.version_info[1])
             os.unlink("moban.output")
 
 
 def test_stdin_input():
     if sys.platform == "win32":
-        raise SkipTest("windows test fails with this pipe test 2")
+        return pytest.skip("windows test fails with this pipe test 2")
     test_args = ["moban", "-d", "hello=world", "-o", "moban.output"]
     with patch.object(sys, "stdin", StringIO("{{hello}}")):
         with patch.object(sys, "argv", test_args):
@@ -560,7 +553,7 @@ def test_stdin_input():
             main()
             with open("moban.output") as f:
                 content = f.read()
-                eq_(content, "world")
+                assert content == "world"
             os.unlink("moban.output")
 
 
@@ -571,7 +564,7 @@ def test_stdout():
             from moban.main import main
 
             main()
-            eq_(fake_stdout.getvalue(), "world\n")
+            assert fake_stdout.getvalue() == "world\n"
 
 
 def test_render_file_stdout():
@@ -587,7 +580,7 @@ def test_render_file_stdout():
             from moban.main import main
 
             main()
-            eq_(fake_stdout.getvalue(), "world\n")
+            assert fake_stdout.getvalue() == "world\n"
 
 
 def test_custom_jinja2_filters_tests():
@@ -616,4 +609,4 @@ def test_custom_jinja2_filters_tests():
                 + "any template, any data and any location.\n"
             )
             main()
-            eq_(fake_stdout.getvalue(), expected_output)
+            assert fake_stdout.getvalue() == expected_output

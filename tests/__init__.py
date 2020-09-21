@@ -1,5 +1,5 @@
 from moban.main import load_engine_factory_and_engines
 
 
-def setup():
+def setUpModule():
     load_engine_factory_and_engines()

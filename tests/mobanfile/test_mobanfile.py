@@ -1,6 +1,6 @@
 import fs.path
 from mock import patch
-from nose.tools import eq_
+import pytest
 
 from moban.core.definitions import TemplateTarget
 
@@ -25,8 +25,8 @@ def test_handle_targets(fake_renderer):
     handle_targets(options, short_hand_targets)
 
     call_args = list(fake_renderer.call_args[0][0])
-    eq_(
-        call_args,
+    assert \
+        call_args == \
         [
             TemplateTarget(
                 "copier-test01.csv",
@@ -34,8 +34,7 @@ def test_handle_targets(fake_renderer):
                 "output.csv",
                 template_type="jinja2",
             )
-        ],
-    )
+        ]
 
 
 @patch("moban.core.moban_factory.MobanEngine.render_to_files")
@@ -63,21 +62,19 @@ def test_handle_targets_sequence(fake_renderer):
 
     call_args = list(fake_renderer.call_args_list)
 
-    eq_(
-        call_args[0][0][0][0],
+    assert \
+        call_args[0][0][0][0] == \
         TemplateTarget(
             "a.template.jj2",
             "child.yaml",
             "filterme.handlebars",
             template_type="jj2",
-        ),
-    )
-    eq_(
-        call_args[1][0][0][0],
+        )
+    assert \
+        call_args[1][0][0][0] == \
         TemplateTarget(
             "filterme.handlebars",
             "child.yaml",
             "filtered_output.txt",
             template_type="handlebars",
-        ),
-    )
+        )

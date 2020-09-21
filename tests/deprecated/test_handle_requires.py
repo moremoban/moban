@@ -1,5 +1,5 @@
 from mock import patch
-from nose.tools import eq_
+import pytest
 
 from moban.deprecated import GitRequire
 
@@ -60,7 +60,7 @@ def test_handle_requires_repos_with_submodule(
     fake_git_clone.assert_called_with(
         [GitRequire(git_url="https://github.com/my/repo", submodule=True)]
     )
-    eq_(fake_pip_install.called, False)
+    assert fake_pip_install.called == False
 
 
 def test_is_repo():
@@ -75,4 +75,4 @@ def test_is_repo():
 
     actual = [is_repo(repo) for repo in repos]
     expected = [True, True, True, False, False]
-    eq_(expected, actual)
+    assert expected == actual

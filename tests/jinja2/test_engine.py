@@ -1,6 +1,6 @@
 import os
 
-from nose.tools import eq_
+import pytest
 
 from moban import file_system
 from moban.jinja2.engine import Engine
@@ -14,7 +14,7 @@ def test_jinja2_template():
     data = dict(test="here")
     result = engine.apply_template(template, data, None)
     expected = "yes\nhere"
-    eq_(expected, result)
+    assert expected == result
 
 
 def test_jinja2_template_string():
@@ -25,4 +25,4 @@ def test_jinja2_template_string():
     data = dict(test="here")
     result = engine.apply_template(template, data, None)
     expected = "here"
-    eq_(expected, result)
+    assert expected == result
