@@ -1,8 +1,8 @@
 import os
 import unittest
 
-import fs.path
 import pytest
+import fs.path
 
 from moban.core import ENGINES
 from moban.externals import file_system

@@ -1,5 +1,5 @@
-import fs.path
 import pytest
+import fs.path
 
 from moban.plugins.json_loader import open_json
 

@@ -2,8 +2,8 @@ import os
 
 import pytest
 
-from moban.core.data_loader import load_data
 from moban.main import load_engine_factory_and_engines
+from moban.core.data_loader import load_data
 
 
 def test_overrides_a_list_of_config_files():

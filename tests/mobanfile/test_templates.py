@@ -1,7 +1,7 @@
 import unittest
 
-import fs.path
 import pytest
+import fs.path
 from mock import patch
 
 from moban.core.mobanfile.templates import handle_template

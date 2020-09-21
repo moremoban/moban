@@ -1,7 +1,7 @@
 import os
 
-import fs.path
 import pytest
+import fs.path
 
 from moban.core.context import Context
 

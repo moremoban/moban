@@ -5,9 +5,9 @@ from unittest.mock import patch
 
 import pytest
 
-from moban.core.hashstore import HashStore, get_file_hash
-from moban.exceptions import NoPermissionsNeeded
 from moban.externals import file_system
+from moban.exceptions import NoPermissionsNeeded
+from moban.core.hashstore import HashStore, get_file_hash
 
 
 class TestHashStore(unittest.TestCase):

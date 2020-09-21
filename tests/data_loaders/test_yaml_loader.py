@@ -1,5 +1,5 @@
-import fs.path
 import pytest
+import fs.path
 
 from moban.core.data_loader import load_data
 from moban.plugins.yaml_loader import open_yaml

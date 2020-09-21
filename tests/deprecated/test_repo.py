@@ -1,17 +1,17 @@
 import unittest
 
-import fs.path
 import pytest
+import fs.path
 from mock import patch
 
 from moban.deprecated import GitRequire
+from moban.exceptions import NoGitCommand
 from moban.deprecated.repo import (
-    get_moban_home,
-    get_repo_name,
     git_clone,
+    get_repo_name,
+    get_moban_home,
     make_sure_git_is_available,
 )
-from moban.exceptions import NoGitCommand
 
 
 @patch("appdirs.user_cache_dir", return_value="root")

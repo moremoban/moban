@@ -1,6 +1,6 @@
-import filecmp
 import os
 import sys
+import filecmp
 import unittest
 
 import fs.path

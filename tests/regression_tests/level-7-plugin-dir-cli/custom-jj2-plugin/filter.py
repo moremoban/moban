@@ -1,5 +1,5 @@
-import base64
 import sys
+import base64
 
 from moban.plugins.jinja2.extensions import JinjaFilter
 

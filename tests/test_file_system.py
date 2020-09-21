@@ -1,13 +1,13 @@
 import os
-import stat
 import sys
+import stat
 from shutil import rmtree
 
 import pytest
 from mock import patch
 
-from moban.exceptions import FileNotFound, UnsupportedPyFS2Protocol
 from moban.externals import file_system
+from moban.exceptions import FileNotFound, UnsupportedPyFS2Protocol
 
 LOCAL_FOLDER = "tests/fixtures"
 LOCAL_FILE = LOCAL_FOLDER + "/a.jj2"

@@ -4,11 +4,11 @@ import unittest
 from textwrap import dedent
 
 import pytest
-from fs.opener.parse import parse_fs_url
 from mock import patch
+from fs.opener.parse import parse_fs_url
 
-from moban.externals import file_system
 from moban.main import main
+from moban.externals import file_system
 
 
 def verify_content(file_name, expected):
