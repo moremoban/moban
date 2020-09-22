@@ -16,7 +16,7 @@ from moban.deprecated.repo import (
 
 @patch("appdirs.user_cache_dir", return_value="root")
 @patch("moban.utils.mkdir_p")
-@patch("moban.file_system.exists")
+@patch("moban.externals.file_system.exists")
 @patch("git.Repo", autospec=True)
 class TestGitFunctions(unittest.TestCase):
     def setUp(self):
@@ -140,7 +140,7 @@ def test_get_repo_name():
     assert expected == actual
 
 
-@patch("moban.reporter.report_error_message")
+@patch("moban.externals.reporter.report_error_message")
 def test_get_repo_name_can_handle_invalid_url(fake_reporter):
     invalid_repo = "invalid"
     try:
