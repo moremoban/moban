@@ -3,9 +3,9 @@ import os
 import pytest
 
 from moban.externals import file_system
+from moban.core.moban_factory import MobanEngine
 from moban.plugins.jinja2.engine import Engine
 from moban.plugins.jinja2.extensions import jinja_global
-from moban.core.moban_factory import MobanEngine
 
 
 def test_globals():
