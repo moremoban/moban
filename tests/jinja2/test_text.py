@@ -1,6 +1,6 @@
 import pytest
 
-from moban.jinja2.filters.text import split_length
+from moban.plugins.jinja2.filters.text import split_length
 
 
 def test_split_length():
