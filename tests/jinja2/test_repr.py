@@ -1,6 +1,6 @@
 import pytest
 
-from moban.jinja2.filters.repr import repr as repr_function
+from moban.plugins.jinja2.filters.repr import repr as repr_function
 
 
 def test_string():
@@ -12,4 +12,4 @@ def test_string():
 def test_list():
     me = [1, 2, 3]
     expected = repr_function(me)
-    assert expected, ["'1'", "'2'" == "'3'"]
+    assert expected == ["'1'", "'2'", "'3'"]
