@@ -9,7 +9,7 @@ from lml.plugin import PluginInfo
 import moban.exceptions as exceptions
 from moban.core import ENGINES
 from moban.core.context import Context
-from moban.jinja2.engine import (
+from moban.plugins.jinja2.engine import (
     Engine,
     is_extension_list_valid,
     import_module_of_extension,
