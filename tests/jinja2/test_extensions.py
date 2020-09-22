@@ -2,9 +2,9 @@ import os
 
 import pytest
 
-from moban import file_system
-from moban.jinja2.engine import Engine
-from moban.jinja2.extensions import jinja_global
+from moban.externals import file_system
+from moban.plugins.jinja2.engine import Engine
+from moban.plugins.jinja2.extensions import jinja_global
 from moban.core.moban_factory import MobanEngine
 
 
