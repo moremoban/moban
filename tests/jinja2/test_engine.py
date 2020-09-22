@@ -2,8 +2,8 @@ import os
 
 import pytest
 
-from moban import file_system
-from moban.jinja2.engine import Engine
+from moban.externals import file_system
+from moban.plugins.jinja2.engine import Engine
 
 
 def test_jinja2_template():
