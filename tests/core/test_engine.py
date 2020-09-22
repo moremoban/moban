@@ -5,9 +5,9 @@ import fs.path
 from mock import patch
 
 from moban.core import ENGINES
-from moban.plugins.jinja2.engine import Engine
-from moban.plugins.yaml_loader import open_yaml
 from moban.core.definitions import TemplateTarget
+from moban.plugins.yaml_loader import open_yaml
+from moban.plugins.jinja2.engine import Engine
 
 MODULE = "moban.core.moban_factory"
 
