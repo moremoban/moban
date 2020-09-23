@@ -3,6 +3,7 @@ import sys
 import unittest
 from textwrap import dedent
 
+import fs
 import pytest
 from mock import patch
 from fs.opener.parse import parse_fs_url

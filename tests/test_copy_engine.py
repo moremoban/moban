@@ -1,8 +1,8 @@
 import os
 import unittest
 
+import fs
 import pytest
-import fs.path
 
 from moban.core import ENGINES
 from moban.externals import file_system
@@ -11,9 +11,9 @@ from moban.externals import file_system
 class TestContentForwardEngine(unittest.TestCase):
     def setUp(self):
         template_path = fs.path.join("tests", "fixtures")
-        fs = file_system.get_multi_fs([template_path])
+        fsys = file_system.get_multi_fs([template_path])
         ContentForwardEngine = ENGINES.load_me_now("copy")
-        self.engine = ContentForwardEngine(fs)
+        self.engine = ContentForwardEngine(fsys)
 
     def test_get_template(self):
         template_content = self.engine.get_template("copier-test01.csv")

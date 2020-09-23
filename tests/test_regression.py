@@ -3,7 +3,7 @@ import sys
 import filecmp
 import unittest
 
-import fs.path
+import fs
 from mock import patch
 
 from moban.main import main

@@ -3,6 +3,7 @@ import sys
 import unittest
 from shutil import copyfile
 
+import fs
 import pytest
 from mock import MagicMock, patch
 

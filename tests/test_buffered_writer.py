@@ -2,6 +2,7 @@ import os
 import tempfile
 import unittest
 
+import fs
 import pytest
 
 from moban.externals import file_system

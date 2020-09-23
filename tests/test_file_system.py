@@ -3,6 +3,7 @@ import sys
 import stat
 from shutil import rmtree
 
+import fs
 import pytest
 from mock import patch
 
