@@ -8,11 +8,7 @@ from moban.plugins.jinja2.engine import Engine
 def test_jinja2_template():
     path = fs.path.join("tests", "fixtures", "jinja_tests")
     fsys = file_system.get_multi_fs([path])
-    options = {
-        "extensions": [
-            "test:moban.externals.file_system.exists"
-            ]
-        }
+    options = {"extensions": ["test:moban.externals.file_system.exists"]}
     engine = Engine(fsys, options)
     template = engine.get_template("file_tests.template")
     data = dict(test="here")

@@ -123,7 +123,9 @@ class MobanEngine(object):
         try:
             template = self.engine.get_template(template_file)
         except InvalidCharsInPath:
-            return self.render_string_to_file(template_file, data_file, output_file)
+            return self.render_string_to_file(
+                template_file, data_file, output_file
+            )
         try:
             template_abs_path = self.template_fs.geturl(
                 template_file, purpose="fs"
