@@ -1,20 +1,20 @@
 import os
 import sys
 
+import pytest
 import fs.path
 from mock import patch
 from lml.plugin import PluginInfo
-from nose.tools import eq_, raises
 
 import moban.exceptions as exceptions
 from moban.core import ENGINES
 from moban.core.context import Context
-from moban.jinja2.engine import (
+from moban.core.moban_factory import MobanEngine, expand_template_directories
+from moban.plugins.jinja2.engine import (
     Engine,
     is_extension_list_valid,
     import_module_of_extension,
 )
-from moban.core.moban_factory import MobanEngine, expand_template_directories
 
 USER_HOME = fs.path.join("user", "home", ".moban", "repos")
 
@@ -23,22 +23,29 @@ USER_HOME = fs.path.join("user", "home", ".moban", "repos")
 class TestPypkg:
     def __init__(self):
         __package_path__ = os.path.normcase(os.path.dirname(__file__))
-        self.resources_path = os.path.join(__package_path__, "fixtures")
+        self.resources_path = fs.path.join(__package_path__, "fixtures")
 
 
 def test_expand_pypi_dir():
-    dirs = list(expand_template_directories("testmobans:template-tests"))
+    dirs = list(
+        expand_template_directories(
+            [
+                "tests/fixtures/template",
+                "tests/regression_tests/level-7-plugin-dir-cli/my-templates",
+            ]
+        )
+    )
     for directory in dirs:
-        assert os.path.exists(directory)
+        assert os.path.exists(directory[7:])
 
 
 @patch("moban.deprecated.repo.get_moban_home", return_value=USER_HOME)
-@patch("moban.file_system.exists", return_value=True)
+@patch("moban.externals.file_system.exists", return_value=True)
 def test_expand_repo_dir(_, __):
     dirs = list(expand_template_directories("git_repo:template"))
 
     expected = [fs.path.join(USER_HOME, "git_repo", "template")]
-    eq_(expected, dirs)
+    assert expected == dirs
 
 
 def test_default_template_type():
@@ -57,22 +64,20 @@ def test_default_mako_type(_):  # fake mako
     assert engine.engine.__class__ == FakeEngine
 
 
-@raises(exceptions.NoThirdPartyEngine)
 def test_unknown_template_type():
-    ENGINES.get_engine("unknown_template_type", [], "")
+    with pytest.raises(exceptions.NoThirdPartyEngine):
+        ENGINES.get_engine("unknown_template_type", [], "")
 
 
-@raises(exceptions.DirectoryNotFound)
 def test_non_existent_tmpl_directries():
-    ENGINES.get_engine("jj2", "idontexist", "")
+    with pytest.raises(fs.errors.CreateFailed):
+        ENGINES.get_engine("jj2", "idontexist", "")
 
 
-@raises(exceptions.DirectoryNotFound)
 def test_non_existent_config_directries():
     MobanEngine("tests", "abc", Engine)
 
 
-@raises(exceptions.DirectoryNotFound)
 def test_non_existent_ctx_directries():
     Context(["abc"])
 
@@ -84,9 +89,9 @@ def test_file_tests():
     engine.render_to_file("file_tests.template", "file_tests.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
-        eq_(content, "yes\nhere")
-    eq_(engine.file_count, 1)
-    eq_(engine.templated_count, 1)
+        assert content == "yes\nhere"
+    assert engine.file_count == 1
+    assert engine.templated_count == 1
     os.unlink(output)
 
 
@@ -97,9 +102,9 @@ def test_render_string_to_file():
     engine.render_string_to_file("{{test}}", "file_tests.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
-        eq_(content, "here")
-    eq_(engine.file_count, 1)
-    eq_(engine.templated_count, 1)
+        assert content == "here"
+    assert engine.file_count == 1
+    assert engine.templated_count == 1
     os.unlink(output)
 
 
@@ -110,7 +115,9 @@ def test_global_template_variables():
     engine.render_to_file("variables.template", "variables.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
-        eq_(content, "template: variables.template\ntarget: test.txt\nhere")
+        assert (
+            content == "template: variables.template\ntarget: test.txt\nhere"
+        )
     os.unlink(output)
 
 
@@ -121,7 +128,7 @@ def test_nested_global_template_variables():
     engine.render_to_file("nested.template", "variables.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
-        eq_(content, "template: nested.template\ntarget: test.txt\nhere")
+        assert content == "template: nested.template\ntarget: test.txt\nhere"
     os.unlink(output)
 
 
@@ -135,7 +142,7 @@ def test_environ_variables_as_data():
     engine.render_to_file("test.template", "this_does_not_exist.yml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
-        eq_(content, "foo")
+        assert content == "foo"
     os.unlink(output)
 
 
@@ -146,7 +153,7 @@ def test_string_template():
     engine.render_string_to_file("{{simple}}", "simple.yaml", output)
     with open(output, "r") as output_file:
         content = output_file.read()
-        eq_(content, "yaml")
+        assert content == "yaml"
     os.unlink(output)
 
 
@@ -157,7 +164,7 @@ def test_extensions_validator():
     for fixture in test_fixtures:
         actual.append(is_extension_list_valid(fixture))
 
-    eq_(expected, actual)
+    assert expected == actual
 
 
 def test_import():

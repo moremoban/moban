@@ -1,7 +1,7 @@
 import uuid
 
+import pytest
 import fs.path
-from nose.tools import eq_, raises
 
 from moban.exceptions import GroupTargetNotFound
 from moban.core.mobanfile import targets
@@ -31,7 +31,7 @@ def test_handling_group_target():
     expected = [
         TemplateTarget(TEMPLATE, CONFIGURATION, OUTPUT, group_template_type)
     ]
-    eq_(expected, actual)
+    assert expected == actual
 
 
 def test_extract_group_targets():
@@ -41,17 +41,17 @@ def test_extract_group_targets():
     ]
     actual = targets.extract_group_targets("copy1", test_targets)
     expected = [{"copy1": [{"output1": "source1"}]}]
-    eq_(expected, actual)
+    assert expected == actual
 
 
-@raises(GroupTargetNotFound)
 def test_extract_group_targets_not_found():
     test_targets = [
         {"copy": [{"output": "source"}], "copy1": [{"output1": "source1"}]}
     ]
-    actual = targets.extract_group_targets("copy2", test_targets)
-    expected = []
-    eq_(expected, actual)
+    with pytest.raises(GroupTargetNotFound):
+        actual = targets.extract_group_targets("copy2", test_targets)
+        expected = []
+        assert expected == actual
 
 
 class TestImplicitTarget:
@@ -67,7 +67,7 @@ class TestImplicitTarget:
             targets._handle_implicit_target(options, TEMPLATE, OUTPUT)
         )
         expected = [TemplateTarget(TEMPLATE, CONFIGURATION, OUTPUT, "jj2")]
-        eq_(expected, actual)
+        assert expected == actual
 
     def test_use_moban_default_template_from_options(self):
         template_without_suffix = "template"
@@ -91,7 +91,7 @@ class TestImplicitTarget:
                 DEFAULT_TEMPLATE_TYPE,
             )
         ]
-        eq_(expected, actual)
+        assert expected == actual
 
 
 class TestExplicitTarget:
@@ -106,7 +106,7 @@ class TestExplicitTarget:
 
         actual = list(targets._handle_explicit_target(options, target))
         expected = [TemplateTarget(TEMPLATE, CONFIGURATION, OUTPUT, "use-me")]
-        eq_(expected, actual)
+        assert expected == actual
 
     def test_derive_template_type_from_target_template_file(self):
 
@@ -119,7 +119,7 @@ class TestExplicitTarget:
 
         actual = list(targets._handle_explicit_target(options, target))
         expected = [TemplateTarget(TEMPLATE, CONFIGURATION, OUTPUT, "jj2")]
-        eq_(expected, actual)
+        assert expected == actual
 
     def test_use_moban_default_template_from_options(self):
         template_without_suffix = "template"
@@ -139,7 +139,7 @@ class TestExplicitTarget:
                 DEFAULT_TEMPLATE_TYPE,
             )
         ]
-        eq_(expected, actual)
+        assert expected == actual
 
     def test_ad_hoc_type(self):
         target = dict(template=TEMPLATE, output=OUTPUT)
@@ -163,4 +163,4 @@ class TestExplicitTarget:
         expected = [
             TemplateTarget(TEMPLATE, CONFIGURATION, OUTPUT, file_extension)
         ]
-        eq_(actual, expected)
+        assert actual == expected

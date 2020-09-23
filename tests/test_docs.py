@@ -1,6 +1,7 @@
 import os
 
-from nose.tools import eq_
+import fs
+import pytest
 
 from .utils import Docs, custom_dedent
 
@@ -129,7 +130,7 @@ class TestTutorial(Docs):
     def test_level_8(self):
         expected = "it is a test\n"
         folder = "level-8-pass-a-folder-full-of-templates"
-        check_file = os.path.join("templated-folder", "my")
+        check_file = fs.path.join("templated-folder", "my")
         self.run_moban(["moban"], folder, [(check_file, expected)])
 
     def test_level_9(self):
@@ -341,7 +342,7 @@ class TestTutorial(Docs):
             ["moban", "-g", "copy"], folder, [("simple.file", expected)]
         )
         # make sure only copy target is executed
-        eq_(False, os.path.exists("a.output"))
+        assert False == os.path.exists("a.output")
 
     def test_level_22_intermediate_targets(self):
         expected = "a world\n"

@@ -1,9 +1,11 @@
 import os
 import sys
+import unittest
 from textwrap import dedent
 
+import fs
+import pytest
 from mock import patch
-from nose.tools import eq_
 from fs.opener.parse import parse_fs_url
 
 from moban.main import main
@@ -13,12 +15,12 @@ from moban.externals import file_system
 def verify_content(file_name, expected):
     with open(file_name, "r") as f:
         content = f.read()
-        eq_(content, expected)
+        assert content == expected
 
 
 def verify_content_with_fs(file_name, expected):
     content = file_system.read_unicode(file_name)
-    eq_(content, expected)
+    assert content == expected
 
 
 def run_moban(args, folder, criterias):
@@ -39,7 +41,7 @@ def run_moban_with_fs(args, folder, criterias):
     os.unlink(result.resource)  # delete the zip file
 
 
-class Docs(object):
+class Docs(unittest.TestCase):
     def setUp(self):
         self.current = os.getcwd()
         self.base_folder = "docs"
@@ -50,11 +52,11 @@ class Docs(object):
         os.chdir(self.current)
 
     def run_moban(self, moban_cli, working_directory, assertions):
-        os.chdir(os.path.join(self.base_folder, working_directory))
+        os.chdir(fs.path.join(self.base_folder, working_directory))
         run_moban(moban_cli, None, assertions)
 
     def run_moban_with_fs(self, moban_cli, working_directory, assertions):
-        os.chdir(os.path.join(self.base_folder, working_directory))
+        os.chdir(fs.path.join(self.base_folder, working_directory))
         run_moban_with_fs(moban_cli, None, assertions)
 
 

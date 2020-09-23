@@ -43,7 +43,7 @@ def _list_dir_files(fs, source, dest):
     for file_name in fs.listdir(source):
         # please note jinja2 does NOT like windows path
         # hence the following statement looks like cross platform
-        #  src_file_under_dir = os.path.join(source, file_name)
+        #  src_file_under_dir = fs.path.join(source, file_name)
         # but actually it breaks windows instead.
         src_file_under_dir = f"{source}/{file_name}"
         if fs.isfile(src_file_under_dir):

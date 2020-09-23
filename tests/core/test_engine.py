@@ -1,13 +1,13 @@
 import os
 
+import pytest
 import fs.path
 from mock import patch
-from nose.tools import eq_
 
 from moban.core import ENGINES
-from moban.definitions import TemplateTarget
-from moban.jinja2.engine import Engine
-from moban.data_loaders.yaml import open_yaml
+from moban.core.definitions import TemplateTarget
+from moban.plugins.yaml_loader import open_yaml
+from moban.plugins.jinja2.engine import Engine
 
 MODULE = "moban.core.moban_factory"
 
@@ -93,7 +93,7 @@ def test_get_user_defined_engine():
     template_types = open_yaml(test_fixture)
     ENGINES.register_options(template_types["template_types"])
     engine = ENGINES.get_engine("custom_jinja", ".", ".")
-    eq_(engine.engine.__class__, Engine)
+    assert engine.engine.__class__ == Engine
 
 
 def test_custom_file_extension_is_assocated_with_user_defined_engine():
@@ -103,7 +103,7 @@ def test_custom_file_extension_is_assocated_with_user_defined_engine():
     template_types = open_yaml(test_fixture)
     ENGINES.register_options(template_types["template_types"])
     template_type = ENGINES.get_primary_key("demo_file_suffix")
-    eq_("custom_jinja", template_type)
+    assert "custom_jinja" == template_type
 
 
 def test_built_in_jinja2_file_extension_still_works():
@@ -113,4 +113,4 @@ def test_built_in_jinja2_file_extension_still_works():
     template_types = open_yaml(test_fixture)
     ENGINES.register_options(template_types["template_types"])
     template_type = ENGINES.get_primary_key("jj2")
-    eq_("jinja2", template_type)
+    assert "jinja2" == template_type

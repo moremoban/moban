@@ -1,6 +1,6 @@
-from nose.tools import eq_
+import pytest
 
-from moban.jinja2.filters.text import split_length
+from moban.plugins.jinja2.filters.text import split_length
 
 
 def test_split_length():
@@ -18,4 +18,4 @@ def test_split_length():
     ]
     for test, expect in zip(inputs, expectations):
         actual = split_length(*test)
-        eq_(list(actual), expect)
+        assert list(actual) == expect

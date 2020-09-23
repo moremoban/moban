@@ -1,7 +1,9 @@
 import os
 import tempfile
+import unittest
 
-from nose.tools import eq_
+import fs
+import pytest
 
 from moban.externals import file_system
 from moban.externals.buffered_writer import BufferedWriter, write_file_out
@@ -16,7 +18,7 @@ CONTENT = b"""
 EXPECTED = "\n    helloworld\n\n\n\n\n    "
 
 
-class TestBufferedWriter:
+class TestBufferedWriter(unittest.TestCase):
     def setUp(self):
         self.writer = BufferedWriter()
 
@@ -25,7 +27,7 @@ class TestBufferedWriter:
         self.writer.write_file_out(test_file, CONTENT)
         self.writer.close()
         content = file_system.read_text(test_file)
-        eq_(content, EXPECTED)
+        assert content == EXPECTED
         os.unlink(test_file)
 
     def test_write_a_zip(self):
@@ -34,8 +36,8 @@ class TestBufferedWriter:
         self.writer.write_file_out(test_file, CONTENT)
         self.writer.close()
         content = file_system.read_text(test_file)
-        eq_(content, EXPECTED)
-        os.unlink(os.path.join(tmp_dir, "testout.zip"))
+        assert content == EXPECTED
+        os.unlink(fs.path.join(tmp_dir, "testout.zip"))
 
 
 def test_write_file_out():
@@ -43,4 +45,4 @@ def test_write_file_out():
     write_file_out(test_file, CONTENT)
     with open(test_file, "r") as f:
         content = f.read()
-        eq_(content, EXPECTED)
+        assert content == EXPECTED

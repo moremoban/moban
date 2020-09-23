@@ -1,14 +1,16 @@
 import os
 import sys
+import unittest
 from shutil import copyfile
 
+import fs
+import pytest
 from mock import MagicMock, patch
-from nose.tools import eq_, raises, assert_raises
 
 import moban.exceptions as exceptions
 
 
-class TestException:
+class TestException(unittest.TestCase):
     def setUp(self):
         self.moban_file = ".moban.yml"
         self.data_file = "data.yml"
@@ -19,15 +21,15 @@ class TestException:
         if os.path.exists(self.data_file):
             os.unlink(self.data_file)
 
-    @raises(exceptions.MobanfileGrammarException)
     def test_handle_moban_file(self):
         copyfile(
-            os.path.join("tests", "fixtures", ".moban-version-1234.yml"),
+            fs.path.join("tests", "fixtures", ".moban-version-1234.yml"),
             self.moban_file,
         )
         import moban.main as main
 
-        main.handle_moban_file(self.moban_file, {})
+        with pytest.raises(exceptions.MobanfileGrammarException):
+            main.handle_moban_file(self.moban_file, {})
 
     def test_check_none(self):
         from ruamel.yaml import YAML
@@ -55,7 +57,7 @@ class TestException:
         ]
 
         for data in (yaml.load(d) for d in invalid_data):
-            assert_raises(
+            pytest.raises(
                 exceptions.MobanfileGrammarException,
                 main.check_none,
                 data,
@@ -65,21 +67,20 @@ class TestException:
         for data in (yaml.load(d) for d in valid_data):
             main.check_none(data, ".moban.yaml")
 
-    @raises(exceptions.MobanfileGrammarException)
     def test_version_1_is_recognized(self):
         copyfile(
-            os.path.join("tests", "fixtures", ".moban-version-1.0.yml"),
+            fs.path.join("tests", "fixtures", ".moban-version-1.0.yml"),
             self.moban_file,
         )
         copyfile(
-            os.path.join("tests", "fixtures", ".moban-version-1.0.yml"),
+            fs.path.join("tests", "fixtures", ".moban-version-1.0.yml"),
             self.data_file,
         )
         import moban.main as main
 
-        main.handle_moban_file(self.moban_file, {})
+        with pytest.raises(exceptions.MobanfileGrammarException):
+            main.handle_moban_file(self.moban_file, {})
 
-    @raises(SystemExit)
     @patch("os.path.exists")
     @patch("moban.main.handle_moban_file")
     @patch("moban.externals.reporter.report_error_message")
@@ -93,9 +94,9 @@ class TestException:
             with patch.object(sys, "argv", ["moban"]):
                 from moban.main import main
 
-                main()
+                with pytest.raises(SystemExit):
+                    main()
 
-    @raises(SystemExit)
     @patch("os.path.exists")
     @patch("moban.main.handle_moban_file")
     @patch("moban.externals.reporter.report_error_message")
@@ -107,9 +108,9 @@ class TestException:
             from moban.main import main
 
             with patch.object(sys, "argv", ["moban"]):
-                main()
+                with pytest.raises(SystemExit):
+                    main()
 
-    @raises(SystemExit)
     @patch("os.path.exists")
     @patch("moban.main.handle_command_line")
     @patch("moban.externals.reporter.report_error_message")
@@ -123,9 +124,9 @@ class TestException:
             from moban.main import main
 
             with patch.object(sys, "argv", ["moban"]):
-                main()
+                with pytest.raises(SystemExit):
+                    main()
 
-    @raises(SystemExit)
     @patch("os.path.exists")
     @patch("moban.main.handle_moban_file")
     @patch("moban.externals.reporter.report_error_message")
@@ -139,9 +140,9 @@ class TestException:
             from moban.main import main
 
             with patch.object(sys, "argv", ["moban"]):
-                main()
+                with pytest.raises(SystemExit):
+                    main()
 
-    @raises(SystemExit)
     @patch("os.path.exists")
     @patch("moban.main.handle_moban_file")
     @patch("moban.externals.reporter.report_error_message")
@@ -155,11 +156,11 @@ class TestException:
             from moban.__main__ import main
 
             with patch.object(sys, "argv", ["moban"]):
-                main()
+                with pytest.raises(SystemExit):
+                    main()
 
 
 class TestExitCodes:
-    @raises(SystemExit)
     @patch("moban.main.handle_moban_file")
     @patch("moban.main.find_default_moban_file")
     def test_has_many_files_with_exit_code(
@@ -170,9 +171,9 @@ class TestExitCodes:
         from moban.main import main
 
         with patch.object(sys, "argv", ["moban", "--exit-code"]):
-            main()
+            with pytest.raises(SystemExit):
+                main()
 
-    @raises(SystemExit)
     @patch("moban.main.handle_command_line")
     @patch("moban.main.find_default_moban_file")
     def test_handle_single_change_with_exit_code(
@@ -183,7 +184,8 @@ class TestExitCodes:
         from moban.main import main
 
         with patch.object(sys, "argv", ["moban", "--exit-code"]):
-            main()
+            with pytest.raises(SystemExit):
+                main()
 
     @patch("moban.main.handle_moban_file")
     @patch("moban.main.find_default_moban_file")
@@ -206,7 +208,7 @@ class TestExitCodes:
             main()
 
 
-class TestFinder:
+class TestFinder(unittest.TestCase):
     def setUp(self):
         self.patcher = patch("moban.externals.file_system.exists")
         self.fake_file_existence = self.patcher.start()
@@ -221,14 +223,14 @@ class TestFinder:
         from moban.main import find_default_moban_file
 
         actual = find_default_moban_file()
-        eq_(".moban.yml", actual)
+        assert ".moban.yml" == actual
 
     def test_moban_yaml(self):
         self.fake_file_existence.side_effect = [False, True]
         from moban.main import find_default_moban_file
 
         actual = find_default_moban_file()
-        eq_(".moban.yaml", actual)
+        assert ".moban.yaml" == actual
 
     def test_no_moban_file(self):
         self.fake_file_existence.side_effect = [False, False]

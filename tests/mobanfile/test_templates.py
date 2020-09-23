@@ -1,11 +1,13 @@
+import unittest
+
+import pytest
 import fs.path
 from mock import patch
-from nose.tools import eq_
 
 from moban.core.mobanfile.templates import handle_template
 
 
-class TestHandleTemplateFunction:
+class TestHandleTemplateFunction(unittest.TestCase):
     def setUp(self):
         self.base_dir = [fs.path.join("tests", "fixtures")]
 
@@ -14,7 +16,7 @@ class TestHandleTemplateFunction:
             handle_template("copier-test01.csv", "/tmp/test", self.base_dir)
         )
         expected = [("copier-test01.csv", "/tmp/test", "csv")]
-        eq_(expected, results)
+        assert expected == results
 
     @patch("moban.externals.reporter.report_error_message")
     def test_file_not_found(self, reporter):
@@ -39,7 +41,7 @@ class TestHandleTemplateFunction:
                 None,
             )
         ]
-        eq_(expected, results)
+        assert expected == results
 
     def test_listing_dir_recusively(self):
         test_dir = "/tmp/copy-a-directory"
@@ -60,9 +62,8 @@ class TestHandleTemplateFunction:
                 None,
             ),
         ]
-        eq_(
-            sorted(results, key=lambda x: x[0]),
-            sorted(expected, key=lambda x: x[0]),
+        assert sorted(results, key=lambda x: x[0]) == sorted(
+            expected, key=lambda x: x[0]
         )
 
     @patch("moban.externals.reporter.report_error_message")
@@ -73,4 +74,4 @@ class TestHandleTemplateFunction:
                 "copier-directory-does-not-exist/**", test_dir, self.base_dir
             )
         )
-        eq_(reporter.call_count, 1)
+        assert reporter.call_count == 1

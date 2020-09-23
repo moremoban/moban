@@ -1,6 +1,8 @@
+import unittest
+
+import pytest
 import fs.path
 from mock import patch
-from nose.tools import eq_, raises
 
 from moban.deprecated import GitRequire
 from moban.exceptions import NoGitCommand
@@ -13,10 +15,10 @@ from moban.deprecated.repo import (
 
 
 @patch("appdirs.user_cache_dir", return_value="root")
-@patch("moban.utils.mkdir_p")
-@patch("moban.file_system.exists")
+@patch("moban.externals.file_system.mkdir_p")
+@patch("moban.externals.file_system.exists")
 @patch("git.Repo", autospec=True)
-class TestGitFunctions:
+class TestGitFunctions(unittest.TestCase):
     def setUp(self):
         self.repo_name = "repoA"
         self.repo = "https://github.com/my/" + self.repo_name
@@ -44,7 +46,7 @@ class TestGitFunctions:
             depth=2,
         )
         repo = fake_repo.return_value
-        eq_(repo.git.submodule.called, False)
+        assert repo.git.submodule.called == False
 
     def test_checkout_new_with_submodules(
         self, fake_repo, local_folder_exists, *_
@@ -89,7 +91,7 @@ class TestGitFunctions:
             depth=2,
         )
         repo = fake_repo.return_value
-        eq_(repo.git.submodule.called, False)
+        assert repo.git.submodule.called == False
 
     def test_update_existing_with_branch_parameter(
         self, fake_repo, local_folder_exists, *_
@@ -112,7 +114,7 @@ class TestGitFunctions:
             depth=2,
         )
         repo = fake_repo.return_value
-        eq_(repo.git.submodule.called, False)
+        assert repo.git.submodule.called == False
 
     def test_update_existing_with_reference_parameter(
         self, fake_repo, local_folder_exists, *_
@@ -135,10 +137,10 @@ def test_get_repo_name():
     ]
     actual = [get_repo_name(repo) for repo in repos]
     expected = ["repo"] * len(repos)
-    eq_(expected, actual)
+    assert expected == actual
 
 
-@patch("moban.reporter.report_error_message")
+@patch("moban.externals.reporter.report_error_message")
 def test_get_repo_name_can_handle_invalid_url(fake_reporter):
     invalid_repo = "invalid"
     try:
@@ -152,10 +154,10 @@ def test_get_repo_name_can_handle_invalid_url(fake_reporter):
 @patch("appdirs.user_cache_dir", return_value="root")
 def test_get_moban_home(_):
     actual = get_moban_home()
-    eq_(fs.path.join("root", "repos"), actual)
+    assert fs.path.join("root", "repos") == actual
 
 
-@raises(NoGitCommand)
 @patch("subprocess.check_output", side_effect=Exception)
 def test_make_git_is_available(_):
-    make_sure_git_is_available()
+    with pytest.raises(NoGitCommand):
+        make_sure_git_is_available()

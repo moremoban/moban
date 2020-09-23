@@ -1,4 +1,4 @@
-from nose.tools import eq_
+import pytest
 
 from moban.core.definitions import TemplateTarget
 from moban.core.mobanfile.store import Store
@@ -9,4 +9,4 @@ def test_store():
     output = "output"
     target = TemplateTarget("template_file", "data_file", output)
     store.add(target)
-    eq_(target, store.look_up_by_output.get(output))
+    assert target == store.look_up_by_output.get(output)

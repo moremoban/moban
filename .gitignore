@@ -542,6 +542,9 @@ cscope.in.out
 cscope.po.out
 
 
+# remove moban hash dictionary
+.moban.hashes
+
 docs/deprecated-level-9-moban-dependency-as-pypi-package/mytravis.yml
 docs/deprecated-level-10-moban-dependency-as-git-repo/mytravis.yml
 docs/level-1-jinja2-cli/testout

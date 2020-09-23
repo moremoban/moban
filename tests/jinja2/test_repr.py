@@ -1,15 +1,15 @@
-from nose.tools import eq_
+import pytest
 
-from moban.jinja2.filters.repr import repr as repr_function
+from moban.plugins.jinja2.filters.repr import repr as repr_function
 
 
 def test_string():
     me = "abc"
     expected = repr_function(me)
-    eq_(expected, "'abc'")
+    assert expected == "'abc'"
 
 
 def test_list():
     me = [1, 2, 3]
     expected = repr_function(me)
-    eq_(expected, ["'1'", "'2'", "'3'"])
+    assert expected == ["'1'", "'2'", "'3'"]
