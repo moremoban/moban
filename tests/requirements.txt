@@ -2,13 +2,11 @@ pytest
 pytest-cov
 codecov
 coverage
-mock
 yamllint
 flake8
 black
 isort
 moban-handlebars
-moban-ansible
 pypi-mobans-pkg==0.0.12
 arrow
 jinja2_time
@@ -18,4 +16,3 @@ jinja2-python-version>=1.1.2
 httpfs
 collective.checkdocs
 Pygments
-

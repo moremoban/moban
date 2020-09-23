@@ -2,10 +2,10 @@ import os
 import sys
 import stat
 from shutil import rmtree
+from unittest.mock import patch
 
 import fs
 import pytest
-from mock import patch
 
 from moban.externals import file_system
 from moban.exceptions import FileNotFound, UnsupportedPyFS2Protocol

@@ -1,9 +1,9 @@
 import os
 import sys
+from unittest.mock import patch
 
 import pytest
 import fs.path
-from mock import patch
 from lml.plugin import PluginInfo
 
 import moban.exceptions as exceptions

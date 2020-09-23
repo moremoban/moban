@@ -2,7 +2,7 @@ import os
 import logging
 from collections import defaultdict
 
-from fs.errors import ResourceNotFound
+from fs.errors import ResourceNotFound, InvalidCharsInPath
 from lml.plugin import PluginManager
 
 from moban import constants, exceptions
@@ -120,7 +120,12 @@ class MobanEngine(object):
 
     def render_to_file(self, template_file, data_file, output_file):
         data = self.context.get_data(data_file)
-        template = self.engine.get_template(template_file)
+        try:
+            template = self.engine.get_template(template_file)
+        except InvalidCharsInPath:
+            return self.render_string_to_file(
+                template_file, data_file, output_file
+            )
         try:
             template_abs_path = self.template_fs.geturl(
                 template_file, purpose="fs"
@@ -204,7 +209,7 @@ class MobanEngine(object):
                         # win32 does not work
                         pass
             return flag
-        except exceptions.FileNotFound:
+        except (exceptions.FileNotFound, InvalidCharsInPath):
             # the template is a string from command line
             LOG.info(f"{template_abs_path} is not a file")
             self.buffered_writer.write_file_out(output_file, rendered_content)
