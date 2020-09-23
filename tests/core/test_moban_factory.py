@@ -27,9 +27,9 @@ class TestPypkg:
 
 
 def test_expand_pypi_dir():
-    dirs = list(expand_template_directories("testmobans:template-tests"))
+    dirs = list(expand_template_directories(["tests/fixtures/template", "tests/regression_tests/level-7-plugin-dir-cli/my-templates"]))
     for directory in dirs:
-        assert os.path.exists(directory)
+        assert os.path.exists(directory[7:])
 
 
 @patch("moban.deprecated.repo.get_moban_home", return_value=USER_HOME)
@@ -63,18 +63,16 @@ def test_unknown_template_type():
 
 
 def test_non_existent_tmpl_directries():
-    with pytest.raises(exceptions.DirectoryNotFound):
+    with pytest.raises(fs.errors.CreateFailed):
         ENGINES.get_engine("jj2", "idontexist", "")
 
 
 def test_non_existent_config_directries():
-    with pytest.raises(exceptions.DirectoryNotFound):
-        MobanEngine("tests", "abc", Engine)
+    MobanEngine("tests", "abc", Engine)
 
 
 def test_non_existent_ctx_directries():
-    with pytest.raises(exceptions.DirectoryNotFound):
-        Context(["abc"])
+    Context(["abc"])
 
 
 def test_file_tests():
