@@ -15,7 +15,7 @@ from moban.deprecated.repo import (
 
 
 @patch("appdirs.user_cache_dir", return_value="root")
-@patch("moban.utils.mkdir_p")
+@patch("moban.core.utils.mkdir_p")
 @patch("moban.externals.file_system.exists")
 @patch("git.Repo", autospec=True)
 class TestGitFunctions(unittest.TestCase):
