@@ -27,7 +27,14 @@ class TestPypkg:
 
 
 def test_expand_pypi_dir():
-    dirs = list(expand_template_directories(["tests/fixtures/template", "tests/regression_tests/level-7-plugin-dir-cli/my-templates"]))
+    dirs = list(
+        expand_template_directories(
+            [
+                "tests/fixtures/template",
+                "tests/regression_tests/level-7-plugin-dir-cli/my-templates",
+            ]
+        )
+    )
     for directory in dirs:
         assert os.path.exists(directory[7:])
 
