@@ -1,8 +1,6 @@
 import sys
 import unittest
-
-import pytest
-from mock import patch
+from unittest.mock import patch
 
 from moban.externals import reporter
 

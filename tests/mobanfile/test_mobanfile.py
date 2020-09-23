@@ -1,6 +1,7 @@
+from unittest.mock import patch
+
 import pytest
 import fs.path
-from mock import patch
 
 from moban.core.definitions import TemplateTarget
 

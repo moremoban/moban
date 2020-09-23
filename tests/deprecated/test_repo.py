@@ -1,8 +1,8 @@
 import unittest
+from unittest.mock import patch
 
 import pytest
 import fs.path
-from mock import patch
 
 from moban.deprecated import GitRequire
 from moban.exceptions import NoGitCommand
@@ -46,7 +46,7 @@ class TestGitFunctions(unittest.TestCase):
             depth=2,
         )
         repo = fake_repo.return_value
-        assert repo.git.submodule.called == False
+        assert repo.git.submodule.called is False
 
     def test_checkout_new_with_submodules(
         self, fake_repo, local_folder_exists, *_

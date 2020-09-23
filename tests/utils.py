@@ -2,10 +2,9 @@ import os
 import sys
 import unittest
 from textwrap import dedent
+from unittest.mock import patch
 
 import fs
-import pytest
-from mock import patch
 from fs.opener.parse import parse_fs_url
 
 from moban.main import main

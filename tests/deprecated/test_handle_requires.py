@@ -1,5 +1,6 @@
+from unittest.mock import patch
+
 import pytest
-from mock import patch
 
 from moban.deprecated import GitRequire
 
@@ -60,7 +61,7 @@ def test_handle_requires_repos_with_submodule(
     fake_git_clone.assert_called_with(
         [GitRequire(git_url="https://github.com/my/repo", submodule=True)]
     )
-    assert fake_pip_install.called == False
+    assert fake_pip_install.called is False
 
 
 def test_is_repo():

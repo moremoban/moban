@@ -2,10 +2,10 @@ import os
 import sys
 import unittest
 from shutil import copyfile
+from unittest.mock import MagicMock, patch
 
 import fs
 import pytest
-from mock import MagicMock, patch
 
 from moban.core.definitions import TemplateTarget
 

@@ -2,9 +2,9 @@ import os
 import sys
 import filecmp
 import unittest
+from unittest.mock import patch
 
 import fs
-from mock import patch
 
 from moban.main import main
 from .utils import Docs
