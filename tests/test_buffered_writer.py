@@ -36,7 +36,7 @@ class TestBufferedWriter(unittest.TestCase):
         self.writer.close()
         content = file_system.read_text(test_file)
         assert content == EXPECTED
-        os.unlink(os.path.join(tmp_dir, "testout.zip"))
+        os.unlink(fs.path.join(tmp_dir, "testout.zip"))
 
 
 def test_write_file_out():

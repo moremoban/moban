@@ -129,7 +129,7 @@ class TestTutorial(Docs):
     def test_level_8(self):
         expected = "it is a test\n"
         folder = "level-8-pass-a-folder-full-of-templates"
-        check_file = os.path.join("templated-folder", "my")
+        check_file = fs.path.join("templated-folder", "my")
         self.run_moban(["moban"], folder, [(check_file, expected)])
 
     def test_level_9(self):

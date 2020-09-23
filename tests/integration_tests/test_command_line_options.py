@@ -118,7 +118,7 @@ class TestNoOptions(unittest.TestCase):
     def setUp(self):
         self.config_file = ".moban.yml"
         copyfile(
-            os.path.join("tests", "fixtures", self.config_file),
+            fs.path.join("tests", "fixtures", self.config_file),
             self.config_file,
         )
         self.data_file = "data.yaml"
@@ -202,7 +202,7 @@ class TestNoOptions2(unittest.TestCase):
     def setUp(self):
         self.config_file = ".moban.yml"
         copyfile(
-            os.path.join("tests", "fixtures", self.config_file),
+            fs.path.join("tests", "fixtures", self.config_file),
             self.config_file,
         )
         self.data_file = "data.yaml"
@@ -236,7 +236,7 @@ class TestCustomMobanFile(unittest.TestCase):
     def setUp(self):
         self.config_file = "custom-moban.txt"
         copyfile(
-            os.path.join("tests", "fixtures", ".moban.yml"), self.config_file
+            fs.path.join("tests", "fixtures", ".moban.yml"), self.config_file
         )
         self.data_file = "data.yaml"
         with open(self.data_file, "w") as f:
@@ -269,7 +269,7 @@ class TestTemplateOption(unittest.TestCase):
     def setUp(self):
         self.config_file = "custom-moban.txt"
         copyfile(
-            os.path.join("tests", "fixtures", ".moban.yml"), self.config_file
+            fs.path.join("tests", "fixtures", ".moban.yml"), self.config_file
         )
         self.patcher1 = patch(
             "moban.core.utils.verify_the_existence_of_directories"
@@ -304,7 +304,7 @@ class TestTemplateOption(unittest.TestCase):
 @patch("moban.core.utils.verify_the_existence_of_directories")
 def test_duplicated_targets_in_moban_file(fake_verify):
     config_file = "duplicated.moban.yml"
-    copyfile(os.path.join("tests", "fixtures", config_file), ".moban.yml")
+    copyfile(fs.path.join("tests", "fixtures", config_file), ".moban.yml")
     test_args = ["moban"]
     with patch.object(sys, "argv", test_args):
         from moban.main import main
@@ -358,7 +358,7 @@ class TestComplexOptions(unittest.TestCase):
     def setUp(self):
         self.config_file = ".moban.yml"
         copyfile(
-            os.path.join("tests", "fixtures", ".moban-2.yml"), self.config_file
+            fs.path.join("tests", "fixtures", ".moban-2.yml"), self.config_file
         )
         self.data_file = "data.yaml"
         with open(self.data_file, "w") as f:

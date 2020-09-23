@@ -160,7 +160,7 @@ TEST_FILE_PATH = [
     [
         LOCAL_FOLDER + "/file_system",
         os.path.normpath(
-            os.path.join(os.getcwd(), "tests/fixtures/file_system")
+            fs.path.join(os.getcwd(), "tests/fixtures/file_system")
         ),
     ]
 ]
@@ -177,7 +177,7 @@ TEST_FILE_URL = [
         LOCAL_FOLDER + "/file_system",
         "osfs://"
         + os.path.normpath(
-            os.path.join(os.getcwd(), "tests/fixtures/file_system")
+            fs.path.join(os.getcwd(), "tests/fixtures/file_system")
         ),
     ]
 ]

@@ -51,11 +51,11 @@ class Docs(unittest.TestCase):
         os.chdir(self.current)
 
     def run_moban(self, moban_cli, working_directory, assertions):
-        os.chdir(os.path.join(self.base_folder, working_directory))
+        os.chdir(fs.path.join(self.base_folder, working_directory))
         run_moban(moban_cli, None, assertions)
 
     def run_moban_with_fs(self, moban_cli, working_directory, assertions):
-        os.chdir(os.path.join(self.base_folder, working_directory))
+        os.chdir(fs.path.join(self.base_folder, working_directory))
         run_moban_with_fs(moban_cli, None, assertions)
 
 

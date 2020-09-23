@@ -7,9 +7,9 @@ from moban.core.data_loader import load_data
 
 
 def test_overrides_a_list_of_config_files():
-    base_dir = os.path.join("tests", "fixtures", "issue_126")
-    config_dir = os.path.join(base_dir, "config")
-    actual = load_data(config_dir, os.path.join(base_dir, "the_config.yaml"))
+    base_dir = fs.path.join("tests", "fixtures", "issue_126")
+    config_dir = fs.path.join(base_dir, "config")
+    actual = load_data(config_dir, fs.path.join(base_dir, "the_config.yaml"))
     expected = [
         ("key", "value"),
         ("key_from_a", "apple"),
@@ -22,8 +22,8 @@ def test_overrides_a_list_of_config_files():
 
 
 def test_overrides_a_list_of_config_files_but_cannot_find_them():
-    base_dir = os.path.join("tests", "fixtures", "issue_126")
-    actual = load_data(None, os.path.join(base_dir, "the_config.yaml"))
+    base_dir = fs.path.join("tests", "fixtures", "issue_126")
+    actual = load_data(None, fs.path.join(base_dir, "the_config.yaml"))
 
     expected = [("key", "value")]
     for item, expected_item in zip(actual.items(), expected):
@@ -33,9 +33,9 @@ def test_overrides_a_list_of_config_files_but_cannot_find_them():
 
 
 def test_overrides_ignores_override_sequence():
-    base_dir = os.path.join("tests", "fixtures", "issue_126")
-    config_dir = os.path.join(base_dir, "config")
-    actual = load_data(config_dir, os.path.join(base_dir, "the_config.yaml"))
+    base_dir = fs.path.join("tests", "fixtures", "issue_126")
+    config_dir = fs.path.join(base_dir, "config")
+    actual = load_data(config_dir, fs.path.join(base_dir, "the_config.yaml"))
     expected = [
         ("key", "value"),
         ("key_from_a", "apple"),
@@ -46,10 +46,10 @@ def test_overrides_ignores_override_sequence():
 
 
 def test_overrides_select_keys_from_parent_files():
-    base_dir = os.path.join("tests", "fixtures", "issue_126")
-    config_dir = os.path.join(base_dir, "config")
+    base_dir = fs.path.join("tests", "fixtures", "issue_126")
+    config_dir = fs.path.join(base_dir, "config")
     actual = load_data(
-        config_dir, os.path.join(base_dir, "multi-key-config.yaml")
+        config_dir, fs.path.join(base_dir, "multi-key-config.yaml")
     )
     expected = [
         ("cat", "from config"),
@@ -61,10 +61,10 @@ def test_overrides_select_keys_from_parent_files():
 
 
 def test_overrides_select_keys():
-    base_dir = os.path.join("tests", "fixtures", "issue_126")
-    config_dir = os.path.join(base_dir, "config")
+    base_dir = fs.path.join("tests", "fixtures", "issue_126")
+    config_dir = fs.path.join(base_dir, "config")
     actual = load_data(
-        config_dir, os.path.join(base_dir, "multi-key-config-override.yaml")
+        config_dir, fs.path.join(base_dir, "multi-key-config-override.yaml")
     )
     expected = [
         ("alpha", "from config"),
@@ -76,9 +76,9 @@ def test_overrides_select_keys():
 
 
 def test_overrides_nested_keys():
-    base_dir = os.path.join("tests", "fixtures", "issue_126")
-    config_dir = os.path.join(base_dir, "config")
-    actual = load_data(config_dir, os.path.join(base_dir, "raspberry.yaml"))
+    base_dir = fs.path.join("tests", "fixtures", "issue_126")
+    config_dir = fs.path.join(base_dir, "config")
+    actual = load_data(config_dir, fs.path.join(base_dir, "raspberry.yaml"))
     expected = {
         "raspberry": {
             "other": "OpenGL 3.0",
@@ -97,6 +97,6 @@ def test_overrides_nested_keys():
 
 def test_overrides_fs_url():
     load_engine_factory_and_engines()
-    base_dir = os.path.join("tests", "fixtures")
-    actual = load_data(None, os.path.join(base_dir, "override_fs_url.yaml"))
+    base_dir = fs.path.join("tests", "fixtures")
+    actual = load_data(None, fs.path.join(base_dir, "override_fs_url.yaml"))
     assert "requires" in actual

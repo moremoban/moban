@@ -126,9 +126,9 @@ class PublishCommand(Command):
     def run(self):
         try:
             self.status("Removing previous builds...")
-            rmtree(os.path.join(HERE, "dist"))
-            rmtree(os.path.join(HERE, "build"))
-            rmtree(os.path.join(HERE, "moban.egg-info"))
+            rmtree(fs.path.join(HERE, "dist"))
+            rmtree(fs.path.join(HERE, "build"))
+            rmtree(fs.path.join(HERE, "moban.egg-info"))
         except OSError:
             pass
 
@@ -174,7 +174,7 @@ def read_files(*files):
 
 def read(afile):
     """Read a file into setup"""
-    the_relative_file = os.path.join(HERE, afile)
+    the_relative_file = fs.path.join(HERE, afile)
     with codecs.open(the_relative_file, "r", "utf-8") as opened_file:
         content = filter_out_test_code(opened_file)
         content = "".join(list(content))

@@ -10,7 +10,7 @@ from moban.externals import file_system
 
 class TestContentForwardEngine(unittest.TestCase):
     def setUp(self):
-        template_path = os.path.join("tests", "fixtures")
+        template_path = fs.path.join("tests", "fixtures")
         fs = file_system.get_multi_fs([template_path])
         ContentForwardEngine = ENGINES.load_me_now("copy")
         self.engine = ContentForwardEngine(fs)

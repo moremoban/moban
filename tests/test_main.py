@@ -22,7 +22,7 @@ class TestException(unittest.TestCase):
 
     def test_handle_moban_file(self):
         copyfile(
-            os.path.join("tests", "fixtures", ".moban-version-1234.yml"),
+            fs.path.join("tests", "fixtures", ".moban-version-1234.yml"),
             self.moban_file,
         )
         import moban.main as main
@@ -68,11 +68,11 @@ class TestException(unittest.TestCase):
 
     def test_version_1_is_recognized(self):
         copyfile(
-            os.path.join("tests", "fixtures", ".moban-version-1.0.yml"),
+            fs.path.join("tests", "fixtures", ".moban-version-1.0.yml"),
             self.moban_file,
         )
         copyfile(
-            os.path.join("tests", "fixtures", ".moban-version-1.0.yml"),
+            fs.path.join("tests", "fixtures", ".moban-version-1.0.yml"),
             self.data_file,
         )
         import moban.main as main

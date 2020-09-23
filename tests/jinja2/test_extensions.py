@@ -12,7 +12,7 @@ def test_globals():
     output = "globals.txt"
     test_dict = dict(hello="world")
     jinja_global("test", test_dict)
-    path = os.path.join("tests", "fixtures", "globals")
+    path = fs.path.join("tests", "fixtures", "globals")
     template_fs = file_system.get_multi_fs([path])
     engine = MobanEngine(template_fs, path, Engine(template_fs))
     engine.render_to_file("basic.template", "basic.yml", output)

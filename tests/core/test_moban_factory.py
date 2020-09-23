@@ -23,7 +23,7 @@ USER_HOME = fs.path.join("user", "home", ".moban", "repos")
 class TestPypkg:
     def __init__(self):
         __package_path__ = os.path.normcase(os.path.dirname(__file__))
-        self.resources_path = os.path.join(__package_path__, "fixtures")
+        self.resources_path = fs.path.join(__package_path__, "fixtures")
 
 
 def test_expand_pypi_dir():
