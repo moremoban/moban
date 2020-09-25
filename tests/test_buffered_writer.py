@@ -3,7 +3,6 @@ import tempfile
 import unittest
 
 import fs
-import pytest
 
 from moban.externals import file_system
 from moban.externals.buffered_writer import BufferedWriter, write_file_out

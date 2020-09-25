@@ -1,6 +1,5 @@
 import os
 
-import pytest
 import fs.path
 
 from moban.core.context import Context

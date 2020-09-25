@@ -1,5 +1,3 @@
-import pytest
-
 from moban.plugins.jinja2.filters.repr import repr as repr_function
 
 

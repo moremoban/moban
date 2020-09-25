@@ -2,7 +2,6 @@ import os
 import unittest
 
 import fs
-import pytest
 
 from moban.core import ENGINES
 from moban.externals import file_system

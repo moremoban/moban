@@ -1,4 +1,3 @@
-import pytest
 from ruamel.yaml import YAML
 
 from moban.core.data_loader import merge

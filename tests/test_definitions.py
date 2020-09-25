@@ -1,5 +1,3 @@
-import pytest
-
 from moban.deprecated import GitRequire
 from moban.core.definitions import TemplateTarget
 
