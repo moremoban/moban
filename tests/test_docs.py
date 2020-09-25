@@ -1,7 +1,6 @@
 import os
 
 import fs
-import pytest
 
 from .utils import Docs, custom_dedent
 

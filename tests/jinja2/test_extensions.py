@@ -1,7 +1,6 @@
 import os
 
 import fs
-import pytest
 
 from moban.externals import file_system
 from moban.core.moban_factory import MobanEngine

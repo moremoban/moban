@@ -1,5 +1,3 @@
-import pytest
-
 from moban.core.definitions import TemplateTarget
 from moban.core.mobanfile.store import Store
 

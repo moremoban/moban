@@ -1,7 +1,6 @@
 import os
 
 import fs
-import pytest
 
 from moban.main import load_engine_factory_and_engines
 from moban.core.data_loader import load_data
