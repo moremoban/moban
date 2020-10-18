@@ -41,7 +41,7 @@ except (ValueError, UnicodeError, locale.Error):
 
 NAME = "moban"
 AUTHOR = "C. W."
-VERSION = "0.8.2"
+VERSION = "0.8.3"
 EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
 ENTRY_POINTS = {
@@ -53,7 +53,7 @@ DESCRIPTION = (
     "General purpose static text generator"
 )
 URL = "https://github.com/moremoban/moban"
-DOWNLOAD_URL = "%s/archive/0.8.2.tar.gz" % URL
+DOWNLOAD_URL = "%s/archive/0.8.3.tar.gz" % URL
 FILES = ["README.rst", "CONTRIBUTORS.rst", "CHANGELOG.rst"]
 KEYWORDS = [
     "python",
@@ -100,8 +100,8 @@ EXTRAS_REQUIRE = {
 PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(sys.executable)
 HERE = os.path.abspath(os.path.dirname(__file__))
 
-GS_COMMAND = ("gease moban v0.8.2 " +
-              "Find 0.8.2 in changelog for more details")
+GS_COMMAND = ("gease moban v0.8.3 " +
+              "Find 0.8.3 in changelog for more details")
 NO_GS_MESSAGE = ("Automatic github release is disabled. " +
                  "Please install gease to enable it.")
 UPLOAD_FAILED_MSG = (
