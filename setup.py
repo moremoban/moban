@@ -40,7 +40,7 @@ except (ValueError, UnicodeError, locale.Error):
     locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
 NAME = "moban"
-AUTHOR = "chfw"
+AUTHOR = "C. W."
 VERSION = "0.8.2"
 EMAIL = "wangc_2011@hotmail.com"
 LICENSE = "MIT"
@@ -98,13 +98,14 @@ EXTRAS_REQUIRE = {
 }
 # You do not need to read beyond this line
 PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(sys.executable)
-GS_COMMAND = ("gs moban v0.8.2 " +
+HERE = os.path.abspath(os.path.dirname(__file__))
+
+GS_COMMAND = ("gease moban v0.8.2 " +
               "Find 0.8.2 in changelog for more details")
 NO_GS_MESSAGE = ("Automatic github release is disabled. " +
                  "Please install gease to enable it.")
 UPLOAD_FAILED_MSG = (
     'Upload failed. please run "%s" yourself.' % PUBLISH_COMMAND)
-HERE = os.path.abspath(os.path.dirname(__file__))
 
 
 class PublishCommand(Command):
@@ -149,7 +150,6 @@ class PublishCommand(Command):
 SETUP_COMMANDS.update({
     "publish": PublishCommand
 })
-
 
 def has_gease():
     """

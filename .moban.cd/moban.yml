@@ -1,7 +1,7 @@
 name: moban
 project: moban
 organisation: moremoban
-author: chfw
+author: C. W.
 contact: wangc_2011@hotmail.com
 license: MIT
 version: 0.8.2
@@ -37,3 +37,5 @@ setup_use_markers: true
 setup_use_markers_fix: true
 python_requires: ">=3.6"
 min_python_version: "3.6"
+excluded_github_users:
+  - chfw
