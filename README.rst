@@ -5,9 +5,6 @@ mó bǎn - 模板 General purpose static text generator
 .. image:: https://raw.githubusercontent.com/pyexcel/pyexcel.github.io/master/images/patreon.png
    :target: https://www.patreon.com/chfw
 
-.. image:: https://api.travis-ci.org/moremoban/moban.svg?branch=master
-   :target: http://travis-ci.org/moremoban/moban
-
 .. image:: https://dev.azure.com/moremoban/moban/_apis/build/status/moremoban.moban
    :target: https://dev.azure.com/moremoban/moban/_build?definitionId=1&_a=summary
 
