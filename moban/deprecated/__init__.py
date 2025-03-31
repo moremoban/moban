@@ -136,7 +136,7 @@ def is_repo(require):
 @deprecated(constants.MESSAGE_DEPRECATE_COPY_SINCE_0_4_0)
 def handle_copy(merged_options, copy_config):
     copy_targets = []
-    for (dest, src) in _iterate_list_of_dicts(copy_config):
+    for dest, src in _iterate_list_of_dicts(copy_config):
         copy_targets.append(
             {
                 constants.LABEL_TEMPLATE: src,

@@ -227,13 +227,13 @@ class MobanEngine(object):
         self.buffered_writer.close()
 
     def _render_with_finding_template_first(self, template_file_index):
-        for (template_file, data_output_pairs) in template_file_index.items():
+        for template_file, data_output_pairs in template_file_index.items():
             try:
                 template = self.engine.get_template(template_file)
                 template_abs_path = self.template_fs.geturl(
                     template_file, purpose="fs"
                 )
-                for (data_file, output) in data_output_pairs:
+                for data_file, output in data_output_pairs:
                     data = self.context.get_data(data_file)
                     flag = self.apply_template(
                         template_abs_path, template, data, output
@@ -246,7 +246,7 @@ class MobanEngine(object):
                     self.file_count += 1
             except exceptions.PassOn as e:
                 LOG.info(e)
-                for (data_file, output) in data_output_pairs:
+                for data_file, output in data_output_pairs:
                     self.fall_out_targets.append(
                         TemplateTarget(
                             template_file,
@@ -262,9 +262,9 @@ class MobanEngine(object):
                 continue
 
     def _render_with_finding_data_first(self, data_file_index):
-        for (data_file, template_output_pairs) in data_file_index.items():
+        for data_file, template_output_pairs in data_file_index.items():
             data = self.context.get_data(data_file)
-            for (template_file, output) in template_output_pairs:
+            for template_file, output in template_output_pairs:
                 try:
                     template = self.engine.get_template(template_file)
 
