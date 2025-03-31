@@ -12,8 +12,8 @@ master: index
 command_line_interface: "moban"
 entry_point: "moban.main:main"
 company: Onni Software Ltd.
-copyright_year: 2017-2020
-copyright: 2017-2020 Onni Software Ltd. and its contributors
+copyright_year: 2016-2025
+copyright: 2016-2025 Onni Software Ltd. and its contributors
 keywords:
   - jinja2
   - moban

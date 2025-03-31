@@ -22,7 +22,7 @@ DESCRIPTION = (
 # -- Project information -----------------------------------------------------
 
 project = 'moban'
-copyright = '2017-2020 Onni Software Ltd.'
+copyright = '2016-2025 Onni Software Ltd.'
 author = 'C. W.'
 # The short X.Y version
 version = '0.8.2'
