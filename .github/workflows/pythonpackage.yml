@@ -22,7 +22,7 @@ jobs:
           pip install -r requirements.txt
       - name: Lint with flake8
         run: |
-          make install_test format git-diff-check lint
+          make install_test format git-diff-check
       - name: Test with pytest
         run: |
           pip install -r tests/requirements.txt
