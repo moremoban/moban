@@ -1,6 +1,6 @@
 
 
-9 contributors
+10 contributors
 ================================================================================
 
 In alphabetical order:
@@ -8,6 +8,7 @@ In alphabetical order:
 * `Andrew Scheller <https://github.com/lurch>`_
 * `Ayan Banerjee <https://github.com/ayan-b>`_
 * `CLiu13 <https://github.com/CLiu13>`_
+* `dependabot[bot] <https://github.com/apps/dependabot>`_
 * `John Vandenberg <https://github.com/jayvdb>`_
 * `Joshua Chung <https://github.com/seeeturtle>`_
 * `Kacper Potyrała <https://github.com/SerekKiri>`_
