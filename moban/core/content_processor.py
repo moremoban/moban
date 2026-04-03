@@ -21,7 +21,7 @@ class ContentProcessor(PluginInfo):
         )
         self.action = action
         self.action_continuing_tense = action_continuing_tense
-        self.action_past_tense = action_continuing_tense
+        self.action_past_tense = action_past_tense
 
     def __call__(self, a_content_processor_function):
         continuing_tense = self.action_continuing_tense
